@@ -12,6 +12,7 @@ const pages = [
   { link: "/add-question", navLabel: "Add Question" },
   { link: "/manage-course", navLabel: "Manage Course" },
   { link: "/manage-question", navLabel: "Manage Question" },
+  { link: "/manage-user", navLabel: "Manage User" },
   { link: "/", navLabel: "Logout" },
 ];
 
@@ -19,7 +20,9 @@ const NavBar = () => {
   return (
     <AppBar position="static" color="primary">
       <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Typography variant="h6">eTHERIA</Typography>
+        <NavLink to="/dashboard">
+          <Typography variant="h6">eTHERIA</Typography>
+        </NavLink>
         <Stack
           direction="row"
           spacing={2}
