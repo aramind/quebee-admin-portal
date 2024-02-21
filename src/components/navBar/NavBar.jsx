@@ -28,7 +28,7 @@ const NavBar = () => {
   return (
     <AppBar position="static" color="primary">
       <Toolbar sx={{ justifyContent: "space-between" }}>
-        <NavLink to="/dashboard">
+        <NavLink to="/">
           <Typography variant="h6">eTHERIA</Typography>
         </NavLink>
         <Stack
