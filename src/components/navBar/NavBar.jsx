@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import { useGlobalState } from "../../context/ContextProvider";
 
 const pages = [
-  { link: "/dashboard", navLabel: "Dashboard" },
+  { link: "/", navLabel: "Dashboard" },
   { link: "/add-course", navLabel: "Add Course" },
   { link: "/add-question", navLabel: "Add Question" },
   { link: "/manage-course", navLabel: "Manage Course" },

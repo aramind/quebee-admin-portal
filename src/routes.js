@@ -14,7 +14,7 @@ const privateRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: "/dashboard",
+        path: "/",
         element: <DashBoardPage />,
       },
       {
