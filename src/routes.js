@@ -46,6 +46,30 @@ const publicRouter = createBrowserRouter([
     path: "/",
     element: <LoginPage />,
   },
+  {
+    path: "/dashboard",
+    element: <LoginPage />,
+  },
+  {
+    path: "/add-question",
+    element: <LoginPage />,
+  },
+  {
+    path: "/add-course",
+    element: <LoginPage />,
+  },
+  {
+    path: "/manage-question",
+    element: <LoginPage />,
+  },
+  {
+    path: "/manage-course",
+    element: <LoginPage />,
+  },
+  {
+    path: "/manage-user",
+    element: <LoginPage />,
+  },
 ]);
 
 const router = { publicRouter, privateRouter };

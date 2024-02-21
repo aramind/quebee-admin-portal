@@ -3,8 +3,9 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-import { Box, Divider, Stack, Tab } from "@mui/material";
+import { Box, Button, Divider, Stack, Tab } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useGlobalState } from "../../context/ContextProvider";
 
 const pages = [
   { link: "/dashboard", navLabel: "Dashboard" },
@@ -13,10 +14,17 @@ const pages = [
   { link: "/manage-course", navLabel: "Manage Course" },
   { link: "/manage-question", navLabel: "Manage Question" },
   { link: "/manage-user", navLabel: "Manage User" },
-  { link: "/", navLabel: "Logout" },
 ];
 
 const NavBar = () => {
+  const {
+    globalState: { currentUser },
+    dispatch,
+  } = useGlobalState();
+
+  const handleLogOut = () => {
+    dispatch({ type: "LOGOUT" });
+  };
   return (
     <AppBar position="static" color="primary">
       <Toolbar sx={{ justifyContent: "space-between" }}>
@@ -32,6 +40,10 @@ const NavBar = () => {
             pages.map((page) => {
               return <NavLink to={page.link}>{page.navLabel}</NavLink>;
             })}
+          <NavLink to="/" onClick={handleLogOut}>
+            {currentUser}
+            <div>LOGOUT</div>
+          </NavLink>
         </Stack>
       </Toolbar>
     </AppBar>

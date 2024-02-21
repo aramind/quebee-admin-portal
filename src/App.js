@@ -1,10 +1,16 @@
 import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import router from "./routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGlobalState } from "./context/ContextProvider";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const {
+    globalState: { isLoggedIn },
+    dispatch,
+  } = useGlobalState();
+
+  console.log(isLoggedIn);
   return (
     <div className="App">
       <RouterProvider
