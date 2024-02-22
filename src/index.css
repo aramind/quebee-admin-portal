@@ -13,3 +13,15 @@ a {
   text-decoration: none;
   color: #eee;
 }
+
+.outlined {
+  border: 1px solid red;
+}
+
+.company-link {
+  color: hsl(224, 100%, 50%);
+}
+
+.company-link:hover {
+  color: hsla(224, 100%, 50%, 0.49);
+}
