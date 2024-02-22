@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import {
-  Box,
   Button,
   IconButton,
   InputAdornment,
-  Link,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+
+const currentYear = new Date().getFullYear();
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -79,6 +79,7 @@ const LoginPage = () => {
         <a href="#" className="company-link">
           RMSolutions&trade;
         </a>
+        &nbsp;&copy;{currentYear}
       </Typography>
     </Stack>
   );
