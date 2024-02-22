@@ -60,7 +60,7 @@ const LoginPage = () => {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton onClick={handleClickShowPassword}>
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             ),
