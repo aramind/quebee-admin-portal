@@ -1,9 +1,15 @@
 const globalReducer = (state, action) => {
   switch (action.type) {
-    case "SET_USER":
-      return { ...state, currentUser: action.payload, isLoggedIn: true };
+    case "SET_CURRENT_USER":
+      return {
+        ...state,
+        currentUser: action.payload.username,
+        currentUserRole: action.payload.role,
+      };
+    case "SET_ALLOWED":
+      return { ...state, allowed: action.payload };
     case "LOGOUT":
-      return { ...state, currentUser: null, isLoggedIn: false };
+      return {};
     default:
       throw new Error("No matched action");
   }

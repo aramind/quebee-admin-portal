@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
   IconButton,
@@ -7,49 +8,77 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import {
-  ErrorOutlineSharp,
-  Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import zodLoginSchema from "../schemas/login";
+import findUser from "../utils/login/authenticateUser";
+import { useGlobalState } from "../context/ContextProvider";
 
 const currentYear = new Date().getFullYear();
 
 const LoginPage = () => {
   // states
+  const {
+    globalState: { currentUser },
+    dispatch,
+  } = useGlobalState();
   const [showPassword, setShowPassword] = useState(false);
-  const [loginErrorMessage, setLoginErrorMessage] = useState("");
-  const [authenticated, setAuthenticated] = useState("false");
+  const [submitMessage, setSubmitMessage] = useState("");
+  const [authenticated, setAuthenticated] = useState(false);
 
-  // other values
   const navigate = useNavigate();
-
+  // useEffects
   useEffect(() => {
     if (authenticated) {
       navigate("/dashboard");
     }
-  }, [authenticated]);
+  }, [authenticated, navigate]);
+
   // form
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, isSubmitting, formState } = useForm({
+    resolver: zodResolver(zodLoginSchema),
+    mode: "onTouched",
+  });
   const { errors } = formState;
 
   const handleClickShowPassword = () => {
     setShowPassword((show) => !show);
   };
 
+  const onError = (errors) => {
+    console.log("Form errors", errors);
+    setSubmitMessage((message) => "Error submitting form. Try again later.");
+  };
+
   const onSubmit = (data) => {
-    const { username, password } = data;
-    // console.log(data);
-    console.log(`logging in: USERNAME ${username} PASSWORD ${password}`);
-    if (username === "mon" && password === "123123") {
-      setAuthenticated((pv) => (pv = true));
-      setLoginErrorMessage("Authenticated Successfully");
+    const authenticatedUser = findUser(data);
+    console.log("USER", authenticatedUser);
+
+    if (authenticatedUser) {
+      setSubmitMessage((message) => "Login successful");
+      dispatch({
+        type: "SET_CURRENT_USER",
+        payload: {
+          username: authenticatedUser.username,
+          role: authenticatedUser.role,
+        },
+      });
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          name: authenticatedUser.username,
+          role: authenticatedUser.role,
+        })
+      );
+      setAuthenticated((authenticated) => true);
     } else {
-      setLoginErrorMessage("Invalid credentials");
+      setSubmitMessage((message) => "Invalid Credentials");
     }
   };
+
+  console.log("CURRENTUSER:", currentUser);
   return (
     <Stack
       height="100vh"
@@ -58,7 +87,7 @@ const LoginPage = () => {
       direction="column"
       spacing="10px"
     >
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Stack
           height="80vh"
           width="80vh"
@@ -91,10 +120,8 @@ const LoginPage = () => {
                 id="username"
                 label="Username"
                 variant="outlined"
-                error={Boolean(errors.username)}
-                {...register("username", {
-                  required: { value: true, message: "Username is required" },
-                })}
+                error={!!errors.username}
+                {...register("username")}
               />
               <Typography
                 variant="caption"
@@ -113,10 +140,8 @@ const LoginPage = () => {
                 label="Password"
                 variant="outlined"
                 type={showPassword ? "text" : "password"}
-                error={Boolean(errors.password)}
-                {...register("password", {
-                  required: { value: true, message: "Password is required" },
-                })}
+                error={!!errors.password}
+                {...register("password")}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -140,14 +165,18 @@ const LoginPage = () => {
             </Stack>
           </Stack>
           <Stack gap={1}>
-            <Typography variant="caption" color="red" height="12px">
-              {loginErrorMessage}
+            <Typography
+              variant="body1"
+              color={!!authenticated ? "green" : "error"}
+            >
+              {submitMessage}
             </Typography>
             <Button
               variant="contained"
               size="large"
               sx={{ padding: "1rem" }}
               type="submit"
+              disabled={isSubmitting}
             >
               Login
             </Button>
@@ -163,6 +192,7 @@ const LoginPage = () => {
         <a
           href="https://www.linkedin.com/in/robin-mon-miranda/"
           target="_blank"
+          rel="noreferrer"
           className="company-link"
         >
           RMSolutions&trade;

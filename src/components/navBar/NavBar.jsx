@@ -38,7 +38,11 @@ const NavBar = () => {
         >
           {pages &&
             pages.map((page) => {
-              return <NavLink to={page.link}>{page.navLabel}</NavLink>;
+              return (
+                <NavLink to={page.link} key={page.link}>
+                  {page.navLabel}
+                </NavLink>
+              );
             })}
           <NavLink to="/" onClick={handleLogOut}>
             {currentUser}

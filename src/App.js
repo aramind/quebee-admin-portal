@@ -5,16 +5,36 @@ import { useEffect, useState } from "react";
 import { useGlobalState } from "./context/ContextProvider";
 
 function App() {
+  // const [allowed, setAllowed] = useState(false);
   const {
-    globalState: { isLoggedIn },
+    globalState: { currentUserRole },
     dispatch,
   } = useGlobalState();
 
-  console.log(isLoggedIn);
+  console.log("CR", currentUserRole);
+
+  useEffect(() => {
+    try {
+      const storedUserData = localStorage.getItem("user");
+      const storedUser = JSON.parse(storedUserData) || {};
+      console.log(storedUser);
+      dispatch({
+        type: "SET_CURRENT_USER",
+        payload: {
+          username: storedUser.username,
+          role: storedUser.role,
+        },
+      });
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+    }
+  }, [dispatch, currentUserRole]);
   return (
     <div className="App">
       <RouterProvider
-        router={isLoggedIn ? router.privateRouter : router.publicRouter}
+        router={
+          +currentUserRole > 1 ? router.privateRouter : router.publicRouter
+        }
       />
     </div>
   );

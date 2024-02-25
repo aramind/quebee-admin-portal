@@ -3,7 +3,7 @@ import globalReducer from "./globalReducer";
 
 const initialGlobalState = {
   currentUser: null,
-  isLoggedIn: true,
+  currentUserRole: 0,
 };
 
 const GlobalStateContext = createContext(initialGlobalState);

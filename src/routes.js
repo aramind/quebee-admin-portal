@@ -7,6 +7,7 @@ import ManageQuestionPage from "./pages/ManageQuestionPage";
 import ManageUserPage from "./pages/ManageUserPage";
 import ManageCoursePage from "./pages/ManageCoursePage";
 import MainLayout from "./layout/MainLayout";
+import LandingPage from "./pages/LandingPage";
 
 const privateRouter = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const privateRouter = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <LandingPage />,
+      },
+      {
+        path: "/dashboard",
         element: <DashBoardPage />,
       },
       {
