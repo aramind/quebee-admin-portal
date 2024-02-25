@@ -25,3 +25,16 @@ a {
 .company-link:hover {
   color: hsla(224, 100%, 50%, 0.49);
 }
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.no-padding-y {
+  padding-top: 0;
+  padding-bottom: 0;
+}

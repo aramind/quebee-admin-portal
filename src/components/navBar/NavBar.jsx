@@ -3,12 +3,13 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-import { Box, Button, Divider, Stack, Tab } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { useGlobalState } from "../../context/ContextProvider";
+import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 
 const pages = [
-  { link: "/", navLabel: "Dashboard" },
+  { link: "/dashboard", navLabel: "Dashboard" },
   { link: "/add-course", navLabel: "Add Course" },
   { link: "/add-question", navLabel: "Add Question" },
   { link: "/manage-course", navLabel: "Manage Course" },
@@ -24,9 +25,11 @@ const NavBar = () => {
 
   const handleLogOut = () => {
     dispatch({ type: "LOGOUT" });
+    localStorage.removeItem("user");
   };
+
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" color="primary" sx={{ height: 60 }}>
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <NavLink to="/">
           <Typography variant="h6">eTHERIA</Typography>
@@ -45,8 +48,7 @@ const NavBar = () => {
               );
             })}
           <NavLink to="/" onClick={handleLogOut}>
-            {currentUser}
-            <div>LOGOUT</div>
+            <ExitToAppTwoToneIcon />
           </NavLink>
         </Stack>
       </Toolbar>

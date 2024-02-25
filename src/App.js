@@ -7,7 +7,7 @@ import { useGlobalState } from "./context/ContextProvider";
 function App() {
   // const [allowed, setAllowed] = useState(false);
   const {
-    globalState: { currentUserRole },
+    globalState: { currentUserRole, currentUser },
     dispatch,
   } = useGlobalState();
 
@@ -21,14 +21,14 @@ function App() {
       dispatch({
         type: "SET_CURRENT_USER",
         payload: {
-          username: storedUser.username,
+          username: storedUser.name,
           role: storedUser.role,
         },
       });
     } catch (error) {
       console.error("Error parsing JSON:", error);
     }
-  }, [dispatch, currentUserRole]);
+  }, [dispatch, currentUserRole, currentUser]);
   return (
     <div className="App">
       <RouterProvider

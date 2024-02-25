@@ -10,7 +10,7 @@ const LandingPage = () => {
         height="80vh"
         justifyContent="center"
       >
-        <Typography variant="h2">
+        <Typography variant="h3">
           Welcome to{" "}
           <Typography
             variant="inherit"
@@ -20,7 +20,7 @@ const LandingPage = () => {
           >
             eTHERIA
           </Typography>{" "}
-          Admin!
+          Admin Portal!
         </Typography>
       </Box>
     </div>
