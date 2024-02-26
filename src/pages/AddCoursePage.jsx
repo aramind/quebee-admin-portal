@@ -35,10 +35,22 @@ const AddCoursePage = () => {
     name: "subjects",
   });
 
-  const subjData = watch("subjects", []);
-  console.log(subjData);
   const onSubmit = (data) => {
-    console.log("DATA:", data);
+    const subjects = getValues("subjects", []);
+    console.log("SUBJECTS", subjects);
+    console.log("RAWDATA:", data);
+
+    const prepSubjects = subjects.map((subject) => {
+      return {
+        ...subject,
+        topics: subject.topics
+          .split("#")
+          .map((topic) => topic.trim())
+          .filter((topic) => topic.length > 1),
+      };
+    });
+    const finalData = { ...data, subjects: prepSubjects };
+    console.log("FINALDATA", finalData);
     console.log("data submitted");
   };
 
@@ -165,11 +177,10 @@ const AddCoursePage = () => {
           <Stack spacing={1}>
             <Grid container rowSpacing={2} columnSpacing={2} maxWidth="100%">
               {fieldsForSubject.map((field, index) => {
-                // Create an object combining 'acronym' and 'title'
                 const subjectObject = {
                   shortTitle: getValues(`subjects[${index}].shortTitle`) || "",
                   longTitle: getValues(`subjects[${index}].longTitle`) || "",
-                  topics: getValues(`subjects[${index}].topics` || ""),
+                  topics: getValues(`subjects[${index}].topics`) || "",
                 };
 
                 // Register the entire object using register

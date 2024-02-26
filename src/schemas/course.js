@@ -3,7 +3,11 @@ import { z } from "zod";
 const subjectSchema = z.object({
   shortTitle: z.string().min(1, "Required"),
   longTitle: z.string().min(1, "Required"),
-  topics: z.string(),
+  topics: z
+    .string()
+    .refine((value) => /^(?=.*#)(?=.*[a-zA-Z]{3,})/.test(value), {
+      message: "Invalid Entries",
+    }),
 });
 
 const courseSchema = z.object({
