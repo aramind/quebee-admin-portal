@@ -5,9 +5,10 @@ import {
   InputLabel,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import courseSchema from "../schemas/course";
 import { DevTool } from "@hookform/devtools";
@@ -19,12 +20,21 @@ const containerStyle = {
 };
 
 const AddCoursePage = () => {
+  const [success, setSuccess] = useState(false);
   // form
-  const { register, control, handleSubmit, formState, watch, getValues } =
-    useForm({
-      resolver: zodResolver(courseSchema),
-      mode: "onTouched",
-    });
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    watch,
+    getValues,
+    isSubmitSuccessful,
+    isSubmitError,
+  } = useForm({
+    resolver: zodResolver(courseSchema),
+    mode: "onTouched",
+  });
   const { errors, dirtyFields } = formState;
   const {
     fields: fieldsForSubject,
@@ -51,6 +61,7 @@ const AddCoursePage = () => {
     });
     const finalData = { ...data, subjects: prepSubjects };
     console.log("FINALDATA", finalData);
+    console.log(setSuccess((value) => (value = true)));
     console.log("data submitted");
   };
 
@@ -226,12 +237,12 @@ const AddCoursePage = () => {
                           size="small"
                           {...register(`subjects[${index}].longTitle`)}
                         />
-                        <InputLabel>
+                        <InputLabel sx={{ textAlign: "left" }}>
                           Topics (add topics starting with # )
                         </InputLabel>
                         <TextField
                           variant="outlined"
-                          label="e.g. #College Algebra)"
+                          label="e.g. #Topic 1"
                           fullWidth
                           multiline
                           size="small"
@@ -255,9 +266,62 @@ const AddCoursePage = () => {
             </Grid>
           </Stack>
         </Stack>
-        <Button sx={{ my: "2rem" }} variant="contained" fullWidth type="submit">
-          SEND
-        </Button>
+        <Stack direction="row">
+          <InputLabel
+            htmlFor="subjects"
+            sx={{
+              textAlign: "left",
+              fontSize: "0.8rem",
+              px: "5px",
+              color: "#333",
+              fontWeight: "bold",
+            }}
+          >
+            STATUS :
+          </InputLabel>
+          <Typography
+            variant="body2"
+            color={
+              success
+                ? "info.main"
+                : isSubmitError || Object.keys(errors).length > 0
+                ? "error.main"
+                : "text.primary"
+            }
+          >
+            {success
+              ? "Pending"
+              : isSubmitError || Object.keys(errors).length > 0
+              ? "Error"
+              : "Editing"}
+          </Typography>
+        </Stack>
+        <Stack direction="row" spacing={4} px={4} py={4}>
+          <Button
+            sx={{ my: "2rem", py: "1rem" }}
+            variant="contained"
+            fullWidth
+            type="submit"
+          >
+            RESET
+          </Button>
+          <Button
+            sx={{ my: "2rem" }}
+            variant="contained"
+            fullWidth
+            type="submit"
+          >
+            SEND
+          </Button>
+          <Button
+            sx={{ my: "2rem" }}
+            variant="contained"
+            fullWidth
+            type="submit"
+          >
+            UPLOAD
+          </Button>
+        </Stack>
       </form>
       <DevTool control={control} />
     </Container>
