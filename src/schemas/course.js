@@ -1,8 +1,9 @@
 import { z } from "zod";
 
 const subjectSchema = z.object({
-  subject: z.string().min(1, "Required"),
-  title: z.string().min(1, "Required"),
+  shortTitle: z.string().min(1, "Required"),
+  longTitle: z.string().min(1, "Required"),
+  topics: z.array(),
 });
 
 const courseSchema = z.object({
@@ -11,7 +12,7 @@ const courseSchema = z.object({
   title: z.string().min(1, "Required"),
   description: z.string().min(1, "Required"),
   subjects: z.array(subjectSchema),
-  topics: z.array(),
+  // topics: z.array(),
 });
 
 export default courseSchema;
