@@ -1,13 +1,10 @@
 import {
-  Box,
   Button,
   Container,
   Grid,
   InputLabel,
-  Paper,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
@@ -23,10 +20,11 @@ const containerStyle = {
 
 const AddCoursePage = () => {
   // form
-  const { register, control, handleSubmit, formState, watch } = useForm({
-    resolver: zodResolver(courseSchema),
-    mode: "onTouched",
-  });
+  const { register, control, handleSubmit, formState, watch, getValues } =
+    useForm({
+      resolver: zodResolver(courseSchema),
+      mode: "onTouched",
+    });
   const { errors, dirtyFields } = formState;
   const {
     fields: fieldsForSubject,
@@ -35,15 +33,6 @@ const AddCoursePage = () => {
   } = useFieldArray({
     control,
     name: "subjects",
-  });
-
-  const {
-    fields: fieldsForTopics,
-    append: appendTopic,
-    remove: removeTopic,
-  } = useFieldArray({
-    control,
-    name: "topics",
   });
 
   const subjData = watch("subjects", []);
@@ -178,9 +167,9 @@ const AddCoursePage = () => {
               {fieldsForSubject.map((field, index) => {
                 // Create an object combining 'acronym' and 'title'
                 const subjectObject = {
-                  shortTitle: watch(`subjects[${index}].shortTitle`) || "",
-                  longTitle: watch(`subjects[${index}].longTitle`) || "",
-                  topics: watch("topics" || []),
+                  shortTitle: getValues(`subjects[${index}].shortTitle`) || "",
+                  longTitle: getValues(`subjects[${index}].longTitle`) || "",
+                  topics: getValues(`subjects[${index}].topics` || ""),
                 };
 
                 // Register the entire object using register
@@ -226,8 +215,17 @@ const AddCoursePage = () => {
                           size="small"
                           {...register(`subjects[${index}].longTitle`)}
                         />
-                        <InputLabel>Topics</InputLabel>
-                        <TextField size="small" multiline></TextField>
+                        <InputLabel>
+                          Topics (add topics starting with # )
+                        </InputLabel>
+                        <TextField
+                          variant="outlined"
+                          label="e.g. #College Algebra)"
+                          fullWidth
+                          multiline
+                          size="small"
+                          {...register(`subjects[${index}].topics`)}
+                        />
                       </Stack>
                     </Stack>
                   </Grid>

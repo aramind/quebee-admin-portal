@@ -3,7 +3,7 @@ import { z } from "zod";
 const subjectSchema = z.object({
   shortTitle: z.string().min(1, "Required"),
   longTitle: z.string().min(1, "Required"),
-  topics: z.array(),
+  topics: z.string(),
 });
 
 const courseSchema = z.object({
