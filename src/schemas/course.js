@@ -11,6 +11,7 @@ const subjectSchema = z.object({
 });
 
 const courseSchema = z.object({
+  database: z.string().min(1, "Required"),
   code: z.string().min(1, "Required"),
   acronym: z.string().min(1, "Required"),
   title: z.string().min(1, "Required"),

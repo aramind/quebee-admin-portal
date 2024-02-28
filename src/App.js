@@ -3,6 +3,7 @@ import "./App.css";
 import router from "./routes";
 import { useEffect, useState } from "react";
 import { useGlobalState } from "./context/ContextProvider";
+import { CssBaseline } from "@mui/material";
 
 function App() {
   // const [allowed, setAllowed] = useState(false);
@@ -31,6 +32,7 @@ function App() {
   }, [dispatch, currentUserRole, currentUser]);
   return (
     <div className="App">
+      <CssBaseline />
       <RouterProvider
         router={
           +currentUserRole > 1 ? router.privateRouter : router.publicRouter

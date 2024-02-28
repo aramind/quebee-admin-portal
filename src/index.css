@@ -18,6 +18,9 @@ a {
   border: 1px solid red;
 }
 
+.colored {
+  background-color: rgb(217, 215, 178);
+}
 .company-link {
   color: hsl(224, 100%, 50%);
 }

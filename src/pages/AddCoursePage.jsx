@@ -12,12 +12,12 @@ import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import courseSchema from "../schemas/course";
 import { DevTool } from "@hookform/devtools";
+import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
+// styles
+import { mainContainerStyles } from "./styles/add-course";
 
-const containerStyle = {
-  minHeight: "calc(100vh - 60px)",
-  py: "2rem",
-  maxWidth: "900px",
-};
+// TODELEDELETE
+const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
 
 const AddCoursePage = () => {
   const [success, setSuccess] = useState(false);
@@ -27,9 +27,8 @@ const AddCoursePage = () => {
     control,
     handleSubmit,
     formState,
-    watch,
+
     getValues,
-    isSubmitSuccessful,
     isSubmitError,
   } = useForm({
     resolver: zodResolver(courseSchema),
@@ -47,8 +46,6 @@ const AddCoursePage = () => {
 
   const onSubmit = (data) => {
     const subjects = getValues("subjects", []);
-    console.log("SUBJECTS", subjects);
-    console.log("RAWDATA:", data);
 
     const prepSubjects = subjects.map((subject) => {
       return {
@@ -60,9 +57,7 @@ const AddCoursePage = () => {
       };
     });
     const finalData = { ...data, subjects: prepSubjects };
-    console.log("FINALDATA", finalData);
-    console.log(setSuccess((value) => (value = true)));
-    console.log("data submitted");
+    console.log("sending...", finalData);
   };
 
   const onError = (error) => {
@@ -70,9 +65,20 @@ const AddCoursePage = () => {
   };
 
   return (
-    <Container maxWidth="xl" className="outlined" sx={{ ...containerStyle }}>
+    <Container
+      maxWidth="xl"
+      // className="colored"
+      sx={{ ...mainContainerStyles }}
+    >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Stack gap={2}>
+          <MultiSelectCheckbox
+            options={mockDBNames}
+            register={register}
+            formState={formState}
+            label="Choose Databases"
+          />
+
           <Grid container spacing={3}>
             <Grid item xs={3}>
               <InputLabel
@@ -93,12 +99,11 @@ const AddCoursePage = () => {
                 id="code"
                 variant="outlined"
                 error={!!errors.code}
-                color={!errors.code ? "success" : "error"}
                 focused={dirtyFields.code && !errors.code}
                 {...register("code")}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <InputLabel
                 htmlFor="acronym"
                 sx={{
@@ -117,12 +122,11 @@ const AddCoursePage = () => {
                 id="acronym"
                 variant="outlined"
                 error={!!errors.acronym}
-                color={!errors.acronym ? "success" : "error"}
                 focused={dirtyFields.acronym && !errors.acronym}
                 {...register("acronym")}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={7}>
               <InputLabel
                 htmlFor="title"
                 sx={{
@@ -141,7 +145,6 @@ const AddCoursePage = () => {
                 id="title"
                 variant="outlined"
                 error={!!errors.title}
-                color={!errors.title ? "success" : "error"}
                 focused={dirtyFields.title && !errors.title}
                 {...register("title")}
               />
@@ -168,7 +171,6 @@ const AddCoursePage = () => {
               id="description"
               variant="outlined"
               error={!!errors.description}
-              color={!errors.description ? "success" : "error"}
               focused={dirtyFields.description && !errors.description}
               {...register("description")}
             />
@@ -256,8 +258,10 @@ const AddCoursePage = () => {
               <Grid item xs={6} alignContent="center">
                 <Button
                   className="centered-content outlined fullWandH"
-                  variant="contained"
-                  sx={{ bgcolor: "info.main", color: "info.contrastText" }}
+                  variant="outlined"
+                  sx={{
+                    minHeight: 200,
+                  }}
                   onClick={() => appendSubject()}
                 >
                   Add Subject
