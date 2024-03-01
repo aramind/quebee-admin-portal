@@ -1,12 +1,10 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 
-import { Divider, Stack } from "@mui/material";
+import { Tooltip, Zoom } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { useGlobalState } from "../../context/ContextProvider";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
+import "./navbar.css";
 
 const pages = [
   { link: "/dashboard", navLabel: "Dashboard" },
@@ -28,31 +26,96 @@ const NavBar = () => {
     localStorage.removeItem("user");
   };
 
+  // return (
+  //   <AppBar position="static" color="primary" sx={{ height: 60 }}>
+  //     <Toolbar sx={{ justifyContent: "space-between" }}>
+  //       <NavLink to="/">
+  //         <Typography variant="h6">eTHERIA</Typography>
+  //       </NavLink>
+  //       <Stack
+  //         alignItems="center"
+  //         direction="row"
+  //         spacing={2}
+  //         divider={
+  //           <Divider
+  //             orientation="vertical"
+  //             flexItem
+  //             sx={{ backgroundColor: "gray" }}
+  //           />
+  //         }
+  //       >
+  //         {pages &&
+  //           pages.map((page) => {
+  //             return (
+  //               <NavLink
+  //                 to={page.link}
+  //                 key={page.link}
+  //                 exact
+  //                 className="nav-link"
+  //                 activeClassName="active"
+  //               >
+  //                 {page.navLabel?.toUpperCase()}
+  //               </NavLink>
+  //             );
+  //           })}
+  //         <NavLink to="/" onClick={handleLogOut}>
+  //           <ExitToAppTwoToneIcon />
+  //         </NavLink>
+  //       </Stack>
+  //     </Toolbar>
+  //   </AppBar>
+  // );
   return (
-    <AppBar position="static" color="primary" sx={{ height: 60 }}>
-      <Toolbar sx={{ justifyContent: "space-between" }}>
+    <nav>
+      <div className="nav__logo">
         <NavLink to="/">
-          <Typography variant="h6">eTHERIA</Typography>
+          <h1>eTHERIA</h1>
         </NavLink>
-        <Stack
-          direction="row"
-          spacing={2}
-          divider={<Divider orientation="vertical" flexItem />}
-        >
-          {pages &&
-            pages.map((page) => {
-              return (
-                <NavLink to={page.link} key={page.link}>
-                  {page.navLabel}
+      </div>
+      <div className="nav__nav-links">
+        {pages &&
+          pages.map((page) => {
+            return (
+              <div className="nav-link">
+                <NavLink
+                  to={page.link}
+                  key={page.link}
+                  exact
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  <p className="nav-link__text">
+                    {page.navLabel?.toUpperCase()}
+                  </p>
                 </NavLink>
-              );
-            })}
-          <NavLink to="/" onClick={handleLogOut}>
-            <ExitToAppTwoToneIcon />
+              </div>
+            );
+          })}
+        <Tooltip
+          placement="left-start"
+          TransitionComponent={Zoom}
+          title="Log out"
+          enterDelay={100}
+          leaveDelay={100}
+          slotProps={{
+            popper: {
+              modifiers: [
+                {
+                  name: "offset",
+                  options: {
+                    offset: [0, -25],
+                  },
+                },
+              ],
+            },
+          }}
+        >
+          <NavLink className="nav__logout" to="/" onClick={handleLogOut}>
+            <ExitToAppTwoToneIcon sx={{ fontSize: "3rem" }} />
           </NavLink>
-        </Stack>
-      </Toolbar>
-    </AppBar>
+        </Tooltip>
+      </div>
+    </nav>
   );
 };
 
