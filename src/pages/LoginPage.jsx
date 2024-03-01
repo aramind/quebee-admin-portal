@@ -110,7 +110,12 @@ const LoginPage = () => {
             >
               eTHERIA
             </Typography>
-            <Typography variant="h5" display="inline" color="gray">
+            <Typography
+              variant="h5"
+              display="inline"
+              color="tertiary.dark"
+              sx={{ fontWeight: "bold" }}
+            >
               Admin Portal
             </Typography>
           </Stack>

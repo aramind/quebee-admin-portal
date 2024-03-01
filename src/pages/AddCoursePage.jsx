@@ -13,13 +13,30 @@ import { useFieldArray, useForm } from "react-hook-form";
 import courseSchema from "../schemas/course";
 import { DevTool } from "@hookform/devtools";
 import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
+import randomColor from "randomcolor";
 // styles
 import { mainContainerStyles } from "./styles/add-course";
 import useStyles from "../hooks/useStyles";
 import LabelledTextField from "../components/form/LabelledTextField";
+import {
+  amber,
+  lightBlue,
+  lime,
+  purple,
+  red,
+  teal,
+} from "@mui/material/colors";
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
-
+const colors = [
+  teal["100"],
+  lightBlue["100"],
+  lime["200"],
+  purple["100"],
+  red["100"],
+  teal["100"],
+  amber["100"],
+];
 const AddCoursePage = () => {
   // hooks
   const styles = useStyles();
@@ -132,12 +149,20 @@ const AddCoursePage = () => {
               />
             </Stack>
           </Stack>
-          <Stack gap={1}></Stack>
-          <InputLabel htmlFor="subjects" sx={styles.form}>
-            SUBJECTS
-          </InputLabel>
-          <Stack spacing={1}>
-            <Grid container rowSpacing={2} columnSpacing={2} maxWidth="100%">
+          <Stack gap={1}>
+            <InputLabel
+              htmlFor="subjects"
+              sx={{ ...styles.form.inputLabel, mt: "0.5rem" }}
+              // className="outlined"
+            >
+              SUBJECTS
+            </InputLabel>
+            <Grid
+              container
+              // rowSpacing={2}
+              spacing={2}
+              width={1}
+            >
               {fieldsForSubject.map((field, index) => {
                 const subjectObject = {
                   shortTitle: getValues(`subjects[${index}].shortTitle`) || "",
@@ -150,61 +175,62 @@ const AddCoursePage = () => {
                   value: subjectObject,
                 });
 
+                // const colorIndex = index % colors.length;
+                const colorIndex = 0;
+
                 return (
-                  <Grid
-                    item
-                    xs={6}
-                    spacing={1}
-                    key={field.id}
-                    name={`subjects[${index}]`}
-                    // className="outlined"
-                  >
+                  <Grid item xs={3} key={field.id} name={`subjects[${index}]`}>
                     <Stack
-                      padding={2}
-                      borderRadius={1}
-                      className="centered-content fullWandH"
+                      // borderRadius={2}
+                      // borderColor="primary.main"
+                      gap={1.5}
+                      padding={1.5}
+                      sx={{
+                        borderTop: `15px solid ${colors[colorIndex]}`,
+                        borderBottom: `2px solid ${colors[colorIndex]}`,
+                        borderLeft: `2px solid ${colors[colorIndex]}`,
+                        borderRight: `2px solid ${colors[colorIndex]}`,
+                      }}
                     >
-                      <Stack spacing={1} className="fullWandH">
-                        <Stack direction="row" spacing={1}>
-                          <TextField
-                            variant="outlined"
-                            label="Short Title"
-                            fullWidth
-                            size="small"
-                            {...register(`subjects[${index}].shortTitle`)}
-                          />
-                          <Button
-                            variant="contained"
-                            color="info"
-                            onClick={() => removeSubject(index)}
-                          >
-                            Remove
-                          </Button>
-                        </Stack>
+                      <Stack direction="row" spacing={1}>
                         <TextField
                           variant="outlined"
-                          label="Long Title"
+                          label="Short Title"
                           fullWidth
                           size="small"
-                          {...register(`subjects[${index}].longTitle`)}
+                          {...register(`subjects[${index}].shortTitle`)}
                         />
-                        <InputLabel sx={{ textAlign: "left" }}>
-                          Topics (add topics starting with # )
-                        </InputLabel>
-                        <TextField
-                          variant="outlined"
-                          label="e.g. #Topic 1"
-                          fullWidth
-                          multiline
-                          size="small"
-                          {...register(`subjects[${index}].topics`)}
-                        />
+                        <Button
+                          variant="contained"
+                          color="info"
+                          onClick={() => removeSubject(index)}
+                        >
+                          Remove
+                        </Button>
                       </Stack>
+                      <TextField
+                        variant="outlined"
+                        label="Long Title"
+                        fullWidth
+                        size="small"
+                        {...register(`subjects[${index}].longTitle`)}
+                      />
+                      <InputLabel sx={{ textAlign: "left" }}>
+                        Topics (add topics starting with # )
+                      </InputLabel>
+                      <TextField
+                        variant="outlined"
+                        label="e.g. #Topic 1"
+                        fullWidth
+                        multiline
+                        size="small"
+                        {...register(`subjects[${index}].topics`)}
+                      />
                     </Stack>
                   </Grid>
                 );
               })}
-              <Grid item xs={6} alignContent="center">
+              <Grid item xs={3} alignContent="center">
                 <Button
                   className="centered-content outlined fullWandH"
                   variant="outlined"

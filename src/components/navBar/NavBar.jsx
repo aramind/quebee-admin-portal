@@ -111,7 +111,7 @@ const NavBar = () => {
           }}
         >
           <NavLink className="nav__logout" to="/" onClick={handleLogOut}>
-            <ExitToAppTwoToneIcon sx={{ fontSize: "3rem" }} />
+            <ExitToAppTwoToneIcon sx={{ fontSize: "2.5rem" }} />
           </NavLink>
         </Tooltip>
       </div>

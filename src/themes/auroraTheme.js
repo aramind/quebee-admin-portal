@@ -18,9 +18,12 @@ const auroraTheme = createTheme({
       light: purple["A200"],
     },
     tertiary: {
-      main: amber["600"],
-      dark: amber["900"],
-      light: amber["A200"],
+      // main: amber["600"],
+      main: "#E9BB1D",
+      // dark: amber["900"],
+      dark: "#CCA114",
+      light: "#F2D77D",
+      // light: amber["A200"],
     },
     info: {
       main: teal["300"],
