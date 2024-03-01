@@ -32,6 +32,9 @@ const auroraTheme = createTheme({
     fontFamily: `"Nunito", "Roboto", "sans-serif"`,
   },
   components: {
+    MuiGrid: {
+      padding: 0,
+    },
     MuiAppBar: {
       styleOverrides: {
         root: {

@@ -76,41 +76,49 @@ const AddCoursePage = () => {
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Stack gap={1}>
-          <Stack width={1} gap={0.25}>
-            <InputLabel htmlFor="databases" sx={styles.form.inputLabel}>
-              DATABASE(S)
-            </InputLabel>
-            <MultiSelectCheckbox
-              options={mockDBNames}
-              register={register}
-              formState={formState}
-            />
-          </Stack>
-          <Stack spacing={3} direction="row" sx={{ width: 1 }}>
-            <Stack sx={{ width: 1 }} spacing={1}>
-              <Stack direction="row" spacing={2} width={1}>
-                <LabelledTextField
-                  label="code"
-                  id="code"
-                  error={!!errors.code}
-                  focused={dirtyFields.code && !errors}
-                  register={register}
-                />
-                <LabelledTextField
-                  label="acronym"
-                  id="acronym"
-                  error={!!errors.acronym}
-                  focused={dirtyFields.acronym && !errors}
-                  register={register}
-                />
-              </Stack>
-              <LabelledTextField
-                label="title"
-                id="title"
-                error={!!errors.title}
-                focused={dirtyFields.title && !errors}
-                register={register}
-              />
+          <Stack spacing={1} direction="row" sx={{ width: 1 }}>
+            <Stack sx={{ width: 1 }} gap={1}>
+              <Grid container spacing={2} width={1}>
+                <Grid item xs={3}>
+                  <LabelledTextField
+                    label="code"
+                    id="code"
+                    error={!!errors.code}
+                    focused={dirtyFields.code && !errors}
+                    register={register}
+                  />
+                </Grid>
+                <Grid item xs={9} sx={{ justifyContent: "center" }}>
+                  <InputLabel htmlFor="databases" sx={styles.form.inputLabel}>
+                    DATABASE(S)
+                  </InputLabel>
+                  <MultiSelectCheckbox
+                    options={mockDBNames}
+                    register={register}
+                    formState={formState}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2} width={1}>
+                <Grid item xs={3}>
+                  <LabelledTextField
+                    label="acronym"
+                    id="acronym"
+                    error={!!errors.acronym}
+                    focused={dirtyFields.acronym && !errors}
+                    register={register}
+                  />
+                </Grid>
+                <Grid item xs={9}>
+                  <LabelledTextField
+                    label="title"
+                    id="title"
+                    error={!!errors.title}
+                    focused={dirtyFields.title && !errors}
+                    register={register}
+                  />
+                </Grid>
+              </Grid>
             </Stack>
             <Stack sx={{ width: 1 }}>
               <LabelledTextField
