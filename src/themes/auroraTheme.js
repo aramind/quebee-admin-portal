@@ -4,9 +4,13 @@ import { amber, cyan, grey, purple, teal } from "@mui/material/colors";
 const auroraTheme = createTheme({
   palette: {
     primary: {
-      main: teal["700"],
-      dark: teal["900"],
-      light: teal["A100"],
+      // main: teal["700"],
+      main: "#2C8C8A",
+      // dark: teal["900"],
+      dark: "#277C7B",
+      // light: teal["A100"],
+      light: "#85D5B4",
+      // light: teal["100"],
     },
     secondary: {
       main: purple["600"],
@@ -24,11 +28,14 @@ const auroraTheme = createTheme({
       light: teal["100"],
     },
   },
+  typography: {
+    fontFamily: `"Nunito", "Roboto", "sans-serif"`,
+  },
   components: {
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: teal["900"],
+          backgroundColor: "#1D5D5C",
         },
       },
     },
@@ -36,7 +43,7 @@ const auroraTheme = createTheme({
       styleOverrides: {
         root: {
           "&:hover": {
-            backgroundColor: teal["900"],
+            backgroundColor: "#277C7B",
           },
         },
         // contained: {

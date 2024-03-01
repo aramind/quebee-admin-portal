@@ -15,11 +15,15 @@ import { DevTool } from "@hookform/devtools";
 import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
 // styles
 import { mainContainerStyles } from "./styles/add-course";
-
+import useStyles from "../hooks/useStyles";
+import LabelledTextField from "../components/form/LabelledTextField";
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
 
 const AddCoursePage = () => {
+  // hooks
+  const styles = useStyles();
+
   const [success, setSuccess] = useState(false);
   // form
   const {
@@ -67,124 +71,61 @@ const AddCoursePage = () => {
   return (
     <Container
       maxWidth="xl"
-      // className="colored"
       sx={{ ...mainContainerStyles }}
+      disableGutters="true"
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <Stack gap={2}>
-          <MultiSelectCheckbox
-            options={mockDBNames}
-            register={register}
-            formState={formState}
-            label="Choose Databases"
-          />
-
-          <Grid container spacing={3}>
-            <Grid item xs={3}>
-              <InputLabel
-                htmlFor="code"
-                sx={{
-                  textAlign: "left",
-                  fontSize: "0.8rem",
-                  px: "5px",
-                  color: "#333",
-                  fontWeight: "bold",
-                }}
-              >
-                CODE
-              </InputLabel>
-              <TextField
-                fullWidth
-                size="small"
-                id="code"
-                variant="outlined"
-                error={!!errors.code}
-                focused={dirtyFields.code && !errors.code}
-                {...register("code")}
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <InputLabel
-                htmlFor="acronym"
-                sx={{
-                  textAlign: "left",
-                  fontSize: "0.8rem",
-                  px: "5px",
-                  color: "#333",
-                  fontWeight: "bold",
-                }}
-              >
-                ACRONYM
-              </InputLabel>
-              <TextField
-                fullWidth
-                size="small"
-                id="acronym"
-                variant="outlined"
-                error={!!errors.acronym}
-                focused={dirtyFields.acronym && !errors.acronym}
-                {...register("acronym")}
-              />
-            </Grid>
-            <Grid item xs={7}>
-              <InputLabel
-                htmlFor="title"
-                sx={{
-                  textAlign: "left",
-                  fontSize: "0.8rem",
-                  px: "5px",
-                  color: "#333",
-                  fontWeight: "bold",
-                }}
-              >
-                TITLE
-              </InputLabel>
-              <TextField
-                fullWidth
-                size="small"
-                id="title"
-                variant="outlined"
-                error={!!errors.title}
-                focused={dirtyFields.title && !errors.title}
-                {...register("title")}
-              />
-            </Grid>
-          </Grid>
-          <Stack gap={1}>
-            <InputLabel
-              htmlFor="description"
-              sx={{
-                textAlign: "left",
-                fontSize: "0.8rem",
-                px: "5px",
-                color: "#333",
-                fontWeight: "bold",
-              }}
-            >
-              DESCRIPTION
+        <Stack gap={1}>
+          <Stack width={1} gap={0.25}>
+            <InputLabel htmlFor="databases" sx={styles.form.inputLabel}>
+              DATABASE(S)
             </InputLabel>
-            <TextField
-              fullWidth
-              multiline
-              minRows={1}
-              size="small"
-              id="description"
-              variant="outlined"
-              error={!!errors.description}
-              focused={dirtyFields.description && !errors.description}
-              {...register("description")}
+            <MultiSelectCheckbox
+              options={mockDBNames}
+              register={register}
+              formState={formState}
             />
           </Stack>
-          <InputLabel
-            htmlFor="subjects"
-            sx={{
-              textAlign: "left",
-              fontSize: "0.8rem",
-              px: "5px",
-              color: "#333",
-              fontWeight: "bold",
-            }}
-          >
+          <Stack spacing={3} direction="row" sx={{ width: 1 }}>
+            <Stack sx={{ width: 1 }} spacing={1}>
+              <Stack direction="row" spacing={2} width={1}>
+                <LabelledTextField
+                  label="code"
+                  id="code"
+                  error={!!errors.code}
+                  focused={dirtyFields.code && !errors}
+                  register={register}
+                />
+                <LabelledTextField
+                  label="acronym"
+                  id="acronym"
+                  error={!!errors.acronym}
+                  focused={dirtyFields.acronym && !errors}
+                  register={register}
+                />
+              </Stack>
+              <LabelledTextField
+                label="title"
+                id="title"
+                error={!!errors.title}
+                focused={dirtyFields.title && !errors}
+                register={register}
+              />
+            </Stack>
+            <Stack sx={{ width: 1 }}>
+              <LabelledTextField
+                label="description"
+                id="description"
+                error={!!errors.description}
+                focused={dirtyFields.description && !errors}
+                register={register}
+                multiline={true}
+                minRows={4}
+              />
+            </Stack>
+          </Stack>
+          <Stack gap={1}></Stack>
+          <InputLabel htmlFor="subjects" sx={styles.form}>
             SUBJECTS
           </InputLabel>
           <Stack spacing={1}>
@@ -271,16 +212,7 @@ const AddCoursePage = () => {
           </Stack>
         </Stack>
         <Stack direction="row">
-          <InputLabel
-            htmlFor="subjects"
-            sx={{
-              textAlign: "left",
-              fontSize: "0.8rem",
-              px: "5px",
-              color: "#333",
-              fontWeight: "bold",
-            }}
-          >
+          <InputLabel htmlFor="subjects" sx={styles.form}>
             STATUS :
           </InputLabel>
           <Typography
@@ -302,7 +234,7 @@ const AddCoursePage = () => {
         </Stack>
         <Stack direction="row" spacing={4} px={4} py={4}>
           <Button
-            sx={{ my: "2rem", py: "1rem" }}
+            sx={styles.form.primaryActionButton}
             variant="contained"
             fullWidth
             type="submit"
@@ -310,7 +242,7 @@ const AddCoursePage = () => {
             RESET
           </Button>
           <Button
-            sx={{ my: "2rem" }}
+            sx={styles.form.primaryActionButton}
             variant="contained"
             fullWidth
             type="submit"
@@ -318,10 +250,11 @@ const AddCoursePage = () => {
             SEND
           </Button>
           <Button
-            sx={{ my: "2rem" }}
+            sx={styles.form.primaryActionButton}
             variant="contained"
             fullWidth
             type="submit"
+            disabled
           >
             UPLOAD
           </Button>
