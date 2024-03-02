@@ -7,13 +7,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import CloudUploadTwoToneIcon from "@mui/icons-material/CloudUploadTwoTone";
+import SendTwoToneIcon from "@mui/icons-material/SendTwoTone";
+import RotateLeftTwoToneIcon from "@mui/icons-material/RotateLeftTwoTone";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import courseSchema from "../schemas/course";
 import { DevTool } from "@hookform/devtools";
 import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
-import randomColor from "randomcolor";
+
 // styles
 import { mainContainerStyles } from "./styles/add-course";
 import useStyles from "../hooks/useStyles";
@@ -26,6 +29,7 @@ import {
   red,
   teal,
 } from "@mui/material/colors";
+import { AddCircleTwoTone, ResetTvOutlined } from "@mui/icons-material";
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
 const colors = [
@@ -37,6 +41,7 @@ const colors = [
   teal["100"],
   amber["100"],
 ];
+
 const AddCoursePage = () => {
   // hooks
   const styles = useStyles();
@@ -48,7 +53,7 @@ const AddCoursePage = () => {
     control,
     handleSubmit,
     formState,
-
+    reset,
     getValues,
     isSubmitError,
   } = useForm({
@@ -106,14 +111,16 @@ const AddCoursePage = () => {
                   />
                 </Grid>
                 <Grid item xs={9} sx={{ justifyContent: "center" }}>
-                  <InputLabel htmlFor="databases" sx={styles.form.inputLabel}>
-                    DATABASE(S)
-                  </InputLabel>
-                  <MultiSelectCheckbox
-                    options={mockDBNames}
-                    register={register}
-                    formState={formState}
-                  />
+                  <Stack width={1} gap={0.25}>
+                    <InputLabel htmlFor="databases" sx={styles.form.inputLabel}>
+                      DATABASE(S)
+                    </InputLabel>
+                    <MultiSelectCheckbox
+                      options={mockDBNames}
+                      register={register}
+                      formState={formState}
+                    />
+                  </Stack>
                 </Grid>
               </Grid>
               <Grid container spacing={2} width={1}>
@@ -185,12 +192,7 @@ const AddCoursePage = () => {
                       // borderColor="primary.main"
                       gap={1.5}
                       padding={1.5}
-                      sx={{
-                        borderTop: `15px solid ${colors[colorIndex]}`,
-                        borderBottom: `2px solid ${colors[colorIndex]}`,
-                        borderLeft: `2px solid ${colors[colorIndex]}`,
-                        borderRight: `2px solid ${colors[colorIndex]}`,
-                      }}
+                      sx={styles.form.cardBorder}
                     >
                       <Stack direction="row" spacing={1}>
                         <TextField
@@ -220,9 +222,11 @@ const AddCoursePage = () => {
                       </InputLabel>
                       <TextField
                         variant="outlined"
-                        label="e.g. #Topic 1"
+                        // label={`#Topic 1\n#Topic 2`}
+                        placeholder={`#Topic 1\n#Topic 2`}
                         fullWidth
                         multiline
+                        rows={2}
                         size="small"
                         {...register(`subjects[${index}].topics`)}
                       />
@@ -245,33 +249,16 @@ const AddCoursePage = () => {
             </Grid>
           </Stack>
         </Stack>
-        <Stack direction="row">
-          <InputLabel htmlFor="subjects" sx={styles.form}>
-            STATUS :
-          </InputLabel>
-          <Typography
-            variant="body2"
-            color={
-              success
-                ? "info.main"
-                : isSubmitError || Object.keys(errors).length > 0
-                ? "error.main"
-                : "text.primary"
-            }
-          >
-            {success
-              ? "Pending"
-              : isSubmitError || Object.keys(errors).length > 0
-              ? "Error"
-              : "Editing"}
-          </Typography>
-        </Stack>
-        <Stack direction="row" spacing={4} px={4} py={4}>
+
+        <Stack direction="row" spacing={4} mt={4}>
           <Button
             sx={styles.form.primaryActionButton}
             variant="contained"
             fullWidth
-            type="submit"
+            onClick={() => {
+              reset();
+            }}
+            // endIcon={<RotateLeftTwoToneIcon />}
           >
             RESET
           </Button>
@@ -280,6 +267,7 @@ const AddCoursePage = () => {
             variant="contained"
             fullWidth
             type="submit"
+            // endIcon={<SendTwoToneIcon />}
           >
             SEND
           </Button>
@@ -287,8 +275,8 @@ const AddCoursePage = () => {
             sx={styles.form.primaryActionButton}
             variant="contained"
             fullWidth
-            type="submit"
-            disabled
+            onClick={() => console.log("uploading to db")}
+            // endIcon={<CloudUploadTwoToneIcon sx={{ fontSize: "2.5rem" }} />}
           >
             UPLOAD
           </Button>
