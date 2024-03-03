@@ -31,6 +31,11 @@ const useStyles = () => {
         borderRight: `2px solid ${teal["100"]}`,
       },
     },
+    mainContainer: {
+      minHeight: "calc(100vh - 60px)",
+      py: "3rem",
+      px: "3rem",
+    },
   };
   return styles;
 };

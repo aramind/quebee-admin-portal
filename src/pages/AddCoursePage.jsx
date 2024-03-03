@@ -5,11 +5,7 @@ import {
   InputLabel,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
-import CloudUploadTwoToneIcon from "@mui/icons-material/CloudUploadTwoTone";
-import SendTwoToneIcon from "@mui/icons-material/SendTwoTone";
-import RotateLeftTwoToneIcon from "@mui/icons-material/RotateLeftTwoTone";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -18,29 +14,12 @@ import { DevTool } from "@hookform/devtools";
 import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
 
 // styles
-import { mainContainerStyles } from "./styles/add-course";
 import useStyles from "../hooks/useStyles";
 import LabelledTextField from "../components/form/LabelledTextField";
-import {
-  amber,
-  lightBlue,
-  lime,
-  purple,
-  red,
-  teal,
-} from "@mui/material/colors";
-import { AddCircleTwoTone, ResetTvOutlined } from "@mui/icons-material";
+import FormInputLabel from "../components/form/FormInputLabel";
+
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
-const colors = [
-  teal["100"],
-  lightBlue["100"],
-  lime["200"],
-  purple["100"],
-  red["100"],
-  teal["100"],
-  amber["100"],
-];
 
 const AddCoursePage = () => {
   // hooks
@@ -48,18 +27,11 @@ const AddCoursePage = () => {
 
   const [success, setSuccess] = useState(false);
   // form
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState,
-    reset,
-    getValues,
-    isSubmitError,
-  } = useForm({
-    resolver: zodResolver(courseSchema),
-    mode: "onTouched",
-  });
+  const { register, control, handleSubmit, formState, reset, getValues } =
+    useForm({
+      resolver: zodResolver(courseSchema),
+      mode: "onTouched",
+    });
   const { errors, dirtyFields } = formState;
   const {
     fields: fieldsForSubject,
@@ -91,11 +63,7 @@ const AddCoursePage = () => {
   };
 
   return (
-    <Container
-      maxWidth="xl"
-      sx={{ ...mainContainerStyles }}
-      disableGutters="true"
-    >
+    <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Stack gap={1}>
           <Stack spacing={1} direction="row" sx={{ width: 1 }}>
@@ -157,13 +125,7 @@ const AddCoursePage = () => {
             </Stack>
           </Stack>
           <Stack gap={1}>
-            <InputLabel
-              htmlFor="subjects"
-              sx={{ ...styles.form.inputLabel, mt: "0.5rem" }}
-              // className="outlined"
-            >
-              SUBJECTS
-            </InputLabel>
+            <FormInputLabel label="subjects" styling={{ mt: "0.5rem" }} />
             <Grid
               container
               // rowSpacing={2}
@@ -183,17 +145,10 @@ const AddCoursePage = () => {
                 });
 
                 // const colorIndex = index % colors.length;
-                const colorIndex = 0;
 
                 return (
                   <Grid item xs={3} key={field.id} name={`subjects[${index}]`}>
-                    <Stack
-                      // borderRadius={2}
-                      // borderColor="primary.main"
-                      gap={1.5}
-                      padding={1.5}
-                      sx={styles.form.cardBorder}
-                    >
+                    <Stack gap={1.5} padding={1.5} sx={styles.form.cardBorder}>
                       <Stack direction="row" spacing={1}>
                         <TextField
                           variant="outlined"
@@ -276,7 +231,6 @@ const AddCoursePage = () => {
             variant="contained"
             fullWidth
             onClick={() => console.log("uploading to db")}
-            // endIcon={<CloudUploadTwoToneIcon sx={{ fontSize: "2.5rem" }} />}
           >
             UPLOAD
           </Button>
