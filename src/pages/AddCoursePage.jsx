@@ -19,6 +19,7 @@ import useStyles from "../hooks/useStyles";
 import LabelledTextField from "../components/form/LabelledTextField";
 import FormInputLabel from "../components/form/FormInputLabel";
 import { grey } from "@mui/material/colors";
+import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
@@ -68,7 +69,7 @@ const AddCoursePage = () => {
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Stack gap={2}>
-          <Paper elevation={1} sx={{ padding: 2 }}>
+          <ElevatedSectionWrapper>
             <Stack spacing={1} direction="row" sx={{ width: 1 }}>
               <Stack sx={{ width: 1 }} gap={1}>
                 <Grid container spacing={2} width={1}>
@@ -130,8 +131,8 @@ const AddCoursePage = () => {
                 />
               </Stack>
             </Stack>
-          </Paper>
-          <Paper elevation={1} sx={{ padding: 2 }}>
+          </ElevatedSectionWrapper>
+          <ElevatedSectionWrapper>
             <Stack gap={1}>
               <FormInputLabel label="subjects" />
               <Grid
@@ -221,7 +222,7 @@ const AddCoursePage = () => {
                 </Grid>
               </Grid>
             </Stack>
-          </Paper>
+          </ElevatedSectionWrapper>
         </Stack>
 
         <Stack direction="row" spacing={4} mt={4}>

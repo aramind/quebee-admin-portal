@@ -13,6 +13,7 @@ const LabelledTextField = ({
   multiline = false,
   fullWidth = true,
   minRows = 0,
+  defaultValue = "",
 }) => {
   const styles = useStyles();
   return (
@@ -33,6 +34,7 @@ const LabelledTextField = ({
         multiline={multiline}
         {...register(id)}
         minRows={minRows}
+        defaultValue={defaultValue}
       />
     </Stack>
   );

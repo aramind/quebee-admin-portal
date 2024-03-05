@@ -46,7 +46,7 @@ const auroraTheme = createTheme({
           },
         },
         outlined: {
-          borderWidth: 0,
+          // borderWidth: 0,
           backgroundColor: teal["50"],
 
           "&:hover": {

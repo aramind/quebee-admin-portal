@@ -65,3 +65,8 @@ input:focus,
 input:active {
   outline: none;
 }
+
+/* table */
+.users-table__header {
+  background-color: red;
+}
