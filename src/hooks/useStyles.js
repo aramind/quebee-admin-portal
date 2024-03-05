@@ -1,4 +1,4 @@
-import { teal } from "@mui/material/colors";
+import { grey, teal } from "@mui/material/colors";
 
 const useStyles = () => {
   const styles = {
@@ -33,8 +33,9 @@ const useStyles = () => {
     },
     mainContainer: {
       minHeight: "calc(100vh - 60px)",
-      py: "3rem",
-      px: "3rem",
+      backgroundColor: grey["100"],
+      py: 4,
+      px: 6,
     },
   };
   return styles;

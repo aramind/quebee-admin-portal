@@ -26,45 +26,6 @@ const NavBar = () => {
     localStorage.removeItem("user");
   };
 
-  // return (
-  //   <AppBar position="static" color="primary" sx={{ height: 60 }}>
-  //     <Toolbar sx={{ justifyContent: "space-between" }}>
-  //       <NavLink to="/">
-  //         <Typography variant="h6">eTHERIA</Typography>
-  //       </NavLink>
-  //       <Stack
-  //         alignItems="center"
-  //         direction="row"
-  //         spacing={2}
-  //         divider={
-  //           <Divider
-  //             orientation="vertical"
-  //             flexItem
-  //             sx={{ backgroundColor: "gray" }}
-  //           />
-  //         }
-  //       >
-  //         {pages &&
-  //           pages.map((page) => {
-  //             return (
-  //               <NavLink
-  //                 to={page.link}
-  //                 key={page.link}
-  //                 exact
-  //                 className="nav-link"
-  //                 activeClassName="active"
-  //               >
-  //                 {page.navLabel?.toUpperCase()}
-  //               </NavLink>
-  //             );
-  //           })}
-  //         <NavLink to="/" onClick={handleLogOut}>
-  //           <ExitToAppTwoToneIcon />
-  //         </NavLink>
-  //       </Stack>
-  //     </Toolbar>
-  //   </AppBar>
-  // );
   return (
     <nav>
       <div className="nav__logo">
