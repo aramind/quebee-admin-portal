@@ -38,9 +38,11 @@ const useStyles = () => {
       px: 6,
     },
     iconButton: {
+      color: teal[300],
       "&:hover": {
         // backgroundColor: teal["100"],
         backgroundColor: "rgba(242, 215, 125, 0.6)",
+        color: "primary.dark",
       },
     },
   };

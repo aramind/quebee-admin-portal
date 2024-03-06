@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useState } from "react";
 
-const SimpleSelect = () => {
+const SimpleSelect = ({ options }) => {
   const [selected, setSelected] = useState("");
 
   const handleChange = (e) => setSelected(e.target.value);
@@ -12,11 +12,11 @@ const SimpleSelect = () => {
         id="simple-select"
         value={selected}
         onChange={handleChange}
-        sx={{ width: "120px" }}
+        sx={{ width: "130px" }}
       >
-        <MenuItem value="admin">Admin</MenuItem>
-        <MenuItem value="editor">Editor</MenuItem>
-        <MenuItem value="viewer">Viewer</MenuItem>
+        <MenuItem value={options?.[0]}>{options?.[0]}</MenuItem>
+        <MenuItem value={options?.[1]}>{options?.[1]}</MenuItem>
+        <MenuItem value={options?.[2]}>{options?.[2]}</MenuItem>
       </Select>
     </FormControl>
   );

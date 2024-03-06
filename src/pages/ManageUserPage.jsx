@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import useStyles from "../hooks/useStyles";
 import FormInputLabel from "../components/form/FormInputLabel";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCell, GridToolbar } from "@mui/x-data-grid";
 import CustomModal from "../components/CustomModal";
 import GrowTransitionWrapper from "../wrappers/GrowTransitionWrapper";
 import DraggableDialog from "../components/DraggableDialog";
@@ -73,40 +73,32 @@ const dummyUsers = [
 
 const EDIT_ICON = <EditTwoToneIcon />;
 
-function RenderDate(props) {
+const RenderDate = () => {
+  const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
+
   const styles = useStyles();
   return (
     <>
-      <ButtonGroup
-        disableElevation
-        variant="text"
-        aria-label="user-table-actions"
+      <IconButton
+        aria-label="edit"
+        sx={styles.iconButton}
+        onClick={() => setOpenDialogEditUser(true)}
       >
-        <IconButton aria-label="edit" sx={styles.iconButton}>
-          <EditTwoToneIcon />
-        </IconButton>
+        <EditTwoToneIcon />
+      </IconButton>
 
-        <IconButton aria-label="delete" sx={styles.iconButton}>
-          <DeleteTwoToneIcon />
-        </IconButton>
-      </ButtonGroup>
-      {/* <IconButton aria-label="edit"></IconButton>
-      <Button
-        variant="contained"
-        size="small"
-        style={{ marginLeft: 16 }}
-        onKeyDown={(event) => {
-          if (event.key === " ") {
-            // Prevent key navigation when focus is on button
-            event.stopPropagation();
-          }
-        }}
-      >
-        Open
-      </Button> */}
+      <IconButton aria-label="delete" sx={styles.iconButton}>
+        <DeleteTwoToneIcon />
+      </IconButton>
+      <DraggableDialog
+        open={openDialogEditUser}
+        setOpen={setOpenDialogEditUser}
+        title="Edit User Information"
+      />
     </>
   );
-}
+};
+
 const columns = [
   { field: "name", headerName: "Name" },
   { field: "username", headerName: "Username" },
@@ -125,7 +117,7 @@ const ManageUserPage = () => {
   const styles = useStyles();
   const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openDialogNewUser, setOpenDialogNewUser] = useState(false);
 
   const [rows, setRows] = useState(dummyUsers);
 
@@ -159,10 +151,7 @@ const ManageUserPage = () => {
           <FormInputLabel label="Current Users" />
           <DataGrid
             editMode="row"
-            rows={rows.map((row) => ({
-              ...row,
-              edit: <EditTwoToneIcon sx={styles.iconButton} />,
-            }))}
+            rows={rows}
             columns={colsWithWidth}
             sx={{
               "& .MuiDataGrid-columnHeader": {
@@ -176,7 +165,9 @@ const ManageUserPage = () => {
           <Button
             variant="contained"
             // onClick={() => setOpenModal(true)}
-            onClick={() => setOpenDialog(true)}
+            onClick={() => {
+              setOpenDialogNewUser(true);
+            }}
             sx={{
               ...styles.form.primaryActionButton,
               fontSize: "1rem",
@@ -187,8 +178,8 @@ const ManageUserPage = () => {
           </Button>
           {/* <CustomModal open={openModal} setOpen={setOpenModal} /> */}
           <DraggableDialog
-            open={openDialog}
-            setOpen={setOpenDialog}
+            open={openDialogNewUser}
+            setOpen={setOpenDialogNewUser}
             title="New User"
           />
         </Stack>

@@ -10,10 +10,12 @@ import LabelledTextField from "../components/form/LabelledTextField";
 import genInitialPassword from "../utils/login/genInitialPassword";
 import SimpleSelect from "../components/SimpleSelect";
 
+const ROLES = ["admin", "editor", "viewer"];
+const STATUS = ["active", "deactivated"];
+
 const AddUser = () => {
   const styles = useStyles();
 
-  const roles = ["admin", "editor", "viewer"];
   //   form
   const { register, control, handleSubmit, formState, reset } = useForm({
     resolver: zodResolver(userSchema),
@@ -47,19 +49,13 @@ const AddUser = () => {
                   register={register}
                 />
               </Box>
-              <Box classname>
+              <Box>
                 <FormInputLabel label="role" />
-                {/* <LabelledTextField
-                  label="role"
-                  id="role"
-                  error={!!errors.role}
-                  register={register}
-                /> */}
-                <SimpleSelect />
+                <SimpleSelect options={ROLES} />
               </Box>
             </Stack>
-            <Stack direction="row" spacing={2}>
-              <Box flex="50%">
+            <Stack direction="row" spacing={2} width={1}>
+              <Box flex={1}>
                 <LabelledTextField
                   label="username"
                   id="username"
@@ -67,7 +63,7 @@ const AddUser = () => {
                   register={register}
                 />
               </Box>
-              <Box flex="50%">
+              <Box flex={1}>
                 <LabelledTextField
                   label="password"
                   id="password"
@@ -75,6 +71,10 @@ const AddUser = () => {
                   register={register}
                   defaultValue={genInitialPassword()}
                 />
+              </Box>
+              <Box>
+                <FormInputLabel label="status" />
+                <SimpleSelect options={STATUS} />
               </Box>
             </Stack>
           </Stack>
