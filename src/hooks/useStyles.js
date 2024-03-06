@@ -7,7 +7,7 @@ const useStyles = () => {
         textAlign: "left",
         fontSize: "0.8rem",
         px: "5px",
-        color: "#333",
+        color: "font.black",
         fontWeight: "bold",
       },
       primaryActionButton: {
@@ -15,11 +15,8 @@ const useStyles = () => {
         fontSize: "1rem",
         "&:hover": {
           backgroundColor: "tertiary.main",
-          color: "black",
+          color: "font.black",
         },
-      },
-      primaryActionIcon: {
-        fontSize: "2rem",
       },
       cardBorder: {
         borderTop: `15px solid ${teal["100"]}`,
@@ -33,14 +30,6 @@ const useStyles = () => {
       backgroundColor: grey["100"],
       py: 3,
       px: 6,
-    },
-    iconButton: {
-      color: teal[300],
-      "&:hover": {
-        // backgroundColor: teal["100"],
-        backgroundColor: "rgba(242, 215, 125, 0.6)",
-        color: "primary.dark",
-      },
     },
   };
   return styles;

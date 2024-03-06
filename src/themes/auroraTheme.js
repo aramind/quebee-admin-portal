@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { purple, teal } from "@mui/material/colors";
+import { grey, purple, teal } from "@mui/material/colors";
 
 // COLORS
 const COLORS = {
@@ -24,20 +24,57 @@ const COLORS = {
     dark: teal["500"],
     light: teal["100"],
   },
+  font: {
+    black: "#333",
+    white: "#eee",
+  },
+  bg: {
+    light: {
+      lightest: grey[50],
+      lighter: grey[100],
+      main: grey[300],
+      darker: grey[400],
+      darkest: grey[500],
+    },
+    dark: {
+      lightest: teal[300],
+      lighter: teal[500],
+      main: teal[700],
+      darker: teal[800],
+      darkest: teal[900],
+    },
+  },
 };
+// theme
 const auroraTheme = createTheme({
   palette: {
     primary: COLORS.primary,
     secondary: COLORS.secondary,
     tertiary: COLORS.tertiary,
     info: COLORS.info,
+    font: COLORS.font,
   },
   typography: {
     fontFamily: `"Nunito", "Roboto", "sans-serif"`,
   },
   components: {
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          color: teal[300],
+          "&:hover": {
+            backgroundColor: "rgba(242, 215, 125, 0.6)",
+            color: COLORS.primary.dark,
+          },
+        },
+      },
+    },
     MuiGrid: {
-      padding: 0,
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+      },
     },
     MuiButton: {
       styleOverrides: {
