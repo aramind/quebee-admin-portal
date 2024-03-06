@@ -20,6 +20,13 @@ const useStyles = () => {
           backgroundColor: "tertiary.main",
           color: "black",
         },
+
+        small: {
+          "&:hover": {
+            backgroundColor: "tertiary.main",
+            color: "black",
+          },
+        },
       },
       primaryActionIcon: {
         fontSize: "2rem",
@@ -34,7 +41,7 @@ const useStyles = () => {
     mainContainer: {
       minHeight: "calc(100vh - 60px)",
       backgroundColor: grey["100"],
-      py: 4,
+      py: 3,
       px: 6,
     },
     iconButton: {

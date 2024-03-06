@@ -9,8 +9,9 @@ import {
 import React from "react";
 import Draggable from "react-draggable";
 import AddUser from "../pages/AddUser";
-import { grey } from "@mui/material/colors";
+import { grey, teal } from "@mui/material/colors";
 import genInitialPassword from "../utils/login/genInitialPassword";
+import AddUserModal from "../pages/AddUserModal";
 
 function PaperComponent(props) {
   return (
@@ -39,16 +40,26 @@ const DraggableDialog = ({ open, setOpen, title = "" }) => {
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
       >
-        <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
+        <DialogTitle
+          sx={{
+            cursor: "move",
+            fontWeight: "bold",
+            borderBottom: "2px solid",
+            borderColor: "primary.light",
+            mb: 2,
+            py: 1,
+          }}
+          id="draggable-dialog-title"
+        >
           {title}
         </DialogTitle>
         <DialogContent>
-          <AddUser />
+          <AddUserModal />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSave}>Save</Button>
           <Button>Clear</Button>
           <Button onClick={() => setOpen(false)}>cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
         </DialogActions>
       </Dialog>
     </>

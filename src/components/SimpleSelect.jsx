@@ -6,13 +6,13 @@ const SimpleSelect = ({ options }) => {
 
   const handleChange = (e) => setSelected(e.target.value);
   return (
-    <FormControl sx={{ width: 1 }} size="small">
+    <FormControl size="small">
       <Select
         labelId="simple-select"
         id="simple-select"
         value={selected}
         onChange={handleChange}
-        sx={{ width: "130px" }}
+        sx={{ minWidth: "140px" }}
       >
         <MenuItem value={options?.[0]}>{options?.[0]}</MenuItem>
         <MenuItem value={options?.[1]}>{options?.[1]}</MenuItem>

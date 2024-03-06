@@ -13,7 +13,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import courseSchema from "../schemas/course";
 import { DevTool } from "@hookform/devtools";
 import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
-
+import SendTwoToneIcon from "@mui/icons-material/SendTwoTone";
 // styles
 import useStyles from "../hooks/useStyles";
 import LabelledTextField from "../components/form/LabelledTextField";
@@ -228,7 +228,7 @@ const AddCoursePage = () => {
           </ElevatedSectionWrapper>
         </Stack>
 
-        <Stack direction="row" spacing={4} mt={4}>
+        {/* <Stack direction="row" spacing={4} mt={4}>
           <Button
             sx={styles.form.primaryActionButton}
             variant="contained"
@@ -256,6 +256,32 @@ const AddCoursePage = () => {
             onClick={() => console.log("uploading to db")}
           >
             UPLOAD
+          </Button>
+        </Stack> */}
+        <br />
+        <Stack
+          direction="row"
+          gap={2}
+          sx={{ justifyContent: "flex-end", py: 0 }}
+        >
+          <Button
+            variant="outlined"
+            sx={{ ...styles.form.primaryActionButton.small, px: 4 }}
+          >
+            Clear
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ ...styles.form.primaryActionButton.small, px: 4 }}
+          >
+            Upload
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{ ...styles.form.primaryActionButton.small, px: 4 }}
+          >
+            Save
           </Button>
         </Stack>
       </form>
