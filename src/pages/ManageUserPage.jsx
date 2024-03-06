@@ -1,7 +1,9 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   Container,
+  IconButton,
   Stack,
   Typography,
   useTheme,
@@ -14,7 +16,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import CustomModal from "../components/CustomModal";
 import GrowTransitionWrapper from "../wrappers/GrowTransitionWrapper";
 import DraggableDialog from "../components/DraggableDialog";
-
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import TooltipWrapper from "../wrappers/TooltipWrapper";
 // to delete
 const dummyUsers = [
   {
@@ -67,12 +71,54 @@ const dummyUsers = [
   },
 ];
 
+const EDIT_ICON = <EditTwoToneIcon />;
+
+function RenderDate(props) {
+  const styles = useStyles();
+  return (
+    <>
+      <ButtonGroup
+        disableElevation
+        variant="text"
+        aria-label="user-table-actions"
+      >
+        <IconButton aria-label="edit" sx={styles.iconButton}>
+          <EditTwoToneIcon />
+        </IconButton>
+
+        <IconButton aria-label="delete" sx={styles.iconButton}>
+          <DeleteTwoToneIcon />
+        </IconButton>
+      </ButtonGroup>
+      {/* <IconButton aria-label="edit"></IconButton>
+      <Button
+        variant="contained"
+        size="small"
+        style={{ marginLeft: 16 }}
+        onKeyDown={(event) => {
+          if (event.key === " ") {
+            // Prevent key navigation when focus is on button
+            event.stopPropagation();
+          }
+        }}
+      >
+        Open
+      </Button> */}
+    </>
+  );
+}
 const columns = [
   { field: "name", headerName: "Name" },
   { field: "username", headerName: "Username" },
   { field: "password", headerName: "Password" },
-  { field: "role", headerName: "Role" },
-  { field: "status", headerName: "Status" },
+  { field: "role", headerName: "Role", editable: false },
+  { field: "status", headerName: "Status", editable: false },
+  {
+    field: "actions",
+    headerName: "Actions",
+
+    renderCell: RenderDate,
+  },
 ];
 
 const ManageUserPage = () => {
@@ -83,13 +129,15 @@ const ManageUserPage = () => {
 
   const [rows, setRows] = useState(dummyUsers);
 
-  const colsWithWidth = columns.map((col) => {
+  const colsWithWidth = columns.map((col, index) => {
     return {
       ...col,
       align: "center",
       headerAlign: "center",
-      editable: true,
+      editable: false,
       flex: 1,
+      // flex: index === columns.length - 1 ? 0 : 1, // Set flex to 0 for the last column (fixed width), and 1 for the others (flexible width)
+      // width: index === columns.length - 1 ?  : undefined,
       headerClassName: "users-table__header",
       renderHeader: () => (
         <Typography
@@ -111,7 +159,10 @@ const ManageUserPage = () => {
           <FormInputLabel label="Current Users" />
           <DataGrid
             editMode="row"
-            rows={rows}
+            rows={rows.map((row) => ({
+              ...row,
+              edit: <EditTwoToneIcon sx={styles.iconButton} />,
+            }))}
             columns={colsWithWidth}
             sx={{
               "& .MuiDataGrid-columnHeader": {

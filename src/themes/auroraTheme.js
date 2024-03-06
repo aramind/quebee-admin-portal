@@ -42,7 +42,7 @@ const auroraTheme = createTheme({
       styleOverrides: {
         root: {
           "&:hover": {
-            backgroundColor: "#277C7B",
+            backgroundColor: "rgba(39, 124, 123, 0.8)",
           },
         },
         outlined: {
@@ -55,7 +55,7 @@ const auroraTheme = createTheme({
         text: {
           "&:hover": {
             // backgroundColor: teal["100"],
-            backgroundColor: "#F2D77D",
+            backgroundColor: "rgba(242, 215, 125, 0.6)",
           },
         },
       },

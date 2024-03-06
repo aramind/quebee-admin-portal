@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useGlobalState } from "../../context/ContextProvider";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import "./navbar.css";
+import TooltipWrapper from "../../wrappers/TooltipWrapper";
 
 const pages = [
   { link: "/dashboard", navLabel: "Dashboard" },
@@ -52,29 +53,11 @@ const NavBar = () => {
               </div>
             );
           })}
-        <Tooltip
-          placement="left-start"
-          TransitionComponent={Zoom}
-          title="Log out"
-          enterDelay={100}
-          leaveDelay={100}
-          slotProps={{
-            popper: {
-              modifiers: [
-                {
-                  name: "offset",
-                  options: {
-                    offset: [0, -25],
-                  },
-                },
-              ],
-            },
-          }}
-        >
+        <TooltipWrapper title="Log out">
           <NavLink className="nav__logout" to="/" onClick={handleLogOut}>
             <ExitToAppTwoToneIcon sx={{ fontSize: "2.5rem" }} />
           </NavLink>
-        </Tooltip>
+        </TooltipWrapper>
       </div>
     </nav>
   );
