@@ -20,6 +20,7 @@ import FormInputLabel from "../components/form/FormInputLabel";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import GrowTransitionWrapper from "../wrappers/GrowTransitionWrapper";
 import FormActionButton from "../components/form/FormActionButton";
+import { teal } from "@mui/material/colors";
 
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
@@ -179,7 +180,7 @@ const AddCoursePage = () => {
                             />
                             <Button
                               variant="contained"
-                              sx={{ bgcolor: "primary.main" }}
+                              sx={{ bgcolor: "primary.semi" }}
                               onClick={() => removeSubject(index)}
                             >
                               Remove
@@ -214,7 +215,7 @@ const AddCoursePage = () => {
                     className="centered-content outlined fullWandH"
                     variant="outlined"
                     sx={{
-                      minHeight: 200,
+                      minHeight: 230,
                     }}
                     onClick={() => appendSubject()}
                   >
