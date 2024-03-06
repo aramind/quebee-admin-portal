@@ -3,7 +3,6 @@ import {
   Container,
   Grid,
   InputLabel,
-  Paper,
   Stack,
   TextField,
 } from "@mui/material";
@@ -13,12 +12,11 @@ import { useFieldArray, useForm } from "react-hook-form";
 import courseSchema from "../schemas/course";
 import { DevTool } from "@hookform/devtools";
 import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
-import SendTwoToneIcon from "@mui/icons-material/SendTwoTone";
+
 // styles
 import useStyles from "../hooks/useStyles";
 import LabelledTextField from "../components/form/LabelledTextField";
 import FormInputLabel from "../components/form/FormInputLabel";
-import { grey } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import GrowTransitionWrapper from "../wrappers/GrowTransitionWrapper";
 import FormActionButton from "../components/form/FormActionButton";
@@ -30,7 +28,6 @@ const AddCoursePage = () => {
   // hooks
   const styles = useStyles();
 
-  const [success, setSuccess] = useState(false);
   // form
   const { register, control, handleSubmit, formState, reset, getValues } =
     useForm({
@@ -145,12 +142,7 @@ const AddCoursePage = () => {
           <ElevatedSectionWrapper>
             <Stack gap={1}>
               <FormInputLabel label="subjects" />
-              <Grid
-                container
-                // rowSpacing={2}
-                spacing={2}
-                width={1}
-              >
+              <Grid container spacing={2} width={1}>
                 {fieldsForSubject.map((field, index) => {
                   const subjectObject = {
                     shortTitle:
@@ -163,8 +155,6 @@ const AddCoursePage = () => {
                   register(`subjects[${index}]`, {
                     value: subjectObject,
                   });
-
-                  // const colorIndex = index % colors.length;
 
                   return (
                     <GrowTransitionWrapper>
@@ -189,7 +179,7 @@ const AddCoursePage = () => {
                             />
                             <Button
                               variant="contained"
-                              color="info"
+                              sx={{ bgcolor: "primary.main" }}
                               onClick={() => removeSubject(index)}
                             >
                               Remove
@@ -207,7 +197,6 @@ const AddCoursePage = () => {
                           </InputLabel>
                           <TextField
                             variant="outlined"
-                            // label={`#Topic 1\n#Topic 2`}
                             placeholder={`#Topic 1\n#Topic 2`}
                             fullWidth
                             multiline
@@ -252,7 +241,6 @@ const AddCoursePage = () => {
             onClickHandler={handleUpload}
             variant="outlined"
           />
-
           <FormActionButton type="submit" label="save" variant="contained" />
         </Stack>
       </form>
