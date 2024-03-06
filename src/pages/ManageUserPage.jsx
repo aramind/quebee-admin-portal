@@ -12,6 +12,8 @@ import FormInputLabel from "../components/form/FormInputLabel";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import { DataGrid } from "@mui/x-data-grid";
 import CustomModal from "../components/CustomModal";
+import GrowTransitionWrapper from "../wrappers/GrowTransitionWrapper";
+import DraggableDialog from "../components/DraggableDialog";
 
 // to delete
 const dummyUsers = [
@@ -77,6 +79,7 @@ const ManageUserPage = () => {
   const styles = useStyles();
   const theme = useTheme();
   const [openModal, setOpenModal] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const [rows, setRows] = useState(dummyUsers);
 
@@ -100,8 +103,6 @@ const ManageUserPage = () => {
     };
   });
 
-  const handleClose = () => setOpenModal(false);
-
   console.log(rows);
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
@@ -123,7 +124,8 @@ const ManageUserPage = () => {
           />
           <Button
             variant="contained"
-            onClick={() => setOpenModal(true)}
+            // onClick={() => setOpenModal(true)}
+            onClick={() => setOpenDialog(true)}
             sx={{
               ...styles.form.primaryActionButton,
               fontSize: "1rem",
@@ -132,7 +134,12 @@ const ManageUserPage = () => {
           >
             Add New User
           </Button>
-          <CustomModal open={openModal} setOpen={setOpenModal} />
+          {/* <CustomModal open={openModal} setOpen={setOpenModal} /> */}
+          <DraggableDialog
+            open={openDialog}
+            setOpen={setOpenDialog}
+            title="New User"
+          />
         </Stack>
       </ElevatedSectionWrapper>
       <br />

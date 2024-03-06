@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import DynamicFields from "./DynamicFields";
+import { red } from "@mui/material/colors";
 
 const style = {
   position: "absolute",
@@ -12,7 +13,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "5px solid red",
   boxShadow: 24,
   p: 4,
 };

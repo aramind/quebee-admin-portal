@@ -46,13 +46,16 @@ const auroraTheme = createTheme({
           },
         },
         outlined: {
-          // borderWidth: 0,
           backgroundColor: teal["50"],
 
           "&:hover": {
             backgroundColor: teal["100"],
-            borderWidth: 0,
-            borderColor: teal["A200"],
+          },
+        },
+        text: {
+          "&:hover": {
+            // backgroundColor: teal["100"],
+            backgroundColor: "#F2D77D",
           },
         },
       },

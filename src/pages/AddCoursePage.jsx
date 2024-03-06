@@ -20,6 +20,7 @@ import LabelledTextField from "../components/form/LabelledTextField";
 import FormInputLabel from "../components/form/FormInputLabel";
 import { grey } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
+import GrowTransitionWrapper from "../wrappers/GrowTransitionWrapper";
 
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
@@ -157,55 +158,57 @@ const AddCoursePage = () => {
                   // const colorIndex = index % colors.length;
 
                   return (
-                    <Grid
-                      item
-                      xs={3}
-                      key={field.id}
-                      name={`subjects[${index}]`}
-                    >
-                      <Stack
-                        gap={1.5}
-                        padding={1.5}
-                        sx={styles.form.cardBorder}
+                    <GrowTransitionWrapper>
+                      <Grid
+                        item
+                        xs={3}
+                        key={field.id}
+                        name={`subjects[${index}]`}
                       >
-                        <Stack direction="row" spacing={1}>
+                        <Stack
+                          gap={1.5}
+                          padding={1.5}
+                          sx={styles.form.cardBorder}
+                        >
+                          <Stack direction="row" spacing={1}>
+                            <TextField
+                              variant="outlined"
+                              label="Short Title"
+                              fullWidth
+                              size="small"
+                              {...register(`subjects[${index}].shortTitle`)}
+                            />
+                            <Button
+                              variant="contained"
+                              color="info"
+                              onClick={() => removeSubject(index)}
+                            >
+                              Remove
+                            </Button>
+                          </Stack>
                           <TextField
                             variant="outlined"
-                            label="Short Title"
+                            label="Long Title"
                             fullWidth
                             size="small"
-                            {...register(`subjects[${index}].shortTitle`)}
+                            {...register(`subjects[${index}].longTitle`)}
                           />
-                          <Button
-                            variant="contained"
-                            color="info"
-                            onClick={() => removeSubject(index)}
-                          >
-                            Remove
-                          </Button>
+                          <InputLabel sx={{ textAlign: "left" }}>
+                            Topics (add topics starting with # )
+                          </InputLabel>
+                          <TextField
+                            variant="outlined"
+                            // label={`#Topic 1\n#Topic 2`}
+                            placeholder={`#Topic 1\n#Topic 2`}
+                            fullWidth
+                            multiline
+                            rows={2}
+                            size="small"
+                            {...register(`subjects[${index}].topics`)}
+                          />
                         </Stack>
-                        <TextField
-                          variant="outlined"
-                          label="Long Title"
-                          fullWidth
-                          size="small"
-                          {...register(`subjects[${index}].longTitle`)}
-                        />
-                        <InputLabel sx={{ textAlign: "left" }}>
-                          Topics (add topics starting with # )
-                        </InputLabel>
-                        <TextField
-                          variant="outlined"
-                          // label={`#Topic 1\n#Topic 2`}
-                          placeholder={`#Topic 1\n#Topic 2`}
-                          fullWidth
-                          multiline
-                          rows={2}
-                          size="small"
-                          {...register(`subjects[${index}].topics`)}
-                        />
-                      </Stack>
-                    </Grid>
+                      </Grid>
+                    </GrowTransitionWrapper>
                   );
                 })}
                 <Grid item xs={3} alignContent="center">
