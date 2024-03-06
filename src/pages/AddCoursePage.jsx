@@ -21,6 +21,7 @@ import FormInputLabel from "../components/form/FormInputLabel";
 import { grey } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import GrowTransitionWrapper from "../wrappers/GrowTransitionWrapper";
+import FormActionButton from "../components/form/FormActionButton";
 
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
@@ -66,6 +67,14 @@ const AddCoursePage = () => {
     console.log("ERROR", error);
   };
 
+  // todo
+  const handleClear = () => {
+    console.log("handling clearing of form..");
+  };
+
+  const handleUpload = () => {
+    console.log("handling uploading of form..");
+  };
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
@@ -227,62 +236,24 @@ const AddCoursePage = () => {
             </Stack>
           </ElevatedSectionWrapper>
         </Stack>
-
-        {/* <Stack direction="row" spacing={4} mt={4}>
-          <Button
-            sx={styles.form.primaryActionButton}
-            variant="contained"
-            fullWidth
-            onClick={() => {
-              reset();
-            }}
-            // endIcon={<RotateLeftTwoToneIcon />}
-          >
-            RESET
-          </Button>
-          <Button
-            sx={styles.form.primaryActionButton}
-            variant="contained"
-            fullWidth
-            type="submit"
-            // endIcon={<SendTwoToneIcon />}
-          >
-            SEND
-          </Button>
-          <Button
-            sx={styles.form.primaryActionButton}
-            variant="contained"
-            fullWidth
-            onClick={() => console.log("uploading to db")}
-          >
-            UPLOAD
-          </Button>
-        </Stack> */}
         <br />
         <Stack
           direction="row"
           gap={2}
           sx={{ justifyContent: "flex-end", py: 0 }}
         >
-          <Button
+          <FormActionButton
+            label="clear"
+            onClickHandler={handleClear}
             variant="outlined"
-            sx={{ ...styles.form.primaryActionButton.small, px: 4 }}
-          >
-            Clear
-          </Button>
-          <Button
+          />
+          <FormActionButton
+            label="upload"
+            onClickHandler={handleUpload}
             variant="outlined"
-            sx={{ ...styles.form.primaryActionButton.small, px: 4 }}
-          >
-            Upload
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{ ...styles.form.primaryActionButton.small, px: 4 }}
-          >
-            Save
-          </Button>
+          />
+
+          <FormActionButton type="submit" label="save" variant="contained" />
         </Stack>
       </form>
       <DevTool control={control} />

@@ -11,21 +11,11 @@ const useStyles = () => {
         fontWeight: "bold",
       },
       primaryActionButton: {
-        my: "1rem",
-        py: "0.5rem",
-        fontSize: "1.5rem",
-        fontWeight: "bold",
-
+        px: 5,
+        fontSize: "1rem",
         "&:hover": {
           backgroundColor: "tertiary.main",
           color: "black",
-        },
-
-        small: {
-          "&:hover": {
-            backgroundColor: "tertiary.main",
-            color: "black",
-          },
         },
       },
       primaryActionIcon: {
