@@ -21,6 +21,13 @@ a {
   border: 1px solid red;
 }
 
+.outlined2 {
+  border: 1px solid blue;
+}
+
+.outlined3 {
+  border: 1px solid green;
+}
 .colored {
   background-color: rgb(217, 215, 178);
 }
@@ -64,6 +71,14 @@ a {
 input:focus,
 input:active {
   outline: none;
+}
+
+/* containers */
+.flex-wrap-row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* table */

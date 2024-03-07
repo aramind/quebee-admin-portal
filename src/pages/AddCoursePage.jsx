@@ -1,11 +1,12 @@
 import {
+  Box,
   Button,
   Container,
-  Grid,
   InputLabel,
   Stack,
   TextField,
 } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -75,14 +76,23 @@ const AddCoursePage = () => {
     console.log("handling uploading of form..");
   };
   return (
-    <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
+    <Container
+      component="main"
+      maxWidth="xl"
+      sx={styles.mainContainer}
+      disableGutters="true"
+    >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <Stack gap={2}>
+        <Stack spacing={2}>
           <ElevatedSectionWrapper>
-            <Stack spacing={1} direction="row" sx={{ width: 1 }}>
-              <Stack sx={{ width: 1 }} gap={1}>
-                <Grid container spacing={2} width={1}>
-                  <Grid item xs={3}>
+            <Stack
+              spacing={2}
+              direction={{ xs: "column", md: "row" }}
+              width={1}
+            >
+              <Box>
+                <Grid container spacing={2}>
+                  <Grid xs={12} md={3}>
                     <LabelledTextField
                       label="code"
                       id="code"
@@ -91,8 +101,8 @@ const AddCoursePage = () => {
                       register={register}
                     />
                   </Grid>
-                  <Grid item xs={9} sx={{ justifyContent: "center" }}>
-                    <Stack width={1} gap={0.25}>
+                  <Grid xs={12} md={9}>
+                    <Stack width={1} spacing={0.25}>
                       <InputLabel
                         htmlFor="databases"
                         sx={styles.form.inputLabel}
@@ -106,9 +116,8 @@ const AddCoursePage = () => {
                       />
                     </Stack>
                   </Grid>
-                </Grid>
-                <Grid container spacing={2} width={1}>
-                  <Grid item xs={3}>
+
+                  <Grid xs={12} md={3}>
                     <LabelledTextField
                       label="acronym"
                       id="acronym"
@@ -117,7 +126,7 @@ const AddCoursePage = () => {
                       register={register}
                     />
                   </Grid>
-                  <Grid item xs={9}>
+                  <Grid xs={12} md={9}>
                     <LabelledTextField
                       label="title"
                       id="title"
@@ -127,7 +136,7 @@ const AddCoursePage = () => {
                     />
                   </Grid>
                 </Grid>
-              </Stack>
+              </Box>
               <Stack sx={{ width: 1 }}>
                 <LabelledTextField
                   label="description"
@@ -136,7 +145,7 @@ const AddCoursePage = () => {
                   focused={dirtyFields.description && !errors}
                   register={register}
                   multiline={true}
-                  minRows={4}
+                  minRows={4.3}
                 />
               </Stack>
             </Stack>
