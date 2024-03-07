@@ -3,7 +3,7 @@ import React from "react";
 
 const GrowTransitionWrapper = ({
   children,
-  transformOrigin = "top right",
+  transformOrigin = "50% 0 0",
   timeout = 1000,
 }) => {
   const growProps = {

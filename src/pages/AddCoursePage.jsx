@@ -90,7 +90,7 @@ const AddCoursePage = () => {
               direction={{ xs: "column", md: "row" }}
               width={1}
             >
-              <Box>
+              <Box width={{ xs: 1, md: 0.5 }}>
                 <Grid container spacing={2}>
                   <Grid xs={12} md={3}>
                     <LabelledTextField
@@ -137,7 +137,7 @@ const AddCoursePage = () => {
                   </Grid>
                 </Grid>
               </Box>
-              <Stack sx={{ width: 1 }}>
+              <Stack width={{ xs: 1, md: 0.5 }}>
                 <LabelledTextField
                   label="description"
                   id="description"
@@ -239,21 +239,22 @@ const AddCoursePage = () => {
               </Box>
             </Stack>
           </ElevatedSectionWrapper>
+
+          <FormActionsContainer>
+            <FormActionButton
+              label="clear"
+              onClickHandler={handleClear}
+              variant="outlined"
+            />
+            <FormActionButton
+              label="upload"
+              onClickHandler={handleUpload}
+              variant="outlined"
+            />
+            <FormActionButton type="submit" label="save" variant="contained" />
+          </FormActionsContainer>
         </Stack>
         <br />
-        <FormActionsContainer>
-          <FormActionButton
-            label="clear"
-            onClickHandler={handleClear}
-            variant="outlined"
-          />
-          <FormActionButton
-            label="upload"
-            onClickHandler={handleUpload}
-            variant="outlined"
-          />
-          <FormActionButton type="submit" label="save" variant="contained" />
-        </FormActionsContainer>
       </form>
       <DevTool control={control} />
     </Container>
