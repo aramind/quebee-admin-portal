@@ -44,8 +44,8 @@ const useStyles = () => {
     mainContainer: {
       minHeight: "calc(100vh - 60px)",
       backgroundColor: grey["100"],
-      py: 3,
-      px: 6,
+      py: { xs: 2, md: 3 },
+      px: { xs: 1, md: 6 },
     },
   };
   return styles;

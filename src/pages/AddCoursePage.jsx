@@ -151,88 +151,92 @@ const AddCoursePage = () => {
             </Stack>
           </ElevatedSectionWrapper>
           <ElevatedSectionWrapper>
-            <Stack gap={1}>
+            <Stack spacing={1}>
               <FormInputLabel label="subjects" />
-              <Grid container spacing={2} width={1}>
-                {fieldsForSubject.map((field, index) => {
-                  const subjectObject = {
-                    shortTitle:
-                      getValues(`subjects[${index}].shortTitle`) || "",
-                    longTitle: getValues(`subjects[${index}].longTitle`) || "",
-                    topics: getValues(`subjects[${index}].topics`) || "",
-                  };
+              <Box>
+                <Grid container spacing={4}>
+                  {fieldsForSubject.map((field, index) => {
+                    const subjectObject = {
+                      shortTitle:
+                        getValues(`subjects[${index}].shortTitle`) || "",
+                      longTitle:
+                        getValues(`subjects[${index}].longTitle`) || "",
+                      topics: getValues(`subjects[${index}].topics`) || "",
+                    };
 
-                  // Register the entire object using register
-                  register(`subjects[${index}]`, {
-                    value: subjectObject,
-                  });
+                    // Register the entire object using register
+                    register(`subjects[${index}]`, {
+                      value: subjectObject,
+                    });
 
-                  return (
-                    <GrowTransitionWrapper>
-                      <Grid
-                        item
-                        xs={3}
-                        key={field.id}
-                        name={`subjects[${index}]`}
-                      >
-                        <Stack
-                          gap={1.5}
-                          padding={1.5}
-                          sx={styles.form.cardBorder}
+                    return (
+                      <GrowTransitionWrapper key={index}>
+                        <Grid
+                          xs={12}
+                          sm={6}
+                          md={3}
+                          key={field.id}
+                          name={`subjects[${index}]`}
                         >
-                          <Stack direction="row" spacing={1}>
+                          <Stack
+                            gap={1.5}
+                            padding={1.5}
+                            sx={styles.form.cardBorder}
+                          >
+                            <Stack direction="row" spacing={1}>
+                              <TextField
+                                variant="outlined"
+                                label="Short Title"
+                                fullWidth
+                                size="small"
+                                {...register(`subjects[${index}].shortTitle`)}
+                              />
+                              <Button
+                                variant="contained"
+                                sx={{ bgcolor: "primary.semi" }}
+                                onClick={() => removeSubject(index)}
+                              >
+                                Remove
+                              </Button>
+                            </Stack>
                             <TextField
                               variant="outlined"
-                              label="Short Title"
+                              label="Long Title"
                               fullWidth
                               size="small"
-                              {...register(`subjects[${index}].shortTitle`)}
+                              {...register(`subjects[${index}].longTitle`)}
                             />
-                            <Button
-                              variant="contained"
-                              sx={{ bgcolor: "primary.semi" }}
-                              onClick={() => removeSubject(index)}
-                            >
-                              Remove
-                            </Button>
+                            <InputLabel sx={{ textAlign: "left" }}>
+                              Topics (add topics starting with # )
+                            </InputLabel>
+                            <TextField
+                              variant="outlined"
+                              placeholder={`#Topic 1\n#Topic 2`}
+                              fullWidth
+                              multiline
+                              rows={2}
+                              size="small"
+                              {...register(`subjects[${index}].topics`)}
+                            />
                           </Stack>
-                          <TextField
-                            variant="outlined"
-                            label="Long Title"
-                            fullWidth
-                            size="small"
-                            {...register(`subjects[${index}].longTitle`)}
-                          />
-                          <InputLabel sx={{ textAlign: "left" }}>
-                            Topics (add topics starting with # )
-                          </InputLabel>
-                          <TextField
-                            variant="outlined"
-                            placeholder={`#Topic 1\n#Topic 2`}
-                            fullWidth
-                            multiline
-                            rows={2}
-                            size="small"
-                            {...register(`subjects[${index}].topics`)}
-                          />
-                        </Stack>
-                      </Grid>
-                    </GrowTransitionWrapper>
-                  );
-                })}
-                <Grid item xs={3} alignContent="center">
-                  <Button
-                    className="centered-content outlined fullWandH"
-                    variant="outlined"
-                    onClick={() => appendSubject()}
-                    sx={{
-                      minHeight: 230,
-                    }}
-                  >
-                    Add Subject
-                  </Button>
+                        </Grid>
+                      </GrowTransitionWrapper>
+                    );
+                  })}
+                  <Grid xs={12} sm={6} md={3}>
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      onClick={() => appendSubject()}
+                      sx={{
+                        minHeight: 242,
+                      }}
+                    >
+                      Add Subject
+                    </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </Box>
             </Stack>
           </ElevatedSectionWrapper>
         </Stack>
