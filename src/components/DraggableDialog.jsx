@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -8,10 +7,11 @@ import {
 } from "@mui/material";
 import React from "react";
 import Draggable from "react-draggable";
-import AddUser from "../pages/AddUser";
-import { grey, teal } from "@mui/material/colors";
-import genInitialPassword from "../utils/login/genInitialPassword";
-import AddUserModal from "../pages/AddUserModal";
+import { grey } from "@mui/material/colors";
+import EditUserModal from "../pages/EditUserModal";
+import useStyles from "../hooks/useStyles";
+import DialogActionsContainer from "../containers/DialogActionsContainer";
+import DialogActionButton from "./form/DialogActionButton";
 
 function PaperComponent(props) {
   return (
@@ -19,12 +19,13 @@ function PaperComponent(props) {
       handle="#draggable-dialog-title"
       cancel={'[class*="MuiDialogContent-root"]'}
     >
-      <Paper {...props} sx={{ bgcolor: grey[100] }} />
+      <Paper {...props} sx={{ bgcolor: grey[100], width: "100%" }} />
     </Draggable>
   );
 }
 
 const DraggableDialog = ({ open, setOpen, title = "" }) => {
+  const styles = useStyles();
   const handleClose = (e) => {
     e.stopPropagation();
   };
@@ -40,26 +41,20 @@ const DraggableDialog = ({ open, setOpen, title = "" }) => {
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
       >
-        <DialogTitle
-          sx={{
-            cursor: "move",
-            fontWeight: "bold",
-            borderBottom: "2px solid",
-            borderColor: "primary.light",
-            mb: 2,
-            py: 1,
-          }}
-          id="draggable-dialog-title"
-        >
+        <DialogTitle sx={styles.dialog.title} id="draggable-dialog-title">
           {title}
         </DialogTitle>
         <DialogContent>
-          <AddUserModal />
+          <EditUserModal />
         </DialogContent>
         <DialogActions>
-          <Button>Clear</Button>
-          <Button onClick={() => setOpen(false)}>cancel</Button>
-          <Button onClick={handleSave}>Save</Button>
+          <DialogActionsContainer>
+            <DialogActionButton
+              label="cancel"
+              onClickHandler={() => setOpen(false)}
+            />
+            <DialogActionButton label="save" onClickHandler={handleSave} />
+          </DialogActionsContainer>
         </DialogActions>
       </Dialog>
     </>
