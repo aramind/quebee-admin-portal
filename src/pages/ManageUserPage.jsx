@@ -1,8 +1,6 @@
 import {
   Box,
-  Button,
   Container,
-  CssBaseline,
   IconButton,
   Stack,
   Typography,
@@ -25,67 +23,25 @@ import genInitialPassword from "../utils/login/genInitialPassword";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
 import VisibilityOffTwoToneIcon from "@mui/icons-material/VisibilityOffTwoTone";
 import HttpsTwoToneIcon from "@mui/icons-material/HttpsTwoTone";
-import { blue, grey, red } from "@mui/material/colors";
-// to delete
-const dummyUsers = [
-  {
-    id: 1,
-    username: "naruto",
-    password: "123456",
-    lastName: "Uzumaki",
-    firstName: "Naruto",
-    role: "super",
-    status: "active",
-  },
-  {
-    id: 2,
-    username: "hinata",
-    password: "789012",
-    lastName: "Hinata",
-    firstName: "Hinata",
-    role: "editor",
-    status: "active",
-  },
-  {
-    id: 3,
-    username: "sasuke",
-    password: "abcdef",
-    lastName: "Uchiha",
-    firstName: "Sasuke",
-    role: "admin",
-    status: "active",
-  },
-  {
-    id: 4,
-    username: "sakura",
-    password: "qwerty",
-    lastName: "Haruno",
-    firstName: "Sakura",
-    role: "viewer",
-    status: "deactivated",
-  },
-  {
-    id: 5,
-    username: "kakashi",
-    password: "pass123",
-    lastName: "Hatake",
-    firstName: "Kakashi",
-    role: "editor",
-    status: "deactivated",
-  },
-  {
-    id: 6,
-    username: "ino",
-    password: "098765",
-    lastName: "Yamanaka",
-    firstName: "Ino",
-    role: "viewer",
-    status: "active",
-  },
-];
-
+// todo: to delete
+import { dummyUsers } from "../mockDB/dummyUsers";
+import FormActionButton from "../components/form/FormActionButton";
+import FormActionsContainer from "../containers/FormActionsContainer";
+import LabelledSelect from "../components/form/LabelledSelect";
 const ROLES = ["admin", "editor", "viewer"];
 const STATUS = ["active", "deactivated"];
+
+const genIcons = (n) => {
+  let icons = [
+    <HttpsTwoToneIcon sx={{ fontSize: "1rem", color: "font.gray" }} />,
+  ];
+  for (let i = 0; i < n - 1; i++) {
+    icons.push(
+      <HttpsTwoToneIcon sx={{ fontSize: "1rem", color: "font.gray" }} />
+    );
+  }
+  return icons;
+};
 
 const RenderPassword = ({ row }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -99,10 +55,9 @@ const RenderPassword = ({ row }) => {
     row.password
   ) : (
     <Stack direction="row" sx={{ justifyContent: "left" }}>
-      <HttpsTwoToneIcon sx={{ fontSize: "1rem", color: grey[700] }} />
-      <HttpsTwoToneIcon sx={{ fontSize: "1rem", color: grey[700] }} />
-      <HttpsTwoToneIcon sx={{ fontSize: "1rem", color: grey[700] }} />
-      <HttpsTwoToneIcon sx={{ fontSize: "1rem", color: grey[700] }} />
+      {genIcons(4).map((icon, index) => (
+        <div key={index}>{icon}</div>
+      ))}
     </Stack>
   );
 
@@ -110,35 +65,18 @@ const RenderPassword = ({ row }) => {
     <>
       <Stack
         direction="row"
+        height="1"
         sx={{ width: 1, justifyContent: "space-between", px: 0 }}
       >
-        <Box flex={1}></Box>
-        <Box className="centered-content" flex={1}>
+        <Box flex={3} sx={localStyle.box.password}>
           {passwordValue}
         </Box>
-        <Box
-          className="centered-content"
-          flex={1}
-          width={1}
-          sx={{ alignItems: "center" }}
-        >
+        <Box flex={2} width={1} sx={localStyle.box.password}>
           <IconButton onClick={togglePWVisibility} sx={styles.iconButton}>
             {showPassword ? (
-              <VisibilityOffTwoToneIcon
-                sx={{
-                  cursor: "pointer",
-                  fontSize: "1.2rem",
-                  color: "primary.main",
-                }}
-              />
+              <VisibilityOffTwoToneIcon sx={localStyle.iconButton} />
             ) : (
-              <VisibilityTwoToneIcon
-                sx={{
-                  cursor: "pointer",
-                  fontSize: "1.2rem",
-                  color: "primary.main",
-                }}
-              />
+              <VisibilityTwoToneIcon sx={localStyle.iconButton} />
             )}
           </IconButton>
         </Box>
@@ -146,9 +84,8 @@ const RenderPassword = ({ row }) => {
     </>
   );
 };
-const RenderDate = () => {
+const RenderAction = () => {
   const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
-
   const styles = useStyles();
 
   return (
@@ -184,16 +121,15 @@ const columns = [
     field: "actions",
     headerName: "Actions",
 
-    renderCell: RenderDate,
+    renderCell: RenderAction,
   },
 ];
 
 const ManageUserPage = () => {
   const styles = useStyles();
   const theme = useTheme();
-  const [openDialogNewUser, setOpenDialogNewUser] = useState(false);
   //   form
-  const { register, control, handleSubmit, formState, reset } = useForm({
+  const { register, handleSubmit, formState, reset } = useForm({
     resolver: zodResolver(userSchema),
     mode: "onTouched",
   });
@@ -208,7 +144,7 @@ const ManageUserPage = () => {
     console.log("ERROR creating user", err);
   };
 
-  // Datagrid
+  // Data grid
   const [rows, setRows] = useState(dummyUsers);
 
   const colsWithWidth = columns.map((col, index) => {
@@ -232,7 +168,9 @@ const ManageUserPage = () => {
     };
   });
 
-  console.log(rows);
+  // handlers
+  // todo
+  const handleClear = () => {};
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <ElevatedSectionWrapper>
@@ -260,7 +198,7 @@ const ManageUserPage = () => {
         <ElevatedSectionWrapper>
           <Stack gap={1}>
             <Typography variant="h6">Add New User</Typography>
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" gap={2} flexWrap="wrap">
               <Box flex={1}>
                 <LabelledTextField
                   label="last name"
@@ -285,15 +223,18 @@ const ManageUserPage = () => {
                   register={register}
                 />
               </Box>
-              <Box>
-                <FormInputLabel label="role" />
-                <SimpleSelect options={ROLES} />
+              <Box flex={1}>
+                <LabelledSelect
+                  label="role"
+                  select={<SimpleSelect options={ROLES} />}
+                />
               </Box>
-              <Box>
-                <FormInputLabel label="status" />
-                <SimpleSelect options={STATUS} />
+              <Box flex={1}>
+                <LabelledSelect
+                  label="status"
+                  select={<SimpleSelect options={STATUS} />}
+                />
               </Box>
-
               <Box flex={1}>
                 <LabelledTextField
                   label="password"
@@ -306,25 +247,14 @@ const ManageUserPage = () => {
             </Stack>
           </Stack>
           <br />
-          <Stack
-            direction="row"
-            gap={2}
-            sx={{ justifyContent: "flex-end", py: 0 }}
-          >
-            <Button
+          <FormActionsContainer>
+            <FormActionButton
+              label="clear"
+              onClickHandler={handleClear}
               variant="outlined"
-              sx={{ ...styles.form.primaryActionButton.small, px: 4 }}
-            >
-              Clear
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ ...styles.form.primaryActionButton.small, px: 4 }}
-            >
-              Save
-            </Button>
-          </Stack>
+            />
+            <FormActionButton label="save" variant="contained" type="submit" />
+          </FormActionsContainer>
         </ElevatedSectionWrapper>
       </form>
       <br />
@@ -333,3 +263,22 @@ const ManageUserPage = () => {
 };
 
 export default ManageUserPage;
+
+//local sx styles
+// @type {import("@mui/material").SxProps}
+const localStyle = {
+  box: {
+    password: {
+      display: "flex",
+      py: "auto",
+      height: 1,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  },
+  iconButton: {
+    cursor: "pointer",
+    fontSize: "1.2rem",
+    color: "primary.main",
+  },
+};

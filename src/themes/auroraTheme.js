@@ -27,6 +27,7 @@ const COLORS = {
   font: {
     black: "#333",
     white: "#eee",
+    gray: grey[700],
   },
   bg: {
     light: {
@@ -53,6 +54,7 @@ const auroraTheme = createTheme({
     tertiary: COLORS.tertiary,
     info: COLORS.info,
     font: COLORS.font,
+    bg: COLORS.bg,
   },
   typography: {
     fontFamily: `"Nunito", "Roboto", "sans-serif"`,
@@ -66,13 +68,6 @@ const auroraTheme = createTheme({
             backgroundColor: "rgba(242, 215, 125, 0.6)",
             color: COLORS.primary.dark,
           },
-        },
-      },
-    },
-    MuiGrid: {
-      styleOverrides: {
-        root: {
-          padding: 0,
         },
       },
     },

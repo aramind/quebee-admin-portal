@@ -21,6 +21,7 @@ import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import GrowTransitionWrapper from "../wrappers/GrowTransitionWrapper";
 import FormActionButton from "../components/form/FormActionButton";
 import { teal } from "@mui/material/colors";
+import FormActionsContainer from "../containers/FormActionsContainer";
 
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
@@ -214,10 +215,10 @@ const AddCoursePage = () => {
                   <Button
                     className="centered-content outlined fullWandH"
                     variant="outlined"
+                    onClick={() => appendSubject()}
                     sx={{
                       minHeight: 230,
                     }}
-                    onClick={() => appendSubject()}
                   >
                     Add Subject
                   </Button>
@@ -227,11 +228,7 @@ const AddCoursePage = () => {
           </ElevatedSectionWrapper>
         </Stack>
         <br />
-        <Stack
-          direction="row"
-          gap={2}
-          sx={{ justifyContent: "flex-end", py: 0 }}
-        >
+        <FormActionsContainer>
           <FormActionButton
             label="clear"
             onClickHandler={handleClear}
@@ -243,7 +240,7 @@ const AddCoursePage = () => {
             variant="outlined"
           />
           <FormActionButton type="submit" label="save" variant="contained" />
-        </Stack>
+        </FormActionsContainer>
       </form>
       <DevTool control={control} />
     </Container>

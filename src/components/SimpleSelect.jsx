@@ -4,19 +4,24 @@ import React, { useState } from "react";
 const SimpleSelect = ({ options }) => {
   const [selected, setSelected] = useState("");
 
+  console.log(options);
   const handleChange = (e) => setSelected(e.target.value);
   return (
-    <FormControl size="small">
+    <FormControl size="small" fullWidth>
       <Select
         labelId="simple-select"
         id="simple-select"
         value={selected}
         onChange={handleChange}
-        sx={{ minWidth: "140px" }}
+        sx={{ minWidth: "140px", width: 1 }}
       >
-        <MenuItem value={options?.[0]}>{options?.[0]}</MenuItem>
-        <MenuItem value={options?.[1]}>{options?.[1]}</MenuItem>
-        <MenuItem value={options?.[2]}>{options?.[2]}</MenuItem>
+        {options?.map((option, index) => {
+          return (
+            <MenuItem key={index} value={option}>
+              {option}
+            </MenuItem>
+          );
+        })}
       </Select>
     </FormControl>
   );
