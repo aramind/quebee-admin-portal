@@ -48,9 +48,9 @@ const NavMenu = ({ pages }) => {
           "aria-labelledby": "basic-button",
         }}
         sx={{
-          // ".MuiPaper-root": {
-          //   backgroundColor: "primary.main",
-          // },
+          ".MuiPaper-root": {
+            backgroundColor: "primary.main",
+          },
 
           ".MuiMenuItem-root": {
             justifyContent: "center",

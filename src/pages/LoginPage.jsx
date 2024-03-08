@@ -81,21 +81,21 @@ const LoginPage = () => {
   console.log("CURRENTUSER:", currentUser);
   return (
     <Stack
-      height="100vh"
+      height={{ xs: "90vh", md: "100vh" }}
       justifyContent="center"
       alignItems="center"
       direction="column"
-      spacing="10px"
+      spacing="1rem"
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Stack
-          height="80vh"
-          width="80vh"
+          height={{ xs: "100vw", md: "80vh" }}
+          width={{ xs: "80vw", md: "80vh" }}
           maxWidth="600px"
           maxHeight="600px"
-          py={4}
-          px={8}
-          gap={4}
+          py={{ xs: 2, md: 4 }}
+          px={{ xs: 2, md: 8 }}
+          gap={{ xs: 2, md: 4 }}
           borderRadius="10px"
           direction="column"
           justifyContent="center"

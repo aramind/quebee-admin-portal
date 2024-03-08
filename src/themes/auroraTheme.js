@@ -98,14 +98,6 @@ const auroraTheme = createTheme({
         },
       },
     },
-    MuiMenu: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: COLORS.primary.main,
-          width: "70%",
-        },
-      },
-    },
   },
 });
 
