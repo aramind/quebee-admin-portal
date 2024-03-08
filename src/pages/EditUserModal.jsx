@@ -14,11 +14,10 @@ import genInitialPassword from "../utils/login/genInitialPassword";
 const ROLES = ["admin", "editor", "viewer"];
 const STATUS = ["active", "deactivated"];
 
-const EditUserModal = () => {
-  const styles = useStyles();
-
+const EditUserModal = ({ row }) => {
+  console.log("ACCEPTED ROW:", row);
   //   form
-  const { register, control, handleSubmit, formState, reset } = useForm({
+  const { register, handleSubmit, formState, reset } = useForm({
     resolver: zodResolver(userSchema),
     mode: "onTouched",
   });
@@ -46,6 +45,8 @@ const EditUserModal = () => {
       </Box>
     );
   };
+
+  console.log(row.role);
   return (
     <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
       <Box width="100%">
@@ -63,6 +64,7 @@ const EditUserModal = () => {
                 id="lastName"
                 error={!!errors.lastName}
                 register={register}
+                defaultValue={row.lastName}
               />
             </BoxWrapper>
             <BoxWrapper>
@@ -71,6 +73,7 @@ const EditUserModal = () => {
                 id="firstName"
                 error={!!errors.firstName}
                 register={register}
+                defaultValue={row.firstName}
               />
             </BoxWrapper>
             <BoxWrapper>
@@ -79,15 +82,16 @@ const EditUserModal = () => {
                 id="username"
                 error={!!errors.name}
                 register={register}
+                defaultValue={row.username}
               />
             </BoxWrapper>
             <BoxWrapper>
               <FormInputLabel label="role" />
-              <SimpleSelect options={ROLES} />
+              <SimpleSelect options={ROLES} selectedOption={row.role} />
             </BoxWrapper>
             <BoxWrapper>
               <FormInputLabel label="status" />
-              <SimpleSelect options={STATUS} />
+              <SimpleSelect options={STATUS} selectedOption={row.status} />
             </BoxWrapper>
             <BoxWrapper>
               <LabelledTextField
@@ -95,7 +99,7 @@ const EditUserModal = () => {
                 id="password"
                 error={!!errors.password}
                 register={register}
-                defaultValue={genInitialPassword()}
+                defaultValue={row.password}
               />
             </BoxWrapper>
           </Stack>

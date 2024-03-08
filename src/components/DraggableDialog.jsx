@@ -24,7 +24,7 @@ function PaperComponent(props) {
   );
 }
 
-const DraggableDialog = ({ open, setOpen, title = "" }) => {
+const DraggableDialog = ({ open, setOpen, title = "", row }) => {
   const styles = useStyles();
   const handleClose = (e) => {
     e.stopPropagation();
@@ -45,7 +45,7 @@ const DraggableDialog = ({ open, setOpen, title = "" }) => {
           {title}
         </DialogTitle>
         <DialogContent>
-          <EditUserModal />
+          <EditUserModal row={row} />
         </DialogContent>
         <DialogActions>
           <DialogActionsContainer>

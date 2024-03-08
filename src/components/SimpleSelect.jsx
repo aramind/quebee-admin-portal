@@ -1,10 +1,9 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useState } from "react";
 
-const SimpleSelect = ({ options }) => {
-  const [selected, setSelected] = useState("");
+const SimpleSelect = ({ options, selectedOption }) => {
+  const [selected, setSelected] = useState(selectedOption || "");
 
-  console.log(options);
   const handleChange = (e) => setSelected(e.target.value);
   return (
     <FormControl size="small" fullWidth>
