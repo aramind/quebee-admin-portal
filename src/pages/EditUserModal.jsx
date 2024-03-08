@@ -1,5 +1,5 @@
 import React from "react";
-import useStyles from "../hooks/useStyles";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
@@ -8,13 +8,11 @@ import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import LabelledTextField from "../components/form/LabelledTextField";
 import SimpleSelect from "../components/SimpleSelect";
 import FormInputLabel from "../components/form/FormInputLabel";
-import genInitialPassword from "../utils/login/genInitialPassword";
+import constants from "../components/configs/constants";
 
 // CONSTANT to delete todo
-const ROLES = ["admin", "editor", "viewer"];
-const STATUS = ["active", "deactivated"];
 
-const EditUserModal = ({ row }) => {
+const EditUserModal = ({ row, setData }) => {
   console.log("ACCEPTED ROW:", row);
   //   form
   const { register, handleSubmit, formState, reset } = useForm({
@@ -25,7 +23,8 @@ const EditUserModal = ({ row }) => {
   const { errors } = formState;
 
   const onSubmit = (data) => {
-    console.log("Creating user...", data);
+    // console.log("Editing user...", data);
+    setData(data);
   };
 
   const onError = (err) => {
@@ -46,7 +45,6 @@ const EditUserModal = ({ row }) => {
     );
   };
 
-  console.log(row.role);
   return (
     <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
       <Box width="100%">
@@ -87,11 +85,17 @@ const EditUserModal = ({ row }) => {
             </BoxWrapper>
             <BoxWrapper>
               <FormInputLabel label="role" />
-              <SimpleSelect options={ROLES} selectedOption={row.role} />
+              <SimpleSelect
+                options={constants.ROLES}
+                selectedOption={row.role}
+              />
             </BoxWrapper>
             <BoxWrapper>
               <FormInputLabel label="status" />
-              <SimpleSelect options={STATUS} selectedOption={row.status} />
+              <SimpleSelect
+                options={constants.STATUS}
+                selectedOption={row.status}
+              />
             </BoxWrapper>
             <BoxWrapper>
               <LabelledTextField

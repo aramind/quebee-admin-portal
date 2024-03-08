@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import { IconButton } from "@mui/material";
-import DraggableDialog from "../DraggableDialog";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import DraggableFormDialog from "../form/DraggableFormDialog";
+import DraggableDialog from "../DraggableDialog";
 
 const RenderAction = ({ row }) => {
   const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
@@ -22,12 +23,18 @@ const RenderAction = ({ row }) => {
       <IconButton aria-label="delete" sx={styles.iconButton}>
         <DeleteTwoToneIcon />
       </IconButton>
-      <DraggableDialog
+      <DraggableFormDialog
         open={openDialogEditUser}
         setOpen={setOpenDialogEditUser}
         title="Edit User Information"
         row={row}
       />
+      {/* <DraggableDialog
+        open={openDialogEditUser}
+        setOpen={setOpenDialogEditUser}
+        title="Edit User Information"
+        row={row}
+      /> */}
     </>
   );
 };

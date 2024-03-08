@@ -5,7 +5,7 @@ import {
   DialogTitle,
   Paper,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import Draggable from "react-draggable";
 import { grey } from "@mui/material/colors";
 import EditUserModal from "../pages/EditUserModal";
@@ -25,14 +25,17 @@ function PaperComponent(props) {
 }
 
 const DraggableDialog = ({ open, setOpen, title = "", row }) => {
+  const [data, setData] = useState("");
+
   const styles = useStyles();
   const handleClose = (e) => {
     e.stopPropagation();
   };
 
-  const handleSave = () => {
-    console.log("saving new user");
+  const handleSendingData = () => {
+    console.log("saving new edited user", data);
   };
+
   return (
     <>
       <Dialog
@@ -45,7 +48,7 @@ const DraggableDialog = ({ open, setOpen, title = "", row }) => {
           {title}
         </DialogTitle>
         <DialogContent>
-          <EditUserModal row={row} />
+          <EditUserModal row={row} setData={setData} />
         </DialogContent>
         <DialogActions>
           <DialogActionsContainer>
@@ -53,7 +56,10 @@ const DraggableDialog = ({ open, setOpen, title = "", row }) => {
               label="cancel"
               onClickHandler={() => setOpen(false)}
             />
-            <DialogActionButton label="save" onClickHandler={handleSave} />
+            <DialogActionButton
+              label="save"
+              onClickHandler={handleSendingData}
+            />
           </DialogActionsContainer>
         </DialogActions>
       </Dialog>

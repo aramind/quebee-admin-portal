@@ -6,6 +6,7 @@ const DialogActionButton = ({
   label,
   type,
   onClickHandler,
+  onSubmit,
   variant = "text",
   otherStyles = {},
 }) => {
@@ -13,7 +14,6 @@ const DialogActionButton = ({
 
   return (
     <Button
-      type={type}
       onClick={onClickHandler}
       variant={variant}
       sx={{ ...styles.dialog.actionButton, ...otherStyles }}

@@ -1,17 +1,13 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React, { useState } from "react";
+import { FormControl, MenuItem, Select } from "@mui/material";
 
-const SimpleSelect = ({ options, selectedOption }) => {
-  const [selected, setSelected] = useState(selectedOption || "");
-
-  const handleChange = (e) => setSelected(e.target.value);
+const SimpleSelect = ({ options, selectedOption, onChange }) => {
   return (
     <FormControl size="small" fullWidth>
       <Select
         labelId="simple-select"
         id="simple-select"
-        value={selected}
-        onChange={handleChange}
+        value={selectedOption}
+        onChange={onChange}
         sx={{ minWidth: "140px", width: 1 }}
       >
         {options?.map((option, index) => {
