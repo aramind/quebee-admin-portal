@@ -57,3 +57,17 @@ nav {
 .nav__logout:hover {
   color: #cca114;
 }
+
+.bottom-nav {
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+  height: 60px;
+  background-color: teal;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-inline: 1rem;
+}

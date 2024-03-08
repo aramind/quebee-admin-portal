@@ -1,11 +1,14 @@
 import React from "react";
 
-import { Tooltip, Zoom } from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { useGlobalState } from "../../context/ContextProvider";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import "./navbar.css";
+import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import TooltipWrapper from "../../wrappers/TooltipWrapper";
+import SideBar from "../SideBar";
+import NavMenu from "../NavMenu";
 
 const pages = [
   { link: "/dashboard", navLabel: "Dashboard" },
@@ -27,39 +30,57 @@ const NavBar = () => {
     localStorage.removeItem("user");
   };
 
+  const theme = useTheme();
+
+  const isMdAndUp = useMediaQuery(theme.breakpoints.up("md"));
+
   return (
-    <nav>
-      <div className="nav__logo">
-        <NavLink to="/">
-          <h1>eTHERIA</h1>
-        </NavLink>
-      </div>
-      <div className="nav__nav-links">
-        {pages &&
-          pages.map((page) => {
-            return (
-              <div className="nav-link">
-                <NavLink
-                  to={page.link}
-                  key={page.link}
-                  exact
-                  className="nav-link"
-                  activeClassName="active"
-                >
-                  <p className="nav-link__text">
-                    {page.navLabel?.toUpperCase()}
-                  </p>
-                </NavLink>
-              </div>
-            );
-          })}
-        <TooltipWrapper title="Log out">
-          <NavLink className="nav__logout" to="/" onClick={handleLogOut}>
-            <ExitToAppTwoToneIcon sx={{ fontSize: "2.5rem" }} />
-          </NavLink>
-        </TooltipWrapper>
-      </div>
-    </nav>
+    <>
+      {isMdAndUp ? (
+        <nav>
+          <div className="nav__logo">
+            <NavLink to="/">
+              <h1>eTHERIA</h1>
+            </NavLink>
+          </div>
+          <div className="nav__nav-links">
+            {pages &&
+              pages.map((page) => {
+                return (
+                  <div className="nav-link" key={page.link}>
+                    <NavLink
+                      to={page.link}
+                      exact
+                      className="nav-link"
+                      activeClassName="active"
+                    >
+                      <p className="nav-link__text">
+                        {page.navLabel?.toUpperCase()}
+                      </p>
+                    </NavLink>
+                  </div>
+                );
+              })}
+            <TooltipWrapper title="Log out">
+              <NavLink className="nav__logout" to="/" onClick={handleLogOut}>
+                <ExitToAppTwoToneIcon sx={{ fontSize: "2.5rem" }} />
+              </NavLink>
+            </TooltipWrapper>
+          </div>
+        </nav>
+      ) : (
+        <nav>
+          <div className="nav__logo">
+            <NavLink to="/">
+              <h1>eTHERIA</h1>
+            </NavLink>
+          </div>
+          {/* <SideBar /> */}
+          {/* <MenuTwoToneIcon sx={{ color: "font.white", fontSize: "2rem" }} /> */}
+          <NavMenu pages={pages} />
+        </nav>
+      )}
+    </>
   );
 };
 

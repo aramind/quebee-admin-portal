@@ -85,3 +85,11 @@ input:active {
 .users-table__header {
   background-color: red;
 }
+
+/* ID */
+#navlink-logout-router {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20%;
+}
