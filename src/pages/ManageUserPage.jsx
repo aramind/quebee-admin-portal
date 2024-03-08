@@ -23,6 +23,7 @@ import genInitialPassword from "../utils/login/genInitialPassword";
 import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
 import VisibilityOffTwoToneIcon from "@mui/icons-material/VisibilityOffTwoTone";
 import HttpsTwoToneIcon from "@mui/icons-material/HttpsTwoTone";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 // todo: to delete
 import { dummyUsers } from "../mockDB/dummyUsers";
 import FormActionButton from "../components/form/FormActionButton";
@@ -154,12 +155,12 @@ const ManageUserPage = () => {
       headerAlign: "center",
       editable: false,
       flex: 1,
-
       headerClassName: "users-table__header",
       renderHeader: () => (
         <Typography
           sx={{
             fontWeight: "bold",
+            width: "100%",
           }}
         >
           {col.headerName.toUpperCase()}
@@ -183,8 +184,29 @@ const ManageUserPage = () => {
             columns={colsWithWidth}
             slots={{ toolbar: GridToolbar }}
             sx={{
+              // "& .MuiDataGrid-columnHeaderTitleContainer": {
+              //   border: "1px solid black",
+              //   width: "100%",
+              //   display: "flex",
+              // },
+              // "& .MuiDataGrid-columnHeaderTitleContainerContent": {
+              //   backgroundColor: "yellow",
+              //   width: "80%",
+              //   display: "flex",
+              //   textAlign: "center",
+              // },
+              // "& .MuiDataGrid-iconButtonContainer": {
+              //   px: 0,
+              //   backgroundColor: "red",
+              //   width: "20px",
+              //   display: "flex",
+              //   flex: "1%",
+              //   justifyContent: "center",
+              // },
               "& .MuiDataGrid-columnHeader": {
                 backgroundColor: theme.palette.primary.light,
+                width: "100%",
+                justifyContent: "left",
               },
               "& .MuiDataGrid-columnHeader:hover": {
                 backgroundColor: theme.palette.tertiary.light,
