@@ -1,13 +1,13 @@
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import React from "react";
 import FormInputLabel from "./FormInputLabel";
 
 const LabelledSelect = ({ label, select }) => {
   return (
-    <Box>
+    <Stack spacing={0.3}>
       <FormInputLabel label={label} />
       {select}
-    </Box>
+    </Stack>
   );
 };
 

@@ -1,6 +1,6 @@
 const constants = {
-  ROLES: ["admin", "editor", "viewer"],
-  STATUS: ["active", "deactivated"],
+  ROLES: ["admin", "editor", "viewer", ""],
+  STATUS: ["active", "deactivated", ""],
 };
 
 export default constants;

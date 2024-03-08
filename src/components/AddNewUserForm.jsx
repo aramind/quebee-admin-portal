@@ -6,18 +6,19 @@ import LabelledSelect from "./form/LabelledSelect";
 import SimpleSelect from "./SimpleSelect";
 import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "./form/FormActionButton";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
-import constants from "./configs/constants";
 import genInitialPassword from "../utils/login/genInitialPassword";
+import constants from "./configs/constants";
 
 const AddNewUserForm = () => {
   //   form
-  const { register, handleSubmit, formState, reset } = useForm({
-    resolver: zodResolver(userSchema),
-    mode: "onTouched",
-  });
+  const { register, handleSubmit, formState, reset, control, setValue } =
+    useForm({
+      resolver: zodResolver(userSchema),
+      mode: "onTouched",
+    });
 
   const { errors } = formState;
 
@@ -30,7 +31,16 @@ const AddNewUserForm = () => {
   };
   // handlers
   // todo
-  const handleClear = () => {};
+  const handleClear = () => {
+    reset({
+      lastName: "",
+      firstName: "",
+      username: "",
+      role: "",
+      status: "",
+      password: genInitialPassword(),
+    });
+  };
 
   return (
     <>
@@ -64,15 +74,43 @@ const AddNewUserForm = () => {
                 />
               </Box>
               <Box flex={1}>
-                <LabelledSelect
-                  label="role"
-                  select={<SimpleSelect options={constants.ROLES} />}
+                <Controller
+                  name="role"
+                  id="role"
+                  control={control}
+                  render={({ field }) => (
+                    <LabelledSelect
+                      label="role"
+                      select={
+                        <SimpleSelect
+                          options={constants.ROLES}
+                          defaultValue=""
+                          selectedOption={field.value || ""}
+                          onChange={(e) => field.onChange(e.target.value)}
+                        />
+                      }
+                    />
+                  )}
                 />
               </Box>
               <Box flex={1}>
-                <LabelledSelect
-                  label="status"
-                  select={<SimpleSelect options={constants.STATUS} />}
+                <Controller
+                  name="status"
+                  id="status"
+                  control={control}
+                  render={({ field }) => (
+                    <LabelledSelect
+                      label="status"
+                      select={
+                        <SimpleSelect
+                          options={constants.STATUS}
+                          defaultValue=""
+                          selectedOption={field.value || ""}
+                          onChange={(e) => field.onChange(e.target.value)}
+                        />
+                      }
+                    />
+                  )}
                 />
               </Box>
               <Box flex={1}>
