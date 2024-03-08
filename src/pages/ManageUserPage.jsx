@@ -12,8 +12,7 @@ import FormInputLabel from "../components/form/FormInputLabel";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DraggableDialog from "../components/DraggableDialog";
-import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
-import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+
 import LabelledTextField from "../components/form/LabelledTextField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
@@ -29,6 +28,7 @@ import { dummyUsers } from "../mockDB/dummyUsers";
 import FormActionButton from "../components/form/FormActionButton";
 import FormActionsContainer from "../containers/FormActionsContainer";
 import LabelledSelect from "../components/form/LabelledSelect";
+import RenderAction from "../components/renders/RenderAction";
 const ROLES = ["admin", "editor", "viewer"];
 const STATUS = ["active", "deactivated"];
 
@@ -85,31 +85,6 @@ const RenderPassword = ({ row }) => {
     </>
   );
 };
-const RenderAction = () => {
-  const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
-  const styles = useStyles();
-
-  return (
-    <>
-      <IconButton
-        aria-label="edit"
-        sx={styles.iconButton}
-        onClick={() => setOpenDialogEditUser(true)}
-      >
-        <EditTwoToneIcon />
-      </IconButton>
-
-      <IconButton aria-label="delete" sx={styles.iconButton}>
-        <DeleteTwoToneIcon />
-      </IconButton>
-      <DraggableDialog
-        open={openDialogEditUser}
-        setOpen={setOpenDialogEditUser}
-        title="Edit User Information"
-      />
-    </>
-  );
-};
 
 const columns = [
   { field: "lastName", headerName: "last name" },
@@ -122,13 +97,12 @@ const columns = [
     field: "actions",
     headerName: "Actions",
 
-    renderCell: RenderAction,
+    renderCell: (params) => <RenderAction row={params.row} />,
   },
 ];
 
 const ManageUserPage = () => {
   const styles = useStyles();
-  const theme = useTheme();
   //   form
   const { register, handleSubmit, formState, reset } = useForm({
     resolver: zodResolver(userSchema),
@@ -183,35 +157,7 @@ const ManageUserPage = () => {
             rows={rows}
             columns={colsWithWidth}
             slots={{ toolbar: GridToolbar }}
-            sx={{
-              // "& .MuiDataGrid-columnHeaderTitleContainer": {
-              //   border: "1px solid black",
-              //   width: "100%",
-              //   display: "flex",
-              // },
-              // "& .MuiDataGrid-columnHeaderTitleContainerContent": {
-              //   backgroundColor: "yellow",
-              //   width: "80%",
-              //   display: "flex",
-              //   textAlign: "center",
-              // },
-              // "& .MuiDataGrid-iconButtonContainer": {
-              //   px: 0,
-              //   backgroundColor: "red",
-              //   width: "20px",
-              //   display: "flex",
-              //   flex: "1%",
-              //   justifyContent: "center",
-              // },
-              "& .MuiDataGrid-columnHeader": {
-                backgroundColor: theme.palette.primary.light,
-                width: "100%",
-                justifyContent: "left",
-              },
-              "& .MuiDataGrid-columnHeader:hover": {
-                backgroundColor: theme.palette.tertiary.light,
-              },
-            }}
+            sx={localStyle.datagrid}
           />
         </Stack>
       </ElevatedSectionWrapper>
@@ -302,5 +248,34 @@ const localStyle = {
     cursor: "pointer",
     fontSize: "1.2rem",
     color: "primary.main",
+  },
+  datagrid: {
+    // "& .MuiDataGrid-columnHeaderTitleContainer": {
+    //   border: "1px solid black",
+    //   width: "100%",
+    //   display: "flex",
+    // },
+    // "& .MuiDataGrid-columnHeaderTitleContainerContent": {
+    //   backgroundColor: "yellow",
+    //   width: "80%",
+    //   display: "flex",
+    //   textAlign: "center",
+    // },
+    // "& .MuiDataGrid-iconButtonContainer": {
+    //   px: 0,
+    //   backgroundColor: "red",
+    //   width: "20px",
+    //   display: "flex",
+    //   flex: "1%",
+    //   justifyContent: "center",
+    // },
+    "& .MuiDataGrid-columnHeader": {
+      backgroundColor: "primary.light",
+      width: "100%",
+      justifyContent: "left",
+    },
+    "& .MuiDataGrid-columnHeader:hover": {
+      backgroundColor: "tertiary.light",
+    },
   },
 };
