@@ -1,4 +1,5 @@
 import { z } from "zod";
+import constants from "../components/configs/constants";
 
 const subjectSchema = z.object({
   shortTitle: z.string().min(1, "Required"),
@@ -11,7 +12,8 @@ const subjectSchema = z.object({
 });
 
 const courseSchema = z.object({
-  database: z.string().min(1, "Required"),
+  database: z.enum(constants.DATABASES),
+  // database: z.array(databaseSchema),
   code: z.string().min(1, "Required"),
   acronym: z.string().min(1, "Required"),
   title: z.string().min(1, "Required"),

@@ -21,17 +21,19 @@ const MenuProps = {
   },
 };
 
-const MultiSelectCheckbox = ({ options, register, formState, label }) => {
+const MultiSelectCheckbox = ({ options, label, field, selectedValues }) => {
   const [selected, setSelected] = useState([]);
-  const { errors, dirtyFields } = formState;
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
 
+    field.onChange(typeof value === "string" ? value.split(",") : value);
     setSelected(typeof value === "string" ? value.split(",") : value);
   };
+
+  console.log(selected);
   return (
     <div>
       <FormControl fullWidth>
@@ -40,20 +42,12 @@ const MultiSelectCheckbox = ({ options, register, formState, label }) => {
           size="small"
           sx={{ my: "auto" }}
           id="database"
-          // focused={dirtyFields.database && !errors.database}
-          // error={!!errors.database}
           multiple
-          value={selected}
+          value={selectedValues || []}
           onChange={handleChange}
-          input={
-            <OutlinedInput
-              label={label}
-              focused={dirtyFields.database && !errors.database}
-              error={!!errors.database}
-              {...register("database")}
-            />
-          }
-          renderValue={(selected) => selected.join(", ")}
+          input={<OutlinedInput label={label} />}
+          // renderValue={(selected) => selected.join(", ")}
+          renderValue={(selected) => (selected || []).join(", ")}
           MenuProps={MenuProps}
         >
           {options.map((option) => {

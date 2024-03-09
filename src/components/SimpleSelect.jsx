@@ -1,12 +1,19 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
 
-const SimpleSelect = ({ options, selectedOption, onChange }) => {
+const SimpleSelect = ({
+  options,
+  selectedOption,
+  onChange,
+  disabled,
+  defaultValue,
+}) => {
   return (
     <FormControl size="small" fullWidth>
       <Select
+        disabled={disabled}
         labelId="simple-select"
         id="simple-select"
-        value={selectedOption}
+        value={selectedOption || defaultValue}
         onChange={onChange}
         sx={{ minWidth: "140px", width: 1 }}
       >

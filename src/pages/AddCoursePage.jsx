@@ -8,8 +8,8 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import React from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import courseSchema from "../schemas/course";
 import { DevTool } from "@hookform/devtools";
 import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
@@ -23,6 +23,9 @@ import GrowTransitionWrapper from "../wrappers/GrowTransitionWrapper";
 import FormActionButton from "../components/form/FormActionButton";
 
 import FormActionsContainer from "../containers/FormActionsContainer";
+import LabelledSelect from "../components/form/LabelledSelect";
+import SimpleSelect from "../components/SimpleSelect";
+import constants from "../components/configs/constants";
 
 // TODELEDELETE
 const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
@@ -48,6 +51,7 @@ const AddCoursePage = () => {
   });
 
   const onSubmit = (data) => {
+    console.log(data);
     const subjects = getValues("subjects", []);
 
     const prepSubjects = subjects.map((subject) => {
@@ -103,16 +107,23 @@ const AddCoursePage = () => {
                   </Grid>
                   <Grid xs={12} md={9}>
                     <Stack width={1} spacing={0.25}>
-                      <InputLabel
-                        htmlFor="databases"
-                        sx={styles.form.inputLabel}
-                      >
-                        DATABASE(S)
-                      </InputLabel>
-                      <MultiSelectCheckbox
-                        options={mockDBNames}
-                        register={register}
-                        formState={formState}
+                      <Controller
+                        name="database"
+                        id="database"
+                        control={control}
+                        render={({ field }) => (
+                          <LabelledSelect
+                            label="database"
+                            select={
+                              <SimpleSelect
+                                // disabled={true}
+                                options={constants.DATABASES}
+                                selectedOption={field.value}
+                                onChange={(e) => field.onChange(e.target.value)}
+                              />
+                            }
+                          />
+                        )}
                       />
                     </Stack>
                   </Grid>
