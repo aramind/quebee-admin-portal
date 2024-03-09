@@ -11,6 +11,7 @@ import ControlledSimpleSelect from "../components/form/ControlledSimpleSelect";
 import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "../components/form/FormActionButton";
 import questionSchema from "../schemas/question";
+import ControlledChipMultiSelect from "../components/form/ControlledChipMultiSelect";
 
 const AddQuestionPage = () => {
   const styles = useStyles();
@@ -22,6 +23,7 @@ const AddQuestionPage = () => {
   });
 
   const onSubmit = (data) => {
+    console.log(data);
     console.log("Submitting question...", data);
   };
 
@@ -53,11 +55,19 @@ const AddQuestionPage = () => {
         </ElevatedSectionWrapper>
         <br />
         <Stack direction={{ xs: "column", md: "row" }}>
-          <Box className="outlined" flex={{ xs: 1, md: "50%" }}>
-            <ElevatedSectionWrapper></ElevatedSectionWrapper>
+          <Box flex={{ xs: 1, md: "50%" }}>
+            <ElevatedSectionWrapper>
+              <ControlledChipMultiSelect
+                name="courses"
+                control={control}
+                id="add-question-courses"
+                label="Choose Course(s)"
+                options={constants.COURSES}
+              />
+            </ElevatedSectionWrapper>
           </Box>
-          <Box className="outlined" flex={{ xs: 1, md: "50%" }}>
-            <ElevatedSectionWrapper>Hey</ElevatedSectionWrapper>
+          <Box flex={{ xs: 1, md: "50%" }}>
+            {/* <ElevatedSectionWrapper>Hey</ElevatedSectionWrapper> */}
           </Box>
         </Stack>
         <br />
