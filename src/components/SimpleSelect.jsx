@@ -6,6 +6,7 @@ import {
   lightGreen,
   lime,
   orange,
+  teal,
 } from "@mui/material/colors";
 
 const SimpleSelect = ({
@@ -27,7 +28,7 @@ const SimpleSelect = ({
           minWidth: "140px",
           width: 1,
           "& .MuiSelect-select": {
-            backgroundColor: selectedOption ? lime["100"] : "transparent",
+            backgroundColor: selectedOption ? teal["A100"] : "transparent",
           },
         }}
       >

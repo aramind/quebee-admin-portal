@@ -20,9 +20,11 @@ import {
   green,
   lightBlue,
   lightGreen,
+  lime,
   orange,
   purple,
   teal,
+  yellow,
 } from "@mui/material/colors";
 
 const AddQuestionPage = () => {
@@ -86,7 +88,7 @@ const AddQuestionPage = () => {
                     label="course(s)"
                     options={constants.COURSES}
                     free={false}
-                    chipColor={teal[50]}
+                    chipColor={teal["A100"]}
                     textTransform="uppercase"
                   />
 
@@ -104,7 +106,7 @@ const AddQuestionPage = () => {
                     label="subject(s)"
                     options={constants.SUBJECTS}
                     free={false}
-                    chipColor={orange[50]}
+                    chipColor={amber["A100"]}
                     textTransform="uppercase"
                   />
                   {/* <ControlledChipMultiSelect
@@ -121,7 +123,7 @@ const AddQuestionPage = () => {
                     label="topic(s)"
                     options={constants.TOPICS}
                     free={false}
-                    chipColor={cyan[50]}
+                    chipColor={cyan["A100"]}
                     textTransform="capitalize"
                   />
                 </Stack>
@@ -140,7 +142,7 @@ const AddQuestionPage = () => {
               label="select tag(s)"
               options={constants.TAGS}
               free={true}
-              chipColor={amber[50]}
+              chipColor={lime["A100"]}
             />
           </ElevatedSectionWrapper>
         </Stack>
