@@ -1,4 +1,4 @@
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, Divider, Stack } from "@mui/material";
 import React from "react";
 import useStyles from "../hooks/useStyles";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
@@ -57,13 +57,22 @@ const AddQuestionPage = () => {
         <Stack direction={{ xs: "column", md: "row" }}>
           <Box flex={{ xs: 1, md: "50%" }}>
             <ElevatedSectionWrapper>
-              <ControlledChipMultiSelect
-                name="courses"
-                control={control}
-                id="add-question-courses"
-                label="Choose Course(s)"
-                options={constants.COURSES}
-              />
+              <Stack gap={1}>
+                <ControlledChipMultiSelect
+                  name="courses"
+                  control={control}
+                  id="add-question-courses"
+                  label="Choose Course(s)"
+                  options={constants.COURSES}
+                />
+                <ControlledChipMultiSelect
+                  name="courses"
+                  control={control}
+                  id="add-question-courses"
+                  label="Choose Course(s)"
+                  options={constants.COURSES}
+                />
+              </Stack>
             </ElevatedSectionWrapper>
           </Box>
           <Box flex={{ xs: 1, md: "50%" }}>

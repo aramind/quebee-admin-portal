@@ -82,15 +82,15 @@ const AddCoursePage = () => {
       disableGutters="true"
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <Stack spacing={2}>
+        <Stack spacing={1.5}>
           <ElevatedSectionWrapper>
             <Stack
-              spacing={2}
+              spacing={1.5}
               direction={{ xs: "column", md: "row" }}
               width={1}
             >
               <Box width={{ xs: 1, md: 0.5 }}>
-                <Grid container spacing={2}>
+                <Grid container spacing={1.5}>
                   <Grid xs={12} md={3}>
                     <LabelledTextField
                       label="code"
@@ -151,7 +151,7 @@ const AddCoursePage = () => {
                   focused={dirtyFields.description && !errors}
                   register={register}
                   multiline={true}
-                  minRows={4.3}
+                  minRows={4.2}
                 />
               </Stack>
             </Stack>
