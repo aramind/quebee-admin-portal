@@ -6,6 +6,7 @@ import { cyan, grey, purple, red, teal } from "@mui/material/colors";
 const FormMultiAutoComp = ({
   field,
   options,
+  free,
   selectedOptions,
   handleChange,
   textTransform = "none",
@@ -15,7 +16,7 @@ const FormMultiAutoComp = ({
     <Autocomplete
       {...field}
       multiple
-      freeSolo
+      freeSolo={free}
       disableCloseOnSelect
       limitTags={40}
       size="small"

@@ -9,6 +9,7 @@ const ControlledChipMultiAutoComp = ({
   id,
   label,
   options,
+  free,
   chipColor,
   textTransform,
 }) => {
@@ -37,6 +38,7 @@ const ControlledChipMultiAutoComp = ({
               selectedOptions={selectedOptions}
               handleChange={handleChange}
               options={options}
+              free={free}
               chipColor={chipColor}
               textTransform={textTransform}
             />

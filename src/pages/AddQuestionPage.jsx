@@ -82,6 +82,7 @@ const AddQuestionPage = () => {
                     id="controlled-multi-auto-comp"
                     label="course(s)"
                     options={constants.COURSES}
+                    free={false}
                     chipColor={lightGreen[100]}
                     textTransform="uppercase"
                   />
@@ -99,6 +100,7 @@ const AddQuestionPage = () => {
                     id="controlled-multi-auto-comp"
                     label="subject(s)"
                     options={constants.SUBJECTS}
+                    free={false}
                     chipColor={orange[100]}
                     textTransform="uppercase"
                   />
@@ -115,6 +117,7 @@ const AddQuestionPage = () => {
                     id="controlled-multi-auto-comp"
                     label="topic(s)"
                     options={constants.TOPICS}
+                    free={false}
                     chipColor={lightBlue[100]}
                     textTransform="capitalize"
                   />
@@ -133,6 +136,7 @@ const AddQuestionPage = () => {
               id="controlled-multi-select"
               label="select tag(s)"
               options={constants.TAGS}
+              free={true}
             />
           </ElevatedSectionWrapper>
         </Stack>
