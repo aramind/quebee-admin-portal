@@ -1,9 +1,13 @@
 import { Box, MenuItem, OutlinedInput, Select } from "@mui/material";
 import React from "react";
 import FormChip from "./FormChip";
-import constants from "../configs/constants";
 
-const FormMultiSelectChip = ({ field, selectedOptions, handleChange }) => {
+const FormMultiSelectChip = ({
+  field,
+  options,
+  selectedOptions,
+  handleChange,
+}) => {
   return (
     <Select
       {...field}
@@ -23,9 +27,9 @@ const FormMultiSelectChip = ({ field, selectedOptions, handleChange }) => {
       )}
       sx={localStyle.select}
     >
-      {constants.COURSES.map((course) => (
-        <MenuItem key={course} value={course}>
-          {course}
+      {options.map((option) => (
+        <MenuItem key={option} value={option}>
+          {option}
         </MenuItem>
       ))}
     </Select>

@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 import LabelledSelect from "./LabelledSelect";
-import { Box, Chip, MenuItem, OutlinedInput, Select } from "@mui/material";
-
-import constants from "../configs/constants";
-import FormChip from "./FormChip";
 import FormMultiSelectChip from "./FormMultiSelectChip";
 
 const ControlledChipMultiSelect = ({ control, name, id, label, options }) => {
@@ -19,7 +15,7 @@ const ControlledChipMultiSelect = ({ control, name, id, label, options }) => {
     );
   };
 
-  console.log("From mulichipcomp:", selectedOptions);
+  // console.log("From mulichipcomp:", selectedOptions);
   return (
     <Controller
       name={name}
@@ -33,6 +29,7 @@ const ControlledChipMultiSelect = ({ control, name, id, label, options }) => {
               field={field}
               selectedOptions={selectedOptions}
               handleChange={handleChange}
+              options={options}
             />
           }
         />
