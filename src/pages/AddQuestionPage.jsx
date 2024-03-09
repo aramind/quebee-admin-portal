@@ -1,6 +1,7 @@
 import React from "react";
+
 const AddQuestionPage = () => {
-  return <div>Add Question</div>;
+  return <div>AddQuestionPage</div>;
 };
 
 export default AddQuestionPage;

@@ -5,9 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useGlobalState } from "../../context/ContextProvider";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import "./navbar.css";
-import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import TooltipWrapper from "../../wrappers/TooltipWrapper";
-import SideBar from "../SideBar";
 import NavMenu from "../NavMenu";
 
 const pages = [
@@ -75,8 +73,6 @@ const NavBar = () => {
               <h1>eTHERIA</h1>
             </NavLink>
           </div>
-          {/* <SideBar /> */}
-          {/* <MenuTwoToneIcon sx={{ color: "font.white", fontSize: "2rem" }} /> */}
           <NavMenu pages={pages} />
         </nav>
       )}

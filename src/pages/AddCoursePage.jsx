@@ -12,8 +12,6 @@ import React from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import courseSchema from "../schemas/course";
 import { DevTool } from "@hookform/devtools";
-import MultiSelectCheckbox from "../components/MultiSelectCheckbox";
-
 // styles
 import useStyles from "../hooks/useStyles";
 import LabelledTextField from "../components/form/LabelledTextField";
@@ -26,9 +24,6 @@ import FormActionsContainer from "../containers/FormActionsContainer";
 import LabelledSelect from "../components/form/LabelledSelect";
 import SimpleSelect from "../components/SimpleSelect";
 import constants from "../components/configs/constants";
-
-// TODELEDELETE
-const mockDBNames = ["Engineering", "LET", "Accountancy", "Nursing"];
 
 const AddCoursePage = () => {
   // hooks
@@ -51,7 +46,7 @@ const AddCoursePage = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     const subjects = getValues("subjects", []);
 
     const prepSubjects = subjects.map((subject) => {

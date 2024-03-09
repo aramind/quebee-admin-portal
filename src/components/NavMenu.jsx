@@ -1,13 +1,4 @@
-import {
-  Box,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, IconButton, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import { NavLink } from "react-router-dom";
@@ -66,13 +57,13 @@ const NavMenu = ({ pages }) => {
         {pages.length > 0 ? (
           pages.map((page, index) => {
             return (
-              <React.Fragment key={index}>
+              <Box key={index}>
                 <NavLink to={page.link}>
                   <MenuItem onClick={handleClose}>{page.navLabel}</MenuItem>
                 </NavLink>
 
                 <Divider sx={{ bgcolor: "font.white" }} />
-              </React.Fragment>
+              </Box>
             );
           })
         ) : (

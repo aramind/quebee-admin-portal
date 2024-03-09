@@ -170,7 +170,10 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
             />
             <DialogActionButton
               label="save"
-              onClickHandler={handleSubmit(onSubmit, onError)}
+              onClickHandler={() => {
+                handleSubmit(onSubmit, onError)();
+                setOpen(false);
+              }}
             />
           </DialogActionsContainer>
         </DialogActions>
