@@ -20,7 +20,7 @@ const LabelledTextField = ({
     <Stack width={1} gap={0.25}>
       <InputLabel
         htmlFor={label}
-        sx={{ ...styles.form.inputLabel, color: error ? "red" : "black" }}
+        sx={{ ...styles.form.inputLabel, color: error ? "red" : "font.gray" }}
       >
         {label.toUpperCase()}
       </InputLabel>

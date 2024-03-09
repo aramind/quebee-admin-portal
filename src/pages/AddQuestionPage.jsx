@@ -12,6 +12,15 @@ import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "../components/form/FormActionButton";
 import questionSchema from "../schemas/question";
 import ControlledChipMultiSelect from "../components/form/ControlledChipMultiSelect";
+import ControlledChipMultiAutoComp from "../components/form/ControlledChipMultiAutoComp";
+import {
+  cyan,
+  green,
+  lightBlue,
+  lightGreen,
+  orange,
+  purple,
+} from "@mui/material/colors";
 
 const AddQuestionPage = () => {
   const styles = useStyles();
@@ -42,42 +51,90 @@ const AddQuestionPage = () => {
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <ElevatedSectionWrapper>
-          <Box width={{ xs: 1, md: "33%" }} minWidth="300px">
-            <ControlledSimpleSelect
-              name="database"
-              id="add-question-database"
-              control={control}
-              label="Choose Database"
-              options={constants.DATABASES}
-            />
-          </Box>
-        </ElevatedSectionWrapper>
-        <br />
-        <Stack direction={{ xs: "column", md: "row" }}>
-          <Box flex={{ xs: 1, md: "50%" }}>
+        <Stack spacing={1.5}>
+          <Stack spacing={1.5}>
             <ElevatedSectionWrapper>
-              <Stack gap={1}>
-                <ControlledChipMultiSelect
-                  name="courses"
+              <Box width={{ xs: 1, md: "33%" }} minWidth="300px">
+                <ControlledSimpleSelect
+                  name="database"
+                  id="add-question-database"
                   control={control}
-                  id="add-question-courses"
-                  label="Choose Course(s)"
-                  options={constants.COURSES}
+                  label="database"
+                  options={constants.DATABASES}
                 />
-                <ControlledChipMultiSelect
-                  name="courses"
-                  control={control}
-                  id="add-question-courses"
-                  label="Choose Course(s)"
-                  options={constants.COURSES}
-                />
-              </Stack>
+              </Box>
             </ElevatedSectionWrapper>
-          </Box>
-          <Box flex={{ xs: 1, md: "50%" }}>
-            {/* <ElevatedSectionWrapper>Hey</ElevatedSectionWrapper> */}
-          </Box>
+          </Stack>
+          <Stack direction={{ xs: "column", md: "row" }}>
+            <Box flex={{ xs: 1, md: "50%" }}>
+              <ElevatedSectionWrapper>
+                <Stack spacing={1.5}>
+                  {/* <ControlledChipMultiSelect
+                    name="courses"
+                    control={control}
+                    id="controlled-multi-select"
+                    label="course(s)"
+                    options={constants.COURSES}
+                  /> */}
+                  <ControlledChipMultiAutoComp
+                    name="courses"
+                    control={control}
+                    id="controlled-multi-auto-comp"
+                    label="course(s)"
+                    options={constants.COURSES}
+                    chipColor={lightGreen[100]}
+                    textTransform="uppercase"
+                  />
+
+                  {/* <ControlledChipMultiSelect
+                    name="subjects"
+                    control={control}
+                    id="controlled-multi-select"
+                    label="subject(s)"
+                    options={constants.SUBJECTS}
+                  /> */}
+                  <ControlledChipMultiAutoComp
+                    name="subjects"
+                    control={control}
+                    id="controlled-multi-auto-comp"
+                    label="subject(s)"
+                    options={constants.SUBJECTS}
+                    chipColor={orange[100]}
+                    textTransform="uppercase"
+                  />
+                  {/* <ControlledChipMultiSelect
+                    name="topics"
+                    control={control}
+                    id="controlled-multi-select"
+                    label="select topic(s)"
+                    options={constants.TOPICS}
+                  /> */}
+                  <ControlledChipMultiAutoComp
+                    name="topics"
+                    control={control}
+                    id="controlled-multi-auto-comp"
+                    label="topic(s)"
+                    options={constants.TOPICS}
+                    chipColor={lightBlue[100]}
+                    textTransform="capitalize"
+                  />
+                </Stack>
+              </ElevatedSectionWrapper>
+            </Box>
+            <Box flex={{ xs: 1, md: "50%" }}>
+              {/* <ElevatedSectionWrapper>Hey</ElevatedSectionWrapper> */}
+            </Box>
+          </Stack>
+
+          <ElevatedSectionWrapper>
+            <ControlledChipMultiAutoComp
+              name="tags"
+              control={control}
+              id="controlled-multi-select"
+              label="select tag(s)"
+              options={constants.TAGS}
+            />
+          </ElevatedSectionWrapper>
         </Stack>
         <br />
         <FormActionsContainer>

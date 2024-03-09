@@ -23,8 +23,9 @@ const useStyles = () => {
         textAlign: "left",
         fontSize: "0.8rem",
         px: "5px",
-        color: "font.black",
-        fontWeight: "bold",
+        color: "font.gray",
+        // fontWeight: "bold",
+        fontFamily: (theme) => theme.typography.prompt,
       },
       primaryActionButton: {
         px: 5,

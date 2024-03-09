@@ -18,6 +18,7 @@ const COLORS = {
     main: "#E9BB1D",
     dark: "#CCA114",
     light: "#F2D77D",
+    lightest: "#F8E8B5",
   },
   info: {
     main: teal["300"],
@@ -27,7 +28,7 @@ const COLORS = {
   font: {
     black: "#333",
     white: "#eee",
-    gray: grey[700],
+    gray: grey[800],
   },
   bg: {
     light: {
@@ -57,7 +58,16 @@ const auroraTheme = createTheme({
     bg: COLORS.bg,
   },
   typography: {
-    fontFamily: `"Nunito", "Roboto", "sans-serif"`,
+    // fontSize: "1rem",
+    fontFamily: `"Inter", "Nunito", "Roboto", "sans-serif"`,
+    exo: "Exo 2",
+    prompt: "Prompt",
+    poppins: "Poppins",
+    abel: "Abel",
+    inter: "Inter",
+    roboto: "Roboto",
+    nunito: "Nunito",
+    chip: "Prompt",
   },
   components: {
     MuiIconButton: {
