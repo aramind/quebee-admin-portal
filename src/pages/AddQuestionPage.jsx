@@ -14,12 +14,15 @@ import questionSchema from "../schemas/question";
 import ControlledChipMultiSelect from "../components/form/ControlledChipMultiSelect";
 import ControlledChipMultiAutoComp from "../components/form/ControlledChipMultiAutoComp";
 import {
+  amber,
+  blue,
   cyan,
   green,
   lightBlue,
   lightGreen,
   orange,
   purple,
+  teal,
 } from "@mui/material/colors";
 
 const AddQuestionPage = () => {
@@ -83,7 +86,7 @@ const AddQuestionPage = () => {
                     label="course(s)"
                     options={constants.COURSES}
                     free={false}
-                    chipColor={lightGreen[100]}
+                    chipColor={teal[50]}
                     textTransform="uppercase"
                   />
 
@@ -101,7 +104,7 @@ const AddQuestionPage = () => {
                     label="subject(s)"
                     options={constants.SUBJECTS}
                     free={false}
-                    chipColor={orange[100]}
+                    chipColor={orange[50]}
                     textTransform="uppercase"
                   />
                   {/* <ControlledChipMultiSelect
@@ -118,7 +121,7 @@ const AddQuestionPage = () => {
                     label="topic(s)"
                     options={constants.TOPICS}
                     free={false}
-                    chipColor={lightBlue[100]}
+                    chipColor={cyan[50]}
                     textTransform="capitalize"
                   />
                 </Stack>
@@ -137,6 +140,7 @@ const AddQuestionPage = () => {
               label="select tag(s)"
               options={constants.TAGS}
               free={true}
+              chipColor={amber[50]}
             />
           </ElevatedSectionWrapper>
         </Stack>

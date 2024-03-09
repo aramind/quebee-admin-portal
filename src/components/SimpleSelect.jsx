@@ -1,4 +1,12 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
+import {
+  amber,
+  green,
+  lightBlue,
+  lightGreen,
+  lime,
+  orange,
+} from "@mui/material/colors";
 
 const SimpleSelect = ({
   options,
@@ -15,7 +23,13 @@ const SimpleSelect = ({
         id="simple-select"
         value={selectedOption || defaultValue}
         onChange={onChange}
-        sx={{ minWidth: "140px", width: 1 }}
+        sx={{
+          minWidth: "140px",
+          width: 1,
+          "& .MuiSelect-select": {
+            backgroundColor: selectedOption ? lime["100"] : "transparent",
+          },
+        }}
       >
         {options?.map((option, index) => {
           return (
