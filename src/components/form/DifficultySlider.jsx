@@ -1,4 +1,4 @@
-import { Slider } from "@mui/material";
+import { Slider, Typography } from "@mui/material";
 import { amber, cyan, red, teal } from "@mui/material/colors";
 import React from "react";
 
@@ -37,11 +37,23 @@ const DifficultySlider = ({ field }) => {
       value={field.value}
       onChange={(e, newValue) => field.onChange(newValue)}
       //   orientation="vertical"
-      valueLabelDisplay="auto"
+      //   valueLabelDisplay="auto"
       shiftStep={difficultySliderConstants.STEP_DIFFICULTY}
-      marks={difficultySliderConstants.MARKS_DIFFICULTY}
       min={difficultySliderConstants.MIN_DIFFICULTY}
       max={difficultySliderConstants.MAX_DIFFICULTY}
+      marks={difficultySliderConstants.MARKS_DIFFICULTY.map((mark) => ({
+        ...mark,
+        label: (
+          <Typography
+            variant="caption"
+            fontWeight={field.value === mark.value ? "bold" : "normal"}
+            color={field.value === mark.value ? "primary.dark" : "font.gray"}
+            fontSize={field.value === mark.value ? "0.9rem" : "0.8rem"}
+          >
+            {mark.label}
+          </Typography>
+        ),
+      }))}
       sx={{
         "& .MuiSlider-track": {
           backgroundColor: "primary.semi",

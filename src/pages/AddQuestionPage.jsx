@@ -13,19 +13,6 @@ import FormActionButton from "../components/form/FormActionButton";
 import questionSchema from "../schemas/question";
 import ControlledChipMultiSelect from "../components/form/ControlledChipMultiSelect";
 import ControlledChipMultiAutoComp from "../components/form/ControlledChipMultiAutoComp";
-import {
-  amber,
-  blue,
-  cyan,
-  green,
-  lightBlue,
-  lightGreen,
-  lime,
-  orange,
-  purple,
-  teal,
-  yellow,
-} from "@mui/material/colors";
 import DifficultySlider from "../components/form/DifficultySlider";
 import FormInputLabel from "../components/form/FormInputLabel";
 

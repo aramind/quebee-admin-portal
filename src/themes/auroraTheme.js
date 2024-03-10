@@ -29,6 +29,7 @@ const COLORS = {
     black: "#333",
     white: "#eee",
     gray: grey[800],
+    lightGray: grey[500],
   },
   bg: {
     light: {

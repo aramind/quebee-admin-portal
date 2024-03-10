@@ -13,7 +13,8 @@ const questionSchema = z.object({
   //   keywords: z.array(keywordsSchema),
   //   code: z.string().min(1, "Required"),
 
-  //   difficulty: z.string().min(1, "Required"),
+  // difficulty: z.string().min(1, "Required"),
+  difficulty: z.number().min(1, "Required"),
   //   type: z.string().min(1, "Required"),
   //   nature: z.string().min(1, "Required"),
   //   isPremium: z.boolean(),

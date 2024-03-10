@@ -1,7 +1,7 @@
-import { Autocomplete, Box, Chip, MenuItem, TextField } from "@mui/material";
+import { Autocomplete, Box, MenuItem, TextField } from "@mui/material";
 import React from "react";
-import FormChip from "./FormChip";
-import { cyan, grey, purple, red, teal } from "@mui/material/colors";
+
+import { grey, red } from "@mui/material/colors";
 
 const FormMultiAutoComp = ({
   field,
