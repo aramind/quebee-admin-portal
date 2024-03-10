@@ -1,13 +1,5 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
-import {
-  amber,
-  green,
-  lightBlue,
-  lightGreen,
-  lime,
-  orange,
-  teal,
-} from "@mui/material/colors";
+import { teal } from "@mui/material/colors";
 
 const SimpleSelect = ({
   options,

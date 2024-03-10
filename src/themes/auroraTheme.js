@@ -67,7 +67,7 @@ const auroraTheme = createTheme({
     inter: "Inter",
     roboto: "Roboto",
     nunito: "Nunito",
-    chip: "Prompt",
+    chip: "Inter",
   },
   components: {
     MuiIconButton: {

@@ -26,6 +26,8 @@ import {
   teal,
   yellow,
 } from "@mui/material/colors";
+import DifficultySlider from "../components/form/DifficultySlider";
+import FormInputLabel from "../components/form/FormInputLabel";
 
 const AddQuestionPage = () => {
   const styles = useStyles();
@@ -57,21 +59,19 @@ const AddQuestionPage = () => {
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Stack spacing={1.5}>
-          <Stack spacing={1.5}>
-            <ElevatedSectionWrapper>
-              <Box width={{ xs: 1, md: "33%" }} minWidth="300px">
-                <ControlledSimpleSelect
-                  name="database"
-                  id="add-question-database"
-                  control={control}
-                  label="database"
-                  options={constants.DATABASES}
-                />
-              </Box>
-            </ElevatedSectionWrapper>
-          </Stack>
-          <Stack direction={{ xs: "column", md: "row" }}>
-            <Box flex={{ xs: 1, md: "50%" }}>
+          <Stack spacing={1.5} direction={{ xs: "column", md: "row" }}>
+            <Stack spacing={1.5} flex={{ xs: 1, md: "50%" }}>
+              <ElevatedSectionWrapper>
+                <Box width={{ xs: 1 }} minWidth="300px">
+                  <ControlledSimpleSelect
+                    name="database"
+                    id="add-question-database"
+                    control={control}
+                    label="database"
+                    options={constants.DATABASES}
+                  />
+                </Box>
+              </ElevatedSectionWrapper>
               <ElevatedSectionWrapper>
                 <Stack spacing={1.5}>
                   {/* <ControlledChipMultiSelect
@@ -88,7 +88,8 @@ const AddQuestionPage = () => {
                     label="course(s)"
                     options={constants.COURSES}
                     free={false}
-                    chipColor={teal["A100"]}
+                    // chipColor={teal["A100"]}
+
                     textTransform="uppercase"
                   />
 
@@ -106,7 +107,7 @@ const AddQuestionPage = () => {
                     label="subject(s)"
                     options={constants.SUBJECTS}
                     free={false}
-                    chipColor={amber["A100"]}
+                    // chipColor={amber["A100"]}
                     textTransform="uppercase"
                   />
                   {/* <ControlledChipMultiSelect
@@ -123,28 +124,41 @@ const AddQuestionPage = () => {
                     label="topic(s)"
                     options={constants.TOPICS}
                     free={false}
-                    chipColor={cyan["A100"]}
+                    // chipColor={cyan["A100"]}
                     textTransform="capitalize"
                   />
                 </Stack>
               </ElevatedSectionWrapper>
-            </Box>
-            <Box flex={{ xs: 1, md: "50%" }}>
-              {/* <ElevatedSectionWrapper>Hey</ElevatedSectionWrapper> */}
-            </Box>
+              <ElevatedSectionWrapper>
+                <ControlledChipMultiAutoComp
+                  name="tags"
+                  control={control}
+                  id="controlled-multi-select"
+                  label="select tag(s)"
+                  options={constants.TAGS}
+                  free={true}
+                  // chipColor="transparent"
+                  // chipColor={lime["A100"]}
+                />
+              </ElevatedSectionWrapper>
+            </Stack>
+            <Stack spacing={1.5} flex={{ xs: 1, md: "50%" }}>
+              <ElevatedSectionWrapper>
+                <FormInputLabel label="difficulty" />
+                <Controller
+                  id="difficulty-slider"
+                  name="difficulty"
+                  control={control}
+                  defaultValue={3}
+                  render={({ field }) => (
+                    <Box sx={{ width: "100%", px: 5 }}>
+                      <DifficultySlider field={field} />
+                    </Box>
+                  )}
+                />
+              </ElevatedSectionWrapper>
+            </Stack>
           </Stack>
-
-          <ElevatedSectionWrapper>
-            <ControlledChipMultiAutoComp
-              name="tags"
-              control={control}
-              id="controlled-multi-select"
-              label="select tag(s)"
-              options={constants.TAGS}
-              free={true}
-              chipColor={lime["A100"]}
-            />
-          </ElevatedSectionWrapper>
         </Stack>
         <br />
         <FormActionsContainer>

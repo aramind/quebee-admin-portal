@@ -42,7 +42,7 @@ const FormMultiAutoComp = ({
           textTransform: textTransform,
           fontFamily: (theme) => theme.typography.chip,
           color: "black",
-          fontSize: { xs: "0.8rem", md: "1rem" },
+          fontSize: { xs: "0.8rem", md: "0.9rem" },
         },
         "& .MuiChip-root": {
           bgcolor: chipColor,
@@ -70,13 +70,9 @@ const localStyle = {
       borderColor: red[100],
       cursor: "default",
     },
-    // "& .MuiChip-deleteIcon": {
-    //   mr: "6px",
-    // },
-    "& .MuiChip-deleteIcon:hover": {
-      // mr: "1px",
-      color: "red",
-      // fontSize: "1.3rem",
-    },
+    "& .MuiChip-deleteIconColorDefault.MuiChip-deleteIconFilledColorDefault:hover":
+      {
+        color: red["A200"],
+      },
   },
 };
