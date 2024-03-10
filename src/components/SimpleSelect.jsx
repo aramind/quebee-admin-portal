@@ -17,10 +17,16 @@ const SimpleSelect = ({
         value={selectedOption || defaultValue}
         onChange={onChange}
         sx={{
-          minWidth: "140px",
+          // minWidth: "140px",
           width: 1,
           "& .MuiSelect-select": {
-            backgroundColor: selectedOption ? teal["A100"] : "transparent",
+            textTransform: "uppercase",
+            fontWeight: "bold",
+            backgroundColor: selectedOption ? teal["50"] : "transparent",
+            color: "primary.dark",
+          },
+          "& .MuiSelect-select:hover": {
+            backgroundColor: selectedOption ? teal["100"] : "transparent",
           },
         }}
       >

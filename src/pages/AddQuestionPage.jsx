@@ -15,6 +15,15 @@ import ControlledChipMultiSelect from "../components/form/ControlledChipMultiSel
 import ControlledChipMultiAutoComp from "../components/form/ControlledChipMultiAutoComp";
 import DifficultySlider from "../components/form/DifficultySlider";
 import FormInputLabel from "../components/form/FormInputLabel";
+import RadGroup from "../components/RadGroup";
+import TagSection from "./add-question-page/TagSection";
+import RadioGroupsSection from "./add-question-page/RadioGroupsSection";
+import DifficultySection from "./add-question-page/DifficultySection";
+import CYTSection from "./add-question-page/CYTSection";
+import DBSelectSection from "./add-question-page/DBSelectSection";
+import STSection from "./add-question-page/STSection";
+import CourseSection from "./add-question-page/CourseSection";
+import AccessSection from "./add-question-page/AccessSection";
 
 const AddQuestionPage = () => {
   const styles = useStyles();
@@ -45,108 +54,30 @@ const AddQuestionPage = () => {
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <Stack spacing={1.5}>
-          <Stack spacing={1.5} direction={{ xs: "column", md: "row" }}>
-            <Stack spacing={1.5} flex={{ xs: 1, md: "50%" }}>
-              <ElevatedSectionWrapper>
-                <Box width={{ xs: 1 }} minWidth="300px">
-                  <ControlledSimpleSelect
-                    name="database"
-                    id="add-question-database"
-                    control={control}
-                    label="database"
-                    options={constants.DATABASES}
-                  />
-                </Box>
-              </ElevatedSectionWrapper>
-              <ElevatedSectionWrapper>
-                <Stack spacing={1.5}>
-                  {/* <ControlledChipMultiSelect
-                    name="courses"
-                    control={control}
-                    id="controlled-multi-select"
-                    label="course(s)"
-                    options={constants.COURSES}
-                  /> */}
-                  <ControlledChipMultiAutoComp
-                    name="courses"
-                    control={control}
-                    id="controlled-multi-auto-comp"
-                    label="course(s)"
-                    options={constants.COURSES}
-                    free={false}
-                    // chipColor={teal["A100"]}
-
-                    textTransform="uppercase"
-                  />
-
-                  {/* <ControlledChipMultiSelect
-                    name="subjects"
-                    control={control}
-                    id="controlled-multi-select"
-                    label="subject(s)"
-                    options={constants.SUBJECTS}
-                  /> */}
-                  <ControlledChipMultiAutoComp
-                    name="subjects"
-                    control={control}
-                    id="controlled-multi-auto-comp"
-                    label="subject(s)"
-                    options={constants.SUBJECTS}
-                    free={false}
-                    // chipColor={amber["A100"]}
-                    textTransform="uppercase"
-                  />
-                  {/* <ControlledChipMultiSelect
-                    name="topics"
-                    control={control}
-                    id="controlled-multi-select"
-                    label="select topic(s)"
-                    options={constants.TOPICS}
-                  /> */}
-                  <ControlledChipMultiAutoComp
-                    name="topics"
-                    control={control}
-                    id="controlled-multi-auto-comp"
-                    label="topic(s)"
-                    options={constants.TOPICS}
-                    free={false}
-                    // chipColor={cyan["A100"]}
-                    textTransform="capitalize"
-                  />
-                </Stack>
-              </ElevatedSectionWrapper>
-              <ElevatedSectionWrapper>
-                <ControlledChipMultiAutoComp
-                  name="tags"
-                  control={control}
-                  id="controlled-multi-select"
-                  label="select tag(s)"
-                  options={constants.TAGS}
-                  free={true}
-                  // chipColor="transparent"
-                  // chipColor={lime["A100"]}
-                />
-              </ElevatedSectionWrapper>
+        <Stack spacing={1.5} id="all-items">
+          <Stack
+            spacing={1.5}
+            direction={{ xs: "column", md: "row" }}
+            id="all-forms"
+          >
+            <Stack spacing={1.5} flex={"20%"}>
+              <DBSelectSection control={control} />
+              <AccessSection control={control} />
             </Stack>
-            <Stack spacing={1.5} flex={{ xs: 1, md: "50%" }}>
-              <ElevatedSectionWrapper>
-                <FormInputLabel label="difficulty" />
-                <Controller
-                  id="difficulty-slider"
-                  name="difficulty"
-                  control={control}
-                  defaultValue={3}
-                  render={({ field }) => (
-                    <Box sx={{ width: "100%", px: 5 }}>
-                      <DifficultySlider field={field} />
-                    </Box>
-                  )}
-                />
-              </ElevatedSectionWrapper>
+            <Stack spacing={1.5} flex={"45%"}>
+              {/* <CourseSection control={control} />
+              <STSection control={control} /> */}
+              <CYTSection control={control} />
+            </Stack>
+
+            <Stack spacing={1.5} flex={"35%"}>
+              <RadioGroupsSection control={control} />
+              <DifficultySection control={control} />
             </Stack>
           </Stack>
         </Stack>
+        <br />
+        <TagSection control={control} />
         <br />
         <FormActionsContainer>
           <FormActionButton

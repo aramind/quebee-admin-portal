@@ -93,3 +93,7 @@ input:active {
   justify-content: center;
   gap: 20%;
 }
+
+.css-g2mnr1-MuiButtonBase-root-MuiRadio-root {
+  padding: 0.25rem !important;
+}

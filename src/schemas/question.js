@@ -15,9 +15,9 @@ const questionSchema = z.object({
 
   // difficulty: z.string().min(1, "Required"),
   difficulty: z.number().min(1, "Required"),
-  //   type: z.string().min(1, "Required"),
-  //   nature: z.string().min(1, "Required"),
-  //   isPremium: z.boolean(),
+  type: z.string().min(1, "Required"),
+  nature: z.string().min(1, "Required"),
+  access: z.string().min(1, "Required"),
   // topics: z.array(),
 });
 

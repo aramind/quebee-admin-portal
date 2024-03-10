@@ -62,9 +62,17 @@ const constants = {
     "sensor technology",
   ],
   DIFFICULTY: ["1", "2", "3", "4", "5"],
-  TYPE: [{ 1: "MCQ" }, { 2: "T/F" }, { 3: "Matching" }, { 4: "Others" }],
-  NATURE: [{ 1: "Objective-type" }, { 2: "Problem-solving" }, { 3: "Others" }],
-  ACCESS: [{ 1: "ordinary", 2: "premium" }],
+  TYPE: [
+    { key: "mcq", value: "MCQ" },
+    { key: "tf", value: "T/F" },
+    { key: "others", value: "Others" },
+  ],
+  NATURE: [
+    { key: "obj", value: "Objective-type" },
+    { key: "ps", value: "Problem-solving" },
+    { key: "others", value: "Others" },
+  ],
+  ACCESS: ["ordinary", "premium"],
 };
 
 export default constants;

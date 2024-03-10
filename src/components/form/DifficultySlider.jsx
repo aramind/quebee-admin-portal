@@ -37,7 +37,8 @@ const DifficultySlider = ({ field }) => {
       value={field.value}
       onChange={(e, newValue) => field.onChange(newValue)}
       //   orientation="vertical"
-      //   valueLabelDisplay="auto"
+      valueLabelDisplay="auto"
+      l
       shiftStep={difficultySliderConstants.STEP_DIFFICULTY}
       min={difficultySliderConstants.MIN_DIFFICULTY}
       max={difficultySliderConstants.MAX_DIFFICULTY}
@@ -45,10 +46,16 @@ const DifficultySlider = ({ field }) => {
         ...mark,
         label: (
           <Typography
-            variant="caption"
             fontWeight={field.value === mark.value ? "bold" : "normal"}
             color={field.value === mark.value ? "primary.dark" : "font.gray"}
-            fontSize={field.value === mark.value ? "0.9rem" : "0.8rem"}
+            fontSize={{
+              xs: field.value === mark.value ? "0.8rem" : "0.7rem",
+              md: field.value === mark.value ? "1rem" : "0.8rem",
+            }}
+            sx={{
+              fontFamily: "Abel",
+            }}
+            l
           >
             {mark.label}
           </Typography>
