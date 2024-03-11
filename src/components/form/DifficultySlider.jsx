@@ -1,34 +1,10 @@
 import { Slider, Typography } from "@mui/material";
 import { amber, cyan, red, teal } from "@mui/material/colors";
 import React from "react";
+import constants from "../configs/constants";
 
-const difficultySliderConstants = {
-  MIN_DIFFICULTY: 1,
-  MAX_DIFFICULTY: 5,
-  STEP_DIFFICULTY: 1,
-  MARKS_DIFFICULTY: [
-    {
-      value: 1,
-      label: "EASY",
-    },
-    {
-      value: 2,
-      label: "MODERATE",
-    },
-    {
-      value: 3,
-      label: "INTERMEDIATE",
-    },
-    {
-      value: 4,
-      label: "DIFFICULT",
-    },
-    {
-      value: 5,
-      label: "ADVANCED",
-    },
-  ],
-};
+const { STEP_DIFFICULTY, MIN_DIFFICULTY, MAX_DIFFICULTY, MARKS_DIFFICULTY } =
+  constants.difficultySliderConstants;
 
 const DifficultySlider = ({ field }) => {
   return (
@@ -38,11 +14,10 @@ const DifficultySlider = ({ field }) => {
       onChange={(e, newValue) => field.onChange(newValue)}
       //   orientation="vertical"
       valueLabelDisplay="auto"
-      l
-      shiftStep={difficultySliderConstants.STEP_DIFFICULTY}
-      min={difficultySliderConstants.MIN_DIFFICULTY}
-      max={difficultySliderConstants.MAX_DIFFICULTY}
-      marks={difficultySliderConstants.MARKS_DIFFICULTY.map((mark) => ({
+      shiftStep={STEP_DIFFICULTY}
+      min={MIN_DIFFICULTY}
+      max={MAX_DIFFICULTY}
+      marks={MARKS_DIFFICULTY.map((mark) => ({
         ...mark,
         label: (
           <Typography

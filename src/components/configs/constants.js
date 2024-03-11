@@ -72,7 +72,36 @@ const constants = {
     { key: "ps", value: "Problem-solving" },
     { key: "others", value: "Others" },
   ],
-  ACCESS: ["ordinary", "premium"],
+  ACCESS: ["basic", "premium"],
+
+  //
+  difficultySliderConstants: {
+    MIN_DIFFICULTY: 1,
+    MAX_DIFFICULTY: 5,
+    STEP_DIFFICULTY: 1,
+    MARKS_DIFFICULTY: [
+      {
+        value: 1,
+        label: "EASY",
+      },
+      {
+        value: 2,
+        label: "MODERATE",
+      },
+      {
+        value: 3,
+        label: "INTERMEDIATE",
+      },
+      {
+        value: 4,
+        label: "DIFFICULT",
+      },
+      {
+        value: 5,
+        label: "ADVANCED",
+      },
+    ],
+  },
 };
 
 export default constants;
