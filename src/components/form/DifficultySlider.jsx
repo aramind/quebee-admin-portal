@@ -6,6 +6,23 @@ const { STEP_DIFFICULTY, MIN_DIFFICULTY, MAX_DIFFICULTY, MARKS_DIFFICULTY } =
   constants.difficultySliderConstants;
 
 const DifficultySlider = ({ field }) => {
+  const getLabel = (mark) => (
+    <Typography
+      fontWeight={field.value === mark.value ? "bold" : "normal"}
+      color={field.value === mark.value ? "primary.dark" : "font.gray"}
+      fontSize={{
+        xs: field.value === mark.value ? "0.8rem" : "0.7rem",
+        md: field.value === mark.value ? "1rem" : "0.8rem",
+      }}
+      sx={{
+        fontFamily: "Abel",
+      }}
+      l
+    >
+      {mark.label}
+    </Typography>
+  );
+
   return (
     <Slider
       aria-label="Difficulty"
@@ -18,41 +35,31 @@ const DifficultySlider = ({ field }) => {
       max={MAX_DIFFICULTY}
       marks={MARKS_DIFFICULTY.map((mark) => ({
         ...mark,
-        label: (
-          <Typography
-            fontWeight={field.value === mark.value ? "bold" : "normal"}
-            color={field.value === mark.value ? "primary.dark" : "font.gray"}
-            fontSize={{
-              xs: field.value === mark.value ? "0.8rem" : "0.7rem",
-              md: field.value === mark.value ? "1rem" : "0.8rem",
-            }}
-            sx={{
-              fontFamily: "Abel",
-            }}
-            l
-          >
-            {mark.label}
-          </Typography>
-        ),
+        label: getLabel(mark),
       }))}
-      sx={{
-        "& .MuiSlider-track": {
-          backgroundColor: "primary.semi",
-          border: 0,
-          height: "0.2rem", // Set the thickness of the track
-        },
-        "& .MuiSlider-rail": {
-          backgroundColor: "info.light", // Set the color of the rail
-          height: "0.2rem", // Set the thickness of the rail
-        },
-        "& .MuiSlider-thumb": {
-          //   backgroundColor: "transparent",
-          width: "1.2rem",
-          height: "1.2rem",
-        },
-      }}
+      sx={localStyle.slider}
     />
   );
 };
 
 export default DifficultySlider;
+
+// localStyle
+const localStyle = {
+  slider: {
+    "& .MuiSlider-track": {
+      backgroundColor: "primary.semi",
+      border: 0,
+      height: "0.2rem", // Set the thickness of the track
+    },
+    "& .MuiSlider-rail": {
+      backgroundColor: "info.light", // Set the color of the rail
+      height: "0.2rem", // Set the thickness of the rail
+    },
+    "& .MuiSlider-thumb": {
+      //   backgroundColor: "transparent",
+      width: "1.2rem",
+      height: "1.2rem",
+    },
+  },
+};

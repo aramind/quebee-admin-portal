@@ -5,6 +5,7 @@ import App from "./App";
 import GlobalContextProvider from "./context/ContextProvider";
 import { ThemeProvider } from "@mui/material";
 import auroraTheme from "./themes/auroraTheme";
+import pupTheme from "./themes/pupTheme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

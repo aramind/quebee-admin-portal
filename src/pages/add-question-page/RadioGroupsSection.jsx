@@ -13,14 +13,14 @@ const RadioGroupsSection = ({ control }) => {
       spacing={1.5}
       sx={{ flex: 1 }}
     >
-      <ElevatedSectionWrapper fullW={true} fullH={true}>
+      <ElevatedSectionWrapper fullH={true}>
         <FormInputLabel label="type" />
         <Controller
           name="type"
           control={control}
           defaultValue={constants?.TYPE[0]?.key || ""}
           render={({ field }) => (
-            <RadGroup field={field} options={constants.TYPE} />
+            <RadGroup field={field} options={constants?.TYPE} />
           )}
         />
       </ElevatedSectionWrapper>

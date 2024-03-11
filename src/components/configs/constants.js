@@ -82,23 +82,23 @@ const constants = {
     MARKS_DIFFICULTY: [
       {
         value: 1,
-        label: "EASY",
+        label: "easy",
       },
       {
         value: 2,
-        label: "MODERATE",
+        label: "intermediate",
       },
       {
         value: 3,
-        label: "INTERMEDIATE",
+        label: "moderate",
       },
       {
         value: 4,
-        label: "DIFFICULT",
+        label: "challenging",
       },
       {
         value: 5,
-        label: "ADVANCED",
+        label: "advanced",
       },
     ],
   },

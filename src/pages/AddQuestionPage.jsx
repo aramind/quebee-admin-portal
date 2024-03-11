@@ -17,7 +17,7 @@ import DBSelectSection from "./add-question-page/DBSelectSection";
 
 import AccessSection from "./add-question-page/AccessSection";
 
-const SCREEN_FLEX_PROPORTIONS = ["18%", "42%", "40%"];
+const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 const AddQuestionPage = () => {
   const styles = useStyles();
 
