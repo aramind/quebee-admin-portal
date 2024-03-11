@@ -15,7 +15,9 @@ const DifficultySection = ({ control }) => {
         control={control}
         defaultValue={3}
         render={({ field }) => (
-          <Box sx={{ width: "100%", px: { xs: 2, md: 3 } }}>
+          <Box
+            sx={{ width: "100%", p: { xs: 1, md: 2 }, pr: { xs: 3, md: 4 } }}
+          >
             <DifficultySlider field={field} />
           </Box>
         )}

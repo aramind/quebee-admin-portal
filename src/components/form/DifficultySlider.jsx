@@ -8,18 +8,15 @@ const { STEP_DIFFICULTY, MIN_DIFFICULTY, MAX_DIFFICULTY, MARKS_DIFFICULTY } =
 const DifficultySlider = ({ field }) => {
   const getLabel = (mark) => (
     <Typography
-      fontWeight={field.value === mark.value ? "bold" : "normal"}
-      color={field.value === mark.value ? "primary.dark" : "font.gray"}
+      fontWeight={field.value === mark?.value ? "bold" : "normal"}
+      color={field.value === mark?.value ? "primary.dark" : "font.gray"}
       fontSize={{
-        xs: field.value === mark.value ? "0.8rem" : "0.7rem",
-        md: field.value === mark.value ? "1rem" : "0.8rem",
+        xs: field.value === mark?.value ? "0.8rem" : "0.7rem",
+        md: field.value === mark?.value ? "1rem" : "0.8rem",
       }}
-      sx={{
-        fontFamily: "Abel",
-      }}
-      l
+      sx={localStyle?.label}
     >
-      {mark.label}
+      {mark?.label}
     </Typography>
   );
 
@@ -37,7 +34,7 @@ const DifficultySlider = ({ field }) => {
         ...mark,
         label: getLabel(mark),
       }))}
-      sx={localStyle.slider}
+      sx={localStyle?.slider}
     />
   );
 };
@@ -61,5 +58,8 @@ const localStyle = {
       width: "1.2rem",
       height: "1.2rem",
     },
+  },
+  label: {
+    fontFamily: "Abel",
   },
 };
