@@ -17,6 +17,7 @@ import DBSelectSection from "./add-question-page/DBSelectSection";
 
 import AccessSection from "./add-question-page/AccessSection";
 
+const SCREEN_FLEX_PROPORTIONS = ["18%", "42%", "40%"];
 const AddQuestionPage = () => {
   const styles = useStyles();
 
@@ -52,17 +53,17 @@ const AddQuestionPage = () => {
             direction={{ xs: "column", md: "row" }}
             id="all-forms"
           >
-            <Stack spacing={1.5} flex={"20%"}>
+            <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[0]}>
               <DBSelectSection control={control} />
               <AccessSection control={control} />
             </Stack>
-            <Stack spacing={1.5} flex={"45%"}>
+            <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[1]}>
               {/* <CourseSection control={control} />
               <STSection control={control} /> */}
               <CYTSection control={control} />
             </Stack>
 
-            <Stack spacing={1.5} flex={"35%"}>
+            <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[2]}>
               <RadioGroupsSection control={control} />
               <DifficultySection control={control} />
             </Stack>
