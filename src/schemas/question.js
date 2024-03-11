@@ -18,6 +18,19 @@ const questionSchema = z.object({
   type: z.string().min(1, "Required"),
   nature: z.string().min(1, "Required"),
   access: z.string().min(1, "Required"),
+  question: z.string().min(1, "Required"),
+  // A: z.string().min(1, "Required"),
+  // B: z.string().min(1, "Required"),
+  // C: z.string().min(1, "Required"),
+  // D: z.string().min(1, "Required"),
+  // correctAnswer: z.string().min(1, "Required"),
+  choices: z.object({
+    A: z.string().min(1, "Required"),
+    B: z.string().min(1, "Required"),
+    C: z.string().min(1, "Required"),
+    D: z.string().min(1, "Required"),
+    correctAnswer: z.string().min(1, "Required"),
+  }),
   // topics: z.array(),
 });
 

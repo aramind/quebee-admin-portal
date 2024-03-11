@@ -16,6 +16,8 @@ import CYTSection from "./add-question-page/CYTSection";
 import DBSelectSection from "./add-question-page/DBSelectSection";
 
 import AccessSection from "./add-question-page/AccessSection";
+import QuestionSection from "./add-question-page/QuestionSection";
+import { DevTool } from "@hookform/devtools";
 
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 const AddQuestionPage = () => {
@@ -28,7 +30,7 @@ const AddQuestionPage = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log("onSubmit triggered");
     console.log("Submitting question...", data);
   };
 
@@ -70,6 +72,8 @@ const AddQuestionPage = () => {
           </Stack>
         </Stack>
         <br />
+        <QuestionSection control={control} />
+        <br />
         <TagSection control={control} />
         <br />
         <FormActionsContainer>
@@ -86,6 +90,7 @@ const AddQuestionPage = () => {
           <FormActionButton type="submit" label="save" variant="contained" />
         </FormActionsContainer>
       </form>
+      <DevTool control={control} />
     </Container>
   );
 };

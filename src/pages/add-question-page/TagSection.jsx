@@ -14,9 +14,7 @@ const TagSection = ({ control }) => {
           id="controlled-multi-select"
           label="select tag(s)"
           options={constants.TAGS}
-          free={true}
-          // chipColor="transparent"
-          // chipColor={lime["A100"]}
+          free
         />
       </ElevatedSectionWrapper>
     </Stack>
