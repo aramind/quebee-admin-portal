@@ -3,7 +3,14 @@ import { Controller } from "react-hook-form";
 import LabelledSelect from "./LabelledSelect";
 import SimpleSelect from "../SimpleSelect";
 
-const ControlledSimpleSelect = ({ control, name, id, label, options }) => {
+const ControlledSimpleSelect = ({
+  control,
+  name,
+  id,
+  label,
+  options,
+  highlighted,
+}) => {
   return (
     <Controller
       name={name}
@@ -17,6 +24,7 @@ const ControlledSimpleSelect = ({ control, name, id, label, options }) => {
               options={options}
               selectedOption={field.value || ""}
               onChange={(e) => field.onChange(e.target.value)}
+              highlighted={highlighted}
             />
           }
         />

@@ -1,5 +1,4 @@
 import { Slider, Typography } from "@mui/material";
-import { amber, cyan, red, teal } from "@mui/material/colors";
 import React from "react";
 import constants from "../configs/constants";
 

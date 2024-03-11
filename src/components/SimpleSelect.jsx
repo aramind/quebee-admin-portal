@@ -7,6 +7,7 @@ const SimpleSelect = ({
   onChange,
   disabled,
   defaultValue,
+  highlighted,
 }) => {
   return (
     <FormControl size="small" fullWidth>
@@ -16,19 +17,21 @@ const SimpleSelect = ({
         id="simple-select"
         value={selectedOption || defaultValue}
         onChange={onChange}
-        sx={{
-          // minWidth: "140px",
-          width: 1,
-          "& .MuiSelect-select": {
-            textTransform: "uppercase",
-            fontWeight: "bold",
-            backgroundColor: selectedOption ? teal["50"] : "transparent",
-            color: "primary.dark",
-          },
-          "& .MuiSelect-select:hover": {
-            backgroundColor: selectedOption ? teal["100"] : "transparent",
-          },
-        }}
+        sx={
+          highlighted && {
+            // minWidth: "140px",
+            width: 1,
+            "& .MuiSelect-select": {
+              textTransform: "uppercase",
+              fontWeight: "bold",
+              backgroundColor: selectedOption ? teal["50"] : "transparent",
+              color: "primary.dark",
+            },
+            "& .MuiSelect-select:hover": {
+              backgroundColor: selectedOption ? teal["100"] : "transparent",
+            },
+          }
+        }
       >
         {options?.map((option, index) => {
           return (

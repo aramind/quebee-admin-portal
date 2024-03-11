@@ -1,35 +1,27 @@
-import { Box, Container, Divider, Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import React from "react";
 import useStyles from "../hooks/useStyles";
-import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import LabelledSelect from "../components/form/LabelledSelect";
-import SimpleSelect from "../components/SimpleSelect";
-import constants from "../components/configs/constants";
-import ControlledSimpleSelect from "../components/form/ControlledSimpleSelect";
+import { useForm } from "react-hook-form";
+
 import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "../components/form/FormActionButton";
 import questionSchema from "../schemas/question";
-import ControlledChipMultiSelect from "../components/form/ControlledChipMultiSelect";
-import ControlledChipMultiAutoComp from "../components/form/ControlledChipMultiAutoComp";
-import DifficultySlider from "../components/form/DifficultySlider";
-import FormInputLabel from "../components/form/FormInputLabel";
-import RadGroup from "../components/RadGroup";
+
 import TagSection from "./add-question-page/TagSection";
 import RadioGroupsSection from "./add-question-page/RadioGroupsSection";
 import DifficultySection from "./add-question-page/DifficultySection";
 import CYTSection from "./add-question-page/CYTSection";
 import DBSelectSection from "./add-question-page/DBSelectSection";
-import STSection from "./add-question-page/STSection";
-import CourseSection from "./add-question-page/CourseSection";
+
 import AccessSection from "./add-question-page/AccessSection";
 
 const AddQuestionPage = () => {
   const styles = useStyles();
 
   // form related
-  const { register, handleSubmit, formState, reset, control } = useForm({
+  const { handleSubmit, control } = useForm({
     resolver: zodResolver(questionSchema),
     mode: "onTouched",
   });

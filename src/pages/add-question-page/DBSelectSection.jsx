@@ -14,6 +14,7 @@ const DBSelectSection = ({ control }) => {
           control={control}
           label="database"
           options={constants.DATABASES}
+          highlighted
         />
       </Box>
     </ElevatedSectionWrapper>
