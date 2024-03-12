@@ -9,7 +9,7 @@ import Choices from "./Choices";
 const QuestionSection = ({ control }) => {
   return (
     <ElevatedSectionWrapper fullW>
-      <Stack spacing={0.5}>
+      <Stack>
         <Question control={control} />
         <Choices control={control} />
       </Stack>

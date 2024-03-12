@@ -14,7 +14,7 @@ const Question = ({ control }) => {
       >
         <QuestionFormLabel fullW label="question" />
       </Stack>
-      <Stack flex={1} width="100%">
+      <Stack flex={1}>
         <Controller
           control={control}
           name="question"
@@ -30,11 +30,11 @@ const Question = ({ control }) => {
         />
       </Stack>
       <Stack
-        flex={0.1}
         // className="outlined2"
-        minWidth="50px"
-        maxWidth="100px"
-        justifyContent="center"
+        sx={{
+          width: "120px",
+          justifyContent: "center",
+        }}
       >
         <Button variant="outlined" sx={{ height: 1 }}>
           Remove

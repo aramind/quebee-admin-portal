@@ -101,3 +101,26 @@ input:active {
 .MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-18pnire-MuiTypography-root {
   /* font-size: 0.9rem !important; */
 }
+
+/* for the choices */
+/* id=style#0001 */
+.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-18pnire-MuiTypography-root {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.choice-container {
+  display: flex;
+  width: 100%;
+  /* background-color: red; */
+}
+.MuiFormControlLabel-root.MuiFormControlLabel-labelPlacementEnd.css-j204z7-MuiFormControlLabel-root {
+  margin: 0;
+}
+
+input.PrivateSwitchBase-input {
+  display: block;
+}

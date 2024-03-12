@@ -1,31 +1,35 @@
 import {
+  Box,
   Button,
   FormControlLabel,
   Radio,
   RadioGroup,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import React from "react";
-import QuestionFormLabel from "./QuestionFormLabel";
+
 import { Controller } from "react-hook-form";
+import { red } from "@mui/material/colors";
+import ChoicesLabel from "./ChoicesLabel";
 
 // const choices = ["choice1", "choice2", "choice3", "choice4"];
 const choices = ["A", "B", "C", "D"];
 
 const Choices = ({ control }) => {
   return (
-    <Stack
-      direction={{ xs: "column", md: "column" }}
-      spacing={1.5}
-      height="100%"
-      className="outlined"
-    >
-      <Controller
-        name="correctAnswer"
-        control={control}
-        defaultValue={choices[0]}
-        render={({ field }) => (
+    <Controller
+      name="correctAnswer"
+      control={control}
+      defaultValue={choices[0]}
+      render={({ field }) => (
+        <Stack
+          direction={{ xs: "column", md: "column" }}
+          spacing={1.5}
+          height="100%"
+          // className="outlined"
+        >
           <RadioGroup
             aria-labelledby="radio-group"
             value={field.value}
@@ -38,59 +42,51 @@ const Choices = ({ control }) => {
                 control={<Radio />}
                 label={
                   <>
-                    <Controller
-                      control={control}
-                      // name={`choices.${choice}`}
-                      name={choice}
-                      render={({ field }) => (
-                        <>
-                          <Stack
-                            direction="row"
-                            spacing={1.5}
-                            height="100%"
-                            flex={1}
-                            className="outlined2"
-                          >
+                    <Stack
+                      width="100%"
+                      direction="row"
+                      spacing={1.5}
+                      // className="outlined"
+                    >
+                      <Box>
+                        <ChoicesLabel label={choice} fullW fullH />
+                      </Box>
+                      <Controller
+                        control={control}
+                        // name={`choices.${choice}`}
+                        name={choice}
+                        render={({ field }) => (
+                          <div className="choice-container">
+                            <TextField
+                              fullWidth
+                              {...field}
+                              multiline
+                              onBlur={field.onBlur}
+                              sx={{ pr: 1.5 }}
+                            />
                             <Stack
-                              flex={0.1}
-                              minWidth="50px"
-                              maxWidth="100px"
-                              justifyContent="center"
-                              direction="row"
-                            >
-                              <QuestionFormLabel fullW label={choice} />
-                            </Stack>
-                            <Stack flex={1} width="100%">
-                              <TextField
-                                fullWidth
-                                {...field}
-                                multiline
-                                onBlur={field.onBlur}
-                              />
-                            </Stack>
-                            <Stack
-                              flex={0.1}
                               // className="outlined2"
-                              minWidth="50px"
-                              maxWidth="100px"
-                              justifyContent="center"
+                              sx={{
+                                width: "135px",
+                                justifyContent: "center",
+                              }}
                             >
                               <Button variant="outlined" sx={{ height: 1 }}>
                                 Remove
                               </Button>
                             </Stack>
-                          </Stack>
-                        </>
-                      )}
-                    />
+                          </div>
+                        )}
+                      />
+                    </Stack>
                   </>
                 }
               />
             ))}
           </RadioGroup>
-        )}
-      />
-    </Stack>
+        </Stack>
+      )}
+    />
   );
 };
 
