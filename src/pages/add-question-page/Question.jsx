@@ -6,12 +6,7 @@ import { Controller } from "react-hook-form";
 const Question = ({ control }) => {
   return (
     <Stack direction={{ xs: "column", md: "row" }} spacing={1.5} height="100%">
-      <Stack
-        flex={0.1}
-        minWidth="50px"
-        maxWidth="100px"
-        justifyContent="center"
-      >
+      <Stack width="99px" justifyContent="center">
         <QuestionFormLabel fullW label="question" />
       </Stack>
       <Stack flex={1}>
@@ -37,7 +32,7 @@ const Question = ({ control }) => {
         }}
       >
         <Button variant="outlined" sx={{ height: 1 }}>
-          Remove
+          Clear
         </Button>
       </Stack>
     </Stack>

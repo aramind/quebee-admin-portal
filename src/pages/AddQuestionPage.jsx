@@ -72,6 +72,12 @@ const AddQuestionPage = () => {
 
     const formattedData = formatData(data);
     console.log("Submitting question...", formattedData);
+
+    // Convert the JavaScript object to a string
+    const formattedDataString = JSON.stringify(formattedData, null, 2);
+
+    // Display the formatted data in an alert
+    alert(formattedDataString);
   };
 
   const onError = (err) => {

@@ -7,12 +7,13 @@ const ChoicesLabel = ({ label, fullW, fullH }) => {
       htmlFor="question-form-label"
       sx={{
         height: fullH && "100%",
-        width: fullW && "100%",
+        width: fullW ? "100%" : "51px",
         display: "flex",
-        justifyContent: "center",
+        justifyContent: { xs: "start", md: "center" },
         alignItems: "center",
         // fontWeight: "bold",
-        fontSize: "1.5rem",
+        fontSize: "2rem",
+        color: "primary.main",
       }}
       className="centered-content"
     >
