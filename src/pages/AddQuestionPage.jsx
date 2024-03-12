@@ -23,6 +23,43 @@ const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 const AddQuestionPage = () => {
   const styles = useStyles();
 
+  const formatData = (originalData) => {
+    const {
+      database,
+      courses,
+      subjects,
+      topics,
+      tags,
+      difficulty,
+      type,
+      nature,
+      access,
+      question,
+      correctAnswer,
+      ...choicesData
+    } = originalData;
+
+    const choices = Object.entries(choicesData).map(([key, value]) => ({
+      value,
+      isCorrect: key.toLowerCase() === correctAnswer.toLowerCase(),
+    }));
+
+    const formattedData = {
+      database,
+      courses,
+      subjects,
+      topics,
+      tags,
+      difficulty,
+      type,
+      nature,
+      access,
+      question,
+      choices,
+    };
+
+    return formattedData;
+  };
   // form related
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(questionSchema),
@@ -31,7 +68,10 @@ const AddQuestionPage = () => {
 
   const onSubmit = (data) => {
     console.log("onSubmit triggered");
-    console.log("Submitting question...", data);
+    console.log("raw data:", data);
+
+    const formattedData = formatData(data);
+    console.log("Submitting question...", formattedData);
   };
 
   const onError = (err) => {

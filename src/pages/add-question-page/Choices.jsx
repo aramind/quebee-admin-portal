@@ -10,78 +10,86 @@ import React from "react";
 import QuestionFormLabel from "./QuestionFormLabel";
 import { Controller } from "react-hook-form";
 
+// const choices = ["choice1", "choice2", "choice3", "choice4"];
+const choices = ["A", "B", "C", "D"];
+
 const Choices = ({ control }) => {
   return (
     <Stack
       direction={{ xs: "column", md: "column" }}
       spacing={1.5}
       height="100%"
+      className="outlined"
     >
-      {[1, 2, 3, 4].map((choice, index) => (
-        <Stack
-          key={index}
-          direction={{ xs: "column", md: "row" }}
-          spacing={1.5}
-          height="100%"
-        >
-          <Stack
-            flex={0.1}
-            minWidth="50px"
-            maxWidth="100px"
-            justifyContent="center"
+      <Controller
+        name="correctAnswer"
+        control={control}
+        defaultValue={choices[0]}
+        render={({ field }) => (
+          <RadioGroup
+            aria-labelledby="radio-group"
+            value={field.value}
+            onChange={(e) => field.onChange(e.target.value)}
           >
-            <QuestionFormLabel fullW label={`Choice ${choice}`} />
-          </Stack>
-          <Stack flex={1} width="100%">
-            <Controller
-              control={control}
-              name={`choices[${index - 1}]`}
-              render={({ field }) => (
-                <TextField
-                  fullWidth
-                  {...field}
-                  placeholder={`Type here option ${choice}...`}
-                  multiline
-                  onBlur={field.onBlur}
-                />
-              )}
-            />
-          </Stack>
-          <Stack
-            flex={1}
-            minWidth="50px"
-            maxWidth="100px"
-            justifyContent="center"
-          >
-            <Button variant="outlined">Remove</Button>
-          </Stack>
-        </Stack>
-      ))}
-      {/* RG */}
-      <Stack flex={1} width="100%">
-        <Controller
-          control={control}
-          name="correctAnswer"
-          render={({ field }) => (
-            <RadioGroup
-              aria-label="correctAnswer"
-              name="correctAnswer"
-              value={field.value}
-              onChange={(e) => field.onChange(e.target.value)}
-              row
-            >
-              {[1, 2, 3, 4].map((index) => (
-                <FormControlLabel
-                  key={index}
-                  value={index.toString()}
-                  control={<Radio />}
-                  label={`Option ${index}`}
-                />
-              ))}
-            </RadioGroup>
-          )}
-        />
-      </Stack>
+            {choices.map((choice, index) => (
+              <FormControlLabel
+                key={choice}
+                value={choice}
+                control={<Radio />}
+                label={
+                  <>
+                    <Controller
+                      control={control}
+                      // name={`choices.${choice}`}
+                      name={choice}
+                      render={({ field }) => (
+                        <>
+                          <Stack
+                            direction="row"
+                            spacing={1.5}
+                            height="100%"
+                            flex={1}
+                            className="outlined2"
+                          >
+                            <Stack
+                              flex={0.1}
+                              minWidth="50px"
+                              maxWidth="100px"
+                              justifyContent="center"
+                              direction="row"
+                            >
+                              <QuestionFormLabel fullW label={choice} />
+                            </Stack>
+                            <Stack flex={1} width="100%">
+                              <TextField
+                                fullWidth
+                                {...field}
+                                multiline
+                                onBlur={field.onBlur}
+                              />
+                            </Stack>
+                            <Stack
+                              flex={0.1}
+                              // className="outlined2"
+                              minWidth="50px"
+                              maxWidth="100px"
+                              justifyContent="center"
+                            >
+                              <Button variant="outlined" sx={{ height: 1 }}>
+                                Remove
+                              </Button>
+                            </Stack>
+                          </Stack>
+                        </>
+                      )}
+                    />
+                  </>
+                }
+              />
+            ))}
+          </RadioGroup>
+        )}
+      />
     </Stack>
   );
 };

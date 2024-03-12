@@ -10,6 +10,7 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import QuestionFormLabel from "./QuestionFormLabel";
 
+// const choices = ["choice1", "choice2", "choice3", "choice4"];
 const choices = ["A", "B", "C", "D"];
 const Choices3 = ({ control }) => {
   return (
@@ -20,7 +21,7 @@ const Choices3 = ({ control }) => {
       className="outlined"
     >
       <Controller
-        name="choices.correctAnswer"
+        name="correctAnswer"
         control={control}
         defaultValue={choices[0]}
         render={({ field }) => (
@@ -38,7 +39,8 @@ const Choices3 = ({ control }) => {
                   <>
                     <Controller
                       control={control}
-                      name={`choices.${choice}`}
+                      // name={`choices.${choice}`}
+                      name={choice}
                       render={({ field }) => (
                         <>
                           <Stack
