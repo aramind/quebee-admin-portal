@@ -11,19 +11,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
 import genInitialPassword from "../utils/login/genInitialPassword";
 import constants from "./configs/constants";
+import { useAddUser } from "../hooks/useAddUser";
 
 const AddNewUserForm = () => {
+  const { mutate: addUser } = useAddUser();
   //   form
-  const { register, handleSubmit, formState, reset, control, setValue } =
-    useForm({
-      resolver: zodResolver(userSchema),
-      mode: "onTouched",
-    });
+  const { register, handleSubmit, formState, reset, control } = useForm({
+    resolver: zodResolver(userSchema),
+    mode: "onTouched",
+  });
 
   const { errors } = formState;
 
   const onSubmit = (data) => {
     console.log("Creating user...", data);
+    addUser(data);
   };
 
   const onError = (err) => {
@@ -35,7 +37,8 @@ const AddNewUserForm = () => {
     reset({
       lastName: "",
       firstName: "",
-      username: "",
+      middleName: "",
+      userName: "",
       role: "",
       status: "",
       password: genInitialPassword(),
@@ -51,6 +54,14 @@ const AddNewUserForm = () => {
             <Stack direction="row" gap={2} flexWrap="wrap">
               <Box flex={1}>
                 <LabelledTextField
+                  label="employee id"
+                  id="employeeId"
+                  error={!!errors.name}
+                  register={register}
+                />
+              </Box>
+              <Box flex={1}>
+                <LabelledTextField
                   label="last name"
                   id="lastName"
                   error={!!errors.name}
@@ -61,6 +72,14 @@ const AddNewUserForm = () => {
                 <LabelledTextField
                   label="first name"
                   id="firstName"
+                  error={!!errors.name}
+                  register={register}
+                />
+              </Box>
+              <Box flex={1}>
+                <LabelledTextField
+                  label="middle name"
+                  id="middleName"
                   error={!!errors.name}
                   register={register}
                 />

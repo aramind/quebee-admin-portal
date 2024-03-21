@@ -30,6 +30,7 @@ function App() {
       console.error("Error parsing JSON:", error);
     }
   }, [dispatch, currentUserRole, currentUser]);
+
   return (
     <div className="App">
       <CssBaseline />
