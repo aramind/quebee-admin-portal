@@ -36,7 +36,7 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
   const styles = useStyles();
 
   //   form
-  const { register, handleSubmit, formState, reset, control } = useForm({
+  const { register, handleSubmit, formState, control } = useForm({
     resolver: zodResolver(userSchema),
     mode: "onTouched",
   });
@@ -93,29 +93,11 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
                 >
                   <BoxWrapper>
                     <LabelledTextField
-                      label="last name"
-                      id="lastName"
-                      error={!!errors.lastName}
+                      label="employee id"
+                      id="employeeId"
+                      error={!!errors.employeeId}
                       register={register}
-                      defaultValue={row.lastName}
-                    />
-                  </BoxWrapper>
-                  <BoxWrapper>
-                    <LabelledTextField
-                      label="first name"
-                      id="firstName"
-                      error={!!errors.firstName}
-                      register={register}
-                      defaultValue={row.firstName}
-                    />
-                  </BoxWrapper>
-                  <BoxWrapper>
-                    <LabelledTextField
-                      label="username"
-                      id="username"
-                      error={!!errors.name}
-                      register={register}
-                      defaultValue={row.username}
+                      defaultValue={row.employeeId}
                     />
                   </BoxWrapper>
                   <BoxWrapper>
@@ -148,6 +130,43 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
                       )}
                     />
                   </BoxWrapper>
+                  <BoxWrapper>
+                    <LabelledTextField
+                      label="last name"
+                      id="lastName"
+                      error={!!errors.lastName}
+                      register={register}
+                      defaultValue={row.lastName}
+                    />
+                  </BoxWrapper>
+                  <BoxWrapper>
+                    <LabelledTextField
+                      label="first name"
+                      id="firstName"
+                      error={!!errors.firstName}
+                      register={register}
+                      defaultValue={row.firstName}
+                    />
+                  </BoxWrapper>
+                  <BoxWrapper>
+                    <LabelledTextField
+                      label="middle name"
+                      id="middleName"
+                      error={!!errors.middleName}
+                      register={register}
+                      defaultValue={row.middleName}
+                    />
+                  </BoxWrapper>
+                  <BoxWrapper>
+                    <LabelledTextField
+                      label="username"
+                      id="username"
+                      error={!!errors.name}
+                      register={register}
+                      defaultValue={row.username}
+                    />
+                  </BoxWrapper>
+
                   <BoxWrapper>
                     <LabelledTextField
                       label="password"

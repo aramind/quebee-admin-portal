@@ -12,7 +12,6 @@ import { useFetchUsers } from "../hooks/useUserHook";
 
 const columns = [
   { field: "employeeId", headerName: "employee ID" },
-  { field: "employeeId", headerName: "employee ID" },
   { field: "lastName", headerName: "last name" },
   { field: "firstName", headerName: "first name" },
   { field: "middleName", headerName: "middle name" },
