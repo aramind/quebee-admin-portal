@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
 import genInitialPassword from "../utils/login/genInitialPassword";
 import constants from "./configs/constants";
-import { useAddUser } from "../hooks/useAddUser";
+import { useAddUser } from "../hooks/useUserHook";
 
 const AddNewUserForm = () => {
   const { mutate: addUser } = useAddUser();

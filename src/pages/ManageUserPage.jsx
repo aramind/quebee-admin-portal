@@ -1,5 +1,5 @@
 import { Container, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "../hooks/useStyles";
 import FormInputLabel from "../components/form/FormInputLabel";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
@@ -8,8 +8,7 @@ import RenderAction from "../components/renders/RenderAction";
 import RenderPassword from "../components/renders/RenderPassword";
 import AddNewUserForm from "../components/AddNewUserForm";
 
-// todo: to delete
-import { dummyUsers } from "../mockDB/dummyUsers";
+import { useFetchUsers } from "../hooks/useUserHook";
 
 const columns = [
   { field: "employeeId", headerName: "employee ID" },
@@ -36,9 +35,34 @@ const columns = [
 ];
 
 const ManageUserPage = () => {
+  const [rows, setRows] = useState([]);
+
   const styles = useStyles();
-  // Data grid
-  const [rows, setRows] = useState(dummyUsers);
+
+  const onSuccess = (data) => {
+    console.log("DATA FETCHED", data.data.data);
+    setRows(
+      data.data.data.map((user, index) => ({
+        id: index + 1,
+        employeeId: user.employeeId,
+        username: user.username,
+        password: user.password,
+        lastName: user.name.lastName,
+        firstName: user.name.firstName,
+        middleName: user.name.middleName,
+        role: user.role,
+        status: user.status,
+      }))
+    );
+    console.log("finished refetching");
+    // window.alert("Finished fetching users");
+  };
+
+  const onError = (error) => {
+    window.alert("Error fetching users.");
+  };
+
+  useFetchUsers(onSuccess, onError);
 
   const colsWithWidth = columns.map((col, index) => {
     return {
