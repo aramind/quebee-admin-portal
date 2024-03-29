@@ -4,7 +4,6 @@ import axios from "axios";
 const API_URL = `${process.env.REACT_APP_API_URL}/users`;
 
 const addUser = (user) => {
-  console.log(API_URL);
   return axios.post(API_URL, user);
 };
 
@@ -31,5 +30,12 @@ export const useFetchUsers = (onSuccess, onError) => {
 };
 
 export const useEditUser = (onSuccess, onError) => {
-  return useMutation(editUser);
+  return useMutation(editUser, {
+    onSuccess: () => {
+      alert("User updated successfully");
+    },
+    onError: () => {
+      alert("Error updating user. Try again");
+    },
+  });
 };

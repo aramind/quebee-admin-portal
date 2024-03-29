@@ -68,9 +68,7 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
   };
 
   const onSubmit = (data) => {
-    // console.log("submit from DraggableFormDialog...");
-    console.log("saving new edited user", data);
-    editUser();
+    editUser(data);
   };
 
   return (
