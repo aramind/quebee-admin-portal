@@ -4,7 +4,6 @@ import { IconButton } from "@mui/material";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import DraggableFormDialog from "../form/DraggableFormDialog";
-import DraggableDialog from "../DraggableDialog";
 
 const RenderAction = ({ row }) => {
   const [openDialogEditUser, setOpenDialogEditUser] = useState(false);

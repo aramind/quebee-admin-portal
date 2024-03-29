@@ -58,6 +58,9 @@ const ManageUserPage = () => {
   };
 
   const onError = (error) => {
+    if (error.message === "Request failed with status code 404") {
+      return;
+    }
     window.alert("Error fetching users.");
   };
 

@@ -21,6 +21,7 @@ import constants from "../configs/constants";
 import useStyles from "../../hooks/useStyles";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "./DialogActionButton";
+import { useEditUser } from "../../hooks/useUserHook";
 
 function PaperComponent(props) {
   return (
@@ -35,6 +36,8 @@ function PaperComponent(props) {
 const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
   const styles = useStyles();
 
+  // hooks
+  const { mutate: editUser } = useEditUser();
   //   form
   const { register, handleSubmit, formState, control } = useForm({
     resolver: zodResolver(userSchema),
@@ -65,8 +68,9 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
   };
 
   const onSubmit = (data) => {
-    console.log("submit from DraggableFormDialog...");
+    // console.log("submit from DraggableFormDialog...");
     console.log("saving new edited user", data);
+    editUser();
   };
 
   return (
@@ -98,6 +102,7 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
                       error={!!errors.employeeId}
                       register={register}
                       defaultValue={row.employeeId}
+                      disabled
                     />
                   </BoxWrapper>
                   <BoxWrapper>

@@ -14,6 +14,7 @@ const LabelledTextField = ({
   fullWidth = true,
   minRows = 0,
   defaultValue = "",
+  disabled = false,
 }) => {
   const styles = useStyles();
   return (
@@ -35,6 +36,7 @@ const LabelledTextField = ({
         {...register(id)}
         minRows={minRows}
         defaultValue={defaultValue}
+        disabled={disabled}
       />
     </Stack>
   );

@@ -11,6 +11,11 @@ const addUser = (user) => {
 const fetchUsers = () => {
   return axios.get(API_URL);
 };
+
+const editUser = (updatedUserData) => {
+  const url = `${API_URL}/${updatedUserData.employeeId}`;
+  return axios.patch(url, updatedUserData);
+};
 // hooks
 export const useAddUser = () => {
   return useMutation(addUser);
@@ -23,4 +28,8 @@ export const useFetchUsers = (onSuccess, onError) => {
     refetchInterval: 3000,
     refetchIntervalInBackground: true,
   });
+};
+
+export const useEditUser = (onSuccess, onError) => {
+  return useMutation(editUser);
 };
