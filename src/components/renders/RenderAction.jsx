@@ -4,11 +4,18 @@ import { IconButton } from "@mui/material";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import DraggableFormDialog from "../form/DraggableFormDialog";
+import { useDeleteUserByEmpId } from "../../hooks/useUserHook";
 
 const RenderAction = ({ row }) => {
   const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
   const styles = useStyles();
 
+  const { mutate: deleteUser, isLoading } = useDeleteUserByEmpId();
+
+  const handleDeleteUser = (employeeId) => {
+    console.log("deleting user with ", employeeId);
+    deleteUser(employeeId);
+  };
   return (
     <>
       <IconButton
@@ -19,7 +26,12 @@ const RenderAction = ({ row }) => {
         <EditTwoToneIcon />
       </IconButton>
 
-      <IconButton aria-label="delete" sx={styles.iconButton}>
+      <IconButton
+        aria-label="delete"
+        sx={styles.iconButton}
+        disabled={isLoading}
+        onClick={() => handleDeleteUser(row.employeeId)}
+      >
         <DeleteTwoToneIcon />
       </IconButton>
       <DraggableFormDialog

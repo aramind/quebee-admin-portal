@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import { Box, Stack, Typography } from "@mui/material";
 import LabelledTextField from "./form/LabelledTextField";
@@ -11,10 +11,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
 import genInitialPassword from "../utils/login/genInitialPassword";
 import constants from "./configs/constants";
-import { useAddUser } from "../hooks/useUserHook";
+import { useAddUser, useFetchUsers } from "../hooks/useUserHook";
 
 const AddNewUserForm = () => {
+  const [forForceRender, setForForceRender] = useState(true);
   const { mutate: addUser } = useAddUser();
+  const { refetch } = useFetchUsers();
   //   form
   const { register, handleSubmit, formState, reset, control } = useForm({
     resolver: zodResolver(userSchema),
@@ -23,9 +25,11 @@ const AddNewUserForm = () => {
 
   const { errors } = formState;
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("Creating user...", data);
-    addUser(data);
+    await addUser(data);
+    setForForceRender((value) => !value);
+    console.log(forForceRender);
   };
 
   const onError = (err) => {

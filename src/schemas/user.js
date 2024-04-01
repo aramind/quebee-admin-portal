@@ -2,6 +2,7 @@ import { z } from "zod";
 import constants from "../components/configs/constants";
 
 const userSchema = z.object({
+  // employeeId: z.string(),
   employeeId: z.string().min(1, "Required"),
   lastName: z.string().min(1, "Required"),
   firstName: z.string().min(1, "Required"),

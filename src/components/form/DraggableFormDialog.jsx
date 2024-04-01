@@ -100,7 +100,7 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
                       error={!!errors.employeeId}
                       register={register}
                       defaultValue={row.employeeId}
-                      disabled
+                      // disabled
                     />
                   </BoxWrapper>
                   <BoxWrapper>
