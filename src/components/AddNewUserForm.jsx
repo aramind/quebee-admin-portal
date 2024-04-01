@@ -11,12 +11,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
 import genInitialPassword from "../utils/login/genInitialPassword";
 import constants from "./configs/constants";
-import { useAddUser, useFetchUsers } from "../hooks/useUserHook";
+import { useAddUser } from "../hooks/useUserHook";
 
-const AddNewUserForm = () => {
-  const [forForceRender, setForForceRender] = useState(true);
+const AddNewUserForm = ({ setRenderTrigger }) => {
   const { mutate: addUser } = useAddUser();
-  const { refetch } = useFetchUsers();
   //   form
   const { register, handleSubmit, formState, reset, control } = useForm({
     resolver: zodResolver(userSchema),
@@ -26,10 +24,8 @@ const AddNewUserForm = () => {
   const { errors } = formState;
 
   const onSubmit = async (data) => {
-    console.log("Creating user...", data);
     await addUser(data);
-    setForForceRender((value) => !value);
-    console.log(forForceRender);
+    setRenderTrigger((pv) => !pv);
   };
 
   const onError = (err) => {

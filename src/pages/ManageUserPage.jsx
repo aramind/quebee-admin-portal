@@ -8,7 +8,7 @@ import RenderAction from "../components/renders/RenderAction";
 import RenderPassword from "../components/renders/RenderPassword";
 import AddNewUserForm from "../components/AddNewUserForm";
 
-import { useFetchUsers } from "../hooks/useUserHook";
+import { useAddUser, useFetchUsers } from "../hooks/useUserHook";
 
 const columns = [
   { field: "employeeId", headerName: "employee ID" },
@@ -35,11 +35,11 @@ const columns = [
 
 const ManageUserPage = () => {
   const [rows, setRows] = useState([]);
+  const [renderTrigger, setRenderTrigger] = useState(false);
 
   const styles = useStyles();
 
   const onSuccess = (data) => {
-    console.log("DATA FETCHED", data.data.data);
     setRows(
       data.data.data.map((user, index) => ({
         id: index + 1,
@@ -53,8 +53,6 @@ const ManageUserPage = () => {
         status: user.status,
       }))
     );
-    console.log("finished refetching");
-    // window.alert("Finished fetching users");
   };
 
   const onError = (error) => {
@@ -103,7 +101,7 @@ const ManageUserPage = () => {
         </Stack>
       </ElevatedSectionWrapper>
       <br />
-      <AddNewUserForm />
+      <AddNewUserForm setRenderTrigger={setRenderTrigger} />
       <br />
     </Container>
   );
