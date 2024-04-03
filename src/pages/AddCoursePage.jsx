@@ -30,11 +30,10 @@ const AddCoursePage = () => {
   const styles = useStyles();
 
   // form
-  const { register, control, handleSubmit, formState, reset, getValues } =
-    useForm({
-      resolver: zodResolver(courseSchema),
-      mode: "onTouched",
-    });
+  const { register, control, handleSubmit, formState, getValues } = useForm({
+    resolver: zodResolver(courseSchema),
+    mode: "onTouched",
+  });
   const { errors, dirtyFields } = formState;
   const {
     fields: fieldsForSubject,
