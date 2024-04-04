@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { Stack } from "@mui/material";
 import ControlledChipMultiAutoComp from "../../components/form/ControlledChipMultiAutoComp";
 import constants from "../../components/configs/constants";
+import { getCourseByParams } from "../../utils/login/apiRequests";
 
 const CYTSection = ({ control }) => {
+  const [coursesList, setCoursesList] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const courses = await getCourseByParams(
+          "/trimmed?fields=title,acronym"
+        );
+        setCoursesList(
+          courses.map((course) => `${course?.title} (${course?.acronym})`)
+        );
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
   return (
     <ElevatedSectionWrapper fullH={true}>
       <Stack spacing={1.5}>
@@ -21,7 +42,8 @@ const CYTSection = ({ control }) => {
           control={control}
           id="controlled-multi-auto-comp"
           label="course(s)"
-          options={constants.COURSES}
+          // options={constants.COURSES}
+          options={coursesList}
           // chipColor={teal["A100"]}
           textTransform="uppercase"
         />

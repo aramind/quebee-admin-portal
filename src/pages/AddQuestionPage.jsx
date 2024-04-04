@@ -18,6 +18,8 @@ import DBSelectSection from "./add-question-page/DBSelectSection";
 import AccessSection from "./add-question-page/AccessSection";
 import QuestionSection from "./add-question-page/QuestionSection";
 import { DevTool } from "@hookform/devtools";
+import { useCoursesData } from "../hooks/useCoursesData";
+import { useFetchCourse } from "../hooks/useFetchCourse";
 
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 const AddQuestionPage = () => {
@@ -108,6 +110,7 @@ const AddQuestionPage = () => {
             <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[1]}>
               {/* <CourseSection control={control} />
               <STSection control={control} /> */}
+
               <CYTSection control={control} />
             </Stack>
 
