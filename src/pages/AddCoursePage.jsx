@@ -26,11 +26,20 @@ import SimpleSelect from "../components/SimpleSelect";
 import constants from "../components/configs/constants";
 import { useAddCourse } from "../hooks/useAddCourse";
 
+const onAddCourseSuccess = () => {
+  alert("Course added successfully");
+};
+
+const onAddCourseError = () => {
+  alert("Error adding course.Try again!");
+};
 const AddCoursePage = () => {
   // hooks
   const styles = useStyles();
-
-  const { mutate: addCourse } = useAddCourse();
+  const { mutate: addCourse } = useAddCourse(
+    onAddCourseSuccess,
+    onAddCourseError
+  );
 
   // form
   const { register, control, handleSubmit, formState, getValues } = useForm({
@@ -60,8 +69,11 @@ const AddCoursePage = () => {
           .filter((topic) => topic.length > 1),
       };
     });
-    const finalData = { ...data, subjects: prepSubjects };
-    console.log("sending...", finalData);
+    const finalData = {
+      ...data,
+      subjects: prepSubjects,
+      creator: "6606cd49d6e168904285a93c",
+    };
     addCourse(finalData);
   };
 
