@@ -24,10 +24,13 @@ import FormActionsContainer from "../containers/FormActionsContainer";
 import LabelledSelect from "../components/form/LabelledSelect";
 import SimpleSelect from "../components/SimpleSelect";
 import constants from "../components/configs/constants";
+import { useAddCourse } from "../hooks/useAddCourse";
 
 const AddCoursePage = () => {
   // hooks
   const styles = useStyles();
+
+  const { mutate: addCourse } = useAddCourse();
 
   // form
   const { register, control, handleSubmit, formState, getValues } = useForm({
@@ -59,6 +62,7 @@ const AddCoursePage = () => {
     });
     const finalData = { ...data, subjects: prepSubjects };
     console.log("sending...", finalData);
+    addCourse(finalData);
   };
 
   const onError = (error) => {
@@ -244,7 +248,19 @@ const AddCoursePage = () => {
               </Box>
             </Stack>
           </ElevatedSectionWrapper>
-
+          <ElevatedSectionWrapper>
+            <Stack width={1}>
+              <LabelledTextField
+                label="remarks"
+                id="remarks"
+                error={!!errors.remarks}
+                focused={dirtyFields.remarks && !errors}
+                register={register}
+                multiline={true}
+                minRows={1}
+              />
+            </Stack>
+          </ElevatedSectionWrapper>
           <FormActionsContainer>
             <FormActionButton
               label="clear"
