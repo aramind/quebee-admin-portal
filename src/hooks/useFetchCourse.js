@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 const API_URL = `${process.env.REACT_APP_API_URL}/courses`;
 
 const fetchCourses = async (reqParams) => {
-  //   console.log(`${API_URL}${reqParams}`);
+  // console.log(`${API_URL}${reqParams}`);
   try {
     const response = await axios.get(`${API_URL}${reqParams}`);
     console.log(response.data.data);
@@ -14,9 +14,16 @@ const fetchCourses = async (reqParams) => {
   }
 };
 
-export const useFetchCourse = (reqParams, onSuccess, onError) => {
-  return useQuery("courses", fetchCourses(reqParams), {
+export const useFetchCourse = ({
+  reqParams,
+  onSuccess,
+  onError,
+  select,
+  staleTime,
+}) => {
+  return useQuery("courses", () => fetchCourses(reqParams), {
     onSuccess,
     onError,
+    staleTime,
   });
 };

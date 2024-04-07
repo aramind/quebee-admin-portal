@@ -1,37 +1,42 @@
-import React, { useEffect, useState } from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { Stack } from "@mui/material";
 import ControlledChipMultiAutoComp from "../../components/form/ControlledChipMultiAutoComp";
-import constants from "../../components/configs/constants";
-import { getCourseByParams } from "../../utils/login/apiRequests";
 
-const CYTSection = ({ control }) => {
-  const [coursesList, setCoursesList] = useState([]);
+const CYTSection = ({
+  control,
+  coursesList = [],
+  completeCoursesList = [],
+  watch,
+}) => {
+  const getSubjects = (coursesList) => {
+    const subjects = Array.from(
+      new Set(
+        coursesList.flatMap((course) =>
+          course.subjects.map((subject) => subject.longTitle)
+        )
+      )
+    ).sort((a, b) => a.localeCompare(b));
+    return subjects;
+  };
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const courses = await getCourseByParams(
-          "/trimmed?fields=title,acronym"
-        );
-        setCoursesList(
-          courses.map((course) => `${course?.title} (${course?.acronym})`)
-        );
-      } catch (error) {
-        console.log(error);
-        throw error;
-      }
-    };
-
-    fetchCourses();
-  }, []);
-
+  const getTopics = (coursesList) => {
+    const topics = Array.from(
+      new Set(
+        coursesList.flatMap((course) =>
+          course.subjects.flatMap((subject) => subject.topics)
+        )
+      )
+    )
+      .flat()
+      .sort((a, b) => a.localeCompare(b));
+    return topics;
+  };
   return (
     <ElevatedSectionWrapper fullH={true}>
       <Stack spacing={1.5}>
         {/* <ControlledChipMultiSelect
-                    name="courses"
-                    control={control}
+                    name="courses" 
+                    control={control} 
                     id="controlled-multi-select"
                     label="course(s)"
                     options={constants.COURSES}
@@ -61,7 +66,7 @@ const CYTSection = ({ control }) => {
           control={control}
           id="controlled-multi-auto-comp"
           label="subject(s)"
-          options={constants.SUBJECTS}
+          options={getSubjects(completeCoursesList) || []}
           // chipColor={amber["A100"]}
           textTransform="uppercase"
         />
@@ -79,7 +84,7 @@ const CYTSection = ({ control }) => {
           control={control}
           id="controlled-multi-auto-comp"
           label="topic(s)"
-          options={constants.TOPICS}
+          options={getTopics(completeCoursesList) || []}
           // chipColor={cyan["A100"]}
           textTransform="capitalize"
         />

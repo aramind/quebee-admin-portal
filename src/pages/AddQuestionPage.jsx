@@ -1,5 +1,5 @@
 import { Container, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "../hooks/useStyles";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,8 +22,20 @@ import { useCoursesData } from "../hooks/useCoursesData";
 import { useFetchCourse } from "../hooks/useFetchCourse";
 
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
+
+const prepCoursesList = (courses) => {
+  return courses.map((course) => `${course?.title}`);
+};
 const AddQuestionPage = () => {
+  const [subjectsList, setSubjectsList] = useState([]);
+  const [topicsList, setTopicsList] = useState([]);
+
   const styles = useStyles();
+
+  const { data: coursesList } = useFetchCourse({
+    reqParams: "/trimmed?fields=title,acronym,subjects",
+    staleTime: Infinity,
+  });
 
   const formatData = (originalData) => {
     const {
@@ -63,7 +75,7 @@ const AddQuestionPage = () => {
     return formattedData;
   };
   // form related
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, watch, getValues } = useForm({
     resolver: zodResolver(questionSchema),
     mode: "onTouched",
   });
@@ -94,6 +106,7 @@ const AddQuestionPage = () => {
     console.log("handling clear");
   };
 
+  // console.log("COURSES LIST", coursesList);
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
@@ -111,7 +124,13 @@ const AddQuestionPage = () => {
               {/* <CourseSection control={control} />
               <STSection control={control} /> */}
 
-              <CYTSection control={control} />
+              <CYTSection
+                control={control}
+                completeCoursesList={coursesList || []}
+                coursesList={coursesList ? prepCoursesList(coursesList) : []}
+                getValues={getValues}
+                watch={watch}
+              />
             </Stack>
 
             <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[2]}>
