@@ -62,6 +62,7 @@ const AddQuestionPage = () => {
       access,
       question,
       correctAnswer,
+      remarks,
       ...choicesData
     } = originalData;
 
@@ -83,6 +84,8 @@ const AddQuestionPage = () => {
       access,
       question,
       choices,
+      remarks,
+      creator: "6606cd49d6e168904285a93c",
     };
 
     return formattedData;
@@ -94,13 +97,13 @@ const AddQuestionPage = () => {
   });
 
   const onSubmit = (data) => {
-    console.log("onSubmit triggered");
-    console.log("raw data:", data);
+    // console.log("onSubmit triggered");
+    // console.log("raw data:", data);
 
     const formattedData = formatData(data);
-    console.log("Submitting question...", formattedData);
+    // console.log("Submitting question...", formattedData);
 
-    // addQuestion(formattedData);
+    addQuestion(formattedData);
     // Convert the JavaScript object to a string
     // const formattedDataString = JSON.stringify(formattedData, null, 2);
 
@@ -160,6 +163,10 @@ const AddQuestionPage = () => {
         <QuestionSection control={control} />
         <br />
         <TagSection control={control} />
+        <br />
+        <ElevatedSectionWrapper fullW={true} fullH={true}>
+          <LabelledTextField label="remarks" id="remarks" register={register} />
+        </ElevatedSectionWrapper>
         <br />
         <FormActionsContainer>
           <FormActionButton

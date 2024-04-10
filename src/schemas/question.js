@@ -26,6 +26,7 @@ const questionSchema = z.object({
   C: z.string().min(1, "Required"),
   D: z.string().min(1, "Required"),
   correctAnswer: z.string().min(1, "Required"),
+  remarks: z.string(),
   // choices: z.object({
   //   choice1: z.string().min(1, "Required"),
   //   choice2: z.string().min(1, "Required"),
