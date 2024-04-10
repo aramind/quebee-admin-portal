@@ -1,12 +1,14 @@
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { Stack } from "@mui/material";
 import ControlledChipMultiAutoComp from "../../components/form/ControlledChipMultiAutoComp";
+import { useState } from "react";
 
 const CYTSection = ({
   control,
   coursesList = [],
   completeCoursesList = [],
   watch,
+  getValues,
 }) => {
   const getSubjects = (coursesList) => {
     const subjects = Array.from(
@@ -31,6 +33,7 @@ const CYTSection = ({
       .sort((a, b) => a.localeCompare(b));
     return topics;
   };
+
   return (
     <ElevatedSectionWrapper fullH={true}>
       <Stack spacing={1.5}>

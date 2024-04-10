@@ -1,5 +1,4 @@
 import { Container, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
 import useStyles from "../hooks/useStyles";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,20 +17,32 @@ import DBSelectSection from "./add-question-page/DBSelectSection";
 import AccessSection from "./add-question-page/AccessSection";
 import QuestionSection from "./add-question-page/QuestionSection";
 import { DevTool } from "@hookform/devtools";
-import { useCoursesData } from "../hooks/useCoursesData";
+
 import { useFetchCourse } from "../hooks/useFetchCourse";
+import { useAddQuestion } from "../hooks/useAddQuestion";
+import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
+import LabelledTextField from "../components/form/LabelledTextField";
 
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 
 const prepCoursesList = (courses) => {
   return courses.map((course) => `${course?.title}`);
 };
+
+const onAddQuestionSucess = () => {
+  alert("Question added successfully");
+};
+
+const onAddQuestionError = () => {
+  alert("Error adding question.Try again!");
+};
+
 const AddQuestionPage = () => {
-  const [subjectsList, setSubjectsList] = useState([]);
-  const [topicsList, setTopicsList] = useState([]);
-
   const styles = useStyles();
-
+  const { mutate: addQuestion } = useAddQuestion(
+    onAddQuestionSucess,
+    onAddQuestionError
+  );
   const { data: coursesList } = useFetchCourse({
     reqParams: "/trimmed?fields=title,acronym,subjects",
     staleTime: Infinity,
@@ -39,6 +50,7 @@ const AddQuestionPage = () => {
 
   const formatData = (originalData) => {
     const {
+      code,
       database,
       courses,
       subjects,
@@ -59,6 +71,7 @@ const AddQuestionPage = () => {
     }));
 
     const formattedData = {
+      code,
       database,
       courses,
       subjects,
@@ -75,7 +88,7 @@ const AddQuestionPage = () => {
     return formattedData;
   };
   // form related
-  const { handleSubmit, control, watch, getValues } = useForm({
+  const { handleSubmit, control, watch, getValues, register } = useForm({
     resolver: zodResolver(questionSchema),
     mode: "onTouched",
   });
@@ -87,11 +100,12 @@ const AddQuestionPage = () => {
     const formattedData = formatData(data);
     console.log("Submitting question...", formattedData);
 
+    // addQuestion(formattedData);
     // Convert the JavaScript object to a string
-    const formattedDataString = JSON.stringify(formattedData, null, 2);
+    // const formattedDataString = JSON.stringify(formattedData, null, 2);
 
     // Display the formatted data in an alert
-    alert(formattedDataString);
+    // alert(formattedDataString);
   };
 
   const onError = (err) => {
@@ -117,6 +131,9 @@ const AddQuestionPage = () => {
             id="all-forms"
           >
             <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[0]}>
+              <ElevatedSectionWrapper fullW={true} fullH={true}>
+                <LabelledTextField label="code" id="code" register={register} />
+              </ElevatedSectionWrapper>
               <DBSelectSection control={control} />
               <AccessSection control={control} />
             </Stack>

@@ -2,7 +2,9 @@ import { z } from "zod";
 import constants from "../components/configs/constants";
 
 const questionSchema = z.object({
+  code: z.string().min(1, "Required"),
   database: z.enum(constants.DATABASES),
+
   //   course: z.string().min(1, "Required"),
   courses: z.array(z.string()),
   subjects: z.array(z.string()),
