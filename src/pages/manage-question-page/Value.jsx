@@ -1,17 +1,24 @@
 import { Chip, Stack, Typography } from "@mui/material";
 import React, { Fragment } from "react";
 
-const LabelledText = ({ label, values, inChip, oneLiner }) => {
+const Value = ({ values, inChip }) => {
   return (
-    <Stack direction={oneLiner ? "row" : "column"} spacing={1}>
-      <Typography sx={{ fontStyle: "italic" }}>
-        {label.charAt(0).toUpperCase() + label.slice(1)}:
-      </Typography>
+    <Stack direction="row" spacing={1}>
       {values && Array.isArray(values) ? (
         values.map((value, index) => (
           <Fragment key={value}>
             {inChip ? (
-              <Chip label={value} size="small" sx={{ minWidth: "50px" }} />
+              <Chip
+                label={value}
+                size="small"
+                sx={{
+                  minWidth: "50px",
+                  bgcolor: "tertiary.lightest",
+                  fontFamily: "Inter",
+                  color: "black",
+                  fontSize: { xs: "0.8rem", md: "1rem" },
+                }}
+              />
             ) : (
               <Typography>
                 {value}
@@ -27,4 +34,4 @@ const LabelledText = ({ label, values, inChip, oneLiner }) => {
   );
 };
 
-export default LabelledText;
+export default Value;
