@@ -8,7 +8,6 @@ import {
 import useStyles from "../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import questionSchema from "../schemas/question";
-import { zodResolver } from "@hookform/resolvers/zod";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 
 import Label from "./manage-question-page/Label";
@@ -32,19 +31,6 @@ const ManageQuestionPage = () => {
   });
 
   const { mutate: editQuestion } = usePatchQuestion();
-
-  // console.log("QUESTIONS", questions);
-  const { handleSubmit } = useForm({
-    resolver: zodResolver(questionSchema),
-    mode: "onTouched",
-  });
-  const onSubmit = (data) => {
-    console.log("Submitting Question:", data);
-  };
-
-  const onError = (error) => {
-    console.log("Error submitting question:", error);
-  };
 
   // onClickHandlers
   const handleNext = () => {
@@ -210,6 +196,7 @@ const ManageQuestionPage = () => {
               label="upload question"
               onClickHandler={handleUpload}
               variant="contained"
+              disabled={questions[questionIndex]?.status === "approved"}
             />
             <FormActionButton
               label="next"

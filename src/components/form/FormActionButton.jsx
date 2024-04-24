@@ -2,7 +2,13 @@ import { Button } from "@mui/material";
 import React from "react";
 import useStyles from "../../hooks/useStyles";
 
-const FormActionButton = ({ label, type, onClickHandler, variant }) => {
+const FormActionButton = ({
+  label,
+  type,
+  onClickHandler,
+  variant,
+  disabled,
+}) => {
   const styles = useStyles();
 
   return (
@@ -10,6 +16,7 @@ const FormActionButton = ({ label, type, onClickHandler, variant }) => {
       type={type}
       onClick={onClickHandler}
       variant={variant}
+      disabled={disabled}
       sx={{ ...styles.form.primaryActionButton }}
     >
       {label}
