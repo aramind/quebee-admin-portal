@@ -48,6 +48,11 @@ const ManageQuestionPage = () => {
     setQuestionIndex((prevIndex) => (prevIndex + 1) % questions?.length);
   };
 
+  const handlePrevious = () => {
+    setQuestionIndex((prevIndex) =>
+      prevIndex === 0 ? questions.length - 1 : prevIndex - 1
+    );
+  };
   return (
     <Container maxWidth="xl" sx={styles.mainContainer}>
       {questions && (
@@ -170,7 +175,7 @@ const ManageQuestionPage = () => {
           <FormActionsContainer justify={{ sm: "center", xs: "center" }}>
             <FormActionButton
               label="previous"
-              // onclickHandler={handlePrevious}
+              onClickHandler={handlePrevious}
               variant="outlined"
             />
             <FormActionButton
