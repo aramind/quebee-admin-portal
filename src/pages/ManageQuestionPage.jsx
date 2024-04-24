@@ -55,6 +55,18 @@ const ManageQuestionPage = () => {
     }
   };
 
+  const handleDelete = () => {
+    try {
+      editQuestion({
+        params: `${questions[questionIndex]?._id}`,
+        patchData: {
+          status: "deleted",
+        },
+      });
+    } catch (error) {
+      console.error("Error updating question:", error);
+    }
+  };
   return (
     <Container maxWidth="xl" sx={styles.mainContainer}>
       {questions && (
@@ -182,8 +194,9 @@ const ManageQuestionPage = () => {
             />
             <FormActionButton
               label="delete question"
-              // onClickHandler={handleDelete}
+              onClickHandler={handleDelete}
               variant="contained"
+              disabled={questions[questionIndex]?.status === "deleted"}
             />
             <FormActionButton
               label="edit question"
@@ -191,7 +204,6 @@ const ManageQuestionPage = () => {
               variant="contained"
             />
             <FormActionButton
-              // type="submit"
               label="upload question"
               onClickHandler={handleUpload}
               variant="contained"
