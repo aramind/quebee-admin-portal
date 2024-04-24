@@ -17,11 +17,13 @@ import { useFetchQUestions } from "../hooks/useFetchQuestions";
 import { formatDate } from "../utils/formatDate";
 import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "../components/form/FormActionButton";
+import { useState } from "react";
 
 const SCREEN_FLEX_PROPORTIONS = ["60%", "20%", "20%"];
 
 const ManageQuestionPage = () => {
   const styles = useStyles();
+  const [questionIndex, setQuestionIndex] = useState(0);
 
   const { data: questions } = useFetchQUestions({
     params: "?status=pending",
@@ -40,6 +42,12 @@ const ManageQuestionPage = () => {
   const onError = (error) => {
     console.log("Error submitting question:", error);
   };
+
+  // onClickHandlers
+  const handleNext = () => {
+    setQuestionIndex((prevIndex) => (prevIndex + 1) % questions?.length);
+  };
+
   return (
     <Container maxWidth="xl" sx={styles.mainContainer}>
       {questions && (
@@ -48,15 +56,15 @@ const ManageQuestionPage = () => {
             <ElevatedSectionWrapper fullW={true}>
               <Stack direction="row">
                 <Label label="code" />
-                <Value values={questions[0]?.code} />
+                <Value values={questions[questionIndex]?.code} />
               </Stack>
             </ElevatedSectionWrapper>
             <ElevatedSectionWrapper fullW={true}>
               <Stack spacing={1}>
                 <Label label="question" />
-                <Value values={questions[0]?.question} />
+                <Value values={questions[questionIndex]?.question} />
                 <RadioGroup>
-                  {questions[0]?.choices?.map((choice) => {
+                  {questions[questionIndex]?.choices?.map((choice) => {
                     return (
                       <FormControlLabel
                         value={choice.value}
@@ -72,13 +80,15 @@ const ManageQuestionPage = () => {
             <ElevatedSectionWrapper>
               <Stack spacing={1}>
                 <Label label="information" />
-                <Value values={questions[0]?.information || "----------"} />
+                <Value
+                  values={questions[questionIndex]?.information || "----------"}
+                />
               </Stack>
             </ElevatedSectionWrapper>
             <ElevatedSectionWrapper>
               <Stack spacing={1} direction="row">
                 <Label label="tags" />
-                <Value values={questions[0]?.tags} inChip />
+                <Value values={questions[questionIndex]?.tags} inChip />
               </Stack>
             </ElevatedSectionWrapper>
             <Stack direction="row" spacing={1}>
@@ -87,19 +97,25 @@ const ManageQuestionPage = () => {
                   <Stack spacing={1}>
                     <Stack direction="row">
                       <Label label="database" />
-                      <Value values={questions[0]?.database} />
+                      <Value values={questions[questionIndex]?.database} />
                     </Stack>
                     <Stack direction="row">
                       <Label label="course(s)" />
-                      <Value values={questions[0]?.courses} inChip />
+                      <Value
+                        values={questions[questionIndex]?.courses}
+                        inChip
+                      />
                     </Stack>
                     <Stack direction="row">
                       <Label label="subject(s)" />
-                      <Value values={questions[0]?.subjects} inChip />
+                      <Value
+                        values={questions[questionIndex]?.subjects}
+                        inChip
+                      />
                     </Stack>
                     <Stack direction="row">
                       <Label label="topic(s)" />
-                      <Value values={questions[0]?.topics} inChip />
+                      <Value values={questions[questionIndex]?.topics} inChip />
                     </Stack>
                   </Stack>
                 </ElevatedSectionWrapper>
@@ -109,19 +125,21 @@ const ManageQuestionPage = () => {
                   <Stack spacing={1}>
                     <Stack direction="row" spacing={1}>
                       <Label label="access" />
-                      <Value values={questions[0]?.access} />
+                      <Value values={questions[questionIndex]?.access} />
                     </Stack>
                     <Stack direction="row" spacing={1}>
                       <Label label="difficulty" />
-                      <Value values={`${questions[0]?.difficulty}/5`} />
+                      <Value
+                        values={`${questions[questionIndex]?.difficulty}/5`}
+                      />
                     </Stack>
                     <Stack direction="row" spacing={1}>
                       <Label label="nature" />
-                      <Value values={questions[0]?.nature} />
+                      <Value values={questions[questionIndex]?.nature} />
                     </Stack>
                     <Stack direction="row" spacing={1}>
                       <Label label="type" />
-                      <Value values={questions[0]?.type} />
+                      <Value values={questions[questionIndex]?.type} />
                     </Stack>
                   </Stack>
                 </ElevatedSectionWrapper>
@@ -135,11 +153,13 @@ const ManageQuestionPage = () => {
                     </Stack>
                     <Stack direction="row" spacing={1}>
                       <Label label="encoded" />
-                      <Value values={formatDate(questions[0]?.createdAt)} />
+                      <Value
+                        values={formatDate(questions[questionIndex]?.createdAt)}
+                      />
                     </Stack>
                     <Stack direction="row" spacing={1}>
                       <Label label="status" />
-                      <Value values={questions[0]?.status} />
+                      <Value values={questions[questionIndex]?.status} />
                     </Stack>
                   </Stack>
                 </ElevatedSectionWrapper>
@@ -150,7 +170,7 @@ const ManageQuestionPage = () => {
           <FormActionsContainer justify={{ sm: "center", xs: "center" }}>
             <FormActionButton
               label="previous"
-              // onclickHandler = {handleNext}
+              // onclickHandler={handlePrevious}
               variant="outlined"
             />
             <FormActionButton
@@ -170,7 +190,7 @@ const ManageQuestionPage = () => {
             />
             <FormActionButton
               label="next"
-              // onclickHandler = {handleNext}
+              onClickHandler={handleNext}
               variant="outlined"
             />
           </FormActionsContainer>
