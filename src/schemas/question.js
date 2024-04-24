@@ -21,11 +21,13 @@ const questionSchema = z.object({
   nature: z.string().min(1, "Required"),
   access: z.string().min(1, "Required"),
   question: z.string().min(1, "Required"),
+
   A: z.string().min(1, "Required"),
   B: z.string().min(1, "Required"),
   C: z.string().min(1, "Required"),
   D: z.string().min(1, "Required"),
   correctAnswer: z.string().min(1, "Required"),
+  information: z.string(),
   remarks: z.string(),
   // choices: z.object({
   //   choice1: z.string().min(1, "Required"),

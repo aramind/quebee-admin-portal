@@ -62,6 +62,7 @@ const AddQuestionPage = () => {
       access,
       question,
       correctAnswer,
+      information,
       remarks,
       ...choicesData
     } = originalData;
@@ -84,10 +85,12 @@ const AddQuestionPage = () => {
       access,
       question,
       choices,
+      information,
       remarks,
       creator: "6606cd49d6e168904285a93c",
     };
 
+    // console.log(formattedData);
     return formattedData;
   };
   // form related
@@ -162,13 +165,23 @@ const AddQuestionPage = () => {
         <br />
         <QuestionSection control={control} />
         <br />
+        <ElevatedSectionWrapper fullW={true} fullH={true}>
+          <LabelledTextField
+            label="information"
+            id="information"
+            register={register}
+            multiline={true}
+            minRows={2}
+          />
+        </ElevatedSectionWrapper>
+        <br />
         <TagSection control={control} />
         <br />
         <ElevatedSectionWrapper fullW={true} fullH={true}>
           <LabelledTextField label="remarks" id="remarks" register={register} />
         </ElevatedSectionWrapper>
         <br />
-        <FormActionsContainer>
+        <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
           <FormActionButton
             label="clear"
             onClickHandler={handleClear}

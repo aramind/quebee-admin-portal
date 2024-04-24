@@ -5,7 +5,6 @@ import {
   RadioGroup,
   Stack,
 } from "@mui/material";
-import React, { useState } from "react";
 import useStyles from "../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import questionSchema from "../schemas/question";
@@ -16,6 +15,8 @@ import Label from "./manage-question-page/Label";
 import Value from "./manage-question-page/Value";
 import { useFetchQUestions } from "../hooks/useFetchQuestions";
 import { formatDate } from "../utils/formatDate";
+import FormActionsContainer from "../containers/FormActionsContainer";
+import FormActionButton from "../components/form/FormActionButton";
 
 const SCREEN_FLEX_PROPORTIONS = ["60%", "20%", "20%"];
 
@@ -27,7 +28,7 @@ const ManageQuestionPage = () => {
     staleTime: Infinity,
   });
 
-  console.log("QUESTIONS", questions);
+  // console.log("QUESTIONS", questions);
   const { handleSubmit } = useForm({
     resolver: zodResolver(questionSchema),
     mode: "onTouched",
@@ -145,6 +146,34 @@ const ManageQuestionPage = () => {
               </Stack>
             </Stack>
           </Stack>
+          <br />
+          <FormActionsContainer justify={{ sm: "center", xs: "center" }}>
+            <FormActionButton
+              label="previous"
+              // onclickHandler = {handleNext}
+              variant="outlined"
+            />
+            <FormActionButton
+              label="delete question"
+              // onClickHandler={handleDelete}
+              variant="contained"
+            />
+            <FormActionButton
+              label="edit question"
+              // onClickHandler={handleEdit}
+              variant="contained"
+            />
+            <FormActionButton
+              type="submit"
+              label="upload question"
+              variant="contained"
+            />
+            <FormActionButton
+              label="next"
+              // onclickHandler = {handleNext}
+              variant="outlined"
+            />
+          </FormActionsContainer>
         </form>
       )}
     </Container>

@@ -273,7 +273,7 @@ const AddCoursePage = () => {
               />
             </Stack>
           </ElevatedSectionWrapper>
-          <FormActionsContainer>
+          <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
             <FormActionButton
               label="clear"
               onClickHandler={handleClear}
