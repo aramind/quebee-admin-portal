@@ -17,7 +17,7 @@ import { useFetchQUestions } from "../hooks/useFetchQuestions";
 import { formatDate } from "../utils/formatDate";
 import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "../components/form/FormActionButton";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { usePatchQuestion } from "../hooks/usePatchQuestion";
 
 const SCREEN_FLEX_PROPORTIONS = ["60%", "20%", "20%"];
@@ -31,7 +31,7 @@ const ManageQuestionPage = () => {
     staleTime: Infinity,
   });
 
-  const { mutate: patchQuestion } = usePatchQuestion();
+  const { mutate: editQuestion } = usePatchQuestion();
 
   // console.log("QUESTIONS", questions);
   const { handleSubmit } = useForm({
@@ -57,15 +57,14 @@ const ManageQuestionPage = () => {
     );
   };
 
-  const handleUpload = async () => {
+  const handleUpload = () => {
     try {
-      const res = await patchQuestion({
+      editQuestion({
         params: `${questions[questionIndex]?._id}`,
         patchData: {
-          status: "pending",
+          status: "approved",
         },
       });
-      console.log(res);
     } catch (error) {
       console.error("Error updating question:", error);
     }
@@ -74,7 +73,7 @@ const ManageQuestionPage = () => {
   return (
     <Container maxWidth="xl" sx={styles.mainContainer}>
       {questions && (
-        <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
+        <Fragment>
           <Stack spacing={1.5}>
             <ElevatedSectionWrapper fullW={true}>
               <Stack direction="row">
@@ -218,7 +217,7 @@ const ManageQuestionPage = () => {
               variant="outlined"
             />
           </FormActionsContainer>
-        </form>
+        </Fragment>
       )}
     </Container>
   );
