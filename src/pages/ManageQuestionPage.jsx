@@ -18,6 +18,7 @@ import { formatDate } from "../utils/formatDate";
 import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "../components/form/FormActionButton";
 import { useState } from "react";
+import { usePatchQuestion } from "../hooks/usePatchQuestion";
 
 const SCREEN_FLEX_PROPORTIONS = ["60%", "20%", "20%"];
 
@@ -26,9 +27,11 @@ const ManageQuestionPage = () => {
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const { data: questions } = useFetchQUestions({
-    params: "?status=pending",
+    params: "",
     staleTime: Infinity,
   });
+
+  const { mutate: patchQuestion } = usePatchQuestion();
 
   // console.log("QUESTIONS", questions);
   const { handleSubmit } = useForm({
@@ -53,6 +56,21 @@ const ManageQuestionPage = () => {
       prevIndex === 0 ? questions.length - 1 : prevIndex - 1
     );
   };
+
+  const handleUpload = async () => {
+    try {
+      const updatedQuestion = await patchQuestion({
+        params: `${questions[questionIndex]?._id}`,
+        patchData: {
+          status: "approved",
+        },
+      });
+      console.log(updatedQuestion);
+    } catch (error) {
+      console.error("Error updating question:", error);
+    }
+  };
+
   return (
     <Container maxWidth="xl" sx={styles.mainContainer}>
       {questions && (
@@ -189,8 +207,9 @@ const ManageQuestionPage = () => {
               variant="contained"
             />
             <FormActionButton
-              type="submit"
+              // type="submit"
               label="upload question"
+              onClickHandler={handleUpload}
               variant="contained"
             />
             <FormActionButton
