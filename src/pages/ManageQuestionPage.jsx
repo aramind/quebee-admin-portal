@@ -31,7 +31,7 @@ const ManageQuestionPage = () => {
     staleTime: Infinity,
   });
 
-  const { mutate: patchQuestion } = usePatchQuestion();
+  const { mutate: editQuestion } = usePatchQuestion();
 
   // console.log("QUESTIONS", questions);
   const { handleSubmit } = useForm({
@@ -57,15 +57,14 @@ const ManageQuestionPage = () => {
     );
   };
 
-  const handleUpload = async () => {
+  const handleUpload = () => {
     try {
-      const res = await patchQuestion({
+      editQuestion({
         params: `${questions[questionIndex]?._id}`,
         patchData: {
-          status: "pending",
+          status: "approved",
         },
       });
-      console.log(res);
     } catch (error) {
       console.error("Error updating question:", error);
     }
