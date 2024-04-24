@@ -59,13 +59,13 @@ const ManageQuestionPage = () => {
 
   const handleUpload = async () => {
     try {
-      const updatedQuestion = await patchQuestion({
+      const res = await patchQuestion({
         params: `${questions[questionIndex]?._id}`,
         patchData: {
-          status: "approved",
+          status: "pending",
         },
       });
-      console.log(updatedQuestion);
+      console.log(res);
     } catch (error) {
       console.error("Error updating question:", error);
     }
