@@ -31,6 +31,22 @@ const ManageQuestionPage = () => {
   });
 
   const { mutate: editQuestion } = usePatchQuestion();
+<<<<<<< HEAD
+=======
+
+  // console.log("QUESTIONS", questions);
+  const { handleSubmit } = useForm({
+    resolver: zodResolver(questionSchema),
+    mode: "onTouched",
+  });
+  const onSubmit = (data) => {
+    console.log("Submitting Question:", data);
+  };
+
+  const onError = (error) => {
+    console.log("Error submitting question:", error);
+  };
+>>>>>>> f2e66eae5bc8e9b78534e0bfb7cbc5da84dce280
 
   // onClickHandlers
   const handleNext = () => {
