@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import LabelledSelect from "./LabelledSelect";
 import FormMultiAutoComp from "./FormMultiAutoComp";
 
 const ControlledChipMultiAutoComp = ({
+  getValue,
   control,
   name,
   id,
@@ -12,8 +13,16 @@ const ControlledChipMultiAutoComp = ({
   free,
   chipColor,
   textTransform,
+  defaultValues,
 }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
+  useEffect(() => {
+    // Set selectedOptions to the existing value from form data
+    const formValue = defaultValues?.tags;
+    // const formValue = watch("tags");
+    setSelectedOptions(formValue || []);
+  }, [defaultValues]);
+
   const handleChange = (event) => {
     const {
       target: { value },
