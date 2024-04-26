@@ -16,7 +16,7 @@ const TagSection = ({ defaultValues, watch, control, getValue }) => {
           label="select tag(s)"
           options={constants.TAGS}
           free
-          defaultValues={defaultValues}
+          defaultValues={defaultValues?.tags}
           watch={watch}
         />
       </ElevatedSectionWrapper>
