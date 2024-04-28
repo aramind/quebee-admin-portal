@@ -12,11 +12,10 @@ import Label from "./manage-question-page/Label";
 import Value from "./manage-question-page/Value";
 import { useFetchQUestions } from "../hooks/useFetchQuestions";
 import { formatDate } from "../utils/formatDate";
-import FormActionsContainer from "../containers/FormActionsContainer";
-import FormActionButton from "../components/form/FormActionButton";
 import { Fragment, useState } from "react";
 import { usePatchQuestion } from "../hooks/usePatchQuestion";
 import ButtonsSection from "./manage-question-page/ButtonsSection";
+import QuestionAndChoicesSection from "./manage-question-page/QuestionAndChoicesSection";
 
 const SCREEN_FLEX_PROPORTIONS = ["60%", "20%", "20%"];
 
@@ -82,24 +81,11 @@ const ManageQuestionPage = () => {
                 <Value values={questions[questionIndex]?.code} />
               </Stack>
             </ElevatedSectionWrapper>
-            <ElevatedSectionWrapper fullW={true}>
-              <Stack spacing={1}>
-                <Label label="question" />
-                <Value values={questions[questionIndex]?.question} />
-                <RadioGroup>
-                  {questions[questionIndex]?.choices?.map((choice) => {
-                    return (
-                      <FormControlLabel
-                        value={choice.value}
-                        control={<Radio />}
-                        label={choice.value}
-                        checked={choice.isCorrect}
-                      />
-                    );
-                  })}
-                </RadioGroup>
-              </Stack>
-            </ElevatedSectionWrapper>
+            <QuestionAndChoicesSection
+              questions={questions}
+              questionIndex={questionIndex}
+            />
+
             <ElevatedSectionWrapper>
               <Stack spacing={1}>
                 <Label label="information" />
