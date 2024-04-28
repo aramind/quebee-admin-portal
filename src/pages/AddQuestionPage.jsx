@@ -22,12 +22,7 @@ import { useFetchCourse } from "../hooks/useFetchCourse";
 import { useAddQuestion } from "../hooks/useAddQuestion";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import LabelledTextField from "../components/form/LabelledTextField";
-
-const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
-
-const prepCoursesList = (courses) => {
-  return courses.map((course) => `${course?.title}`);
-};
+import FormContentsSection from "./add-question-page/FormContentsSection";
 
 const onAddQuestionSucess = () => {
   alert("Question added successfully");
@@ -37,16 +32,14 @@ const onAddQuestionError = () => {
   alert("Error adding question.Try again!");
 };
 
+const defaultValues = {};
+
 const AddQuestionPage = () => {
   const styles = useStyles();
   const { mutate: addQuestion } = useAddQuestion(
     onAddQuestionSucess,
     onAddQuestionError
   );
-  const { data: coursesList } = useFetchCourse({
-    reqParams: "/trimmed?fields=title,acronym,subjects",
-    staleTime: Infinity,
-  });
 
   const formatData = (originalData) => {
     const {
@@ -130,56 +123,7 @@ const AddQuestionPage = () => {
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <Stack spacing={1.5} id="all-items">
-          <Stack
-            spacing={1.5}
-            direction={{ xs: "column", md: "row" }}
-            id="all-forms"
-          >
-            <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[0]}>
-              <ElevatedSectionWrapper fullW={true} fullH={true}>
-                <LabelledTextField label="code" id="code" register={register} />
-              </ElevatedSectionWrapper>
-              <DBSelectSection control={control} />
-              <AccessSection control={control} />
-            </Stack>
-            <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[1]}>
-              {/* <CourseSection control={control} />
-              <STSection control={control} /> */}
-
-              <CYTSection
-                control={control}
-                completeCoursesList={coursesList || []}
-                coursesList={coursesList ? prepCoursesList(coursesList) : []}
-                getValues={getValues}
-                watch={watch}
-              />
-            </Stack>
-
-            <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[2]}>
-              <RadioGroupsSection control={control} />
-              <DifficultySection control={control} />
-            </Stack>
-          </Stack>
-        </Stack>
-        <br />
-        <QuestionSection control={control} />
-        <br />
-        <ElevatedSectionWrapper fullW={true} fullH={true}>
-          <LabelledTextField
-            label="information"
-            id="information"
-            register={register}
-            multiline={true}
-            minRows={2}
-          />
-        </ElevatedSectionWrapper>
-        <br />
-        <TagSection control={control} />
-        <br />
-        <ElevatedSectionWrapper fullW={true} fullH={true}>
-          <LabelledTextField label="remarks" id="remarks" register={register} />
-        </ElevatedSectionWrapper>
+        <FormContentsSection control={control} defaultValues={defaultValues} />
         <br />
         <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
           <FormActionButton
