@@ -18,9 +18,12 @@ const prepCoursesList = (courses) => {
 };
 
 const FormContentsSection = ({
+  getValue,
   defaultValues,
-
+  register,
   control,
+  getValues,
+  watch,
 }) => {
   const { data: coursesList } = useFetchCourse({
     reqParams: "/trimmed?fields=title,acronym,subjects",
@@ -37,7 +40,12 @@ const FormContentsSection = ({
         >
           <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[0]}>
             <ElevatedSectionWrapper fullW={true} fullH={true}>
-              <LabelledTextField control={control} label="code" id="code" />
+              <LabelledTextField
+                control={control}
+                label="code"
+                id="code"
+                register={register}
+              />
             </ElevatedSectionWrapper>
             <DBSelectSection control={control} />
             <AccessSection control={control} />
@@ -47,18 +55,18 @@ const FormContentsSection = ({
               <STSection control={control} /> */}
 
             <CYTSection
+              getValue={getValue}
               control={control}
               defaultValues={defaultValues}
               completeCoursesList={coursesList || []}
               coursesList={coursesList ? prepCoursesList(coursesList) : []}
+              getValues={getValues}
+              watch={watch}
             />
           </Stack>
 
           <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[2]}>
-            <RadioGroupsSection
-              control={control}
-              defaultValues={defaultValues}
-            />
+            <RadioGroupsSection control={control} />
             <DifficultySection control={control} />
           </Stack>
         </Stack>
@@ -77,10 +85,20 @@ const FormContentsSection = ({
         />
       </ElevatedSectionWrapper>
       <br />
-      <TagSection control={control} defaultValues={defaultValues} />
+      <TagSection
+        control={control}
+        getValue={getValue}
+        defaultValues={defaultValues}
+        watch={watch}
+      />
       <br />
       <ElevatedSectionWrapper fullW={true} fullH={true}>
-        <LabelledTextField control={control} label="remarks" id="remarks" />
+        <LabelledTextField
+          control={control}
+          label="remarks"
+          id="remarks"
+          register={register}
+        />
       </ElevatedSectionWrapper>
     </>
   );

@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import useStyles from "../hooks/useStyles";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,12 +6,28 @@ import { useForm } from "react-hook-form";
 
 import questionSchema from "../schemas/question";
 
+import TagSection from "./add-question-page/TagSection";
+import RadioGroupsSection from "./add-question-page/RadioGroupsSection";
+import DifficultySection from "./add-question-page/DifficultySection";
+import CYTSection from "./add-question-page/CYTSection";
+import DBSelectSection from "./add-question-page/DBSelectSection";
+
+import AccessSection from "./add-question-page/AccessSection";
+import QuestionSection from "./add-question-page/QuestionSection";
 import { DevTool } from "@hookform/devtools";
 
+import { useFetchCourse } from "../hooks/useFetchCourse";
 import { useAddQuestion } from "../hooks/useAddQuestion";
-
+import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
+import LabelledTextField from "../components/form/LabelledTextField";
 import FormActionsSection from "./add-question-page/FormActionsSection";
 import FormContentsSection from "./add-question-page/FormContentsSection";
+
+const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
+
+const prepCoursesList = (courses) => {
+  return courses.map((course) => `${course?.title}`);
+};
 
 const onAddQuestionSuccess = () => {
   alert("Question added successfully");
@@ -27,6 +43,10 @@ const AddQuestionPage = () => {
     onAddQuestionSuccess,
     onAddQuestionError
   );
+  const { data: coursesList } = useFetchCourse({
+    reqParams: "/trimmed?fields=title,acronym,subjects",
+    staleTime: Infinity,
+  });
 
   const formatData = (originalData) => {
     const {
@@ -100,6 +120,9 @@ const AddQuestionPage = () => {
 
   // handlers todo
   const handleClear = () => {
+    console.log("handling clear");
+  };
+  const handleUpload = () => {
     console.log("handling clear");
   };
 
