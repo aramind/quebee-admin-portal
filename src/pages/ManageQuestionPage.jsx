@@ -12,6 +12,17 @@ import ButtonsSection from "./manage-question-page/ButtonsSection";
 import QuestionAndChoicesSection from "./manage-question-page/QuestionAndChoicesSection";
 import MetaInfoSection from "./manage-question-page/MetaInfoSection";
 
+const SimpleLabelValueStack = ({
+  label,
+  values,
+  direction = "row",
+  inChip,
+}) => (
+  <Stack direction={direction} spacing={1}>
+    <Label label={label} />
+    <Value values={values} inChip={inChip} />
+  </Stack>
+);
 const ManageQuestionPage = () => {
   const styles = useStyles();
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -69,36 +80,34 @@ const ManageQuestionPage = () => {
         <Fragment>
           <Stack spacing={1.5}>
             <ElevatedSectionWrapper fullW={true}>
-              <Stack direction="row">
-                <Label label="code" />
-                <Value values={questions[questionIndex]?.code} />
-              </Stack>
+              <SimpleLabelValueStack
+                label="code"
+                values={questions[questionIndex]?.code}
+              />
             </ElevatedSectionWrapper>
             <QuestionAndChoicesSection
               questions={questions}
               questionIndex={questionIndex}
             />
-
             <ElevatedSectionWrapper>
-              <Stack spacing={1}>
-                <Label label="information" />
-                <Value
-                  values={questions[questionIndex]?.information || "----------"}
-                />
-              </Stack>
+              <SimpleLabelValueStack
+                label="information"
+                values={questions[questionIndex]?.information || "----------"}
+                direction="column"
+              />
             </ElevatedSectionWrapper>
             <ElevatedSectionWrapper>
-              <Stack spacing={1} direction="row">
-                <Label label="tags" />
-                <Value values={questions[questionIndex]?.tags} inChip />
-              </Stack>
+              <SimpleLabelValueStack
+                label="tags"
+                values={questions[questionIndex]?.tags}
+                inChip
+              />
             </ElevatedSectionWrapper>
             <MetaInfoSection currentQuestion={questions[questionIndex]} />
           </Stack>
           <br />
           <ButtonsSection
-            questions={questions}
-            questionIndex={questionIndex}
+            currentQuestion={questions[questionIndex]}
             handlePrevious={handlePrevious}
             handleDelete={handleDelete}
             handleEdit={handleEdit}

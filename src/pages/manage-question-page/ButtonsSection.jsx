@@ -3,8 +3,7 @@ import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 
 const ButtonsSection = ({
-  questions,
-  questionIndex,
+  currentQuestion,
   handlePrevious,
   handleDelete,
   handleEdit,
@@ -22,7 +21,7 @@ const ButtonsSection = ({
         label="delete question"
         onClickHandler={handleDelete}
         variant="contained"
-        disabled={questions && questions[questionIndex]?.status === "deleted"}
+        disabled={currentQuestion?.status === "deleted"}
       />
       <FormActionButton
         label="edit question"
@@ -33,7 +32,7 @@ const ButtonsSection = ({
         label="upload question"
         onClickHandler={handleUpload}
         variant="contained"
-        disabled={questions && questions[questionIndex]?.status === "approved"}
+        disabled={currentQuestion?.status === "approved"}
       />
       <FormActionButton
         label="next"
