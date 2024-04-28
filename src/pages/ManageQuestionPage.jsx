@@ -1,10 +1,4 @@
-import {
-  Container,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Stack,
-} from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import useStyles from "../hooks/useStyles";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 
@@ -16,8 +10,7 @@ import { Fragment, useState } from "react";
 import { usePatchQuestion } from "../hooks/usePatchQuestion";
 import ButtonsSection from "./manage-question-page/ButtonsSection";
 import QuestionAndChoicesSection from "./manage-question-page/QuestionAndChoicesSection";
-
-const SCREEN_FLEX_PROPORTIONS = ["60%", "20%", "20%"];
+import MetaInfoSection from "./manage-question-page/MetaInfoSection";
 
 const ManageQuestionPage = () => {
   const styles = useStyles();
@@ -100,80 +93,7 @@ const ManageQuestionPage = () => {
                 <Value values={questions[questionIndex]?.tags} inChip />
               </Stack>
             </ElevatedSectionWrapper>
-            <Stack direction="row" spacing={1}>
-              <Stack flex={SCREEN_FLEX_PROPORTIONS[0]}>
-                <ElevatedSectionWrapper fullW fullH>
-                  <Stack spacing={1}>
-                    <Stack direction="row">
-                      <Label label="database" />
-                      <Value values={questions[questionIndex]?.database} />
-                    </Stack>
-                    <Stack direction="row">
-                      <Label label="course(s)" />
-                      <Value
-                        values={questions[questionIndex]?.courses}
-                        inChip
-                      />
-                    </Stack>
-                    <Stack direction="row">
-                      <Label label="subject(s)" />
-                      <Value
-                        values={questions[questionIndex]?.subjects}
-                        inChip
-                      />
-                    </Stack>
-                    <Stack direction="row">
-                      <Label label="topic(s)" />
-                      <Value values={questions[questionIndex]?.topics} inChip />
-                    </Stack>
-                  </Stack>
-                </ElevatedSectionWrapper>
-              </Stack>
-              <Stack flex={SCREEN_FLEX_PROPORTIONS[1]}>
-                <ElevatedSectionWrapper fullW fullH>
-                  <Stack spacing={1}>
-                    <Stack direction="row" spacing={1}>
-                      <Label label="access" />
-                      <Value values={questions[questionIndex]?.access} />
-                    </Stack>
-                    <Stack direction="row" spacing={1}>
-                      <Label label="difficulty" />
-                      <Value
-                        values={`${questions[questionIndex]?.difficulty}/5`}
-                      />
-                    </Stack>
-                    <Stack direction="row" spacing={1}>
-                      <Label label="nature" />
-                      <Value values={questions[questionIndex]?.nature} />
-                    </Stack>
-                    <Stack direction="row" spacing={1}>
-                      <Label label="type" />
-                      <Value values={questions[questionIndex]?.type} />
-                    </Stack>
-                  </Stack>
-                </ElevatedSectionWrapper>
-              </Stack>
-              <Stack flex={SCREEN_FLEX_PROPORTIONS[2]}>
-                <ElevatedSectionWrapper fullW fullH>
-                  <Stack spacing={1}>
-                    <Stack direction="row" spacing={1}>
-                      <Label label="encoder" />
-                      <Value values="abc31" />
-                    </Stack>
-                    <Stack direction="row" spacing={1}>
-                      <Label label="encoded" />
-                      <Value
-                        values={formatDate(questions[questionIndex]?.createdAt)}
-                      />
-                    </Stack>
-                    <Stack direction="row" spacing={1}>
-                      <Label label="status" />
-                      <Value values={questions[questionIndex]?.status} />
-                    </Stack>
-                  </Stack>
-                </ElevatedSectionWrapper>
-              </Stack>
-            </Stack>
+            <MetaInfoSection currentQuestion={questions[questionIndex]} />
           </Stack>
           <br />
           <ButtonsSection
