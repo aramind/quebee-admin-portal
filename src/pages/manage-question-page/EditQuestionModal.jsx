@@ -62,12 +62,11 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
     database: constants.DATABASES[0],
     courses: ["default course1", "default course2"],
     subjects: ["default subject1", "default subject2"],
-    topics: ["Default topic 1", "Default topic 2", "Default topic 3"],
     tags: ["default tag1", "default tag2"],
-    difficulty: 5,
-    type: "tf",
-    nature: "ps",
-    access: "premium",
+    difficulty: 1,
+    type: "default type",
+    nature: "default nature",
+    access: "basic",
     question: "default question",
     A: "default A",
     B: "default B",
@@ -125,7 +124,7 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
     return formattedData;
   };
   // form related
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, watch, getValue, register } = useForm({
     resolver: zodResolver(questionSchema),
     mode: "onTouched",
     defaultValues: defaultValues,
@@ -166,7 +165,10 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
                   <>
                     <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
                       <FormContentsSection
+                        register={register}
                         control={control}
+                        getValue={getValue}
+                        watch={watch}
                         defaultValues={defaultValues}
                       />
 
