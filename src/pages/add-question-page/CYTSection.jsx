@@ -7,8 +7,6 @@ const CYTSection = ({
   control,
   coursesList = [],
   completeCoursesList = [],
-  watch,
-  getValues,
 }) => {
   const getSubjects = (coursesList) => {
     const subjects = Array.from(
@@ -42,8 +40,9 @@ const CYTSection = ({
           control={control}
           id="controlled-multi-auto-comp"
           label="course(s)"
-          options={defaultValues?.coursesList || coursesList}
+          options={coursesList || []}
           textTransform="uppercase"
+          defaultValues={defaultValues?.courses}
         />
 
         <ControlledChipMultiAutoComp
@@ -53,6 +52,7 @@ const CYTSection = ({
           label="subject(s)"
           options={getSubjects(completeCoursesList) || []}
           textTransform="uppercase"
+          defaultValues={defaultValues?.subjects}
         />
 
         <ControlledChipMultiAutoComp
@@ -62,6 +62,7 @@ const CYTSection = ({
           label="topic(s)"
           options={getTopics(completeCoursesList) || []}
           textTransform="capitalize"
+          defaultValues={defaultValues?.topics}
         />
       </Stack>
     </ElevatedSectionWrapper>
