@@ -6,8 +6,6 @@ import {
   Stack,
 } from "@mui/material";
 import useStyles from "../hooks/useStyles";
-import { useForm } from "react-hook-form";
-import questionSchema from "../schemas/question";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 
 import Label from "./manage-question-page/Label";
@@ -18,6 +16,7 @@ import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "../components/form/FormActionButton";
 import { Fragment, useState } from "react";
 import { usePatchQuestion } from "../hooks/usePatchQuestion";
+import ButtonsSection from "./manage-question-page/ButtonsSection";
 
 const SCREEN_FLEX_PROPORTIONS = ["60%", "20%", "20%"];
 
@@ -32,27 +31,11 @@ const ManageQuestionPage = () => {
 
   const { mutate: editQuestion } = usePatchQuestion();
   // onClickHandlers
-  const handleNext = () => {
-    setQuestionIndex((prevIndex) => (prevIndex + 1) % questions?.length);
-  };
 
   const handlePrevious = () => {
     setQuestionIndex((prevIndex) =>
       prevIndex === 0 ? questions.length - 1 : prevIndex - 1
     );
-  };
-
-  const handleUpload = () => {
-    try {
-      editQuestion({
-        params: `${questions[questionIndex]?._id}`,
-        patchData: {
-          status: "approved",
-        },
-      });
-    } catch (error) {
-      console.error("Error updating question:", error);
-    }
   };
 
   const handleDelete = () => {
@@ -67,6 +50,27 @@ const ManageQuestionPage = () => {
       console.error("Error updating question:", error);
     }
   };
+
+  const handleEdit = () => {
+    // alert("Clicked edit btn on manage question page");
+  };
+  const handleUpload = () => {
+    try {
+      editQuestion({
+        params: `${questions[questionIndex]?._id}`,
+        patchData: {
+          status: "approved",
+        },
+      });
+    } catch (error) {
+      console.error("Error updating question:", error);
+    }
+  };
+
+  const handleNext = () => {
+    setQuestionIndex((prevIndex) => (prevIndex + 1) % questions?.length);
+  };
+
   return (
     <Container maxWidth="xl" sx={styles.mainContainer}>
       {questions && (
@@ -186,35 +190,15 @@ const ManageQuestionPage = () => {
             </Stack>
           </Stack>
           <br />
-          <FormActionsContainer justify={{ sm: "center", xs: "center" }}>
-            <FormActionButton
-              label="previous"
-              onClickHandler={handlePrevious}
-              variant="outlined"
-            />
-            <FormActionButton
-              label="delete question"
-              onClickHandler={handleDelete}
-              variant="contained"
-              disabled={questions[questionIndex]?.status === "deleted"}
-            />
-            <FormActionButton
-              label="edit question"
-              // onClickHandler={handleEdit}
-              variant="contained"
-            />
-            <FormActionButton
-              label="upload question"
-              onClickHandler={handleUpload}
-              variant="contained"
-              disabled={questions[questionIndex]?.status === "approved"}
-            />
-            <FormActionButton
-              label="next"
-              onClickHandler={handleNext}
-              variant="outlined"
-            />
-          </FormActionsContainer>
+          <ButtonsSection
+            questions={questions}
+            questionIndex={questionIndex}
+            handlePrevious={handlePrevious}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            handleUpload={handleUpload}
+            handleNext={handleNext}
+          />
         </Fragment>
       )}
     </Container>
