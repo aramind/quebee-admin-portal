@@ -8,21 +8,12 @@ import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "../components/form/FormActionButton";
 import questionSchema from "../schemas/question";
 
-import TagSection from "./add-question-page/TagSection";
-import RadioGroupsSection from "./add-question-page/RadioGroupsSection";
-import DifficultySection from "./add-question-page/DifficultySection";
-import CYTSection from "./add-question-page/CYTSection";
-import DBSelectSection from "./add-question-page/DBSelectSection";
-
-import AccessSection from "./add-question-page/AccessSection";
-import QuestionSection from "./add-question-page/QuestionSection";
 import { DevTool } from "@hookform/devtools";
 
-import { useFetchCourse } from "../hooks/useFetchCourse";
 import { useAddQuestion } from "../hooks/useAddQuestion";
-import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
-import LabelledTextField from "../components/form/LabelledTextField";
+
 import FormContentsSection from "./add-question-page/FormContentsSection";
+import FormActionsSection from "./add-question-page/FormActionsSection";
 
 const onAddQuestionSucess = () => {
   alert("Question added successfully");
@@ -87,7 +78,7 @@ const AddQuestionPage = () => {
     return formattedData;
   };
   // form related
-  const { handleSubmit, control, watch, getValues, register } = useForm({
+  const { handleSubmit, control } = useForm({
     resolver: zodResolver(questionSchema),
     mode: "onTouched",
   });
@@ -115,9 +106,6 @@ const AddQuestionPage = () => {
   const handleClear = () => {
     console.log("handling clear");
   };
-  const handleUpload = () => {
-    console.log("handling clear");
-  };
 
   // console.log("COURSES LIST", coursesList);
   return (
@@ -125,19 +113,10 @@ const AddQuestionPage = () => {
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <FormContentsSection control={control} defaultValues={defaultValues} />
         <br />
-        <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-          <FormActionButton
-            label="clear"
-            onClickHandler={handleClear}
-            variant="outlined"
-          />
-          <FormActionButton
-            label="upload"
-            onClickHandler={handleUpload}
-            variant="outlined"
-          />
-          <FormActionButton type="submit" label="save" variant="contained" />
-        </FormActionsContainer>
+        <FormActionsSection
+          handleClear={handleClear}
+          handleSubmit={handleSubmit}
+        />
       </form>
       <DevTool control={control} />
     </Container>
