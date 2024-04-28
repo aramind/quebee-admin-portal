@@ -6,6 +6,8 @@ import {
   Stack,
 } from "@mui/material";
 import useStyles from "../hooks/useStyles";
+import { useForm } from "react-hook-form";
+import questionSchema from "../schemas/question";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 
 import Label from "./manage-question-page/Label";
@@ -16,12 +18,10 @@ import FormActionsContainer from "../containers/FormActionsContainer";
 import FormActionButton from "../components/form/FormActionButton";
 import { Fragment, useState } from "react";
 import { usePatchQuestion } from "../hooks/usePatchQuestion";
-import EditQuestionModal from "./manage-question-page/EditQuestionModal";
 
 const SCREEN_FLEX_PROPORTIONS = ["60%", "20%", "20%"];
 
 const ManageQuestionPage = () => {
-  const [openEditQuestion, setOpenEditQuestion] = useState(false);
   const styles = useStyles();
   const [questionIndex, setQuestionIndex] = useState(0);
 
@@ -200,7 +200,7 @@ const ManageQuestionPage = () => {
             />
             <FormActionButton
               label="edit question"
-              onClickHandler={() => setOpenEditQuestion(true)}
+              // onClickHandler={handleEdit}
               variant="contained"
             />
             <FormActionButton
@@ -215,11 +215,6 @@ const ManageQuestionPage = () => {
               variant="outlined"
             />
           </FormActionsContainer>
-          <EditQuestionModal
-            open={openEditQuestion}
-            setOpen={setOpenEditQuestion}
-            title="Edit Question"
-          />
         </Fragment>
       )}
     </Container>

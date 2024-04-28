@@ -4,6 +4,8 @@ import useStyles from "../hooks/useStyles";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import FormActionsContainer from "../containers/FormActionsContainer";
+import FormActionButton from "../components/form/FormActionButton";
 import questionSchema from "../schemas/question";
 
 import TagSection from "./add-question-page/TagSection";
@@ -20,8 +22,6 @@ import { useFetchCourse } from "../hooks/useFetchCourse";
 import { useAddQuestion } from "../hooks/useAddQuestion";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import LabelledTextField from "../components/form/LabelledTextField";
-import FormActionsSection from "./add-question-page/FormActionsSection";
-import FormContentsSection from "./add-question-page/FormContentsSection";
 
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 
@@ -29,7 +29,7 @@ const prepCoursesList = (courses) => {
   return courses.map((course) => `${course?.title}`);
 };
 
-const onAddQuestionSuccess = () => {
+const onAddQuestionSucess = () => {
   alert("Question added successfully");
 };
 
@@ -40,7 +40,7 @@ const onAddQuestionError = () => {
 const AddQuestionPage = () => {
   const styles = useStyles();
   const { mutate: addQuestion } = useAddQuestion(
-    onAddQuestionSuccess,
+    onAddQuestionSucess,
     onAddQuestionError
   );
   const { data: coursesList } = useFetchCourse({
@@ -100,8 +100,8 @@ const AddQuestionPage = () => {
   });
 
   const onSubmit = (data) => {
-    console.log("onSubmit triggered");
-    console.log("raw data:", data);
+    // console.log("onSubmit triggered");
+    // console.log("raw data:", data);
 
     const formattedData = formatData(data);
     // console.log("Submitting question...", formattedData);
@@ -130,15 +130,70 @@ const AddQuestionPage = () => {
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <FormContentsSection
-          register={register}
-          control={control}
-          getValues={getValues}
-          watch={watch}
-        />
+        <Stack spacing={1.5} id="all-items">
+          <Stack
+            spacing={1.5}
+            direction={{ xs: "column", md: "row" }}
+            id="all-forms"
+          >
+            <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[0]}>
+              <ElevatedSectionWrapper fullW={true} fullH={true}>
+                <LabelledTextField label="code" id="code" register={register} />
+              </ElevatedSectionWrapper>
+              <DBSelectSection control={control} />
+              <AccessSection control={control} />
+            </Stack>
+            <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[1]}>
+              {/* <CourseSection control={control} />
+              <STSection control={control} /> */}
 
+              <CYTSection
+                control={control}
+                completeCoursesList={coursesList || []}
+                coursesList={coursesList ? prepCoursesList(coursesList) : []}
+                getValues={getValues}
+                watch={watch}
+              />
+            </Stack>
+
+            <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[2]}>
+              <RadioGroupsSection control={control} />
+              <DifficultySection control={control} />
+            </Stack>
+          </Stack>
+        </Stack>
         <br />
-        <FormActionsSection handleClear={handleClear} />
+        <QuestionSection control={control} />
+        <br />
+        <ElevatedSectionWrapper fullW={true} fullH={true}>
+          <LabelledTextField
+            label="information"
+            id="information"
+            register={register}
+            multiline={true}
+            minRows={2}
+          />
+        </ElevatedSectionWrapper>
+        <br />
+        <TagSection control={control} />
+        <br />
+        <ElevatedSectionWrapper fullW={true} fullH={true}>
+          <LabelledTextField label="remarks" id="remarks" register={register} />
+        </ElevatedSectionWrapper>
+        <br />
+        <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+          <FormActionButton
+            label="clear"
+            onClickHandler={handleClear}
+            variant="outlined"
+          />
+          <FormActionButton
+            label="upload"
+            onClickHandler={handleUpload}
+            variant="outlined"
+          />
+          <FormActionButton type="submit" label="save" variant="contained" />
+        </FormActionsContainer>
       </form>
       <DevTool control={control} />
     </Container>
