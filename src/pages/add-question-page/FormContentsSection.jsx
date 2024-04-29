@@ -49,6 +49,7 @@ const FormContentsSection = ({ control, defaultValues }) => {
               control={control}
               completeCoursesList={coursesList || []}
               coursesList={coursesList ? prepCoursesList(coursesList) : []}
+              defaultValues={defaultValues}
             />
           </Stack>
 

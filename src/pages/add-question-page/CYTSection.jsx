@@ -7,8 +7,7 @@ const CYTSection = ({
   control,
   coursesList = [],
   completeCoursesList = [],
-  watch,
-  getValues,
+  defaultValues,
 }) => {
   const getSubjects = (coursesList) => {
     const subjects = Array.from(
@@ -54,6 +53,7 @@ const CYTSection = ({
           options={coursesList}
           // chipColor={teal["A100"]}
           textTransform="uppercase"
+          defaultValues={defaultValues?.courses}
         />
 
         {/* <ControlledChipMultiSelect
@@ -72,6 +72,7 @@ const CYTSection = ({
           options={getSubjects(completeCoursesList) || []}
           // chipColor={amber["A100"]}
           textTransform="uppercase"
+          defaultValues={defaultValues?.subjects}
         />
 
         {/* <ControlledChipMultiSelect
@@ -90,6 +91,7 @@ const CYTSection = ({
           options={getTopics(completeCoursesList) || []}
           // chipColor={cyan["A100"]}
           textTransform="capitalize"
+          defaultValues={defaultValues?.topics}
         />
       </Stack>
     </ElevatedSectionWrapper>

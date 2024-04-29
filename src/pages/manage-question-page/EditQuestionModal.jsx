@@ -171,7 +171,6 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
                         defaultValues={defaultValues}
                       />
                     </form>
-                    <DevTool control={control} />
                   </>
                 </BoxWrapper>
               </Stack>
@@ -192,6 +191,7 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
           />
         </DialogActions>
       </Dialog>
+      <DevTool control={control} />
     </>
   );
 };
