@@ -5,12 +5,12 @@ import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import Label from "./manage-question-page/Label";
 import Value from "./manage-question-page/Value";
 import { useFetchQUestions } from "../hooks/useFetchQuestions";
-import { formatDate } from "../utils/formatDate";
 import { Fragment, useState } from "react";
 import { usePatchQuestion } from "../hooks/usePatchQuestion";
 import ButtonsSection from "./manage-question-page/ButtonsSection";
 import QuestionAndChoicesSection from "./manage-question-page/QuestionAndChoicesSection";
 import MetaInfoSection from "./manage-question-page/MetaInfoSection";
+import EditQuestionModal from "./manage-question-page/EditQuestionModal";
 
 const SimpleLabelValueStack = ({
   label,
@@ -24,6 +24,7 @@ const SimpleLabelValueStack = ({
   </Stack>
 );
 const ManageQuestionPage = () => {
+  const [openEditQuestion, setOpenEditQuestion] = useState(false);
   const styles = useStyles();
   const [questionIndex, setQuestionIndex] = useState(0);
 
@@ -56,6 +57,7 @@ const ManageQuestionPage = () => {
 
   const handleEdit = () => {
     // alert("Clicked edit btn on manage question page");
+    setOpenEditQuestion(true);
   };
   const handleUpload = () => {
     try {
@@ -113,6 +115,11 @@ const ManageQuestionPage = () => {
             handleEdit={handleEdit}
             handleUpload={handleUpload}
             handleNext={handleNext}
+          />
+          <EditQuestionModal
+            open={openEditQuestion}
+            setOpen={setOpenEditQuestion}
+            title="Edit Question"
           />
         </Fragment>
       )}

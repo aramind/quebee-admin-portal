@@ -1,7 +1,6 @@
 import { Stack } from "@mui/material";
 import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-import LabelledTextField from "../../components/form/LabelledTextField";
 import DBSelectSection from "./DBSelectSection";
 import AccessSection from "./AccessSection";
 import CYTSection from "./CYTSection";
@@ -72,7 +71,7 @@ const FormContentsSection = ({ control, defaultValues }) => {
         />
       </ElevatedSectionWrapper>
       <br />
-      <TagSection control={control} />
+      <TagSection control={control} defaultValues={defaultValues?.tags} />
       <br />
       <ElevatedSectionWrapper fullW={true} fullH={true}>
         <ControlledLabelledTextField

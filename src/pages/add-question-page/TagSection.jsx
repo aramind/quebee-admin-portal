@@ -4,7 +4,8 @@ import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledChipMultiAutoComp from "../../components/form/ControlledChipMultiAutoComp";
 import constants from "../../components/configs/constants";
 
-const TagSection = ({ control }) => {
+const TagSection = ({ control, defaultValues }) => {
+  console.log(defaultValues);
   return (
     <Stack spacing={1.5} flex={1}>
       <ElevatedSectionWrapper fullH={true}>
@@ -15,6 +16,7 @@ const TagSection = ({ control }) => {
           label="select tag(s)"
           options={constants.TAGS}
           free
+          defaultValues={defaultValues}
         />
       </ElevatedSectionWrapper>
     </Stack>
