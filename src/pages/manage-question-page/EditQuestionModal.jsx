@@ -31,6 +31,12 @@ const PaperComponent = (props) => {
   );
 };
 
+const getLetterOfCorrectAnswer = (choices) => {
+  const key = { 0: "A", 1: "B", 2: "C", 3: "D" };
+  const letter = key[choices.findIndex((choice) => choice.isCorrect)];
+  // console.log(letter);
+  return letter;
+};
 const EditQuestionModal = ({
   open,
   setOpen,
@@ -56,6 +62,7 @@ const EditQuestionModal = ({
     );
   };
 
+  // console.log(question);
   useEffect(() => {
     setDefaultValues({
       ...question,
@@ -63,8 +70,9 @@ const EditQuestionModal = ({
       B: question?.choices[1]?.value,
       C: question?.choices[2]?.value,
       D: question?.choices[3]?.value,
-      correctAnswer: question?.choices.find((choice) => choice.isCorrect)
-        ?.value,
+      // correctAnswer: question?.choices.find((choice) => choice.isCorrect)
+      //   ?.value,
+      correctAnswer: getLetterOfCorrectAnswer(question?.choices),
     });
   }, [question]);
   // form related
