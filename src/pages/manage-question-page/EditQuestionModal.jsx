@@ -124,6 +124,7 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
   });
 
   const onSubmit = (data) => {
+    console.log("Clicked save edit");
     const formattedData = formatData(data);
     console.log(formattedData);
   };
@@ -164,14 +165,14 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
                 }}
               >
                 <BoxWrapper>
+                  {/* <form onSubmit={handleSubmit(onSubmit, onError)} noValidate> */}
                   <>
-                    <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-                      <FormContentsSection
-                        control={control}
-                        defaultValues={defaultValues}
-                      />
-                    </form>
+                    <FormContentsSection
+                      control={control}
+                      defaultValues={defaultValues}
+                    />
                   </>
+                  {/* </form> */}
                 </BoxWrapper>
               </Stack>
             </ElevatedSectionWrapper>

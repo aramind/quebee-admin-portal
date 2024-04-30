@@ -62,7 +62,7 @@ const FormContentsSection = ({ control, defaultValues }) => {
       <br />
       <QuestionSection control={control} />
       <br />
-      <ElevatedSectionWrapper fullW={true} fullH={true}>
+      <ElevatedSectionWrapper fullW={true}>
         <ControlledLabelledTextField
           label="information"
           id="information"
@@ -74,7 +74,7 @@ const FormContentsSection = ({ control, defaultValues }) => {
       <br />
       <TagSection control={control} defaultValues={defaultValues?.tags} />
       <br />
-      <ElevatedSectionWrapper fullW={true} fullH={true}>
+      <ElevatedSectionWrapper fullW={true}>
         <ControlledLabelledTextField
           label="remarks"
           id="remarks"
