@@ -76,6 +76,17 @@ const ManageQuestionPage = () => {
     setQuestionIndex((prevIndex) => (prevIndex + 1) % questions?.length);
   };
 
+  const handleSaveEdit = (data) => {
+    try {
+      editQuestion({
+        params: `${questions[questionIndex]?._id}`,
+        patchData: data,
+      });
+    } catch (error) {
+      console.error("Error updating question:", error);
+    }
+  };
+
   return (
     <Container maxWidth="xl" sx={styles.mainContainer}>
       {questions && (
@@ -121,6 +132,7 @@ const ManageQuestionPage = () => {
             open={openEditQuestion}
             setOpen={setOpenEditQuestion}
             title="Edit Question"
+            handleSaveEdit={handleSaveEdit}
           />
         </Fragment>
       )}

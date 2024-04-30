@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import FormContentsSection from "../add-question-page/FormContentsSection";
 import DialogActionButton from "../../components/form/DialogActionButton";
 import { DevTool } from "@hookform/devtools";
+import { usePatchQuestion } from "../../hooks/usePatchQuestion";
 
 const PaperComponent = (props) => {
   return (
@@ -30,9 +31,17 @@ const PaperComponent = (props) => {
   );
 };
 
-const EditQuestionModal = ({ open, setOpen, title = "", question }) => {
+const EditQuestionModal = ({
+  open,
+  setOpen,
+  title = "",
+  question,
+  handleSaveEdit,
+}) => {
   const styles = useStyles();
   const [defaultValues, setDefaultValues] = useState({});
+
+  const { mutate: editQuestion } = usePatchQuestion();
 
   const BoxWrapper = ({ children }) => {
     return (
@@ -117,10 +126,20 @@ const EditQuestionModal = ({ open, setOpen, title = "", question }) => {
   useEffect(() => {
     reset(defaultValues);
   }, [reset, defaultValues]);
+
   const onSubmit = (data) => {
     alert("Clicked save edit");
     const formattedData = formatData(data);
     console.log(formattedData);
+    handleSaveEdit(formattedData);
+    // try {
+    //   editQuestion({
+    //     params: `${question?._id}`,
+    //     patchData: formattedData,
+    //   });
+    // } catch (error) {
+    //   console.error("Error updating question:", error);
+    // }
   };
 
   const onError = (err) => {
