@@ -123,7 +123,7 @@ const EditQuestionModal = ({
     return formattedData;
   };
 
-  console.log(defaultValues);
+  // console.log(defaultValues);
   // form related
   const { handleSubmit, control, reset } = useForm({
     resolver: zodResolver(questionSchema),
