@@ -60,7 +60,7 @@ const FormContentsSection = ({ control, defaultValues }) => {
         </Stack>
       </Stack>
       <br />
-      <QuestionSection control={control} />
+      <QuestionSection control={control} defaultValues={defaultValues} />
       <br />
       <ElevatedSectionWrapper fullW={true}>
         <ControlledLabelledTextField

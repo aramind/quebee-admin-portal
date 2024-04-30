@@ -65,7 +65,7 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
     C: "3",
     D: "4",
 
-    correctAnswer: "4",
+    correctAnswer: "2",
     information: "default information",
     remarks: "default remarks",
   };
@@ -116,6 +116,7 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
     return formattedData;
   };
 
+  console.log(defaultValues);
   // form related
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(questionSchema),
@@ -124,7 +125,7 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
   });
 
   const onSubmit = (data) => {
-    console.log("Clicked save edit");
+    alert("Clicked save edit");
     const formattedData = formatData(data);
     console.log(formattedData);
   };
@@ -137,12 +138,13 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
     e.stopPropagation();
   };
 
-  const handleSave = (data) => {
-    console.log("clicked saved");
+  const handleSave = () => {
+    handleSubmit(onSubmit, onError)();
+    setOpen(false);
   };
 
   return (
-    <>
+    <form noValidate>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -165,14 +167,10 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
                 }}
               >
                 <BoxWrapper>
-                  {/* <form onSubmit={handleSubmit(onSubmit, onError)} noValidate> */}
-                  <>
-                    <FormContentsSection
-                      control={control}
-                      defaultValues={defaultValues}
-                    />
-                  </>
-                  {/* </form> */}
+                  <FormContentsSection
+                    control={control}
+                    defaultValues={defaultValues}
+                  />
                 </BoxWrapper>
               </Stack>
             </ElevatedSectionWrapper>
@@ -183,17 +181,11 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
             label="cancel"
             onClickHandler={() => setOpen(false)}
           />
-          <DialogActionButton
-            label="save"
-            onClickHandler={() => {
-              handleSave();
-              setOpen(false);
-            }}
-          />
+          <DialogActionButton label="save" onClickHandler={handleSave} />
         </DialogActions>
       </Dialog>
       <DevTool control={control} />
-    </>
+    </form>
   );
 };
 

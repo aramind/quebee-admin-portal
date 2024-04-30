@@ -6,23 +6,22 @@ import {
   RadioGroup,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
 import React from "react";
 
 import { Controller } from "react-hook-form";
-import { red } from "@mui/material/colors";
 import ChoicesLabel from "./ChoicesLabel";
+import { getKeyOfCorrectAnswer } from "../../utils/getKeyOfCorrectAnswer";
 
 // const choices = ["choice1", "choice2", "choice3", "choice4"];
 const choices = ["A", "B", "C", "D"];
 
-const Choices = ({ control }) => {
+const Choices = ({ control, defaultValues }) => {
   return (
     <Controller
       name="correctAnswer"
       control={control}
-      defaultValue={choices[0]}
+      // defaultValue={getKeyOfCorrectAnswer(defaultValues)}
       render={({ field }) => (
         <Stack height="100%">
           <RadioGroup
@@ -35,7 +34,14 @@ const Choices = ({ control }) => {
               <FormControlLabel
                 key={choice}
                 value={choice}
-                control={<Radio />}
+                control={
+                  <Radio
+                    checked={
+                      defaultValues?.correctAnswer &&
+                      getKeyOfCorrectAnswer(defaultValues) === choice
+                    }
+                  />
+                }
                 label={
                   <>
                     <Stack
@@ -50,14 +56,14 @@ const Choices = ({ control }) => {
                       <Stack flex={1}>
                         <Controller
                           control={control}
-                          // name={`choices.${choice}`}
+                          // name={`choices[${choice}]`}
                           name={choice}
                           render={({ field }) => (
                             <TextField
                               fullWidth
                               {...field}
                               multiline
-                              onBlur={field.onBlur}
+                              // onBlur={field.onBlur}
                             />
                           )}
                         />
