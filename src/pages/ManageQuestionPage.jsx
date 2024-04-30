@@ -117,6 +117,7 @@ const ManageQuestionPage = () => {
             handleNext={handleNext}
           />
           <EditQuestionModal
+            question={questions[questionIndex]}
             open={openEditQuestion}
             setOpen={setOpenEditQuestion}
             title="Edit Question"

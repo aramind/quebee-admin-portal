@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import {
   Box,
@@ -17,7 +17,6 @@ import questionSchema from "../../schemas/question";
 import { useForm } from "react-hook-form";
 import FormContentsSection from "../add-question-page/FormContentsSection";
 import DialogActionButton from "../../components/form/DialogActionButton";
-import constants from "../../components/configs/constants";
 import { DevTool } from "@hookform/devtools";
 
 const PaperComponent = (props) => {
@@ -31,8 +30,9 @@ const PaperComponent = (props) => {
   );
 };
 
-const EditQuestionModal = ({ open, setOpen, title = "" }) => {
+const EditQuestionModal = ({ open, setOpen, title = "", question }) => {
   const styles = useStyles();
+  const [defaultValues, setDefaultValues] = useState({});
 
   const BoxWrapper = ({ children }) => {
     return (
@@ -47,28 +47,18 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
     );
   };
 
+  useEffect(() => {
+    setDefaultValues({
+      ...question,
+      A: question?.choices[0]?.value,
+      B: question?.choices[1]?.value,
+      C: question?.choices[2]?.value,
+      D: question?.choices[3]?.value,
+      correctAnswer: question?.choices.find((choice) => choice.isCorrect)
+        ?.value,
+    });
+  }, [question]);
   // form related
-  const defaultValues = {
-    code: "default code",
-    database: constants.DATABASES[0],
-    courses: ["default course1", "default course2"],
-    subjects: ["default subject1", "default subject2"],
-    topics: ["Default topic 1", "Default topic 2", "Default topic 3"],
-    tags: ["default tag1", "default tag2"],
-    difficulty: 5,
-    type: "tf",
-    nature: "ps",
-    access: "premium",
-    question: "default question",
-    A: "1",
-    B: "2",
-    C: "3",
-    D: "4",
-
-    correctAnswer: "2",
-    information: "default information",
-    remarks: "default remarks",
-  };
 
   const formatData = (originalData) => {
     const {
@@ -118,12 +108,15 @@ const EditQuestionModal = ({ open, setOpen, title = "" }) => {
 
   console.log(defaultValues);
   // form related
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, reset } = useForm({
     resolver: zodResolver(questionSchema),
     mode: "onTouched",
     defaultValues: defaultValues,
   });
 
+  useEffect(() => {
+    reset(defaultValues);
+  }, [reset, defaultValues]);
   const onSubmit = (data) => {
     alert("Clicked save edit");
     const formattedData = formatData(data);
