@@ -91,32 +91,44 @@ const ManageQuestionPage = () => {
     <Container maxWidth="xl" sx={styles.mainContainer}>
       {questions && (
         <Fragment>
-          <Stack spacing={1.5}>
-            <ElevatedSectionWrapper fullW={true}>
-              <SimpleLabelValueStack
-                label="code"
-                values={questions[questionIndex]?.code}
-              />
-            </ElevatedSectionWrapper>
-            <QuestionAndChoicesSection
-              questions={questions}
-              questionIndex={questionIndex}
-            />
-            <ElevatedSectionWrapper>
-              <SimpleLabelValueStack
-                label="information"
-                values={questions[questionIndex]?.information || "----------"}
-                direction="column"
-              />
-            </ElevatedSectionWrapper>
-            <ElevatedSectionWrapper>
-              <SimpleLabelValueStack
-                label="tags"
-                values={questions[questionIndex]?.tags}
-                inChip
-              />
-            </ElevatedSectionWrapper>
-            <MetaInfoSection currentQuestion={questions[questionIndex]} />
+          <Stack spacing={1.5} direction="row">
+            <Stack spacing={1.5}>
+              <ElevatedSectionWrapper fullW>
+                <SimpleLabelValueStack
+                  label="code"
+                  values={questions[questionIndex]?.code}
+                />
+              </ElevatedSectionWrapper>
+              <MetaInfoSection currentQuestion={questions[questionIndex]} />
+            </Stack>
+            <Stack spacing={1.5}>
+              <Stack spacing={1.5}>
+                <Stack>
+                  <QuestionAndChoicesSection
+                    questions={questions}
+                    questionIndex={questionIndex}
+                  />
+                </Stack>
+                <Stack spacing={1.5}>
+                  <ElevatedSectionWrapper>
+                    <SimpleLabelValueStack
+                      label="information"
+                      values={
+                        questions[questionIndex]?.information || "----------"
+                      }
+                      direction="column"
+                    />
+                  </ElevatedSectionWrapper>
+                  <ElevatedSectionWrapper>
+                    <SimpleLabelValueStack
+                      label="tags"
+                      values={questions[questionIndex]?.tags}
+                      inChip
+                    />
+                  </ElevatedSectionWrapper>
+                </Stack>
+              </Stack>
+            </Stack>
           </Stack>
           <br />
           <ButtonsSection

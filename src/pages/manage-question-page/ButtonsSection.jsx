@@ -11,7 +11,7 @@ const ButtonsSection = ({
   handleNext,
 }) => {
   return (
-    <FormActionsContainer justify={{ sm: "center", xs: "center" }}>
+    <FormActionsContainer justify={{ sm: "center", xs: "center" }} sticky>
       <FormActionButton
         label="previous"
         onClickHandler={handlePrevious}
