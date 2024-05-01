@@ -8,7 +8,7 @@ import { formatDate } from "../../utils/formatDate";
 const SCREEN_FLEX_PROPORTIONS = ["30%", "70%"];
 
 const StackItem = ({ label, values, direction = "row", inChip }) => (
-  <Stack direction={direction} spacing={1}>
+  <Stack direction={direction} spacing={1} sx={{ flexWrap: "wrap" }}>
     <Label label={label} />
     <Value values={values} inChip={inChip} />
   </Stack>

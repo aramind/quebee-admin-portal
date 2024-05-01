@@ -1,4 +1,4 @@
-import { Container, Stack } from "@mui/material";
+import { Container, Grid, Stack } from "@mui/material";
 import useStyles from "../hooks/useStyles";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 
@@ -11,6 +11,7 @@ import ButtonsSection from "./manage-question-page/ButtonsSection";
 import QuestionAndChoicesSection from "./manage-question-page/QuestionAndChoicesSection";
 import MetaInfoSection from "./manage-question-page/MetaInfoSection";
 import EditQuestionModal from "./manage-question-page/EditQuestionModal";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 const SimpleLabelValueStack = ({
   label,
@@ -91,45 +92,49 @@ const ManageQuestionPage = () => {
     <Container maxWidth="xl" sx={styles.mainContainer}>
       {questions && (
         <Fragment>
-          <Stack spacing={1.5} direction="row">
-            <Stack spacing={1.5}>
-              <ElevatedSectionWrapper fullW>
-                <SimpleLabelValueStack
-                  label="code"
-                  values={questions[questionIndex]?.code}
-                />
-              </ElevatedSectionWrapper>
-              <MetaInfoSection currentQuestion={questions[questionIndex]} />
-            </Stack>
-            <Stack spacing={1.5}>
-              <Stack spacing={1.5}>
-                <Stack>
-                  <QuestionAndChoicesSection
-                    questions={questions}
-                    questionIndex={questionIndex}
+          <Grid container spacing={1.5}>
+            <Grid item xs={4}>
+              <Stack spacing={1.5} width="100%" height="100%">
+                <ElevatedSectionWrapper fullW>
+                  <SimpleLabelValueStack
+                    label="code"
+                    values={questions[questionIndex]?.code}
                   />
-                </Stack>
-                <Stack spacing={1.5}>
-                  <ElevatedSectionWrapper>
-                    <SimpleLabelValueStack
-                      label="information"
-                      values={
-                        questions[questionIndex]?.information || "----------"
-                      }
-                      direction="column"
+                </ElevatedSectionWrapper>
+                <MetaInfoSection currentQuestion={questions[questionIndex]} />
+              </Stack>
+            </Grid>
+            <Grid item xs={8}>
+              <Stack spacing={1.5}>
+                <Stack spacing={1.5} sx={{ flex: "1 1 auto" }}>
+                  <Stack>
+                    <QuestionAndChoicesSection
+                      questions={questions}
+                      questionIndex={questionIndex}
                     />
-                  </ElevatedSectionWrapper>
-                  <ElevatedSectionWrapper>
-                    <SimpleLabelValueStack
-                      label="tags"
-                      values={questions[questionIndex]?.tags}
-                      inChip
-                    />
-                  </ElevatedSectionWrapper>
+                  </Stack>
+                  <Stack spacing={1.5}>
+                    <ElevatedSectionWrapper>
+                      <SimpleLabelValueStack
+                        label="information"
+                        values={
+                          questions[questionIndex]?.information || "----------"
+                        }
+                        direction="column"
+                      />
+                    </ElevatedSectionWrapper>
+                    <ElevatedSectionWrapper>
+                      <SimpleLabelValueStack
+                        label="tags"
+                        values={questions[questionIndex]?.tags}
+                        inChip
+                      />
+                    </ElevatedSectionWrapper>
+                  </Stack>
                 </Stack>
               </Stack>
-            </Stack>
-          </Stack>
+            </Grid>
+          </Grid>
           <br />
           <ButtonsSection
             currentQuestion={questions[questionIndex]}
