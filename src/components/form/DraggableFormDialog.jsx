@@ -133,6 +133,7 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
                       )}
                     />
                   </BoxWrapper>
+
                   <BoxWrapper>
                     <LabelledTextField
                       label="last name"
@@ -158,6 +159,16 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
                       error={!!errors.middleName}
                       register={register}
                       defaultValue={row.middleName}
+                    />
+                  </BoxWrapper>
+                  <BoxWrapper>
+                    <LabelledTextField
+                      label="email"
+                      id="email"
+                      // error={!!errors.employeeId}
+                      register={register}
+                      defaultValue={row.email}
+                      // disabled
                     />
                   </BoxWrapper>
                   <BoxWrapper>

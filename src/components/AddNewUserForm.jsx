@@ -23,8 +23,10 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
 
   const { errors } = formState;
 
-  const onSubmit = async (data) => {
-    await addUser(data);
+  const onSubmit = (data) => {
+    const user = addUser(data);
+    console.log(data);
+    console.log(user);
     setRenderTrigger((pv) => !pv);
   };
 
@@ -39,6 +41,7 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
       firstName: "",
       middleName: "",
       userName: "",
+      email: "",
       role: "",
       status: "",
       password: genInitialPassword(),
@@ -60,6 +63,8 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                   register={register}
                 />
               </Box>
+            </Stack>
+            <Stack direction="row" gap={2} flexWrap="wrap">
               <Box flex={1}>
                 <LabelledTextField
                   label="last name"
@@ -84,6 +89,16 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                   register={register}
                 />
               </Box>
+              <Box flex={1}>
+                <LabelledTextField
+                  label="email"
+                  id="email"
+                  // error={!!errors.email}
+                  register={register}
+                />
+              </Box>
+            </Stack>
+            <Stack direction="row" gap={2} flexWrap="wrap">
               <Box flex={1}>
                 <LabelledTextField
                   label="username"

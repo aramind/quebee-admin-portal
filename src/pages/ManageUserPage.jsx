@@ -15,7 +15,9 @@ const columns = [
   { field: "lastName", headerName: "last name" },
   { field: "firstName", headerName: "first name" },
   { field: "middleName", headerName: "middle name" },
+  { field: "email", headerName: "email" },
   { field: "username", headerName: "username" },
+
   {
     field: "password",
     headerName: "password",
@@ -44,6 +46,7 @@ const ManageUserPage = () => {
       data.data.data.map((user, index) => ({
         id: index + 1,
         employeeId: user.employeeId,
+        email: user.email,
         username: user.username,
         password: user.password,
         lastName: user.name.lastName,
