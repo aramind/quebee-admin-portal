@@ -2,8 +2,6 @@ import { Container, Grid, Stack } from "@mui/material";
 import useStyles from "../hooks/useStyles";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 
-import Label from "./manage-question-page/Label";
-import Value from "./manage-question-page/Value";
 import { useFetchQUestions } from "../hooks/useFetchQuestions";
 import { Fragment, useState } from "react";
 import { usePatchQuestion } from "../hooks/usePatchQuestion";
@@ -11,19 +9,9 @@ import ButtonsSection from "./manage-question-page/ButtonsSection";
 import QuestionAndChoicesSection from "./manage-question-page/QuestionAndChoicesSection";
 import MetaInfoSection from "./manage-question-page/MetaInfoSection";
 import EditQuestionModal from "./manage-question-page/EditQuestionModal";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
-const SimpleLabelValueStack = ({
-  label,
-  values,
-  direction = "row",
-  inChip,
-}) => (
-  <Stack direction={direction} spacing={1}>
-    <Label label={label} />
-    <Value values={values} inChip={inChip} />
-  </Stack>
-);
+import SimpleLabelValue from "../components/SimpleLabelValue";
+
 const ManageQuestionPage = () => {
   const [openEditQuestion, setOpenEditQuestion] = useState(false);
   const styles = useStyles();
@@ -96,7 +84,7 @@ const ManageQuestionPage = () => {
             <Grid item xs={4}>
               <Stack spacing={1.5} width="100%" height="100%">
                 <ElevatedSectionWrapper fullW>
-                  <SimpleLabelValueStack
+                  <SimpleLabelValue
                     label="code"
                     values={questions[questionIndex]?.code}
                   />
@@ -115,7 +103,7 @@ const ManageQuestionPage = () => {
                   </Stack>
                   <Stack spacing={1.5}>
                     <ElevatedSectionWrapper>
-                      <SimpleLabelValueStack
+                      <SimpleLabelValue
                         label="information"
                         values={
                           questions[questionIndex]?.information || "----------"
@@ -124,7 +112,7 @@ const ManageQuestionPage = () => {
                       />
                     </ElevatedSectionWrapper>
                     <ElevatedSectionWrapper>
-                      <SimpleLabelValueStack
+                      <SimpleLabelValue
                         label="tags"
                         values={questions[questionIndex]?.tags}
                         inChip
