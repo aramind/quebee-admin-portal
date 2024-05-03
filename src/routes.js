@@ -9,6 +9,47 @@ import ManageCoursePage from "./pages/ManageCoursePage";
 import MainLayout from "./layout/MainLayout";
 import LandingPage from "./pages/LandingPage";
 
+const combinedRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/",
+        element: <LandingPage />,
+      },
+      {
+        path: "/dashboard",
+        element: <DashBoardPage />,
+      },
+      {
+        path: "/add-question",
+        element: <AddQuestionPage />,
+      },
+      {
+        path: "/add-course",
+        element: <AddCoursePage />,
+      },
+      {
+        path: "/manage-question",
+        element: <ManageQuestionPage />,
+      },
+      {
+        path: "/manage-course",
+        element: <ManageCoursePage />,
+      },
+      {
+        path: "/manage-user",
+        element: <ManageUserPage />,
+      },
+    ],
+  },
+]);
+
 const privateRouter = createBrowserRouter([
   {
     path: "/",
@@ -77,6 +118,6 @@ const publicRouter = createBrowserRouter([
   },
 ]);
 
-const router = { publicRouter, privateRouter };
+const router = { combinedRouter, publicRouter, privateRouter };
 
 export default router;
