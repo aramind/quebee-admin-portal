@@ -4,6 +4,18 @@ import { Stack, Typography } from "@mui/material";
 import mockDB from "../mockDB/mockDB";
 import DashBoardCard from "../components/dashBoardCard/dashBoardCard";
 
+const currentDate = new Date().toLocaleDateString("en-PH", {
+  timeZone: "Asia/Manila",
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
+const currentDay = new Date().toLocaleString("en-PH", {
+  timeZone: "Asia/Manila",
+  weekday: "long",
+});
+
 const DashBoardPage = () => {
   const {
     globalState: { currentUser },
@@ -11,7 +23,8 @@ const DashBoardPage = () => {
   return (
     <>
       <Typography variant="body1" color="initial" align="left" mx={5} my={2}>
-        Hello {currentUser}! Happy {mockDB.day} of {mockDB.date}
+        Hello {currentUser?.name?.firstName}! Happy {currentDay} of{" "}
+        {currentDate}
       </Typography>
       <Stack
         direction="row"

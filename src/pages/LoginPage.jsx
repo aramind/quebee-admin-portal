@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import zodLoginSchema from "../schemas/login";
 import findUser from "../utils/login/authenticateUser";
 import { useGlobalState } from "../context/ContextProvider";
@@ -22,6 +22,11 @@ const LOGIN_URL = `${process.env.REACT_APP_API_URL}/auth/login`;
 
 const LoginPage = () => {
   const { setAuth } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.pathname || "/";
+
   // states
   const {
     globalState: { currentUser },
@@ -57,14 +62,9 @@ const LoginPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
       const response = await axios.post(LOGIN_URL, data);
-      console.log(response);
       if (response.data.success) {
         const user = response.data.data;
-        console.log(user);
-        console.log(user.role);
-
         if (user?.token) {
           dispatch({
             type: "SET_CURRENT_USER",
@@ -72,6 +72,7 @@ const LoginPage = () => {
           });
         }
         setAuth(user);
+        navigate(from, { replace: true });
         alert(response.data.message);
       }
     } catch (error) {

@@ -9,6 +9,8 @@ import ManageCoursePage from "./pages/ManageCoursePage";
 import MainLayout from "./layout/MainLayout";
 import LandingPage from "./pages/LandingPage";
 import RequireAuth from "./components/RequireAuth";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useGlobalState } from "./context/ContextProvider";
 
 const combinedRouter = createBrowserRouter([
   {
@@ -16,13 +18,8 @@ const combinedRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: "",
-        element: <RequireAuth />,
+        element: <RequireAuth allowedRoles={["admin", "super"]} />,
         children: [
-          {
-            path: "/",
-            element: <LandingPage />,
-          },
           {
             path: "/dashboard",
             element: <DashBoardPage />,
@@ -49,6 +46,16 @@ const combinedRouter = createBrowserRouter([
           },
         ],
       },
+      {
+        element: <RequireAuth allowedRoles={["super", "admin", "editor"]} />,
+        children: [
+          {
+            path: "",
+            element: <LandingPage />,
+          },
+        ],
+      },
+
       {
         path: "/login",
         element: <LoginPage />,
