@@ -29,15 +29,15 @@ const LoginPage = () => {
   } = useGlobalState();
   const [showPassword, setShowPassword] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
+  // const [authenticated, setAuthenticated] = useState(false);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // useEffects
-  useEffect(() => {
-    if (authenticated) {
-      navigate("/dashboard");
-    }
-  }, [authenticated, navigate]);
+  // useEffect(() => {
+  //   if (authenticated) {
+  //     navigate("/dashboard");
+  //   }
+  // }, [authenticated, navigate]);
 
   // form
   const { register, handleSubmit, isSubmitting, formState } = useForm({
@@ -64,44 +64,53 @@ const LoginPage = () => {
         const user = response.data.data;
         console.log(user);
         console.log(user.role);
+
+        if (user?.token) {
+          dispatch({
+            type: "SET_CURRENT_USER",
+            payload: user,
+          });
+        }
+        setAuth(user);
         alert(response.data.message);
       }
     } catch (error) {
       const errorMessage =
         error?.response?.data?.message ||
-        "Unknown error in the request. Please try again";
+        "No server response. Please try again";
       alert(errorMessage);
     }
   };
 
-  const onSubmit2 = (data) => {
-    const authenticatedUser = findUser(data);
-    console.log("USER", authenticatedUser);
+  // const onSubmit2 = (data) => {
+  //   const authenticatedUser = findUser(data);
+  //   console.log("USER", authenticatedUser);
 
-    if (authenticatedUser) {
-      setSubmitMessage((message) => "Login successful");
-      dispatch({
-        type: "SET_CURRENT_USER",
-        payload: {
-          username: authenticatedUser.username,
-          role: authenticatedUser.role,
-        },
-      });
+  //   if (authenticatedUser) {
+  //     setSubmitMessage((message) => "Login successful");
+  //     dispatch({
+  //       type: "SET_CURRENT_USER",
+  //       payload: {
+  //         username: authenticatedUser.username,
+  //         role: authenticatedUser.role,
+  //       },
+  //     });
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          name: authenticatedUser.username,
-          role: authenticatedUser.role,
-        })
-      );
-      setAuthenticated((authenticated) => true);
-    } else {
-      setSubmitMessage((message) => "Invalid Credentials");
-    }
-  };
+  //     localStorage.setItem(
+  //       "user",
+  //       JSON.stringify({
+  //         name: authenticatedUser.username,
+  //         role: authenticatedUser.role,
+  //       })
+  //     );
+  //     setAuthenticated((authenticated) => true);
+  //   } else {
+  //     setSubmitMessage((message) => "Invalid Credentials");
+  //   }
+  // };
 
   console.log("CURRENTUSER:", currentUser);
+
   return (
     <Stack
       height={{ xs: "90vh", md: "100vh" }}
@@ -195,7 +204,7 @@ const LoginPage = () => {
           <Stack gap={1}>
             <Typography
               variant="body1"
-              color={!!authenticated ? "green" : "error"}
+              // color={!!authenticated ? "green" : "error"}
             >
               {submitMessage}
             </Typography>

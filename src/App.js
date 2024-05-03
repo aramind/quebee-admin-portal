@@ -7,27 +7,27 @@ import { CssBaseline } from "@mui/material";
 
 function App() {
   // const [allowed, setAllowed] = useState(false);
-  const {
-    globalState: { currentUserRole, currentUser },
-    dispatch,
-  } = useGlobalState();
+  // const {
+  //   globalState: { currentUserRole, currentUser },
+  //   dispatch,
+  // } = useGlobalState();
 
-  useEffect(() => {
-    try {
-      const storedUserData = localStorage.getItem("user");
-      const storedUser = JSON.parse(storedUserData) || {};
-      console.log(storedUser);
-      dispatch({
-        type: "SET_CURRENT_USER",
-        payload: {
-          username: storedUser.name,
-          role: storedUser.role,
-        },
-      });
-    } catch (error) {
-      console.error("Error parsing JSON:", error);
-    }
-  }, [dispatch, currentUserRole, currentUser]);
+  // useEffect(() => {
+  //   try {
+  //     const storedUserData = localStorage.getItem("user");
+  //     const storedUser = JSON.parse(storedUserData) || {};
+  //     console.log(storedUser);
+  //     dispatch({
+  //       type: "SET_CURRENT_USER",
+  //       payload: {
+  //         username: storedUser.name,
+  //         role: storedUser.role,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.error("Error parsing JSON:", error);
+  //   }
+  // }, [dispatch, currentUserRole, currentUser]);
 
   return (
     <div className="App">

@@ -3,8 +3,7 @@ const globalReducer = (state, action) => {
     case "SET_CURRENT_USER":
       return {
         ...state,
-        currentUser: action.payload.username,
-        currentUserRole: action.payload.role,
+        currentUser: action.payload,
       };
     case "SET_ALLOWED":
       return { ...state, allowed: action.payload };
