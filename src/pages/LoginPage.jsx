@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -14,10 +14,14 @@ import { useNavigate } from "react-router-dom";
 import zodLoginSchema from "../schemas/login";
 import findUser from "../utils/login/authenticateUser";
 import { useGlobalState } from "../context/ContextProvider";
+import { AuthContext } from "../context/AuthProvider";
+import axios from "axios";
 
 const currentYear = new Date().getFullYear();
+const LOGIN_URL = `${process.env.REACT_APP_API_URL}/auth/login`;
 
 const LoginPage = () => {
+  const { setAuth } = useContext(AuthContext);
   // states
   const {
     globalState: { currentUser },
@@ -51,7 +55,26 @@ const LoginPage = () => {
     setSubmitMessage((message) => "Error submitting form. Try again later.");
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      const response = await axios.post(LOGIN_URL, data);
+      console.log(response);
+      if (response.data.success) {
+        const user = response.data.data;
+        console.log(user);
+        console.log(user.role);
+        alert(response.data.message);
+      }
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        "Unknown error in the request. Please try again";
+      alert(errorMessage);
+    }
+  };
+
+  const onSubmit2 = (data) => {
     const authenticatedUser = findUser(data);
     console.log("USER", authenticatedUser);
 

@@ -12,8 +12,6 @@ function App() {
     dispatch,
   } = useGlobalState();
 
-  console.log("CR", currentUserRole);
-
   useEffect(() => {
     try {
       const storedUserData = localStorage.getItem("user");
@@ -35,9 +33,10 @@ function App() {
     <div className="App">
       <CssBaseline />
       <RouterProvider
-        router={
-          +currentUserRole > 1 ? router.privateRouter : router.publicRouter
-        }
+        // router={
+        //   +currentUserRole > 1 ? router.privateRouter : router.publicRouter
+        // }
+        router={router.combinedRouter}
       />
     </div>
   );
