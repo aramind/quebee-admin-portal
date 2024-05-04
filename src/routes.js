@@ -8,9 +8,8 @@ import ManageUserPage from "./pages/ManageUserPage";
 import ManageCoursePage from "./pages/ManageCoursePage";
 import MainLayout from "./layout/MainLayout";
 import LandingPage from "./pages/LandingPage";
-import RequireAuth from "./components/RequireAuth";
+
 import ProtectedRoute from "./components/ProtectedRoute";
-import { useGlobalState } from "./context/ContextProvider";
 
 const combinedRouter = createBrowserRouter([
   {
@@ -18,7 +17,50 @@ const combinedRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        element: <RequireAuth allowedRoles={["admin", "super"]} />,
+        element: <ProtectedRoute allowedRoles={["super", "admin", "editor"]} />,
+        children: [
+          {
+            path: "/dashboard",
+            element: <DashBoardPage />,
+          },
+          {
+            path: "/add-question",
+            element: <AddQuestionPage />,
+          },
+
+          {
+            path: "/manage-question",
+            element: <ManageQuestionPage />,
+          },
+        ],
+      },
+      {
+        element: <ProtectedRoute allowedRoles={["super", "admin"]} />,
+        children: [
+          {
+            path: "/dashboard",
+            element: <DashBoardPage />,
+          },
+          {
+            path: "/add-question",
+            element: <AddQuestionPage />,
+          },
+          {
+            path: "/add-course",
+            element: <AddCoursePage />,
+          },
+          {
+            path: "/manage-question",
+            element: <ManageQuestionPage />,
+          },
+          {
+            path: "/manage-course",
+            element: <ManageCoursePage />,
+          },
+        ],
+      },
+      {
+        element: <ProtectedRoute allowedRoles={["super"]} />,
         children: [
           {
             path: "/dashboard",
@@ -47,15 +89,9 @@ const combinedRouter = createBrowserRouter([
         ],
       },
       {
-        element: <RequireAuth allowedRoles={["super", "admin", "editor"]} />,
-        children: [
-          {
-            path: "",
-            element: <LandingPage />,
-          },
-        ],
+        path: "",
+        element: <LandingPage />,
       },
-
       {
         path: "/login",
         element: <LoginPage />,

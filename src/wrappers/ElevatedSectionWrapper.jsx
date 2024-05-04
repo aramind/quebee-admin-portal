@@ -1,7 +1,7 @@
 import { Paper, useTheme } from "@mui/material";
 import React from "react";
 
-const ElevatedSectionWrapper = ({ children, fullW, fullH }) => {
+const ElevatedSectionWrapper = ({ children, fullW, fullH, centered }) => {
   return (
     <Paper
       elevation={1}
@@ -9,6 +9,7 @@ const ElevatedSectionWrapper = ({ children, fullW, fullH }) => {
         padding: 2,
         width: fullW ? "100%" : "auto",
         height: fullH ? "100%" : "auto",
+        alignItems: centered ? "center" : "left",
       }}
     >
       {children}
