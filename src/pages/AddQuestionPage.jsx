@@ -12,7 +12,7 @@ import { useAddQuestion } from "../hooks/useAddQuestion";
 import FormContentsSection from "./add-question-page/FormContentsSection";
 import FormActionsSection from "./add-question-page/FormActionsSection";
 
-const onAddQuestionSucess = () => {
+const onAddQuestionSuccess = () => {
   alert("Question added successfully");
 };
 
@@ -25,7 +25,7 @@ const defaultValues = {};
 const AddQuestionPage = () => {
   const styles = useStyles();
   const { mutate: addQuestion } = useAddQuestion(
-    onAddQuestionSucess,
+    onAddQuestionSuccess,
     onAddQuestionError
   );
 
@@ -106,7 +106,7 @@ const AddQuestionPage = () => {
 
   // console.log("COURSES LIST", coursesList);
   return (
-    <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
+    <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <FormContentsSection control={control} defaultValues={defaultValues} />
         <br />

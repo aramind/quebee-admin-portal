@@ -1,9 +1,7 @@
 import { FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
-import { blue, red } from "@mui/material/colors";
 import React from "react";
 
 const RadGroup = ({ field, options, row }) => {
-  console.log("field.value:", field.value);
   return (
     <RadioGroup
       aria-labelledby="radio-group"

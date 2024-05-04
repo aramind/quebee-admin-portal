@@ -6,7 +6,7 @@ import FormInputLabel from "../../components/form/FormInputLabel";
 const CodeSection = ({ control }) => {
   return (
     <ElevatedSectionWrapper fullW={true} fullH={true}>
-      <FormInputLabel label="access" />
+      {/* <FormInputLabel label="access" />
       <Controller
         name="access"
         control={control}
@@ -14,7 +14,7 @@ const CodeSection = ({ control }) => {
         render={({ field }) => (
           <RadGroup field={field} options={constants?.ACCESS} row={false} />
         )}
-      />
+      /> */}
     </ElevatedSectionWrapper>
   );
 };

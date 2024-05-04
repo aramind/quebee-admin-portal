@@ -94,7 +94,7 @@ const AddCoursePage = () => {
       component="main"
       maxWidth="xl"
       sx={styles.mainContainer}
-      disableGutters="true"
+      disableGutters
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Stack spacing={1.5}>
@@ -127,6 +127,7 @@ const AddCoursePage = () => {
                             select={
                               <SimpleSelect
                                 // disabled={true}
+                                defaultValue={constants.DATABASES[0]}
                                 options={constants.DATABASES}
                                 selectedOption={field.value}
                                 onChange={(e) => field.onChange(e.target.value)}

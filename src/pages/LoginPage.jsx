@@ -12,74 +12,24 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import zodLoginSchema from "../schemas/login";
-import findUser from "../utils/login/authenticateUser";
+
 import { useGlobalState } from "../context/ContextProvider";
 import { AuthContext } from "../context/AuthProvider";
 import axios from "axios";
-import { useCookies } from "react-cookie";
 
 const currentYear = new Date().getFullYear();
 const LOGIN_URL = `${process.env.REACT_APP_API_URL}/auth/login`;
 
 const LoginPage = () => {
   const { setAuth } = useContext(AuthContext);
-  const [cookies, setCookie, removeCookie] = useCookies(); // use useCookies hook
-
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.pathname || "/";
 
   // states
-  const {
-    globalState: { currentUser },
-    dispatch,
-  } = useGlobalState();
+  const { dispatch } = useGlobalState();
   const [showPassword, setShowPassword] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
-  // const [authenticated, setAuthenticated] = useState(false);
-
-  // const navigate = useNavigate();
-  // useEffects
-  // useEffect(() => {
-  //   if (authenticated) {
-  //     navigate("/dashboard");
-  //   }
-  // }, [authenticated, navigate]);
-
-  // useEffect(() => {
-  //   // Read the cookie on component mount (refresh)
-
-  //   const sessionCookie = cookies.session;
-  //   console.log(sessionCookie);
-  //   if (sessionCookie) {
-  //     // Parse the cookie value if necessary
-  //     const user = sessionCookie;
-  //     console.log(user);
-  //     dispatch(
-  //       {
-  //         type: "SET_CURRENT_USER",
-  //         payload: user,
-  //       },
-  //       []
-  //     );
-  //     // Dispatch action or perform logic based on cookie value
-  //     // For example, setAuth(userInfo) to authenticate user based on the cookie
-  //     // setAuth(userInfo);
-  //   }
-  // }, [cookies.session, dispatch]);
-
-  // useEffect(() => {
-  //   // Save the current location before refresh
-  //   window.addEventListener("beforeunload", () => {
-  //     sessionStorage.setItem("savedLocation", JSON.stringify(location));
-  //   });
-
-  //   // Restore the saved location after refresh
-  //   const savedLocation = JSON.parse(sessionStorage.getItem("savedLocation"));
-  //   if (savedLocation) {
-  //     navigate(savedLocation.pathname + savedLocation.search);
-  //   }
-  // }, [location, navigate]);
 
   // form
   const { register, handleSubmit, isSubmitting, formState } = useForm({
@@ -102,6 +52,7 @@ const LoginPage = () => {
       const response = await axios.post(LOGIN_URL, data);
       if (response.data.success) {
         const user = response.data.data;
+        console.log(user);
         if (user?.token) {
           dispatch({
             type: "SET_CURRENT_USER",
@@ -109,8 +60,6 @@ const LoginPage = () => {
           });
         }
         setAuth(user);
-        // setCookie("session", JSON.stringify(user), { path: "/" });
-        // console.log(cookies);
         navigate(from, { replace: true });
         alert(response.data.message);
       }
@@ -148,9 +97,6 @@ const LoginPage = () => {
   //     setSubmitMessage((message) => "Invalid Credentials");
   //   }
   // };
-
-  console.log("CURRENTUSER:", currentUser);
-
   return (
     <Stack
       height={{ xs: "90vh", md: "100vh" }}

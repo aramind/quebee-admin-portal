@@ -60,7 +60,7 @@ const combinedRouter = createBrowserRouter([
         ],
       },
       {
-        element: <ProtectedRoute allowedRoles={["admin"]} />,
+        element: <ProtectedRoute allowedRoles={["super"]} />,
         children: [
           {
             path: "/dashboard",

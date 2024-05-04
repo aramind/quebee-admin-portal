@@ -7,17 +7,14 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
 
 import { Controller } from "react-hook-form";
 import ChoicesLabel from "./ChoicesLabel";
-import { getKeyOfCorrectAnswer } from "../../utils/getKeyOfCorrectAnswer";
 
 // const choices = ["choice1", "choice2", "choice3", "choice4"];
 const choices = ["A", "B", "C", "D"];
 
 const Choices = ({ control, defaultValues }) => {
-  console.log(getKeyOfCorrectAnswer(defaultValues));
   return (
     <Controller
       name="correctAnswer"

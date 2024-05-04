@@ -10,6 +10,7 @@ const ControlledSimpleSelect = ({
   label,
   options,
   highlighted,
+  defaultValue,
 }) => {
   return (
     <Controller
@@ -22,7 +23,7 @@ const ControlledSimpleSelect = ({
           select={
             <SimpleSelect
               options={options}
-              selectedOption={field.value || ""}
+              selectedOption={field.value || defaultValue}
               onChange={(e) => field.onChange(e.target.value)}
               highlighted={highlighted}
             />

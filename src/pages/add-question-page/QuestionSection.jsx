@@ -4,7 +4,6 @@ import { Stack } from "@mui/material";
 
 import Question from "./Question";
 import Choices from "./Choices";
-import Choices2 from "./Choices2";
 
 // const QUESTION_SEC_PROP = ["20%"]
 const QuestionSection = ({ control, defaultValues }) => {

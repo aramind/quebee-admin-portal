@@ -1,15 +1,8 @@
-import {
-  Router,
-  RouterProvider,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import router from "./routes";
-import { useEffect } from "react";
-import { useGlobalState } from "./context/ContextProvider";
+
 import { CssBaseline } from "@mui/material";
-import { useCookies } from "react-cookie";
 
 function App() {
   return (

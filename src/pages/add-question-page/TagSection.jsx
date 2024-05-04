@@ -5,7 +5,6 @@ import ControlledChipMultiAutoComp from "../../components/form/ControlledChipMul
 import constants from "../../components/configs/constants";
 
 const TagSection = ({ control, defaultValues }) => {
-  console.log(defaultValues);
   return (
     <Stack spacing={1.5} flex={1}>
       <ElevatedSectionWrapper fullH={true}>

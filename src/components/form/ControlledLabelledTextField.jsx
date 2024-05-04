@@ -41,7 +41,9 @@ const ControlledLabelledTextField = ({
             focused={focused}
             multiline={multiline}
             minRows={minRows}
-            defaultValue={defaultValue}
+            // defaultValue={defaultValue}
+            // TOCHECK
+            value={defaultValue}
             disabled={disabled}
           />
         )}

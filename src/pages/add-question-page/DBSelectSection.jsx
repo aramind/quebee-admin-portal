@@ -13,6 +13,7 @@ const DBSelectSection = ({ control }) => {
           id="add-question-database"
           control={control}
           label="database"
+          defaultValue={constants.DATABASES[0]}
           options={constants.DATABASES}
           highlighted
         />

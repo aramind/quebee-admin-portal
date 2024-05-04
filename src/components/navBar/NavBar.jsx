@@ -48,9 +48,9 @@ const NavBar = () => {
                   <div className="nav-link" key={page.link}>
                     <NavLink
                       to={page.link}
-                      exact
+                      exact="true"
                       className="nav-link"
-                      activeClassName="active"
+                      // activeclassname="active"
                     >
                       <p className="nav-link__text">
                         {page.navLabel?.toUpperCase()}

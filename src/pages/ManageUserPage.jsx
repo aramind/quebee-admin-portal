@@ -1,5 +1,5 @@
 import { Container, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useStyles from "../hooks/useStyles";
 import FormInputLabel from "../components/form/FormInputLabel";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
@@ -8,7 +8,7 @@ import RenderAction from "../components/renders/RenderAction";
 import RenderPassword from "../components/renders/RenderPassword";
 import AddNewUserForm from "../components/AddNewUserForm";
 
-import { useAddUser, useFetchUsers } from "../hooks/useUserHook";
+import { useFetchUsers } from "../hooks/useUserHook";
 
 const columns = [
   { field: "employeeId", headerName: "employee ID" },
@@ -65,7 +65,7 @@ const ManageUserPage = () => {
     window.alert("Error fetching users.");
   };
 
-  useFetchUsers(onSuccess, onError);
+  // useFetchUsers(onSuccess, onError);
 
   const colsWithWidth = columns.map((col, index) => {
     return {
@@ -89,7 +89,7 @@ const ManageUserPage = () => {
   });
 
   return (
-    <Container maxWidth="xl" sx={styles.mainContainer} disableGutters="true">
+    <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
       <ElevatedSectionWrapper>
         <Stack gap={1}>
           <FormInputLabel label="Current Users" />
