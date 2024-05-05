@@ -1,12 +1,11 @@
 import React from "react";
-
 import { useMediaQuery, useTheme } from "@mui/material";
-import { NavLink } from "react-router-dom";
-import { useGlobalState } from "../../context/ContextProvider";
+import { NavLink, useNavigate } from "react-router-dom";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import "./navbar.css";
 import TooltipWrapper from "../../wrappers/TooltipWrapper";
 import NavMenu from "../NavMenu";
+import useLogout from "../../hooks/useLogout";
 
 const pages = [
   { link: "/dashboard", navLabel: "Dashboard" },
@@ -18,14 +17,13 @@ const pages = [
 ];
 
 const NavBar = () => {
-  const {
-    globalState: { currentUser },
-    dispatch,
-  } = useGlobalState();
+  const logout = useLogout();
+  const navigate = useNavigate();
 
-  const handleLogOut = () => {
-    dispatch({ type: "LOGOUT" });
-    localStorage.removeItem("user");
+  const handleLogOut = async () => {
+    console.log("CLICKED LOG OUT");
+    await logout();
+    navigate("/login");
   };
 
   const theme = useTheme();
