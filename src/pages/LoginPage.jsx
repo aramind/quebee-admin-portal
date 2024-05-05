@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
+  Checkbox,
+  FormControlLabel,
   IconButton,
   InputAdornment,
   Stack,
@@ -21,7 +23,7 @@ const currentYear = new Date().getFullYear();
 const LOGIN_URL = `${process.env.REACT_APP_API_URL}/auth/login`;
 
 const LoginPage = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth, persist, setPersist } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.pathname || "/";
@@ -31,6 +33,9 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
 
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
   // form
   const { register, handleSubmit, isSubmitting, formState } = useForm({
     resolver: zodResolver(zodLoginSchema),
@@ -206,6 +211,20 @@ const LoginPage = () => {
             >
               Login
             </Button>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={persist}
+                  onChange={() => setPersist((pv) => !pv)}
+                />
+              }
+              label={
+                <Typography sx={{ fontSize: "0.9rem" }}>
+                  {" "}
+                  Stay logged in in this device
+                </Typography>
+              }
+            />
           </Stack>
         </Stack>
       </form>

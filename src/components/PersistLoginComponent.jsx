@@ -7,7 +7,7 @@ import LoadingPage from "../pages/LoadingPage";
 const PersistLoginComponent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
-  const { auth } = useContext(AuthContext);
+  const { auth, persist } = useContext(AuthContext);
 
   useEffect(() => {
     const verifyRefreshToken = async () => {
@@ -23,7 +23,9 @@ const PersistLoginComponent = () => {
     !auth?.token ? verifyRefreshToken() : setIsLoading(false);
   }, [auth?.token, refresh]);
 
-  return <>{isLoading ? <LoadingPage /> : <Outlet />}</>;
+  return (
+    <>{!persist ? <Outlet /> : isLoading ? <LoadingPage /> : <Outlet />}</>
+  );
 };
 
 export default PersistLoginComponent;
