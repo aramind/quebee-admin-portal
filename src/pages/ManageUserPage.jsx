@@ -1,5 +1,5 @@
 import { Button, Container, Stack, Typography } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "../hooks/useStyles";
 import FormInputLabel from "../components/form/FormInputLabel";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
@@ -7,11 +7,10 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import RenderAction from "../components/renders/RenderAction";
 import RenderPassword from "../components/renders/RenderPassword";
 import AddNewUserForm from "../components/AddNewUserForm";
-
-import { useFetchUsers } from "../hooks/useUserHook";
-import { AuthContext } from "../context/AuthProvider";
 import useRefreshToken from "../hooks/useRefreshToken";
-import useFetchRefreshToken from "../hooks/useFetchRefreshToken";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useFetchUsers from "../hooks/useFetchUsers";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const columns = [
   { field: "employeeId", headerName: "employee ID" },
@@ -38,39 +37,56 @@ const columns = [
   },
 ];
 
+const onSuccess = () => {
+  // alert("Finished fetching users");
+  console.log("Finished fetching users");
+};
+
 const ManageUserPage = () => {
   const [rows, setRows] = useState([]);
   const [renderTrigger, setRenderTrigger] = useState(false);
-  const { auth } = useContext(AuthContext);
   const styles = useStyles();
   const refresh = useRefreshToken();
-  const refreshByFetch = useFetchRefreshToken();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const onSuccess = (data) => {
-    setRows(
-      data?.data?.data?.map((user, index) => ({
-        id: index + 1,
-        employeeId: user.employeeId,
-        email: user.email,
-        username: user.username,
-        password: user.password,
-        lastName: user.name.lastName,
-        firstName: user.name.firstName,
-        middleName: user.name.middleName,
-        role: user.role,
-        status: user.status,
-      }))
-    );
-  };
+  const axiosPrivate = useAxiosPrivate();
 
   const onError = (error) => {
-    if (error.message === "Request failed with status code 404") {
-      return;
+    console.log(error.response.status);
+    const status = error.response.status;
+    if (status === 401 || status === 403) {
+      console.log("re logging in");
+      navigate("/login", { state: { from: location }, replace: true });
+    } else {
+      alert(error);
     }
-    window.alert("Error fetching users.");
   };
 
-  // useFetchUsers(onSuccess, onError);
+  const { data: fetchedUsers } = useFetchUsers(
+    axiosPrivate,
+    onSuccess,
+    onError
+  );
+
+  useEffect(() => {
+    if (fetchedUsers) {
+      setRows(
+        fetchedUsers.map((user, index) => ({
+          id: index + 1,
+          employeeId: user.employeeId,
+          email: user.email,
+          username: user.username,
+          password: user.password,
+          lastName: user.name.lastName,
+          firstName: user.name.firstName,
+          middleName: user.name.middleName,
+          role: user.role,
+          status: user.status,
+        }))
+      );
+    }
+  }, [fetchedUsers]);
 
   const colsWithWidth = columns.map((col, index) => {
     return {
@@ -122,25 +138,6 @@ export default ManageUserPage;
 // @type {import("@mui/material").SxProps}
 const localStyle = {
   datagrid: {
-    // "& .MuiDataGrid-columnHeaderTitleContainer": {
-    //   border: "1px solid black",
-    //   width: "100%",
-    //   display: "flex",
-    // },
-    // "& .MuiDataGrid-columnHeaderTitleContainerContent": {
-    //   backgroundColor: "yellow",
-    //   width: "80%",
-    //   display: "flex",
-    //   textAlign: "center",
-    // },
-    // "& .MuiDataGrid-iconButtonContainer": {
-    //   px: 0,
-    //   backgroundColor: "red",
-    //   width: "20px",
-    //   display: "flex",
-    //   flex: "1%",
-    //   justifyContent: "center",
-    // },
     "& .MuiDataGrid-columnHeader": {
       backgroundColor: "primary.light",
       width: "100%",

@@ -8,10 +8,6 @@ const addUser = (user) => {
   return axios.post(API_URL, user);
 };
 
-const fetchUsers = async () => {
-  return axios.get(API_URL);
-};
-
 const editUser = (updatedUserData) => {
   const url = `${API_URL}/${updatedUserData.employeeId}`;
   console.log("editing user");
@@ -24,13 +20,6 @@ export const useAddUser = (onSuccess, onError) => {
     onSuccess: async () => {
       queryClient.invalidateQueries("users");
     },
-  });
-};
-
-export const useFetchUsers = (onSuccess, onError) => {
-  return useQuery("users", fetchUsers, {
-    onSuccess,
-    onError,
   });
 };
 
