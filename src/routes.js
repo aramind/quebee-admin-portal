@@ -21,9 +21,7 @@ const combinedRouter = createBrowserRouter([
         element: <PersistLoginComponent />,
         children: [
           {
-            element: (
-              <ProtectedRoute allowedRoles={["super", "admin", "editor"]} />
-            ),
+            element: <ProtectedRoute allowedRoles={["1991", "2013", "2025"]} />,
             children: [
               {
                 path: "/dashboard",
@@ -41,7 +39,7 @@ const combinedRouter = createBrowserRouter([
             ],
           },
           {
-            element: <ProtectedRoute allowedRoles={["super", "admin"]} />,
+            element: <ProtectedRoute allowedRoles={["1991", "2013"]} />,
             children: [
               {
                 path: "/dashboard",
@@ -66,7 +64,7 @@ const combinedRouter = createBrowserRouter([
             ],
           },
           {
-            element: <ProtectedRoute allowedRoles={["super"]} />,
+            element: <ProtectedRoute allowedRoles={["1991"]} />,
             children: [
               {
                 path: "/dashboard",
