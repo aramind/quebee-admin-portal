@@ -11,13 +11,16 @@ import MetaInfoSection from "./manage-question-page/MetaInfoSection";
 import EditQuestionModal from "./manage-question-page/EditQuestionModal";
 
 import SimpleLabelValue from "../components/SimpleLabelValue";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const ManageQuestionPage = () => {
   const [openEditQuestion, setOpenEditQuestion] = useState(false);
   const styles = useStyles();
   const [questionIndex, setQuestionIndex] = useState(0);
+  const axiosPrivate = useAxiosPrivate();
 
   const { data: questions } = useFetchQUestions({
+    axiosPriv: axiosPrivate,
     params: "",
     staleTime: Infinity,
   });

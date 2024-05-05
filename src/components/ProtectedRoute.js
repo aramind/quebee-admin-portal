@@ -1,18 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useGlobalState } from "../context/ContextProvider";
 import UnAuthorizedPage from "../pages/unauthorized-page/UnAuthorizedPage";
+import { AuthContext } from "../context/AuthProvider";
 
 const ProtectedRoute = ({ allowedRoles }) => {
-  const {
-    globalState: { currentUser },
-  } = useGlobalState();
-  //   const { auth } = useContext(AuthContext);
   const location = useLocation();
 
-  return !currentUser?.token ? (
+  const { auth } = useContext(AuthContext);
+
+  return !auth?.token ? (
     <Navigate to="/login" state={{ from: location }} replace />
-  ) : !allowedRoles.includes(currentUser?.role) ? (
+  ) : !allowedRoles.includes(auth?.role) ? (
     <UnAuthorizedPage location={location} />
   ) : (
     <Outlet />

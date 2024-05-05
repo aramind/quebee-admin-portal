@@ -1,24 +1,26 @@
-import axios from "axios";
 import { useQuery } from "react-query";
 
 const API_URL = `${process.env.REACT_APP_API_URL}/questions`;
 
-const fetchQuestions = async (params) => {
+const fetchQuestions = async (axiosPriv, params) => {
   try {
-    const response = await axios.get(`${API_URL}${params}`);
-    return response.data.data;
+    const response = await axiosPriv.get(`${API_URL}${params}`);
+    const data = response?.data?.data;
+    console.log(data);
+    return data;
   } catch (error) {
-    throw new Error("Failed to fetch questions");
+    throw error;
   }
 };
 
 export const useFetchQUestions = ({
+  axiosPriv,
   params,
   onSuccess,
   onError,
   staleTime,
 }) => {
-  return useQuery("questions", () => fetchQuestions(params), {
+  return useQuery("questions", () => fetchQuestions(axiosPriv, params), {
     onSuccess,
     onError,
     staleTime,
