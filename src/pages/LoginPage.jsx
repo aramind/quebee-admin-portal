@@ -18,6 +18,7 @@ import zodLoginSchema from "../schemas/login";
 import { useGlobalState } from "../context/ContextProvider";
 import { AuthContext } from "../context/AuthProvider";
 import axios from "axios";
+import { red } from "@mui/material/colors";
 
 const currentYear = new Date().getFullYear();
 const LOGIN_URL = `${process.env.REACT_APP_API_URL}/auth/login`;
@@ -212,6 +213,7 @@ const LoginPage = () => {
               Login
             </Button>
             <FormControlLabel
+              sx={localStyle.checkbox}
               control={
                 <Checkbox
                   checked={persist}
@@ -219,7 +221,7 @@ const LoginPage = () => {
                 />
               }
               label={
-                <Typography sx={{ fontSize: "0.9rem" }}>
+                <Typography sx={{ fontSize: "0.9rem" }} disableGutter>
                   {" "}
                   Stay logged in in this device
                 </Typography>
@@ -249,3 +251,9 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+const localStyle = {
+  checkbox: {
+    "& .MuiButtonBase-root": { pr: "5px" },
+  },
+};
