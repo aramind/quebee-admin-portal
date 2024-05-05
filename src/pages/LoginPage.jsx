@@ -49,7 +49,9 @@ const LoginPage = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(LOGIN_URL, data);
+      const response = await axios.post(LOGIN_URL, data, {
+        withCredentials: true,
+      });
       if (response.data.success) {
         const user = response.data.data;
         console.log(user);
@@ -60,6 +62,7 @@ const LoginPage = () => {
           });
         }
         setAuth(user);
+
         navigate(from, { replace: true });
         alert(response.data.message);
       }

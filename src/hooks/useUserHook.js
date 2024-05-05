@@ -8,7 +8,7 @@ const addUser = (user) => {
   return axios.post(API_URL, user);
 };
 
-const fetchUsers = () => {
+const fetchUsers = async () => {
   return axios.get(API_URL);
 };
 

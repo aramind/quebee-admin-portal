@@ -1,5 +1,5 @@
-import { Container, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Button, Container, Stack, Typography } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
 import useStyles from "../hooks/useStyles";
 import FormInputLabel from "../components/form/FormInputLabel";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
@@ -9,6 +9,9 @@ import RenderPassword from "../components/renders/RenderPassword";
 import AddNewUserForm from "../components/AddNewUserForm";
 
 import { useFetchUsers } from "../hooks/useUserHook";
+import { AuthContext } from "../context/AuthProvider";
+import useRefreshToken from "../hooks/useRefreshToken";
+import useFetchRefreshToken from "../hooks/useFetchRefreshToken";
 
 const columns = [
   { field: "employeeId", headerName: "employee ID" },
@@ -38,12 +41,14 @@ const columns = [
 const ManageUserPage = () => {
   const [rows, setRows] = useState([]);
   const [renderTrigger, setRenderTrigger] = useState(false);
-
+  const { auth } = useContext(AuthContext);
   const styles = useStyles();
+  const refresh = useRefreshToken();
+  const refreshByFetch = useFetchRefreshToken();
 
   const onSuccess = (data) => {
     setRows(
-      data.data.data.map((user, index) => ({
+      data?.data?.data?.map((user, index) => ({
         id: index + 1,
         employeeId: user.employeeId,
         email: user.email,
@@ -90,6 +95,7 @@ const ManageUserPage = () => {
 
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
+      <Button onClick={() => refresh()}>Refresh</Button>
       <ElevatedSectionWrapper>
         <Stack gap={1}>
           <FormInputLabel label="Current Users" />
