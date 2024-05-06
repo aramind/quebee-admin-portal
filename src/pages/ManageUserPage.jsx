@@ -39,7 +39,7 @@ const columns = [
 
 const onSuccess = () => {
   // alert("Finished fetching users");
-  console.log("Finished fetching users");
+  // console.log("Finished fetching users");
 };
 
 const ManageUserPage = () => {

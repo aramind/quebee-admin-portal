@@ -12,8 +12,13 @@ import userSchema from "../schemas/user";
 import genInitialPassword from "../utils/login/genInitialPassword";
 import constants from "./configs/constants";
 import { useAddUser } from "../hooks/useUserHook";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+
+const API_URL = `${process.env.REACT_APP_API_URL}/users`;
 
 const AddNewUserForm = ({ setRenderTrigger }) => {
+  const axiosPrivate = useAxiosPrivate();
+
   const { mutate: addUser } = useAddUser();
   //   form
   const { register, handleSubmit, formState, reset, control } = useForm({
@@ -23,16 +28,21 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
 
   const { errors } = formState;
 
-  const onSubmit = (data) => {
-    const user = addUser(data);
+  const onSubmit = async (data) => {
+    // const user = addUser(axiosPrivate, data);
     console.log(data);
-    console.log(user);
+    // console.log(user);
+
+    try {
+      const url = `${API_URL}/register`;
+      const response = await axiosPrivate.post(url, data);
+      console.log(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
     setRenderTrigger((pv) => !pv);
   };
 
-  const onError = (err) => {
-    console.log("ERROR creating user", err);
-  };
   // handlers
   // todo
   const handleClear = () => {
@@ -48,6 +58,9 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
     });
   };
 
+  const onError = (error) => {
+    console.log("Error submitting form", error);
+  };
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
