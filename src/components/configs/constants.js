@@ -1,4 +1,5 @@
 const constants = {
+  DEFAULT_PASSWORD: "1234",
   ROLES: ["admin", "editor", "viewer", ""],
   STATUS: ["active", "deactivated", ""],
   DATABASES: ["Engineering", "LET", "Accountancy", "Others"],

@@ -15,6 +15,7 @@ import { useAddUser } from "../hooks/useUserHook";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const API_URL = `${process.env.REACT_APP_API_URL}/users`;
+const DEFAULT_PASSWORD = constants.DEFAULT_PASSWORD;
 
 const AddNewUserForm = ({ setRenderTrigger }) => {
   const axiosPrivate = useAxiosPrivate();
@@ -54,7 +55,8 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
       email: "",
       role: "",
       status: "",
-      password: genInitialPassword(),
+      // password: genInitialPassword(),
+      password: { DEFAULT_PASSWORD },
     });
   };
 
@@ -166,7 +168,8 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                   id="password"
                   error={!!errors.password}
                   register={register}
-                  defaultValue={genInitialPassword()}
+                  // defaultValue={genInitialPassword()}
+                  defaultValue={DEFAULT_PASSWORD}
                 />
               </Box>
             </Stack>
