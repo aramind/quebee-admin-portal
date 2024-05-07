@@ -41,7 +41,6 @@ const columns = [
 
 const ManageUserPage = () => {
   const [rows, setRows] = useState([]);
-  const [renderTrigger, setRenderTrigger] = useState(false);
   const styles = useStyles();
   const refresh = useRefreshToken();
   const navigate = useNavigate();
@@ -52,6 +51,7 @@ const ManageUserPage = () => {
     data: fetchedUsers,
     isLoading,
     error,
+    refetch: refetchUsers,
   } = useApiGet(["users"], get, {
     enabled: true,
     refetchOnWindowFocus: true,
@@ -130,7 +130,11 @@ const ManageUserPage = () => {
         </Stack>
       </ElevatedSectionWrapper>
       <br />
-      <AddNewUserForm setRenderTrigger={setRenderTrigger} />
+      <AddNewUserForm
+        onSuccessFn={() => {
+          refetchUsers();
+        }}
+      />
       <br />
     </Container>
   );

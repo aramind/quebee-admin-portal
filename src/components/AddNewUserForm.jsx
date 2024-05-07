@@ -10,13 +10,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
 import constants from "./configs/constants";
 import ControlledTextField from "./form-controlled/ControlledTextField";
-import useAxiosPrivate from "../hooks/api/useAxiosPrivate";
 import useApiSend from "../hooks/api/useApiSend";
 import useUserReq from "../hooks/api/useUserReq";
 import { DevTool } from "@hookform/devtools";
-
-const API_URL = `${process.env.REACT_APP_API_URL}/users`;
-const DEFAULT_PASSWORD = constants.DEFAULT_PASSWORD;
 
 const RowWrapper = ({ children }) => {
   return (
@@ -31,21 +27,25 @@ const RowWrapper = ({ children }) => {
   );
 };
 
-const onSuccessReg = () => {
-  alert("New User added successfully");
+const initialValues = {
+  role: constants.ROLES?.[1], // Initial value for role select
+  status: constants.STATUS?.[0], // Initial value for status select
+  password: constants.DEFAULT_PASSWORD,
 };
 
-const onErrorReg = (err) => {
-  console.log(err);
-  alert("Encountered an error adding the new user. Try again later", err);
-};
-const AddNewUserForm = ({ setRenderTrigger }) => {
+const AddNewUserForm = ({ onSuccessFn }) => {
   const { register } = useUserReq();
 
   const { mutate: registerUser } = useApiSend(
     register,
-    onSuccessReg,
-    onErrorReg,
+    () => {
+      onSuccessFn();
+      alert("New User added successfully");
+    },
+    (err) => {
+      console.log(err);
+      alert("Encountered an error adding the new user. Try again later", err);
+    },
     ["users"],
     {}
   );
@@ -53,13 +53,12 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
   const { handleSubmit, reset, control } = useForm({
     resolver: zodResolver(userSchema),
     mode: "onTouched",
+    defaultValues: initialValues,
   });
 
   const onSubmit = async (data) => {
     console.log("CLIKED SUBMIT NEW USER", data);
     registerUser(data);
-
-    setRenderTrigger((pv) => !pv);
   };
 
   // handlers
@@ -74,7 +73,7 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
       role: "",
       status: "",
       // password: genInitialPassword(),
-      password: { DEFAULT_PASSWORD },
+      password: constants?.DEFAULT_PASSWORD,
     });
   };
 

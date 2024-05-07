@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 const useApiSend = (fn, successFn, errorFn, invalidateKey, options) => {
   const queryClient = useQueryClient();
