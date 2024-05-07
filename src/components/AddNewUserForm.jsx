@@ -80,46 +80,71 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
             </Stack>
             <Stack direction="row" gap={2} flexWrap="wrap">
               <Box flex={1}>
-                <LabelledTextField
+                <ControlledTextField
+                  name="lastName"
+                  label="last name"
+                  control={control}
+                />
+                {/* <LabelledTextField
                   label="last name"
                   id="lastName"
                   error={!!errors.name}
                   register={register}
-                />
+                /> */}
               </Box>
               <Box flex={1}>
-                <LabelledTextField
+                <ControlledTextField
+                  label="first name"
+                  name="firstName"
+                  control={control}
+                />
+                {/* <LabelledTextField
                   label="first name"
                   id="firstName"
                   error={!!errors.name}
                   register={register}
-                />
+                /> */}
               </Box>
               <Box flex={1}>
-                <LabelledTextField
+                <ControlledTextField
+                  label="middle name"
+                  name="middleName"
+                  control={control}
+                />
+                {/* <LabelledTextField
                   label="middle name"
                   id="middleName"
                   error={!!errors.name}
                   register={register}
-                />
+                /> */}
               </Box>
               <Box flex={1}>
-                <LabelledTextField
+                <ControlledTextField
+                  label="email"
+                  name="email"
+                  control={control}
+                />
+                {/* <LabelledTextField
                   label="email"
                   id="email"
                   // error={!!errors.email}
                   register={register}
-                />
+                /> */}
               </Box>
             </Stack>
             <Stack direction="row" gap={2} flexWrap="wrap">
               <Box flex={1}>
-                <LabelledTextField
+                <ControlledTextField
+                  label="username"
+                  name="username"
+                  control={control}
+                />
+                {/* <LabelledTextField
                   label="username"
                   id="username"
                   error={!!errors.name}
                   register={register}
-                />
+                /> */}
               </Box>
               <Box flex={1}>
                 <Controller
@@ -133,7 +158,7 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                         <SimpleSelect
                           options={constants.ROLES}
                           defaultValue=""
-                          selectedOption={field.value || ""}
+                          selectedOption={field.value || constants?.ROLES?.[1]}
                           onChange={(e) => field.onChange(e.target.value)}
                         />
                       }
@@ -153,7 +178,7 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                         <SimpleSelect
                           options={constants.STATUS}
                           defaultValue=""
-                          selectedOption={field.value || ""}
+                          selectedOption={field.value || constants?.STATUS?.[0]}
                           onChange={(e) => field.onChange(e.target.value)}
                         />
                       }
@@ -162,14 +187,19 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                 />
               </Box>
               <Box flex={1}>
-                <LabelledTextField
+                <ControlledTextField
+                  label="password"
+                  name="password"
+                  control={control}
+                />
+                {/* <LabelledTextField
                   label="password"
                   id="password"
                   error={!!errors.password}
                   register={register}
                   // defaultValue={genInitialPassword()}
                   defaultValue={DEFAULT_PASSWORD}
-                />
+                /> */}
               </Box>
             </Stack>
           </Stack>
