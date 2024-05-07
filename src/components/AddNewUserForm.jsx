@@ -1,7 +1,6 @@
 import React from "react";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
-import { Box, Stack, Typography } from "@mui/material";
-import LabelledTextField from "./form/LabelledTextField";
+import { Stack, Typography } from "@mui/material";
 import LabelledSelect from "./form/LabelledSelect";
 import SimpleSelect from "./SimpleSelect";
 import FormActionsContainer from "../containers/FormActionsContainer";
@@ -12,20 +11,29 @@ import userSchema from "../schemas/user";
 import constants from "./configs/constants";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import ControlledTextField from "./form-controlled/ControlledTextField";
-import { red } from "@mui/material/colors";
 
 const API_URL = `${process.env.REACT_APP_API_URL}/users`;
 const DEFAULT_PASSWORD = constants.DEFAULT_PASSWORD;
 
+const RowWrapper = ({ children }) => {
+  return (
+    <Stack
+      direction="row"
+      gap={2}
+      flexWrap="wrap"
+      justifyContent="space-between"
+    >
+      {children}
+    </Stack>
+  );
+};
 const AddNewUserForm = ({ setRenderTrigger }) => {
   const axiosPrivate = useAxiosPrivate();
   //   form
-  const { register, handleSubmit, formState, reset, control } = useForm({
+  const { handleSubmit, reset, control } = useForm({
     resolver: zodResolver(userSchema),
     mode: "onTouched",
   });
-
-  const { errors } = formState;
 
   const onSubmit = async (data) => {
     try {
@@ -63,95 +71,52 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
         <ElevatedSectionWrapper>
           <Stack gap={1}>
             <Typography variant="h6">Add New User</Typography>
-            <Stack direction="row" gap={2} flexWrap="wrap">
-              <Box flex={1}>
-                {/* <LabelledTextField
-                  label="employee id"
-                  id="employeeId"
-                  error={!!errors.name}
-                  register={register}
-                /> */}
-                <ControlledTextField
-                  name="employeeId"
-                  control={control}
-                  label="Employee ID"
-                />
-              </Box>
-            </Stack>
-            <Stack direction="row" gap={2} flexWrap="wrap">
-              <Box flex={1}>
-                <ControlledTextField
-                  name="lastName"
-                  label="last name"
-                  control={control}
-                />
-                {/* <LabelledTextField
-                  label="last name"
-                  id="lastName"
-                  error={!!errors.name}
-                  register={register}
-                /> */}
-              </Box>
-              <Box flex={1}>
-                <ControlledTextField
-                  label="first name"
-                  name="firstName"
-                  control={control}
-                />
-                {/* <LabelledTextField
-                  label="first name"
-                  id="firstName"
-                  error={!!errors.name}
-                  register={register}
-                /> */}
-              </Box>
-              <Box flex={1}>
-                <ControlledTextField
-                  label="middle name"
-                  name="middleName"
-                  control={control}
-                />
-                {/* <LabelledTextField
-                  label="middle name"
-                  id="middleName"
-                  error={!!errors.name}
-                  register={register}
-                /> */}
-              </Box>
-              <Box flex={1}>
-                <ControlledTextField
-                  label="email"
-                  name="email"
-                  control={control}
-                />
-                {/* <LabelledTextField
-                  label="email"
-                  id="email"
-                  // error={!!errors.email}
-                  register={register}
-                /> */}
-              </Box>
-            </Stack>
-            <Stack direction="row" gap={2} flexWrap="wrap">
-              <Box flex={1}>
-                <ControlledTextField
-                  label="username"
-                  name="username"
-                  control={control}
-                />
-                {/* <LabelledTextField
-                  label="username"
-                  id="username"
-                  error={!!errors.name}
-                  register={register}
-                /> */}
-              </Box>
-              <Box flex={1}>
-                <Controller
-                  name="role"
-                  id="role"
-                  control={control}
-                  render={({ field }) => (
+            <RowWrapper>
+              <ControlledTextField
+                name="employeeId"
+                control={control}
+                label="Employee ID"
+              />
+            </RowWrapper>
+            <RowWrapper>
+              <ControlledTextField
+                name="lastName"
+                label="last name"
+                control={control}
+              />
+
+              <ControlledTextField
+                label="first name"
+                name="firstName"
+                control={control}
+              />
+
+              <ControlledTextField
+                label="middle name"
+                name="middleName"
+                control={control}
+              />
+
+              <ControlledTextField
+                label="email"
+                name="email"
+                control={control}
+              />
+            </RowWrapper>
+
+            <RowWrapper>
+              <ControlledTextField
+                label="username"
+                name="username"
+                control={control}
+              />
+
+              <Controller
+                name="role"
+                id="role"
+                control={control}
+                render={({ field }) => (
+                  <Stack flex={1}>
                     <LabelledSelect
                       label="role"
                       select={
@@ -163,15 +128,15 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                         />
                       }
                     />
-                  )}
-                />
-              </Box>
-              <Box flex={1}>
-                <Controller
-                  name="status"
-                  id="status"
-                  control={control}
-                  render={({ field }) => (
+                  </Stack>
+                )}
+              />
+              <Controller
+                name="status"
+                id="status"
+                control={control}
+                render={({ field }) => (
+                  <Stack flex={1}>
                     <LabelledSelect
                       label="status"
                       select={
@@ -183,25 +148,15 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                         />
                       }
                     />
-                  )}
-                />
-              </Box>
-              <Box flex={1}>
-                <ControlledTextField
-                  label="password"
-                  name="password"
-                  control={control}
-                />
-                {/* <LabelledTextField
-                  label="password"
-                  id="password"
-                  error={!!errors.password}
-                  register={register}
-                  // defaultValue={genInitialPassword()}
-                  defaultValue={DEFAULT_PASSWORD}
-                /> */}
-              </Box>
-            </Stack>
+                  </Stack>
+                )}
+              />
+              <ControlledTextField
+                label="password"
+                name="password"
+                control={control}
+              />
+            </RowWrapper>
           </Stack>
           <br />
           <FormActionsContainer>
