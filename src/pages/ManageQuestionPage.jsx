@@ -11,7 +11,7 @@ import MetaInfoSection from "./manage-question-page/MetaInfoSection";
 import EditQuestionModal from "./manage-question-page/EditQuestionModal";
 
 import SimpleLabelValue from "../components/SimpleLabelValue";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../hooks/api/useAxiosPrivate";
 
 const ManageQuestionPage = () => {
   const [openEditQuestion, setOpenEditQuestion] = useState(false);

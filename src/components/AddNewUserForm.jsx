@@ -9,8 +9,11 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
 import constants from "./configs/constants";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import ControlledTextField from "./form-controlled/ControlledTextField";
+import useAxiosPrivate from "../hooks/api/useAxiosPrivate";
+import useApiSend from "../hooks/api/useApiSend";
+import useUserReq from "../hooks/api/useUserReq";
+import { DevTool } from "@hookform/devtools";
 
 const API_URL = `${process.env.REACT_APP_API_URL}/users`;
 const DEFAULT_PASSWORD = constants.DEFAULT_PASSWORD;
@@ -27,8 +30,25 @@ const RowWrapper = ({ children }) => {
     </Stack>
   );
 };
+
+const onSuccessReg = () => {
+  alert("New User added successfully");
+};
+
+const onErrorReg = (err) => {
+  console.log(err);
+  alert("Encountered an error adding the new user. Try again later", err);
+};
 const AddNewUserForm = ({ setRenderTrigger }) => {
-  const axiosPrivate = useAxiosPrivate();
+  const { register } = useUserReq();
+
+  const { mutate: registerUser } = useApiSend(
+    register,
+    onSuccessReg,
+    onErrorReg,
+    ["users"],
+    {}
+  );
   //   form
   const { handleSubmit, reset, control } = useForm({
     resolver: zodResolver(userSchema),
@@ -36,13 +56,9 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
   });
 
   const onSubmit = async (data) => {
-    try {
-      const url = `${API_URL}/register`;
-      const response = await axiosPrivate.post(url, data);
-      console.log(response?.data);
-    } catch (error) {
-      console.log(error);
-    }
+    console.log("CLIKED SUBMIT NEW USER", data);
+    registerUser(data);
+
     setRenderTrigger((pv) => !pv);
   };
 
@@ -65,6 +81,7 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
   const onError = (error) => {
     console.log("Error submitting form", error);
   };
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
@@ -123,7 +140,7 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                         <SimpleSelect
                           options={constants.ROLES}
                           defaultValue=""
-                          selectedOption={field.value || constants?.ROLES?.[1]}
+                          selectedOption={field.value}
                           onChange={(e) => field.onChange(e.target.value)}
                         />
                       }
@@ -142,8 +159,7 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
                       select={
                         <SimpleSelect
                           options={constants.STATUS}
-                          defaultValue=""
-                          selectedOption={field.value || constants?.STATUS?.[0]}
+                          selectedOption={field.value || " "}
                           onChange={(e) => field.onChange(e.target.value)}
                         />
                       }
@@ -169,6 +185,7 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
           </FormActionsContainer>
         </ElevatedSectionWrapper>
       </form>
+      <DevTool control={control} />
     </>
   );
 };

@@ -1,9 +1,9 @@
-import React from "react";
 import { Button, Stack, Typography, useTheme } from "@mui/material";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import DangerousTwoToneIcon from "@mui/icons-material/DangerousTwoTone";
 
-const UnAuthorizedPage = () => {
+const RequestErrorPage = (error) => {
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -19,9 +19,9 @@ const UnAuthorizedPage = () => {
         sx={{ fontSize: "10rem", color: theme.palette.error.main }}
       />
       <Typography sx={{ fontWeight: "bold", fontSize: "3rem" }}>
-        Access Denied
+        Request Failed.
       </Typography>
-      <Typography>You do not have access to this page</Typography>
+      <Typography>{error?.message || error}</Typography>
       <br />
       <Button variant="outlined" onClick={() => navigate(-1)}>
         Go Back
@@ -30,4 +30,4 @@ const UnAuthorizedPage = () => {
   );
 };
 
-export default UnAuthorizedPage;
+export default RequestErrorPage;

@@ -15,7 +15,7 @@ const SimpleSelect = ({
         disabled={disabled}
         labelId="simple-select"
         id="simple-select"
-        value={selectedOption || defaultValue}
+        value={selectedOption || " "}
         onChange={onChange}
         sx={
           highlighted && {

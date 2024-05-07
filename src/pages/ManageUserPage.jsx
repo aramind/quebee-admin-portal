@@ -8,9 +8,11 @@ import RenderAction from "../components/renders/RenderAction";
 import RenderPassword from "../components/renders/RenderPassword";
 import AddNewUserForm from "../components/AddNewUserForm";
 import useRefreshToken from "../hooks/useRefreshToken";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import useFetchUsers from "../hooks/useFetchUsers";
 import { useLocation, useNavigate } from "react-router-dom";
+import useApiGet from "../hooks/api/useApiGet";
+import useUserReq from "../hooks/api/useUserReq";
+import LoadingPage from "./LoadingPage";
+import RequestErrorPage from "./RequestErrorPage";
 
 const columns = [
   { field: "employeeId", headerName: "employee ID" },
@@ -37,11 +39,6 @@ const columns = [
   },
 ];
 
-const onSuccess = () => {
-  // alert("Finished fetching users");
-  // console.log("Finished fetching users");
-};
-
 const ManageUserPage = () => {
   const [rows, setRows] = useState([]);
   const [renderTrigger, setRenderTrigger] = useState(false);
@@ -49,25 +46,17 @@ const ManageUserPage = () => {
   const refresh = useRefreshToken();
   const navigate = useNavigate();
   const location = useLocation();
+  const { get } = useUserReq();
 
-  const axiosPrivate = useAxiosPrivate();
-
-  const onError = (error) => {
-    console.log(error.response.status);
-    const status = error.response.status;
-    if (status === 401 || status === 403) {
-      console.log("re logging in");
-      navigate("/login", { state: { from: location }, replace: true });
-    } else {
-      alert(error);
-    }
-  };
-
-  const { data: fetchedUsers } = useFetchUsers(
-    axiosPrivate,
-    onSuccess,
-    onError
-  );
+  const {
+    data: fetchedUsers,
+    isLoading,
+    error,
+  } = useApiGet(["users"], get, {
+    enabled: true,
+    refetchOnWindowFocus: true,
+    retry: 2,
+  });
 
   useEffect(() => {
     if (fetchedUsers) {
@@ -108,6 +97,21 @@ const ManageUserPage = () => {
       ),
     };
   });
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    console.log(error?.response?.status);
+    const status = error?.response?.status;
+    if (status === 401 || status === 403) {
+      console.log("re logging in");
+      navigate("/login", { state: { from: location }, replace: true });
+    } else {
+      return <RequestErrorPage error={error} />;
+    }
+  }
 
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
