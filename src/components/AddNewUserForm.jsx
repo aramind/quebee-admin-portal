@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import { Box, Stack, Typography } from "@mui/material";
 import LabelledTextField from "./form/LabelledTextField";
@@ -9,18 +9,16 @@ import FormActionButton from "./form/FormActionButton";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../schemas/user";
-import genInitialPassword from "../utils/login/genInitialPassword";
 import constants from "./configs/constants";
-import { useAddUser } from "../hooks/useUserHook";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import ControlledTextField from "./form-controlled/ControlledTextField";
+import { red } from "@mui/material/colors";
 
 const API_URL = `${process.env.REACT_APP_API_URL}/users`;
 const DEFAULT_PASSWORD = constants.DEFAULT_PASSWORD;
 
 const AddNewUserForm = ({ setRenderTrigger }) => {
   const axiosPrivate = useAxiosPrivate();
-
-  const { mutate: addUser } = useAddUser();
   //   form
   const { register, handleSubmit, formState, reset, control } = useForm({
     resolver: zodResolver(userSchema),
@@ -30,10 +28,6 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
   const { errors } = formState;
 
   const onSubmit = async (data) => {
-    // const user = addUser(axiosPrivate, data);
-    console.log(data);
-    // console.log(user);
-
     try {
       const url = `${API_URL}/register`;
       const response = await axiosPrivate.post(url, data);
@@ -71,11 +65,16 @@ const AddNewUserForm = ({ setRenderTrigger }) => {
             <Typography variant="h6">Add New User</Typography>
             <Stack direction="row" gap={2} flexWrap="wrap">
               <Box flex={1}>
-                <LabelledTextField
+                {/* <LabelledTextField
                   label="employee id"
                   id="employeeId"
                   error={!!errors.name}
                   register={register}
+                /> */}
+                <ControlledTextField
+                  name="employeeId"
+                  control={control}
+                  label="Employee ID"
                 />
               </Box>
             </Stack>
