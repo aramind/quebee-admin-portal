@@ -33,13 +33,13 @@ const initialValues = {
   password: constants.DEFAULT_PASSWORD,
 };
 
-const AddNewUserForm = ({ onSuccessFn }) => {
+const AddNewUserForm = ({ successFn }) => {
   const { register } = useUserReq();
 
   const { mutate: registerUser } = useApiSend(
     register,
     () => {
-      onSuccessFn();
+      successFn();
       alert("New User added successfully");
     },
     (err) => {

@@ -41,6 +41,7 @@ const columns = [
 
 const ManageUserPage = () => {
   const [rows, setRows] = useState([]);
+  const [pv, setPV] = useState(true);
   const styles = useStyles();
   const refresh = useRefreshToken();
   const navigate = useNavigate();
@@ -75,7 +76,7 @@ const ManageUserPage = () => {
         }))
       );
     }
-  }, [fetchedUsers]);
+  }, [fetchedUsers, pv]);
 
   const colsWithWidth = columns.map((col, index) => {
     return {
@@ -130,11 +131,7 @@ const ManageUserPage = () => {
         </Stack>
       </ElevatedSectionWrapper>
       <br />
-      <AddNewUserForm
-        onSuccessFn={() => {
-          refetchUsers();
-        }}
-      />
+      <AddNewUserForm successFn={refetchUsers} />
       <br />
     </Container>
   );
