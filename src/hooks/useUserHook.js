@@ -36,17 +36,17 @@ const editUser = (updatedUserData) => {
   return axios.patch(url, updatedUserData);
 };
 // hooks
-export const useAddUser = () => {
-  const queryClient = useQueryClient();
-  return useMutation(addUser, {
-    onSuccess: async () => {
-      queryClient.invalidateQueries("users");
-    },
-    onError: (error) => {
-      alert("error adding new user:", error);
-    },
-  });
-};
+// export const useAddUser = () => {
+//   const queryClient = useQueryClient();
+//   return useMutation(addUser, {
+//     onSuccess: async () => {
+//       queryClient.invalidateQueries("users");
+//     },
+//     onError: (error) => {
+//       alert("error adding new user:", error);
+//     },
+//   });
+// };
 
 export const useEditUser = (onSuccess, onError) => {
   const queryClient = useQueryClient();
@@ -61,27 +61,27 @@ export const useEditUser = (onSuccess, onError) => {
   });
 };
 
-export const useDeleteUserByEmpId = () => {
-  const queryClient = useQueryClient();
-  return useMutation(
-    async (employeeId) => {
-      console.log(employeeId);
-      const url = `${API_URL}/${employeeId}`;
-      const response = await axios.delete(url);
+// export const useDeleteUserByEmpId = () => {
+//   const queryClient = useQueryClient();
+//   return useMutation(
+//     async (employeeId) => {
+//       console.log(employeeId);
+//       const url = `${API_URL}/${employeeId}`;
+//       const response = await axios.delete(url);
 
-      return response;
-    },
-    {
-      onSuccess: async (response) => {
-        queryClient.invalidateQueries("users");
-        console.log(response);
-        setTimeout(() => {
-          alert(response.data.message);
-        }, 1000);
-      },
-      onError: () => {
-        alert("Error deleting user. Try again.");
-      },
-    }
-  );
-};
+//       return response;
+//     },
+//     {
+//       onSuccess: async (response) => {
+//         queryClient.invalidateQueries("users");
+//         console.log(response);
+//         setTimeout(() => {
+//           alert(response.data.message);
+//         }, 1000);
+//       },
+//       onError: () => {
+//         alert("Error deleting user. Try again.");
+//       },
+//     }
+//   );
+// };

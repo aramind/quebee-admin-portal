@@ -19,6 +19,13 @@ const useUserReq = () => {
         data: data,
       });
     },
+
+    deleteById: (id) => {
+      request({
+        url: `${BASE_URL}/${id}`,
+        method: "DELETE",
+      });
+    },
   };
 
   return user;

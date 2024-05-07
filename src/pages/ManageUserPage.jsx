@@ -41,7 +41,6 @@ const columns = [
 
 const ManageUserPage = () => {
   const [rows, setRows] = useState([]);
-  const [pv, setPV] = useState(true);
   const styles = useStyles();
   const refresh = useRefreshToken();
   const navigate = useNavigate();
@@ -76,7 +75,7 @@ const ManageUserPage = () => {
         }))
       );
     }
-  }, [fetchedUsers, pv]);
+  }, [fetchedUsers]);
 
   const colsWithWidth = columns.map((col, index) => {
     return {

@@ -4,21 +4,34 @@ import { IconButton } from "@mui/material";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import DraggableFormDialog from "../form/DraggableFormDialog";
-import { useDeleteUserByEmpId } from "../../hooks/useUserHook";
 import ConfirmActionDialog from "../ConfirmActionDialog";
 import DeleteUserDialogContent from "../../pages/manage-user-page/DeleteUserDialogContent";
+import useUserReq from "../../hooks/api/useUserReq";
+import useApiSend from "../../hooks/api/useApiSend";
 
 const RenderAction = ({ row }) => {
   const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
   const styles = useStyles();
+  const { deleteById } = useUserReq();
+  // const { mutate: deleteUser, isLoading } = useDeleteUserByEmpId();
 
-  const { mutate: deleteUser, isLoading } = useDeleteUserByEmpId();
+  const { mutate: deleteUser, isLoading } = useApiSend(
+    deleteById,
+    () => {
+      alert("Successfully deleted user");
+    },
+    (err) => {
+      alert("Encountered an error deleting user. Please try again later.");
+    },
+    ["users"],
+    {}
+  );
 
-  const handleDeleteUser = (employeeId) => {
-    console.log("deleting user with ", employeeId);
-    deleteUser(employeeId);
+  const handleDeleteUser = (id) => {
+    deleteUser(id);
   };
+
   return (
     <>
       <IconButton
