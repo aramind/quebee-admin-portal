@@ -15,6 +15,7 @@ import CSTSection from "./CSTSection";
 import TypeSection from "./TypeSection";
 import NatureSection from "./NatureSection";
 import QuestionSection from "./QuestionSection";
+import TagSection from "./TagSection";
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 
 const prepCoursesList = (courses) => {
@@ -39,15 +40,6 @@ const FormContentsSection = ({ control }) => {
       staleTime: Infinity,
     }
   );
-
-  // const { data: coursesList } = useFetchCourse({
-  //   reqParams: "/trimmed?fields=title,acronym,subjects",
-  //   staleTime: Infinity,
-  // });
-
-  useEffect(() => {
-    console.log("CLIST", coursesList);
-  }, [coursesList]);
 
   if (isLoading) {
     return <LoadingPage />;
@@ -101,23 +93,18 @@ const FormContentsSection = ({ control }) => {
       <QuestionSection control={control} />
       <br />
       <ElevatedSectionWrapper fullW={true}>
-        <ControlledLabelledTextField
+        <ControlledTextField
           label="information"
-          id="information"
+          name="information"
           control={control}
-          multiline={true}
-          minRows={2}
+          tfProps={{ multiline: true, minRows: 2 }}
         />
       </ElevatedSectionWrapper>
       <br />
-      {/* <TagSection control={control} defaultValues={defaultValues?.tags} /> */}
+      <TagSection control={control} />
       <br />
       <ElevatedSectionWrapper fullW={true}>
-        <ControlledLabelledTextField
-          label="remarks"
-          id="remarks"
-          control={control}
-        />
+        <ControlledTextField label="remarks" name="remarks" control={control} />
       </ElevatedSectionWrapper>
     </>
   );

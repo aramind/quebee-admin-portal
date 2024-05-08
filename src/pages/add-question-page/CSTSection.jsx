@@ -1,6 +1,6 @@
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { Stack } from "@mui/material";
-import ControlledChipMultiAutoComp from "../../components/form/ControlledChipMultiAutoComp";
+import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
 import { useState } from "react";
 
 const CSTSection = ({

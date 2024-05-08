@@ -3,7 +3,13 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import DifficultySlider from "./DifficultySlider";
 
-const ControlledSlider = ({ name, control, defaultValue = 0, label, valu }) => {
+const ControlledSliderXX = ({
+  name,
+  control,
+  defaultValue = 0,
+  label,
+  valu,
+}) => {
   return (
     <Controller
       name={name}
@@ -14,4 +20,4 @@ const ControlledSlider = ({ name, control, defaultValue = 0, label, valu }) => {
   );
 };
 
-export default ControlledSlider;
+export default ControlledSliderXX;

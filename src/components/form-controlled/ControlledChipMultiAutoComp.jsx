@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
-import LabelledSelect from "./LabelledSelect";
-import FormMultiAutoComp from "./FormMultiAutoComp";
+import LabelledSelect from "../form/LabelledSelect";
+import FormMultiAutoComp from "../form/FormMultiAutoComp";
 
 const ControlledChipMultiAutoComp = ({
   control,

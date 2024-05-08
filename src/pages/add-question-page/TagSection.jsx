@@ -1,10 +1,10 @@
 import { Stack } from "@mui/material";
 import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-import ControlledChipMultiAutoComp from "../../components/form/ControlledChipMultiAutoComp";
+import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
 import constants from "../../components/configs/constants";
 
-const TagSection = ({ control, defaultValues }) => {
+const TagSection = ({ control }) => {
   return (
     <Stack spacing={1.5} flex={1}>
       <ElevatedSectionWrapper fullH={true}>
@@ -15,7 +15,6 @@ const TagSection = ({ control, defaultValues }) => {
           label="select tag(s)"
           options={constants.TAGS}
           free
-          defaultValues={defaultValues}
         />
       </ElevatedSectionWrapper>
     </Stack>
@@ -23,3 +22,5 @@ const TagSection = ({ control, defaultValues }) => {
 };
 
 export default TagSection;
+
+// TODO: (3) fetch tags in the database
