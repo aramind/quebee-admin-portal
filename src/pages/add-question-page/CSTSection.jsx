@@ -3,7 +3,7 @@ import { Stack } from "@mui/material";
 import ControlledChipMultiAutoComp from "../../components/form/ControlledChipMultiAutoComp";
 import { useState } from "react";
 
-const CYTSection = ({
+const CSTSection = ({
   control,
   coursesList = [],
   completeCoursesList = [],
@@ -98,4 +98,4 @@ const CYTSection = ({
   );
 };
 
-export default CYTSection;
+export default CSTSection;

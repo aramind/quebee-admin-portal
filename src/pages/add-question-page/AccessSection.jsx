@@ -12,6 +12,7 @@ const AccessSection = ({ control }) => {
         name="access"
         control={control}
         options={constants?.ACCESS}
+        row={true}
       />
       {/* <FormInputLabel label="access" />
       <Controller

@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DBSelectSection from "./DBSelectSection";
 import AccessSection from "./AccessSection";
-import CYTSection from "./CYTSection";
 import RadioGroupsSection from "./RadioGroupsSection";
 import DifficultySection from "./DifficultySection";
 import ControlledLabelledTextField from "../../components/form/ControlledLabelledTextField";
@@ -13,6 +12,7 @@ import useCourseReq from "../../hooks/api/useCourseReq";
 import LoadingPage from "../LoadingPage";
 import { useLocation, useNavigate } from "react-router-dom";
 import RequestErrorPage from "../RequestErrorPage";
+import CSTSection from "./CSTSection";
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 
 const prepCoursesList = (courses) => {
@@ -34,6 +34,7 @@ const FormContentsSection = ({ control }) => {
     {
       refetchOnWindowFocus: true,
       retry: 3,
+      staleTime: Infinity,
     }
   );
 
@@ -64,7 +65,7 @@ const FormContentsSection = ({ control }) => {
 
   return (
     <>
-      {coursesList && <p>Has LIST Already</p>}
+      {/* {coursesList && <p>Has LIST Already</p>} */}
       <Stack spacing={1.5} id="all-items">
         <Stack
           spacing={1.5}
@@ -81,8 +82,7 @@ const FormContentsSection = ({ control }) => {
           <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[1]}>
             {/* <CourseSection control={control} />
               <STSection control={control} /> */}
-
-            <CYTSection
+            <CSTSection
               control={control}
               completeCoursesList={coursesList || []}
               coursesList={coursesList ? prepCoursesList(coursesList) : []}
