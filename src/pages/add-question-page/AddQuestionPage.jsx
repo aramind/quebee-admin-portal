@@ -8,6 +8,12 @@ import FormActionsSection from "./FormActionsSection";
 import { DevTool } from "@hookform/devtools";
 
 import { useAddQuestion } from "../../hooks/useAddQuestion";
+import constants from "../../components/configs/constants";
+import useApiGet from "../../hooks/api/useApiGet";
+import useQuestionReq from "../../hooks/api/useQuestionReq";
+import LoadingPage from "../LoadingPage";
+import { useLocation, useNavigate } from "react-router-dom";
+import RequestErrorPage from "../RequestErrorPage";
 
 const onAddQuestionSuccess = () => {
   alert("Question added successfully");
@@ -17,14 +23,49 @@ const onAddQuestionError = () => {
   alert("Error adding question.Try again!");
 };
 
-const defaultValues = {};
-
 const AddQuestionPage = () => {
   const styles = useStyles();
+  const { get } = useQuestionReq();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { handleSubmit, control } = useForm({
+    resolver: zodResolver(questionSchema),
+    mode: "onTouched",
+    defaultValues: {
+      database: constants?.DATABASES?.[0],
+      access: constants?.ACCESS?.[1],
+    },
+  });
+
+  //
   const { mutate: addQuestion } = useAddQuestion(
     onAddQuestionSuccess,
     onAddQuestionError
   );
+
+  const {
+    data: fetchedQuestions,
+    isLoading,
+    error,
+  } = useApiGet("questions", get, {
+    // refetchOnWindowFocus: true,
+    retry: 3,
+  });
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    console.log(error?.response?.status);
+    const status = error?.response?.status;
+    if (status === 401 || status === 403) {
+      console.log("re logging in");
+      navigate("/login", { state: { from: location }, replace: true });
+    } else {
+      return <RequestErrorPage error={error} />;
+    }
+  }
 
   const formatData = (originalData) => {
     const {
@@ -72,10 +113,6 @@ const AddQuestionPage = () => {
     return formattedData;
   };
   // form related
-  const { handleSubmit, control } = useForm({
-    resolver: zodResolver(questionSchema),
-    mode: "onTouched",
-  });
 
   const onSubmit = (data) => {
     // console.log("onSubmit triggered");

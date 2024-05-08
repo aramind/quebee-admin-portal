@@ -52,8 +52,7 @@ const ManageUserPage = () => {
     isLoading,
     error,
     refetch: refetchUsers,
-  } = useApiGet(["users"], get, {
-    enabled: true,
+  } = useApiGet("users", get, {
     refetchOnWindowFocus: true,
     retry: 3,
   });
