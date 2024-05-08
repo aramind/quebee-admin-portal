@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 import { Stack, Typography } from "@mui/material";
 import LabelledSelect from "./form/LabelledSelect";
@@ -15,6 +15,7 @@ import useUserReq from "../hooks/api/useUserReq";
 import { DevTool } from "@hookform/devtools";
 import RowWrapper from "../wrappers/RowWrapper";
 import ControlledSimpleSelect from "./form-controlled/ControlledSimpleSelect";
+import UserInfoSection from "./form/form-sections/UserInfoSection";
 
 const initialValues = {
   role: constants.ROLES?.[1], // Initial value for role select
@@ -24,6 +25,7 @@ const initialValues = {
 
 const AddNewUserForm = ({ successFn }) => {
   const { register } = useUserReq();
+  const [forceRender, setForceRender] = useState(false);
 
   const { mutate: registerUser } = useApiSend(
     register,
@@ -46,24 +48,14 @@ const AddNewUserForm = ({ successFn }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log("CLIKED SUBMIT NEW USER", data);
     registerUser(data);
   };
 
   // handlers
   // todo
   const handleClear = () => {
-    reset({
-      lastName: "",
-      firstName: "",
-      middleName: "",
-      userName: "",
-      email: "",
-      role: "",
-      status: "",
-      // password: genInitialPassword(),
-      password: constants?.DEFAULT_PASSWORD,
-    });
+    reset();
+    setForceRender((prevState) => !prevState);
   };
 
   const onError = (error) => {
@@ -74,7 +66,8 @@ const AddNewUserForm = ({ successFn }) => {
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <ElevatedSectionWrapper>
-          <Stack gap={1}>
+          <UserInfoSection control={control} title="Add New User" />
+          {/* <Stack gap={1}>
             <Typography variant="h6">Add New User</Typography>
             <RowWrapper>
               <ControlledTextField
@@ -121,7 +114,7 @@ const AddNewUserForm = ({ successFn }) => {
                 control={control}
                 options={constants?.ROLES || []}
               />
-              <ControlledTextField
+              <ControlledSimpleSelect
                 label="status"
                 name="status"
                 control={control}
@@ -134,7 +127,7 @@ const AddNewUserForm = ({ successFn }) => {
                 control={control}
               />
             </RowWrapper>
-          </Stack>
+          </Stack> */}
           <br />
           <FormActionsContainer>
             <FormActionButton
