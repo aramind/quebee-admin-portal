@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import DashBoardPage from "./pages/DashBoardPage";
-import AddQuestionPage from "./pages/AddQuestionPage";
 import AddCoursePage from "./pages/AddCoursePage";
 import ManageQuestionPage from "./pages/ManageQuestionPage";
 import ManageUserPage from "./pages/ManageUserPage";
@@ -11,6 +10,7 @@ import LandingPage from "./pages/LandingPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import PersistLoginComponent from "./components/PersistLoginComponent";
+import AddQuestionPage from "./pages/add-question-page/AddQuestionPage";
 
 const combinedRouter = createBrowserRouter([
   {

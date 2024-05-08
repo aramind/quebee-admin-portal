@@ -7,8 +7,6 @@ import CYTSection from "./CYTSection";
 import { useFetchCourse } from "../../hooks/useFetchCourse";
 import RadioGroupsSection from "./RadioGroupsSection";
 import DifficultySection from "./DifficultySection";
-import QuestionSection from "./QuestionSection";
-import TagSection from "./TagSection";
 import ControlledLabelledTextField from "../../components/form/ControlledLabelledTextField";
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 
@@ -16,7 +14,7 @@ const prepCoursesList = (courses) => {
   return courses.map((course) => `${course?.title}`);
 };
 
-const FormContentsSection = ({ control, defaultValues }) => {
+const FormContentsSection = ({ control }) => {
   const { data: coursesList } = useFetchCourse({
     reqParams: "/trimmed?fields=title,acronym,subjects",
     staleTime: Infinity,
@@ -34,7 +32,7 @@ const FormContentsSection = ({ control, defaultValues }) => {
             <ElevatedSectionWrapper fullW={true} fullH={true}>
               <ControlledLabelledTextField
                 label="code"
-                id="code"
+                name="code"
                 control={control}
               />
             </ElevatedSectionWrapper>
@@ -49,7 +47,7 @@ const FormContentsSection = ({ control, defaultValues }) => {
               control={control}
               completeCoursesList={coursesList || []}
               coursesList={coursesList ? prepCoursesList(coursesList) : []}
-              defaultValues={defaultValues}
+              // defaultValues={defaultValues}
             />
           </Stack>
 
@@ -59,8 +57,8 @@ const FormContentsSection = ({ control, defaultValues }) => {
           </Stack>
         </Stack>
       </Stack>
-      <br />
-      <QuestionSection control={control} defaultValues={defaultValues} />
+      {/* <br />
+      <QuestionSection control={control} defaultValues={defaultValues} /> */}
       <br />
       <ElevatedSectionWrapper fullW={true}>
         <ControlledLabelledTextField
@@ -72,7 +70,7 @@ const FormContentsSection = ({ control, defaultValues }) => {
         />
       </ElevatedSectionWrapper>
       <br />
-      <TagSection control={control} defaultValues={defaultValues?.tags} />
+      {/* <TagSection control={control} defaultValues={defaultValues?.tags} /> */}
       <br />
       <ElevatedSectionWrapper fullW={true}>
         <ControlledLabelledTextField

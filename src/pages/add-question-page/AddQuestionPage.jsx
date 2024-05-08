@@ -1,16 +1,13 @@
-import { Container } from "@mui/material";
-import useStyles from "../hooks/useStyles";
-
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import questionSchema from "../schemas/question";
-
+import useStyles from "../../hooks/useStyles";
+import questionSchema from "../../schemas/question";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Container } from "@mui/material";
+import FormContentsSection from "./FormContentsSection";
+import FormActionsSection from "./FormActionsSection";
 import { DevTool } from "@hookform/devtools";
 
-import { useAddQuestion } from "../hooks/useAddQuestion";
-
-import FormContentsSection from "./add-question-page/FormContentsSection";
-import FormActionsSection from "./add-question-page/FormActionsSection";
+import { useAddQuestion } from "../../hooks/useAddQuestion";
 
 const onAddQuestionSuccess = () => {
   alert("Question added successfully");
@@ -108,7 +105,7 @@ const AddQuestionPage = () => {
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <FormContentsSection control={control} defaultValues={defaultValues} />
+        <FormContentsSection control={control} />
         <br />
         <FormActionsSection
           handleClear={handleClear}
