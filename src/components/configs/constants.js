@@ -103,6 +103,10 @@ const constants = {
       },
     ],
   },
-};
 
+  API_URL: {
+    QUESTION: `${process.env.REACT_APP_API_URL}/questions`,
+    USER: `${process.env.REACT_APP_API_URL}/user`,
+  },
+};
 export default constants;

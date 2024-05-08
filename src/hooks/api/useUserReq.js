@@ -1,20 +1,21 @@
+import constants from "../../components/configs/constants";
 import useRequest from "./useRequest";
 
-const BASE_URL = `${process.env.REACT_APP_API_URL}/users`;
+const USER_URL = constants?.API_URL?.USER;
 
 const useUserReq = () => {
   const request = useRequest();
 
-  const user = {
+  const userReq = {
     get: () =>
       request({
-        url: BASE_URL,
+        url: USER_URL,
         method: "GET",
       }),
 
     register: (data) => {
       request({
-        url: `${BASE_URL}/register`,
+        url: `${USER_URL}/register`,
         method: "POST",
         data: data,
       });
@@ -22,21 +23,21 @@ const useUserReq = () => {
 
     deleteById: (id) => {
       request({
-        url: `${BASE_URL}/${id}`,
+        url: `${USER_URL}/${id}`,
         method: "DELETE",
       });
     },
 
     edit: (data) => {
       request({
-        url: `${BASE_URL}/${data?.employeeId}`,
+        url: `${USER_URL}/${data?.employeeId}`,
         method: "PATCH",
         data,
       });
     },
   };
 
-  return user;
+  return userReq;
 };
 
 export default useUserReq;
