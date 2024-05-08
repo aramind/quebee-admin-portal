@@ -1,10 +1,6 @@
 import { Container, Grid, Stack } from "@mui/material";
-
 import { Fragment, useState } from "react";
 import useStyles from "../../hooks/useStyles";
-import useAxiosPrivate from "../../hooks/api/useAxiosPrivate";
-import { usePatchQuestion } from "../../hooks/usePatchQuestion";
-import { useFetchQUestions } from "../../hooks/useFetchQuestions";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import SimpleLabelValue from "../../components/SimpleLabelValue";
 import MetaInfoSection from "./MetaInfoSection";
@@ -12,16 +8,14 @@ import QuestionAndChoicesSection from "./QuestionAndChoicesSection";
 import ButtonsSection from "./ButtonsSection";
 import EditQuestionModal from "./EditQuestionModal";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
-import RequestErrorPage from "../RequestErrorPage";
 import LoadingPage from "../LoadingPage";
 import useApiGet from "../../hooks/api/useApiGet";
-import { useLocation, useNavigate } from "react-router-dom";
 import useApiSend from "../../hooks/api/useApiSend";
+import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
 
 const ManageQuestionPage = () => {
   const styles = useStyles();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const handleReqError = useErrorHandlerUnAuthReq();
   const { get, edit } = useQuestionReq();
   const [openEditQuestion, setOpenEditQuestion] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -53,14 +47,7 @@ const ManageQuestionPage = () => {
 
   if (fetchError || editError) {
     const error = fetchError || editError;
-    console.log(error?.response?.status);
-    const status = error?.response?.status;
-    if (status === 401 || status === 403) {
-      console.log("re logging in");
-      navigate("/login", { state: { from: location }, replace: true });
-    } else {
-      return <RequestErrorPage error={error} />;
-    }
+    handleReqError(error);
   }
 
   // const { mutate: editQuestion } = usePatchQuestion;
