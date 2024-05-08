@@ -14,6 +14,7 @@ import useApiSend from "../hooks/api/useApiSend";
 import useUserReq from "../hooks/api/useUserReq";
 import { DevTool } from "@hookform/devtools";
 import RowWrapper from "../wrappers/RowWrapper";
+import ControlledSimpleSelect from "./form-controlled/ControlledSimpleSelect";
 
 const initialValues = {
   role: constants.ROLES?.[1], // Initial value for role select
@@ -114,46 +115,19 @@ const AddNewUserForm = ({ successFn }) => {
                 name="username"
                 control={control}
               />
-
-              <Controller
+              <ControlledSimpleSelect
+                label="role"
                 name="role"
-                id="role"
                 control={control}
-                render={({ field }) => (
-                  <Stack flex={1}>
-                    <LabelledSelect
-                      label="role"
-                      select={
-                        <SimpleSelect
-                          options={constants.ROLES}
-                          defaultValue=""
-                          selectedOption={field.value}
-                          onChange={(e) => field.onChange(e.target.value)}
-                        />
-                      }
-                    />
-                  </Stack>
-                )}
+                options={constants?.ROLES || []}
               />
-              <Controller
+              <ControlledTextField
+                label="status"
                 name="status"
-                id="status"
                 control={control}
-                render={({ field }) => (
-                  <Stack flex={1}>
-                    <LabelledSelect
-                      label="status"
-                      select={
-                        <SimpleSelect
-                          options={constants.STATUS}
-                          selectedOption={field.value || " "}
-                          onChange={(e) => field.onChange(e.target.value)}
-                        />
-                      }
-                    />
-                  </Stack>
-                )}
+                options={constants?.STATUS || []}
               />
+
               <ControlledTextField
                 label="password"
                 name="password"
