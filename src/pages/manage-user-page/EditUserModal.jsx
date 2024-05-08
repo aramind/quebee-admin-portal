@@ -6,19 +6,19 @@ import {
   DialogTitle,
   Paper,
 } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import React from "react";
 import Draggable from "react-draggable";
-import { grey } from "@mui/material/colors";
+import useStyles from "../../hooks/useStyles";
+import useUserReq from "../../hooks/api/useUserReq";
+import useApiSend from "../../hooks/api/useApiSend";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../../schemas/user";
 import { useForm } from "react-hook-form";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-import useStyles from "../../hooks/useStyles";
+import UserInfoSection from "../../components/form/form-sections/UserInfoSection";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
-import DialogActionButton from "./DialogActionButton";
-import useApiSend from "../../hooks/api/useApiSend";
-import useUserReq from "../../hooks/api/useUserReq";
-import UserInfoSection from "./form-sections/UserInfoSection";
+import DialogActionButton from "../../components/form/DialogActionButton";
 
 function PaperComponent(props) {
   return (
@@ -30,9 +30,9 @@ function PaperComponent(props) {
     </Draggable>
   );
 }
-const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
-  const styles = useStyles();
 
+const EditUserModal = ({ open, setOpen, title = "", row }) => {
+  const styles = useStyles();
   const { edit } = useUserReq();
   // hooks
 
@@ -50,29 +50,23 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
 
   // form
 
-  const { handleSubmit, formState, control } = useForm({
+  const { handleSubmit, control } = useForm({
     resolver: zodResolver(userSchema),
     mode: "onTouched",
     defaultValues: { ...row },
   });
 
-  const { errors } = formState;
-  console.log(errors);
-
   const handleClose = (e) => {
     e.stopPropagation();
   };
 
-  const onSubmit = (data) => {
-    alert("CLICKED ON SUBMIT");
-    console.log(data);
-    updateUser(data, data?.employeeId);
+  const onSubmit = async (data) => {
+    updateUser(data);
   };
 
   const onError = (err) => {
     alert("Encountered an error updating user. Please try again later");
   };
-
   return (
     <>
       <Dialog
@@ -111,8 +105,9 @@ const DraggableFormDialog = ({ open, setOpen, title = "", row }) => {
           </DialogActionsContainer>
         </DialogActions>
       </Dialog>
+      {/* <DevTool control={control} /> */}
     </>
   );
 };
 
-export default DraggableFormDialog;
+export default EditUserModal;

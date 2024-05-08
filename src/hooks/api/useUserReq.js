@@ -27,10 +27,11 @@ const useUserReq = () => {
       });
     },
 
-    edit: (data, id) => {
+    edit: (data) => {
       request({
-        url: `${BASE_URL}/${id}`,
-        method: "PATCH".data,
+        url: `${BASE_URL}/${data?.employeeId}`,
+        method: "PATCH",
+        data,
       });
     },
   };

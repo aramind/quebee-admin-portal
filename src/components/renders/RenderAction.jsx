@@ -3,18 +3,17 @@ import useStyles from "../../hooks/useStyles";
 import { IconButton } from "@mui/material";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import DraggableFormDialog from "../form/DraggableFormDialog";
 import ConfirmActionDialog from "../ConfirmActionDialog";
 import DeleteUserDialogContent from "../../pages/manage-user-page/DeleteUserDialogContent";
 import useUserReq from "../../hooks/api/useUserReq";
 import useApiSend from "../../hooks/api/useApiSend";
+import EditUserModal from "../../pages/manage-user-page/EditUserModal";
 
 const RenderAction = ({ row }) => {
   const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
   const styles = useStyles();
   const { deleteById } = useUserReq();
-  // const { mutate: deleteUser, isLoading } = useDeleteUserByEmpId();
 
   const { mutate: deleteUser, isLoading } = useApiSend(
     deleteById,
@@ -22,7 +21,7 @@ const RenderAction = ({ row }) => {
       alert("Successfully deleted user");
     },
     (err) => {
-      alert("Encountered an error deleting user. Please try again later.");
+      alert("Encountered an error deleting user. Please try again later.", err);
     },
     ["users"],
     {}
@@ -46,12 +45,11 @@ const RenderAction = ({ row }) => {
         aria-label="delete"
         sx={styles.iconButton}
         disabled={isLoading}
-        // onClick={() => handleDeleteUser(row.employeeId)}
         onClick={() => setOpenConfirmDelete(true)}
       >
         <DeleteTwoToneIcon />
       </IconButton>
-      <DraggableFormDialog
+      <EditUserModal
         open={openDialogEditUser}
         setOpen={setOpenDialogEditUser}
         title="Edit User Information"
@@ -64,12 +62,6 @@ const RenderAction = ({ row }) => {
         content={<DeleteUserDialogContent userDetails={row} />}
         handleConfirm={() => handleDeleteUser(row.employeeId)}
       />
-      {/* <DraggableDialog
-        open={openDialogEditUser}
-        setOpen={setOpenDialogEditUser}
-        title="Edit User Information"
-        row={row}
-      /> */}
     </>
   );
 };

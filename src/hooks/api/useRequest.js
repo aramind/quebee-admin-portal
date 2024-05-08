@@ -10,7 +10,7 @@ const useRequest = () => {
 
     const onError = (err) => {
       // return Promise.reject(err.response?.data);
-      alert(err.response?.data?.message);
+      // alert(err.response?.data?.message);
     };
 
     return client(options).then(onSuccess).catch(onError);

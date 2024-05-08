@@ -55,7 +55,7 @@ const ManageUserPage = () => {
   } = useApiGet(["users"], get, {
     enabled: true,
     refetchOnWindowFocus: true,
-    retry: 2,
+    retry: 3,
   });
 
   useEffect(() => {
