@@ -14,6 +14,8 @@ import useQuestionReq from "../../hooks/api/useQuestionReq";
 import LoadingPage from "../LoadingPage";
 import { useLocation, useNavigate } from "react-router-dom";
 import RequestErrorPage from "../RequestErrorPage";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthProvider";
 
 const onAddQuestionSuccess = () => {
   alert("Question added successfully");
@@ -28,12 +30,18 @@ const AddQuestionPage = () => {
   const { get } = useQuestionReq();
   const navigate = useNavigate();
   const location = useLocation();
+  const auth = useContext(AuthContext);
+
+  console.log(auth);
+
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(questionSchema),
     mode: "onTouched",
     defaultValues: {
       database: constants?.DATABASES?.[0],
-      access: constants?.ACCESS?.[1],
+      access: constants?.ACCESS?.[0],
+      type: constants?.TYPE[0]?.key,
+      nature: constants?.NATURE[0]?.key,
     },
   });
 
@@ -42,30 +50,6 @@ const AddQuestionPage = () => {
     onAddQuestionSuccess,
     onAddQuestionError
   );
-
-  const {
-    data: fetchedQuestions,
-    isLoading,
-    error,
-  } = useApiGet("questions", get, {
-    // refetchOnWindowFocus: true,
-    retry: 3,
-  });
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (error) {
-    console.log(error?.response?.status);
-    const status = error?.response?.status;
-    if (status === 401 || status === 403) {
-      console.log("re logging in");
-      navigate("/login", { state: { from: location }, replace: true });
-    } else {
-      return <RequestErrorPage error={error} />;
-    }
-  }
 
   const formatData = (originalData) => {
     const {
@@ -106,27 +90,18 @@ const AddQuestionPage = () => {
       choices,
       information,
       remarks,
-      creator: "6606cd49d6e168904285a93c",
+      creator: auth?._id,
     };
 
-    // console.log(formattedData);
+    console.log(formattedData);
     return formattedData;
   };
   // form related
 
   const onSubmit = (data) => {
-    // console.log("onSubmit triggered");
-    // console.log("raw data:", data);
-
     const formattedData = formatData(data);
-    // console.log("Submitting question...", formattedData);
 
     addQuestion(formattedData);
-    // Convert the JavaScript object to a string
-    // const formattedDataString = JSON.stringify(formattedData, null, 2);
-
-    // Display the formatted data in an alert
-    // alert(formattedDataString);
   };
 
   const onError = (err) => {

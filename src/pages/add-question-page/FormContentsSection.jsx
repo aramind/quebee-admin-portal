@@ -1,10 +1,9 @@
 import { Stack } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DBSelectSection from "./DBSelectSection";
 import AccessSection from "./AccessSection";
 import DifficultySection from "./DifficultySection";
-import ControlledLabelledTextField from "../../components/form/ControlledLabelledTextField";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import useApiGet from "../../hooks/api/useApiGet";
 import useCourseReq from "../../hooks/api/useCourseReq";
@@ -59,7 +58,6 @@ const FormContentsSection = ({ control }) => {
 
   return (
     <>
-      {/* {coursesList && <p>Has LIST Already</p>} */}
       <Stack spacing={1.5} id="all-items">
         <Stack
           spacing={1.5}

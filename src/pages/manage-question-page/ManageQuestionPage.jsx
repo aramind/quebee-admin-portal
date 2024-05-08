@@ -1,31 +1,65 @@
 import { Container, Grid, Stack } from "@mui/material";
-import useStyles from "../hooks/useStyles";
-import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
 
-import { useFetchQUestions } from "../hooks/useFetchQuestions";
 import { Fragment, useState } from "react";
-import { usePatchQuestion } from "../hooks/usePatchQuestion";
-import ButtonsSection from "./manage-question-page/ButtonsSection";
-import QuestionAndChoicesSection from "./manage-question-page/QuestionAndChoicesSection";
-import MetaInfoSection from "./manage-question-page/MetaInfoSection";
-import EditQuestionModal from "./manage-question-page/EditQuestionModal";
-
-import SimpleLabelValue from "../components/SimpleLabelValue";
-import useAxiosPrivate from "../hooks/api/useAxiosPrivate";
+import useStyles from "../../hooks/useStyles";
+import useAxiosPrivate from "../../hooks/api/useAxiosPrivate";
+import { usePatchQuestion } from "../../hooks/usePatchQuestion";
+import { useFetchQUestions } from "../../hooks/useFetchQuestions";
+import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
+import SimpleLabelValue from "../../components/SimpleLabelValue";
+import MetaInfoSection from "./MetaInfoSection";
+import QuestionAndChoicesSection from "./QuestionAndChoicesSection";
+import ButtonsSection from "./ButtonsSection";
+import EditQuestionModal from "./EditQuestionModal";
+import useQuestionReq from "../../hooks/api/useQuestionReq";
+import RequestErrorPage from "../RequestErrorPage";
+import LoadingPage from "../LoadingPage";
+import useApiGet from "../../hooks/api/useApiGet";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ManageQuestionPage = () => {
-  const [openEditQuestion, setOpenEditQuestion] = useState(false);
   const styles = useStyles();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { get } = useQuestionReq();
+  const [openEditQuestion, setOpenEditQuestion] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
-  const axiosPrivate = useAxiosPrivate();
+  const [params, setParams] = useState("");
 
-  const { data: questions } = useFetchQUestions({
-    axiosPriv: axiosPrivate,
-    params: "",
+  // const axiosPrivate = useAxiosPrivate();
+
+  const {
+    data: questions,
+    isLoading,
+    error,
+  } = useApiGet("questions", () => get(params), {
+    refetchOnWindowFocus: true,
+    retry: 3,
     staleTime: Infinity,
   });
 
-  const { mutate: editQuestion } = usePatchQuestion();
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    console.log(error?.response?.status);
+    const status = error?.response?.status;
+    if (status === 401 || status === 403) {
+      console.log("re logging in");
+      navigate("/login", { state: { from: location }, replace: true });
+    } else {
+      return <RequestErrorPage error={error} />;
+    }
+  }
+
+  //   const { data: questions2 } = useFetchQUestions({
+  //   axiosPriv: axiosPrivate,
+  //   params: "",
+  //   staleTime: Infinity,
+  // });
+
+  const { mutate: editQuestion } = usePatchQuestion;
   // onClickHandlers
 
   const handlePrevious = () => {
@@ -135,6 +169,7 @@ const ManageQuestionPage = () => {
             handleUpload={handleUpload}
             handleNext={handleNext}
           />
+
           <EditQuestionModal
             question={questions[questionIndex]}
             open={openEditQuestion}

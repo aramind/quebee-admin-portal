@@ -7,9 +7,29 @@ const useQuestionReq = () => {
   const request = useRequest();
 
   const questionReq = {
-    get: () =>
+    get: (params) =>
+      request({
+        url: `${QUESTION_URL}/${params}`,
+        method: "GET",
+      }),
+
+    add: (data) =>
       request({
         url: QUESTION_URL,
+        method: "POST",
+        data,
+      }),
+
+    edit: ({ id, data }) =>
+      request({
+        url: `${QUESTION_URL}/${id}`,
+        method: "PATCH",
+        data,
+      }),
+
+    getById: (id) =>
+      request({
+        url: `${QUESTION_URL}/${id}`,
         method: "GET",
       }),
   };

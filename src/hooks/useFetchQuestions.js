@@ -4,7 +4,7 @@ const API_URL = `${process.env.REACT_APP_API_URL}/questions`;
 
 const fetchQuestions = async (axiosPriv, params) => {
   try {
-    const response = await axiosPriv.get(`${API_URL}${params}`);
+    const response = await axiosPriv.get(`${API_URL}/${params}`);
     const data = response?.data?.data;
     console.log(data);
     return data;
