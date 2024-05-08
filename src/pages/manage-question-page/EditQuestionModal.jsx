@@ -19,6 +19,9 @@ import FormContentsSection from "../add-question-page/FormContentsSection";
 import DialogActionButton from "../../components/form/DialogActionButton";
 import { DevTool } from "@hookform/devtools";
 import { usePatchQuestion } from "../../hooks/usePatchQuestion";
+import useApiSend from "../../hooks/api/useApiSend";
+import useQuestionReq from "../../hooks/api/useQuestionReq";
+import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
 
 const PaperComponent = (props) => {
   return (
@@ -45,9 +48,24 @@ const EditQuestionModal = ({
   handleSaveEdit,
 }) => {
   const styles = useStyles();
+  const { edit } = useQuestionReq();
+  const handleReqError = useErrorHandlerUnAuthReq();
+
   const [defaultValues, setDefaultValues] = useState({});
 
-  const { mutate: editQuestion } = usePatchQuestion();
+  const { mutate: editQuestion, error: editError } = useApiSend(
+    edit,
+    () => alert("Edit saved"),
+    (err) => alert("Something went wrong. Try again."),
+    ["questions"],
+    {}
+  );
+
+  if (editError) {
+    handleReqError(editError);
+  }
+
+  // const { mutate: editQuestion } = usePatchQuestion();
 
   const BoxWrapper = ({ children }) => {
     return (

@@ -16,12 +16,13 @@ import RequestErrorPage from "../RequestErrorPage";
 import LoadingPage from "../LoadingPage";
 import useApiGet from "../../hooks/api/useApiGet";
 import { useLocation, useNavigate } from "react-router-dom";
+import useApiSend from "../../hooks/api/useApiSend";
 
 const ManageQuestionPage = () => {
   const styles = useStyles();
   const navigate = useNavigate();
   const location = useLocation();
-  const { get } = useQuestionReq();
+  const { get, edit } = useQuestionReq();
   const [openEditQuestion, setOpenEditQuestion] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [params, setParams] = useState("");
@@ -31,18 +32,27 @@ const ManageQuestionPage = () => {
   const {
     data: questions,
     isLoading,
-    error,
+    error: fetchError,
   } = useApiGet("questions", () => get(params), {
     refetchOnWindowFocus: true,
     retry: 3,
     staleTime: Infinity,
   });
 
+  const { mutate: editQuestion, error: editError } = useApiSend(
+    edit,
+    () => alert("Edit saved"),
+    (err) => alert("Something went wrong. Try again."),
+    ["questions"],
+    {}
+  );
+
   if (isLoading) {
     return <LoadingPage />;
   }
 
-  if (error) {
+  if (fetchError || editError) {
+    const error = fetchError || editError;
     console.log(error?.response?.status);
     const status = error?.response?.status;
     if (status === 401 || status === 403) {
@@ -53,13 +63,7 @@ const ManageQuestionPage = () => {
     }
   }
 
-  //   const { data: questions2 } = useFetchQUestions({
-  //   axiosPriv: axiosPrivate,
-  //   params: "",
-  //   staleTime: Infinity,
-  // });
-
-  const { mutate: editQuestion } = usePatchQuestion;
+  // const { mutate: editQuestion } = usePatchQuestion;
   // onClickHandlers
 
   const handlePrevious = () => {
@@ -85,6 +89,7 @@ const ManageQuestionPage = () => {
     // alert("Clicked edit btn on manage question page");
     setOpenEditQuestion(true);
   };
+
   const handleUpload = () => {
     try {
       editQuestion({
