@@ -19,8 +19,6 @@ const Choices = ({ control, defaultValues }) => {
     <Controller
       name="correctAnswer"
       control={control}
-      // defaultValue={getKeyOfCorrectAnswer(defaultValues)}
-      // defaultValue={defaultValues?.correctAnswer}
       render={({ field }) => (
         <Stack height="100%">
           <RadioGroup

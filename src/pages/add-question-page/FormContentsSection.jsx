@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DBSelectSection from "./DBSelectSection";
 import AccessSection from "./AccessSection";
-import RadioGroupsSection from "./RadioGroupsSection";
 import DifficultySection from "./DifficultySection";
 import ControlledLabelledTextField from "../../components/form/ControlledLabelledTextField";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
@@ -13,6 +12,9 @@ import LoadingPage from "../LoadingPage";
 import { useLocation, useNavigate } from "react-router-dom";
 import RequestErrorPage from "../RequestErrorPage";
 import CSTSection from "./CSTSection";
+import TypeSection from "./TypeSection";
+import NatureSection from "./NatureSection";
+import QuestionSection from "./QuestionSection";
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 
 const prepCoursesList = (courses) => {
@@ -80,24 +82,23 @@ const FormContentsSection = ({ control }) => {
             <AccessSection control={control} />
           </Stack>
           <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[1]}>
-            {/* <CourseSection control={control} />
-              <STSection control={control} /> */}
             <CSTSection
               control={control}
               completeCoursesList={coursesList || []}
               coursesList={coursesList ? prepCoursesList(coursesList) : []}
-              // defaultValues={defaultValues}
             />
           </Stack>
-
           <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[2]}>
-            <RadioGroupsSection control={control} />
+            <Stack direction={{ xs: "column", md: "row" }} spacing={1.5}>
+              <TypeSection control={control} />
+              <NatureSection control={control} />
+            </Stack>
             <DifficultySection control={control} />
           </Stack>
         </Stack>
       </Stack>
-      {/* <br />
-      <QuestionSection control={control} defaultValues={defaultValues} /> */}
+      <br />
+      <QuestionSection control={control} />
       <br />
       <ElevatedSectionWrapper fullW={true}>
         <ControlledLabelledTextField
