@@ -26,6 +26,13 @@ const useUserReq = () => {
         method: "DELETE",
       });
     },
+
+    edit: (data, id) => {
+      request({
+        url: `${BASE_URL}/${id}`,
+        method: "PATCH".data,
+      });
+    },
   };
 
   return user;

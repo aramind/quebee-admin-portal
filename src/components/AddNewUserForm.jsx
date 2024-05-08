@@ -13,19 +13,7 @@ import ControlledTextField from "./form-controlled/ControlledTextField";
 import useApiSend from "../hooks/api/useApiSend";
 import useUserReq from "../hooks/api/useUserReq";
 import { DevTool } from "@hookform/devtools";
-
-const RowWrapper = ({ children }) => {
-  return (
-    <Stack
-      direction="row"
-      gap={2}
-      flexWrap="wrap"
-      justifyContent="space-between"
-    >
-      {children}
-    </Stack>
-  );
-};
+import RowWrapper from "../wrappers/RowWrapper";
 
 const initialValues = {
   role: constants.ROLES?.[1], // Initial value for role select
