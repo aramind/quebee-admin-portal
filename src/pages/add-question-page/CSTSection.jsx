@@ -1,13 +1,12 @@
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { Stack } from "@mui/material";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
-import { useState } from "react";
 
 const CSTSection = ({
   control,
   coursesList = [],
   completeCoursesList = [],
-  defaultValues,
+  getValues,
 }) => {
   const getSubjects = (coursesList) => {
     const subjects = Array.from(
@@ -53,7 +52,8 @@ const CSTSection = ({
           options={coursesList}
           // chipColor={teal["A100"]}
           textTransform="uppercase"
-          defaultValues={defaultValues?.courses}
+          // defaultValues={defaultValues?.courses}
+          defaultValue={getValues("courses")}
         />
 
         {/* <ControlledChipMultiSelect
@@ -72,7 +72,7 @@ const CSTSection = ({
           options={getSubjects(completeCoursesList) || []}
           // chipColor={amber["A100"]}
           textTransform="uppercase"
-          defaultValues={defaultValues?.subjects}
+          defaultValue={getValues("subjects")}
         />
 
         {/* <ControlledChipMultiSelect
@@ -91,7 +91,7 @@ const CSTSection = ({
           options={getTopics(completeCoursesList) || []}
           // chipColor={cyan["A100"]}
           textTransform="capitalize"
-          defaultValues={defaultValues?.topics}
+          defaultValue={getValues("topics")}
         />
       </Stack>
     </ElevatedSectionWrapper>

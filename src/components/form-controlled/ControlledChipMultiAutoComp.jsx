@@ -12,13 +12,14 @@ const ControlledChipMultiAutoComp = ({
   free,
   chipColor,
   textTransform,
-  defaultValues,
+  defaultValue,
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  console.log(defaultValue);
+  const [selectedOptions, setSelectedOptions] = useState(defaultValue || []);
 
-  useEffect(() => {
-    setSelectedOptions(defaultValues || []);
-  }, [defaultValues]);
+  // useEffect(() => {
+  //   setSelectedOptions(defaultValues || []);
+  // }, [defaultValues]);
 
   const handleChange = (event) => {
     const {

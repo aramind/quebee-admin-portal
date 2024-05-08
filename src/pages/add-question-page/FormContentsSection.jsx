@@ -21,7 +21,7 @@ const prepCoursesList = (courses) => {
   return courses.map((course) => `${course?.title}`);
 };
 
-const FormContentsSection = ({ control }) => {
+const FormContentsSection = ({ control, getValues }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { get } = useCourseReq();
@@ -76,6 +76,7 @@ const FormContentsSection = ({ control }) => {
               control={control}
               completeCoursesList={coursesList || []}
               coursesList={coursesList ? prepCoursesList(coursesList) : []}
+              getValues={getValues}
             />
           </Stack>
           <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[2]}>
@@ -97,7 +98,7 @@ const FormContentsSection = ({ control }) => {
           />
         </ElevatedSectionWrapper>
 
-        <TagSection control={control} />
+        <TagSection control={control} getValues={getValues} />
 
         <ElevatedSectionWrapper fullW={true}>
           <ControlledTextField

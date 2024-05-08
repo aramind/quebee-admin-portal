@@ -143,7 +143,7 @@ const EditQuestionModal = ({
 
   // console.log(defaultValues);
   // form related
-  const { handleSubmit, control, reset } = useForm({
+  const { handleSubmit, control, reset, getValues } = useForm({
     resolver: zodResolver(questionSchema),
     mode: "onTouched",
     defaultValues: defaultValues,
@@ -207,7 +207,9 @@ const EditQuestionModal = ({
                 <BoxWrapper>
                   <FormContentsSection
                     control={control}
-                    defaultValues={defaultValues}
+                    // defaultValues={defaultValues}
+                    // getValues={getValues}
+                    getValues={getValues}
                   />
                 </BoxWrapper>
               </Stack>
