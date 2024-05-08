@@ -88,24 +88,27 @@ const FormContentsSection = ({ control }) => {
             <DifficultySection control={control} />
           </Stack>
         </Stack>
+        <QuestionSection control={control} />
+
+        <ElevatedSectionWrapper fullW={true}>
+          <ControlledTextField
+            label="information"
+            name="information"
+            control={control}
+            tfProps={{ multiline: true, minRows: 2 }}
+          />
+        </ElevatedSectionWrapper>
+
+        <TagSection control={control} />
+
+        <ElevatedSectionWrapper fullW={true}>
+          <ControlledTextField
+            label="remarks"
+            name="remarks"
+            control={control}
+          />
+        </ElevatedSectionWrapper>
       </Stack>
-      <br />
-      <QuestionSection control={control} />
-      <br />
-      <ElevatedSectionWrapper fullW={true}>
-        <ControlledTextField
-          label="information"
-          name="information"
-          control={control}
-          tfProps={{ multiline: true, minRows: 2 }}
-        />
-      </ElevatedSectionWrapper>
-      <br />
-      <TagSection control={control} />
-      <br />
-      <ElevatedSectionWrapper fullW={true}>
-        <ControlledTextField label="remarks" name="remarks" control={control} />
-      </ElevatedSectionWrapper>
     </>
   );
 };

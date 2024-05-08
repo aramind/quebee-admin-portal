@@ -29,50 +29,37 @@ const Choices = ({ control, defaultValues }) => {
             sx={{ ml: 2 }}
           >
             {choices.map((choice, index) => (
-              <FormControlLabel
-                key={choice}
-                value={choice}
-                control={<Radio />}
-                label={
-                  <>
-                    <Stack
-                      width="100%"
-                      direction={{ xs: "column", md: "row" }}
-                      spacing={1.5}
-                      justifyContent={{ xs: "start" }}
-                    >
-                      <Box>
-                        <ChoicesLabel label={choice} fullH />
-                      </Box>
-                      <Stack flex={1}>
-                        <Controller
-                          control={control}
-                          // name={`choices[${choice}]`}
-                          name={choice}
-                          render={({ field }) => (
-                            <TextField
-                              fullWidth
-                              {...field}
-                              multiline
-                              // onBlur={field.onBlur}
-                            />
-                          )}
-                        />
-                      </Stack>
-                      <Stack
-                        sx={{
-                          width: "120px",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Button variant="outlined" sx={{ height: 1 }}>
-                          Clear
-                        </Button>
-                      </Stack>
-                    </Stack>
-                  </>
-                }
-              />
+              <Stack direction="row" spacing={1.5} mt={1}>
+                <FormControlLabel
+                  key={choice}
+                  value={choice}
+                  control={<Radio />}
+                  label={<ChoicesLabel label={choice} fullH />}
+                />
+                <Controller
+                  control={control}
+                  // name={`choices[${choice}]`}
+                  name={choice}
+                  render={({ field }) => (
+                    <TextField
+                      fullWidth
+                      {...field}
+                      multiline
+                      // onBlur={field.onBlur}
+                    />
+                  )}
+                />
+                <Stack
+                  sx={{
+                    width: "150px",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button variant="outlined" sx={{ height: 1 }}>
+                    Clear
+                  </Button>
+                </Stack>
+              </Stack>
             ))}
           </RadioGroup>
         </Stack>

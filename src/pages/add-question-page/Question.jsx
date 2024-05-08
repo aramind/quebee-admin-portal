@@ -20,10 +20,8 @@ const Question = ({ control }) => {
       </Stack>
       <Stack
         // className="outlined2"
-        sx={{
-          width: "120px",
-          justifyContent: "center",
-        }}
+        width={{ xs: "100%", md: "120px" }}
+        justifyContent="center"
       >
         <Button variant="outlined" sx={{ height: 1 }}>
           Clear
