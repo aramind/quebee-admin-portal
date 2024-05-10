@@ -2,7 +2,7 @@ import { useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthProvider";
 
-const API_URL = `${process.env.REACT_APP_API_URL}/logout`;
+const API_URL = `${process.env.REACT_APP_API_URL}/v1/logout`;
 
 const useLogout = () => {
   const { setAuth } = useContext(AuthContext);
@@ -15,6 +15,7 @@ const useLogout = () => {
       //   if (response?.status === 204) {
       //     alert("You have been logged out!");
       //   }
+      return response;
     } catch (error) {
       console.error(error);
     }

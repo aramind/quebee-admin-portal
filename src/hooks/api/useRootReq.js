@@ -1,0 +1,19 @@
+import constants from "../../components/configs/constants";
+import useRequest from "./useRequest";
+
+const ROOT_URL = constants?.API_URL?.ROOT;
+
+const useRootReq = () => {
+  const request = useRequest();
+
+  const rootReq = {
+    logout: () =>
+      request({
+        url: `${ROOT_URL}/logout`,
+        method: "DELETE",
+      }),
+  };
+  return rootReq;
+};
+
+export default useRootReq;

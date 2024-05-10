@@ -22,8 +22,8 @@ const NavBar = () => {
 
   const handleLogOut = async () => {
     console.log("CLICKED LOG OUT");
-    await logout();
     navigate("/login");
+    logout();
   };
 
   const theme = useTheme();
