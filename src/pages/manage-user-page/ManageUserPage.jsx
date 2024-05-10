@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import RenderAction from "../../components/renders/RenderAction";
 import RenderPassword from "../../components/renders/RenderPassword";
-import AddNewUserForm from "../../components/AddNewUserForm";
+import AddNewUserForm from "./AddNewUserForm";
 import useRefreshToken from "../../hooks/useRefreshToken";
 import { useLocation, useNavigate } from "react-router-dom";
 import useApiGet from "../../hooks/api/useApiGet";

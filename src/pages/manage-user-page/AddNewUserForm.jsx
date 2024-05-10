@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import ElevatedSectionWrapper from "../wrappers/ElevatedSectionWrapper";
+import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 
-import FormActionsContainer from "../containers/FormActionsContainer";
-import FormActionButton from "./form/FormActionButton";
+import FormActionsContainer from "../../containers/FormActionsContainer";
+import FormActionButton from "../../components/form/FormActionButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import userSchema from "../schemas/user";
-import constants from "./configs/constants";
+import userSchema from "../../schemas/user";
+import constants from "../../components/configs/constants";
 
-import useApiSend from "../hooks/api/useApiSend";
-import useUserReq from "../hooks/api/useUserReq";
+import useApiSend from "../../hooks/api/useApiSend";
+import useUserReq from "../../hooks/api/useUserReq";
 import { DevTool } from "@hookform/devtools";
-import UserInfoSection from "./form/form-sections/UserInfoSection";
+import UserInfoSection from "../../components/form/form-sections/UserInfoSection";
 
 const initialValues = {
   role: constants.ROLES?.[1], // Initial value for role select
