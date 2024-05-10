@@ -18,15 +18,15 @@ import zodLoginSchema from "../schemas/login";
 import { useGlobalState } from "../context/ContextProvider";
 import { AuthContext } from "../context/AuthProvider";
 import axios from "axios";
-import { red } from "@mui/material/colors";
 
 const currentYear = new Date().getFullYear();
-const LOGIN_URL = `${process.env.REACT_APP_API_URL}/auth/login`;
+const LOGIN_URL = `${process.env.REACT_APP_API_URL}/v1/login`;
 
 const LoginPage = () => {
   const { setAuth, persist, setPersist } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+
   const from = location.state?.pathname || "/";
 
   // states
@@ -37,6 +37,7 @@ const LoginPage = () => {
   useEffect(() => {
     localStorage.setItem("persist", persist);
   }, [persist]);
+
   // form
   const { register, handleSubmit, isSubmitting, formState } = useForm({
     resolver: zodResolver(zodLoginSchema),
@@ -106,6 +107,7 @@ const LoginPage = () => {
   //     setSubmitMessage((message) => "Invalid Credentials");
   //   }
   // };
+
   return (
     <Stack
       height={{ xs: "90vh", md: "100vh" }}

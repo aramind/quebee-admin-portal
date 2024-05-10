@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { grey, purple, teal } from "@mui/material/colors";
+import { grey, purple, red, teal } from "@mui/material/colors";
 
 // COLORS
 const COLORS = {
@@ -9,6 +9,7 @@ const COLORS = {
     light: "#85D5B4",
     semi: teal["400"],
   },
+
   secondary: {
     main: purple["600"],
     dark: purple["800"],
