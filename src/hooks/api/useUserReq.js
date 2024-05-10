@@ -2,7 +2,7 @@ import constants from "../../components/configs/constants";
 import useRequest from "./useRequest";
 
 const USER_URL = constants?.API_URL?.USER;
-console.log(USER_URL);
+// User in fe is Employee in be
 
 const useUserReq = () => {
   const request = useRequest();
@@ -29,9 +29,9 @@ const useUserReq = () => {
       });
     },
 
-    edit: (data) => {
+    edit: ({ data, id }) => {
       request({
-        url: `${USER_URL}/${data?.employeeId}`,
+        url: `${USER_URL}/${id}`,
         method: "PATCH",
         data,
       });

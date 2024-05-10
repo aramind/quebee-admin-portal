@@ -15,6 +15,10 @@ import useStyles from "../../hooks/useStyles";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import FormInputLabel from "../../components/form/FormInputLabel";
 
+const setId = (user, index) => {
+  return user?._id || index + 1;
+};
+
 const columns = [
   { field: "employeeId", headerName: "employee ID" },
   { field: "lastName", headerName: "last name" },
@@ -60,9 +64,11 @@ const ManageUserPage = () => {
 
   useEffect(() => {
     if (fetchedUsers) {
+      const filtered = fetchedUsers.filter((user) => user.role !== "super");
+
       setRows(
-        fetchedUsers.map((user, index) => ({
-          id: index + 1,
+        filtered.map((user, index) => ({
+          id: setId(user, index),
           employeeId: user.employeeId,
           email: user.email,
           username: user.username,

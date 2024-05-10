@@ -35,7 +35,7 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
   const styles = useStyles();
   const { edit } = useUserReq();
   // hooks
-
+  // console.log(row);
   const { mutate: updateUser } = useApiSend(
     edit,
     () => {
@@ -61,7 +61,7 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
   };
 
   const onSubmit = async (data) => {
-    updateUser(data);
+    updateUser({ data: data, id: row?.id });
   };
 
   const onError = (err) => {

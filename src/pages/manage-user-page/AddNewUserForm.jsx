@@ -14,7 +14,7 @@ import { DevTool } from "@hookform/devtools";
 import UserInfoSection from "../../components/form/form-sections/UserInfoSection";
 
 const initialValues = {
-  role: constants.ROLES?.[1], // Initial value for role select
+  role: constants.ROLES?.[0], // Initial value for role select
   status: constants.STATUS?.[0], // Initial value for status select
   password: constants.DEFAULT_PASSWORD,
 };
