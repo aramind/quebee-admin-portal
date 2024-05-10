@@ -2,6 +2,7 @@ import constants from "../../components/configs/constants";
 import useRequest from "./useRequest";
 
 const USER_URL = constants?.API_URL?.USER;
+console.log(USER_URL);
 
 const useUserReq = () => {
   const request = useRequest();

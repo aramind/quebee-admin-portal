@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 
-const REFRESH_URL = `${process.env.REACT_APP_API_URL}/auth/refresh`;
+const REFRESH_URL = `${process.env.REACT_APP_API_URL}/v1/refresh`;
 
 const useRefreshToken = () => {
   const { setAuth } = useContext(AuthContext);
