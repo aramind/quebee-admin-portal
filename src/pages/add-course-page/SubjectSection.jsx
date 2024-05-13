@@ -6,6 +6,8 @@ import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { useFieldArray } from "react-hook-form";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
 import ControlledAutocomplete from "../../components/form-controlled/ControlledAutocomplete";
+import CancelPresentationTwoToneIcon from "@mui/icons-material/CancelPresentationTwoTone";
+import AddBoxTwoToneIcon from "@mui/icons-material/AddBoxTwoTone";
 
 const dummySubjects = [
   { code: "A001", label: "Engineering" },
@@ -40,32 +42,18 @@ const SubjectSection = ({ control }) => {
 
   return (
     <ElevatedSectionWrapper>
-      <Stack
-        direction="row"
-        flexWrap="wrap"
-        // className="outlined2"
-        justifyContent="space-between"
-      >
+      <Typography mb={2}>SUBJECT(S)</Typography>
+      <Stack direction="row" flexWrap="wrap" justifyContent="space-between">
         {subjects.map((subject, subjectIndex) => (
           <Stack
             key={subject.id}
-            className="outlined"
+            // className="outlined"
             mb={4}
             p={2}
             width={{ sx: "100%", md: "48%" }}
+            sx={{ outline: "1px solid gray", borderRadius: "10px" }}
+            spacing={1.5}
           >
-            {/* <Box flex={4}>
-              <ControlledSimpleSelect
-                label="Subject title"
-                name={`subjects[${subjectIndex}].title`}
-                control={control}
-                options={dummySubjects?.map((s) => s.name)}
-              />
-            </Box> */}
-            {/* <Button onClick={() => removeSubject(subjectIndex)}>
-              Remove Subject
-            </Button> */}
-
             <Button onClick={() => removeSubject(subjectIndex)}>
               Remove This Subject
             </Button>
@@ -76,20 +64,13 @@ const SubjectSection = ({ control }) => {
               options={dummySubjects.map((s) => s.label)}
             />
 
-            <Typography mt={1} ml={1}>
-              Topics
-            </Typography>
+            <Typography pl="1rem">Topics</Typography>
 
-            <Box ml="3rem">
+            <Stack pl="2rem" spacing={1}>
               {topics.map((topic, topicIndex) => {
                 if (topic.index === subjectIndex) {
                   return (
-                    <Stack direction="row" key={topic.id}>
-                      {/* <ControlledTextField
-                      control={control}
-                      name={`subjects[${subjectIndex}].topics[${topicIndex}].name`}
-                      //   label={`Topic ${topicIndex + 1}`}
-                    /> */}
+                    <Stack direction="row" key={topic.id} spacing={1}>
                       <ControlledAutocomplete
                         control={control}
                         name={`subjects[${subjectIndex}].topics[${topicIndex}].title`}
@@ -107,7 +88,7 @@ const SubjectSection = ({ control }) => {
               <Button onClick={() => appendTopic({ index: subjectIndex })}>
                 Add Topic
               </Button>
-            </Box>
+            </Stack>
           </Stack>
         ))}
 
