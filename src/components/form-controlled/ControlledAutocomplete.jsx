@@ -21,7 +21,12 @@ const ControlledAutocomplete = ({
           options={options}
           //   getOptionLabel={(option) => option.label}
           renderInput={(params) => (
-            <TextField {...params} size="small" label={label} />
+            <TextField
+              {...params}
+              size="small"
+              label={label}
+              variant="standard"
+            />
           )}
         />
       )}
