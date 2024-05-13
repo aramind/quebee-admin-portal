@@ -12,7 +12,6 @@ import {
 import Draggable from "react-draggable";
 import { grey } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-import SubjectInfoSection from "./SubjectInfoSection";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
 import TopicInfoSection from "./TopicInfoSection";

@@ -17,6 +17,13 @@ import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
 import SubjectInfoSection from "./SubjectInfoSection";
 import AddTopicDialog from "./AddTopicDialog";
+import useTopicReq from "../../hooks/api/useTopicReq";
+import { useLocation, useNavigate } from "react-router-dom";
+import useApiGet from "../../hooks/api/useApiGet";
+import LoadingPage from "../LoadingPage";
+import RequestErrorPage from "../RequestErrorPage";
+import useApiSend from "../../hooks/api/useApiSend";
+import useSubjReq from "../../hooks/api/useSubReq";
 
 function PaperComponent(props) {
   return (
@@ -32,6 +39,31 @@ function PaperComponent(props) {
 const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   const [openAddTopic, setOpenAddTopic] = useState(false);
   const styles = useStyles();
+  const { fetchTopics } = useTopicReq();
+  const { add } = useSubjReq();
+
+  const { mutate: addSubject } = useApiSend(
+    add,
+    (data) => console.log("Success", data),
+    (err) => console.log("Error", err),
+    ["subjects"]
+  );
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const {
+    data: fetchedTopics,
+    onLoading,
+    error,
+  } = useApiGet(
+    "topics",
+    () => fetchTopics({ params: "/trimmed?fields=code,title,acronym" }),
+    {
+      refetchOnWindowFocus: true,
+      retry: 3,
+    }
+  );
 
   const { handleSubmit, control } = useForm({
     mode: "onTouched",
@@ -43,12 +75,31 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
 
   const onSubmit = async (data) => {
     console.log(data);
+    const selectedTopics = data?.topics?.map((topic) => topic?.title);
+    console.log({ ...data, topics: selectedTopics });
+    addSubject({ data: { ...data, topics: selectedTopics } });
     alert("SUBMITTED");
   };
 
   const onError = (err) => {
     alert("Encountered an error. Try again.");
   };
+
+  if (onLoading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    console.log(error?.response?.status);
+    const status = error?.response?.status;
+    if (status === 401 || status === 403) {
+      console.log("re logging in");
+      navigate("/login", { state: { from: location }, replace: true });
+    } else {
+      return <RequestErrorPage error={error} />;
+    }
+  }
+
   return (
     <>
       <Dialog
@@ -69,6 +120,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
                 <SubjectInfoSection
                   control={control}
                   setOpenAddTopic={setOpenAddTopic}
+                  options={fetchedTopics?.map((topic) => topic.title)}
                 />
               </ElevatedSectionWrapper>
             </Box>
