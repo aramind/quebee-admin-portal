@@ -4,11 +4,7 @@ import React from "react";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import { useFieldArray } from "react-hook-form";
 import ControlledAutocomplete from "../../components/form-controlled/ControlledAutocomplete";
-import useTopicReq from "../../hooks/api/useTopicReq";
-import useApiGet from "../../hooks/api/useApiGet";
-import LoadingPage from "../LoadingPage";
-import RequestErrorPage from "../RequestErrorPage";
-import { useLocation, useNavigate } from "react-router-dom";
+import { red } from "@mui/material/colors";
 
 const SubjectInfoSection = ({ control, setOpenAddTopic, options }) => {
   const {
@@ -44,8 +40,20 @@ const SubjectInfoSection = ({ control, setOpenAddTopic, options }) => {
         >
           <Typography>Topics</Typography>
           <Stack direction="row" alignItems="center">
-            <Typography>Topic not in the list?</Typography>
-            <Button onClick={setOpenAddTopic}>Add</Button>
+            <Typography variant="body" color={red["A100"]} mx={1}>
+              Topic not in the list?
+            </Typography>
+
+            <Button
+              variant="text"
+              size="small"
+              onClick={setOpenAddTopic}
+              sx={{ textDecoration: "underline" }}
+            >
+              Create Topic
+            </Button>
+            {/* <Typography>Topic not in the list?</Typography>
+            <Button onClick={setOpenAddTopic}>Add</Button> */}
           </Stack>
         </Stack>
         <Stack spacing={1}>

@@ -1,27 +1,31 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
-import React, { Fragment } from "react";
-import ControlledSimpleSelect from "../../components/form-controlled/ControlledSimpleSelect";
-import ControlledTextField from "../../components/form-controlled/ControlledTextField";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import React from "react";
+
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { useFieldArray } from "react-hook-form";
-import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
-import ControlledAutocomplete from "../../components/form-controlled/ControlledAutocomplete";
-import CancelPresentationTwoToneIcon from "@mui/icons-material/CancelPresentationTwoTone";
-import AddBoxTwoToneIcon from "@mui/icons-material/AddBoxTwoTone";
 
-const dummySubjects = [
-  { code: "A001", label: "Engineering" },
-  { code: "A002", label: "Science and Tech" },
-  { code: "A003", label: "Humanities" },
-];
+import ControlledAutocompleteV2 from "../../components/form-controlled/ControlledAutocompleteV2";
 
-const dummyTopics = [
-  { code: "A001", label: "Calculus" },
-  { code: "A002", label: "Science" },
-  { code: "A003", label: "Algebra" },
-];
+import useSubjReq from "../../hooks/api/useSubReq";
+import useApiGet from "../../hooks/api/useApiGet";
+import LoadingPage from "../LoadingPage";
+import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 
-const SubjectSection = ({ control }) => {
+const MIN_HEIGHT = "170px";
+
+const SubjectSection = ({ control, getValues }) => {
+  const { fetchSubjects } = useSubjReq();
+  const handleUnAuthError = useErrorHandlerUnAuthReq();
+  const {
+    data: fetchedSubjects,
+    isLoading,
+    error,
+  } = useApiGet("subjects", () => fetchSubjects({ params: "" }), {
+    refetchOnWindowFocus: true,
+    retry: 3,
+  });
+
   const {
     fields: subjects,
     append: appendSubject,
@@ -31,14 +35,13 @@ const SubjectSection = ({ control }) => {
     name: "subjects",
   });
 
-  const {
-    fields: topics,
-    append: appendTopic,
-    remove: removeTopic,
-  } = useFieldArray({
-    control,
-    name: "topic",
-  });
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    handleUnAuthError(error);
+  }
 
   return (
     <ElevatedSectionWrapper>
@@ -47,54 +50,48 @@ const SubjectSection = ({ control }) => {
         {subjects.map((subject, subjectIndex) => (
           <Stack
             key={subject.id}
-            // className="outlined"
             mb={4}
             p={2}
             width={{ sx: "100%", md: "48%" }}
-            sx={{ outline: "1px solid gray", borderRadius: "10px" }}
+            sx={{
+              outline: "1px solid gray",
+              borderRadius: "10px",
+              minHeight: { MIN_HEIGHT },
+            }}
             spacing={1.5}
+            // alignItems="flex-start"
           >
-            <Button onClick={() => removeSubject(subjectIndex)}>
-              Remove This Subject
+            <Button onClick={() => removeSubject(subjectIndex)} variant="text">
+              Remove this subject
             </Button>
 
-            <ControlledAutocomplete
+            <ControlledAutocompleteV2
               control={control}
               name={`subjects[${subjectIndex}].title`}
-              options={dummySubjects.map((s) => s.label)}
+              subjects={fetchedSubjects}
             />
-
-            <Typography pl="1rem">Topics</Typography>
-
-            <Stack pl="2rem" spacing={1}>
-              {topics.map((topic, topicIndex) => {
-                if (topic.index === subjectIndex) {
-                  return (
-                    <Stack direction="row" key={topic.id} spacing={1}>
-                      <ControlledAutocomplete
-                        control={control}
-                        name={`subjects[${subjectIndex}].topics[${topicIndex}].title`}
-                        options={dummyTopics.map((s) => s.label)}
-                      />
-                      <Button onClick={() => removeTopic(topicIndex)}>
-                        Remove
-                      </Button>
-                    </Stack>
-                  );
-                }
-                return null;
-              })}
-
-              <Button onClick={() => appendTopic({ index: subjectIndex })}>
-                Add Topic
-              </Button>
-            </Stack>
           </Stack>
         ))}
 
-        <Button fullWidth onClick={() => appendSubject()}>
-          Add Subject
-        </Button>
+        <Stack
+          mb={4}
+          // p={2}
+          width={{ sx: "100%", md: "48%" }}
+          sx={{ borderRadius: "10px" }}
+          spacing={1.5}
+        >
+          <Button
+            sx={{
+              minHeight: "100%",
+            }}
+            // height="100%"
+            borderRadius="50px"
+            className="fullW"
+            onClick={() => appendSubject()}
+          >
+            Add Subject
+          </Button>
+        </Stack>
       </Stack>
     </ElevatedSectionWrapper>
   );

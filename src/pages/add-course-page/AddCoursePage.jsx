@@ -12,13 +12,14 @@ import FormActionButton from "../../components/form/FormActionButton";
 import MetaInfoSection from "./MetaInfoSection";
 import SubjectSection from "./SubjectSection";
 import AddSubjectDialog from "./AddSubjectDialog";
+import { red } from "@mui/material/colors";
 
 const AddCoursePage = () => {
   const [openAddSubject, setOpenAddSubject] = useState(false);
 
   const styles = useStyles();
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, getValues } = useForm({
     // resolver: zodResolver(courseSchema),
     mode: "onTouched",
   });
@@ -41,26 +42,30 @@ const AddCoursePage = () => {
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <MetaInfoSection control={control} />
         <br />
-        <Stack flex={2} width="100%" direction="row" justifyContent="flex-end">
-          <Typography>Not on the list?</Typography>
-          <Stack width="150px">
-            <Button
-              variant="outlined"
-              size="small"
-              onClick={() => setOpenAddSubject(true)}
-            >
-              Add a subject
-            </Button>
-            <Button variant="outlined" size="small">
-              Add a topic
-            </Button>
-          </Stack>
+
+        <SubjectSection control={control} getValues={getValues} />
+        <Stack
+          // className="outlined"
+          my={1}
+          width="100%"
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+          // spacing={1.5}
+        >
+          <Typography variant="body" color={red["A100"]} mx={1}>
+            Subject not in the list?
+          </Typography>
+
+          <Button
+            variant="text"
+            size="small"
+            onClick={() => setOpenAddSubject(true)}
+            sx={{ textDecoration: "underline" }}
+          >
+            Create a subject
+          </Button>
         </Stack>
-
-        <br />
-
-        <SubjectSection control={control} />
-
         <br />
         <ElevatedSectionWrapper>
           <ControlledTextField
