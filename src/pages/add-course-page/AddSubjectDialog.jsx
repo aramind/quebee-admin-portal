@@ -18,12 +18,13 @@ import DialogActionButton from "../../components/form/DialogActionButton";
 import SubjectInfoSection from "./SubjectInfoSection";
 import AddTopicDialog from "./AddTopicDialog";
 import useTopicReq from "../../hooks/api/useTopicReq";
-import { useLocation, useNavigate } from "react-router-dom";
+
 import useApiGet from "../../hooks/api/useApiGet";
 import LoadingPage from "../LoadingPage";
-import RequestErrorPage from "../RequestErrorPage";
+
 import useApiSend from "../../hooks/api/useApiSend";
 import useSubjReq from "../../hooks/api/useSubReq";
+import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
 
 function PaperComponent(props) {
   return (
@@ -41,6 +42,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   const styles = useStyles();
   const { fetchTopics } = useTopicReq();
   const { add } = useSubjReq();
+  const handleUnAuthError = useErrorHandlerUnAuthReq();
 
   const { mutate: addSubject } = useApiSend(
     add,
@@ -49,12 +51,9 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
     ["subjects"]
   );
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
   const {
     data: fetchedTopics,
-    onLoading,
+    isLoading,
     error,
   } = useApiGet(
     "topics",
@@ -96,19 +95,12 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
     alert("Encountered an error. Try again.");
   };
 
-  if (onLoading) {
+  if (isLoading) {
     return <LoadingPage />;
   }
 
   if (error) {
-    console.log(error?.response?.status);
-    const status = error?.response?.status;
-    if (status === 401 || status === 403) {
-      console.log("re logging in");
-      navigate("/login", { state: { from: location }, replace: true });
-    } else {
-      return <RequestErrorPage error={error} />;
-    }
+    handleUnAuthError(error);
   }
 
   return (
