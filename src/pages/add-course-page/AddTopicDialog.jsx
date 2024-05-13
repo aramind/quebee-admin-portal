@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import {
@@ -9,14 +9,13 @@ import {
   DialogTitle,
   Paper,
 } from "@mui/material";
-import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-
 import Draggable from "react-draggable";
 import { grey } from "@mui/material/colors";
+import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
+import SubjectInfoSection from "./SubjectInfoSection";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
-import SubjectInfoSection from "./SubjectInfoSection";
-import AddTopicDialog from "./AddTopicDialog";
+import TopicInfoSection from "./TopicInfoSection";
 
 function PaperComponent(props) {
   return (
@@ -29,8 +28,7 @@ function PaperComponent(props) {
   );
 }
 
-const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
-  const [openAddTopic, setOpenAddTopic] = useState(false);
+const AddTopicDialog = ({ open, setOpen, title = "", data }) => {
   const styles = useStyles();
 
   const { handleSubmit, control } = useForm({
@@ -49,6 +47,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   const onError = (err) => {
     alert("Encountered an error. Try again.");
   };
+
   return (
     <>
       <Dialog
@@ -66,10 +65,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
           <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
             <Box>
               <ElevatedSectionWrapper>
-                <SubjectInfoSection
-                  control={control}
-                  setOpenAddTopic={setOpenAddTopic}
-                />
+                <TopicInfoSection control={control} />
               </ElevatedSectionWrapper>
             </Box>
           </form>
@@ -90,13 +86,8 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
           </DialogActionsContainer>
         </DialogActions>
       </Dialog>
-      <AddTopicDialog
-        open={openAddTopic}
-        setOpen={setOpenAddTopic}
-        title="Add New Topic"
-      />
     </>
   );
 };
 
-export default AddSubjectDialog;
+export default AddTopicDialog;

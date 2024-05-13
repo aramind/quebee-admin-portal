@@ -11,7 +11,7 @@ const dummyTopics = [
   { code: "A003", label: "Algebra" },
 ];
 
-const SubjectInfoSection = ({ control }) => {
+const SubjectInfoSection = ({ control, setOpenAddTopic }) => {
   const {
     fields: topics,
     append: appendTopic,
@@ -46,7 +46,7 @@ const SubjectInfoSection = ({ control }) => {
           <Typography>Topics</Typography>
           <Stack direction="row" alignItems="center">
             <Typography>Topic not in the list?</Typography>
-            <Button>Add</Button>
+            <Button onClick={setOpenAddTopic}>Add</Button>
           </Stack>
         </Stack>
         <Stack spacing={1}>
