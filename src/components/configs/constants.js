@@ -108,7 +108,7 @@ const constants = {
     ROOT: `${process.env.REACT_APP_API_URL}/v1`,
     QUESTION: `${process.env.REACT_APP_API_URL}/questions`,
     USER: `${process.env.REACT_APP_API_URL}/v1/employees`,
-
+    TOPIC: `${process.env.REACT_APP_API_URL}/v1/courses/topics`,
     EMPLOYEE: `${process.env.REACT_APP_API_URL}/v1/employees`,
     COURSE: `${process.env.REACT_APP_API_URL}/courses`,
   },

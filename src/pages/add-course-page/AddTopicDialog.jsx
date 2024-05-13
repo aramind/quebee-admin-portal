@@ -16,6 +16,8 @@ import SubjectInfoSection from "./SubjectInfoSection";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
 import TopicInfoSection from "./TopicInfoSection";
+import useTopicReq from "../../hooks/api/useTopicReq";
+import useApiSend from "../../hooks/api/useApiSend";
 
 function PaperComponent(props) {
   return (
@@ -31,6 +33,15 @@ function PaperComponent(props) {
 const AddTopicDialog = ({ open, setOpen, title = "", data }) => {
   const styles = useStyles();
 
+  const { add } = useTopicReq();
+
+  const { mutate: addTopic } = useApiSend(
+    add,
+    (data) => console.log(data?.message),
+    (err) => console.log(err),
+    ["topics"]
+  );
+
   const { handleSubmit, control } = useForm({
     mode: "onTouched",
   });
@@ -42,6 +53,7 @@ const AddTopicDialog = ({ open, setOpen, title = "", data }) => {
   const onSubmit = async (data) => {
     console.log(data);
     alert("SUBMITTED");
+    addTopic({ data: data });
   };
 
   const onError = (err) => {
