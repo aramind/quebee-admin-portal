@@ -6,14 +6,15 @@ import RenderAction from "../../components/renders/RenderAction";
 import RenderPassword from "../../components/renders/RenderPassword";
 import AddNewUserForm from "./AddNewUserForm";
 import useRefreshToken from "../../hooks/useRefreshToken";
-import { useLocation, useNavigate } from "react-router-dom";
+
 import useApiGet from "../../hooks/api/useApiGet";
 import useUserReq from "../../hooks/api/useUserReq";
-import LoadingPage from "../LoadingPage";
-import RequestErrorPage from "../RequestErrorPage";
+
 import useStyles from "../../hooks/useStyles";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import FormInputLabel from "../../components/form/FormInputLabel";
+import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
+import useDisplayLoadingPage from "../../hooks/api/useDisplayLoadingPage";
 
 const setId = (user, index) => {
   return user?._id || index + 1;
@@ -48,9 +49,9 @@ const ManageUserPage = () => {
   const [rows, setRows] = useState([]);
   const styles = useStyles();
   const refresh = useRefreshToken();
-  const navigate = useNavigate();
-  const location = useLocation();
   const { get } = useUserReq();
+  const { handleError } = useErrorHandlerUnAuthReq();
+  const { displayLoadingPage } = useDisplayLoadingPage();
 
   const {
     data: fetchedUsers,
@@ -105,18 +106,11 @@ const ManageUserPage = () => {
   });
 
   if (isLoading) {
-    return <LoadingPage />;
+    displayLoadingPage();
   }
 
   if (error) {
-    console.log(error?.response?.status);
-    const status = error?.response?.status;
-    if (status === 401 || status === 403) {
-      console.log("re logging in");
-      navigate("/login", { state: { from: location }, replace: true });
-    } else {
-      return <RequestErrorPage error={error} />;
-    }
+    handleError(error);
   }
 
   return (
