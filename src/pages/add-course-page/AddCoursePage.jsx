@@ -1,13 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import useStyles from "../../hooks/useStyles";
-import { zodResolver } from "@hookform/resolvers/zod";
-import courseSchema from "../../schemas/course";
-import { useFieldArray, useForm } from "react-hook-form";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+
+import { useForm } from "react-hook-form";
+import { Button, Container, Stack, Typography } from "@mui/material";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
-import ControlledSimpleSelect from "../../components/form-controlled/ControlledSimpleSelect";
-import constants from "../../components/configs/constants";
+
 import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
@@ -15,15 +13,8 @@ import MetaInfoSection from "./MetaInfoSection";
 import SubjectSection from "./SubjectSection";
 import AddSubjectDialog from "./AddSubjectDialog";
 
-const dummySubjects = [
-  { code: "A001", name: "Engineering" },
-  { code: "A002", name: "Science and Tech" },
-  { code: "A003", name: "Humanities" },
-];
-
 const AddCoursePage = () => {
   const [openAddSubject, setOpenAddSubject] = useState(false);
-  const [openAddTopic, setOpenAddTopic] = useState(false);
 
   const styles = useStyles();
 
