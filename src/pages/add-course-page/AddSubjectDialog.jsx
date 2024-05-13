@@ -74,10 +74,21 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
+
     const selectedTopics = data?.topics?.map((topic) => topic?.title);
     console.log({ ...data, topics: selectedTopics });
-    addSubject({ data: { ...data, topics: selectedTopics } });
+    // const selectedTopicIds = data?.topics
+    //   ?.filter((topic) => fetchedTopics.includes(topic))
+    //   .map((topic) => topic._id);
+
+    // const selectedTopicIds = fetchedTopics
+    //   ?.filter((topic) => selectedTopics.includes(topic.title))
+    //   .map((st) => st._id);
+    // console.log(selectedTopicIds);
+    const finalData = { ...data, topics: selectedTopics };
+    console.log(finalData);
+    addSubject({ data: finalData });
     alert("SUBMITTED");
   };
 
