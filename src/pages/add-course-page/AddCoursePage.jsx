@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import { zodResolver } from "@hookform/resolvers/zod";
 import courseSchema from "../../schemas/course";
@@ -13,6 +13,7 @@ import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import MetaInfoSection from "./MetaInfoSection";
 import SubjectSection from "./SubjectSection";
+import AddSubjectDialog from "./AddSubjectDialog";
 
 const dummySubjects = [
   { code: "A001", name: "Engineering" },
@@ -21,6 +22,9 @@ const dummySubjects = [
 ];
 
 const AddCoursePage = () => {
+  const [openAddSubject, setOpenAddSubject] = useState(false);
+  const [openAddTopic, setOpenAddTopic] = useState(false);
+
   const styles = useStyles();
 
   const { control, handleSubmit } = useForm({
@@ -49,7 +53,11 @@ const AddCoursePage = () => {
         <Stack flex={2} width="100%" direction="row" justifyContent="flex-end">
           <Typography>Not on the list?</Typography>
           <Stack width="150px">
-            <Button variant="outlined" size="small">
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => setOpenAddSubject(true)}
+            >
               Add a subject
             </Button>
             <Button variant="outlined" size="small">
@@ -85,6 +93,11 @@ const AddCoursePage = () => {
           <FormActionButton type="submit" label="save" variant="contained" />
         </FormActionsContainer>
         <DevTool control={control} />
+        <AddSubjectDialog
+          open={openAddSubject}
+          setOpen={setOpenAddSubject}
+          title="Add New Subject"
+        />
       </form>
     </Container>
   );
