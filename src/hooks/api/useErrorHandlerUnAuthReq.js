@@ -6,7 +6,7 @@ const useErrorHandlerUnAuthReq = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleError = (err) => {
+  return (err) => {
     const status = err?.response?.status;
     console.log(status);
     if (status === 401 || status === 403) {
@@ -17,8 +17,6 @@ const useErrorHandlerUnAuthReq = () => {
       return <RequestErrorPage error={err} />;
     }
   };
-
-  return handleError;
 };
 
 export default useErrorHandlerUnAuthReq;

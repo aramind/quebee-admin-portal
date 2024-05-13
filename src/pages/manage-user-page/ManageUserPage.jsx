@@ -14,7 +14,7 @@ import useStyles from "../../hooks/useStyles";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import FormInputLabel from "../../components/form/FormInputLabel";
 import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
-import useDisplayLoadingPage from "../../hooks/api/useDisplayLoadingPage";
+import LoadingPage from "../LoadingPage";
 
 const setId = (user, index) => {
   return user?._id || index + 1;
@@ -50,8 +50,7 @@ const ManageUserPage = () => {
   const styles = useStyles();
   const refresh = useRefreshToken();
   const { get } = useUserReq();
-  const { handleError } = useErrorHandlerUnAuthReq();
-  const { displayLoadingPage } = useDisplayLoadingPage();
+  const handleUnAuthError = useErrorHandlerUnAuthReq();
 
   const {
     data: fetchedUsers,
@@ -106,11 +105,11 @@ const ManageUserPage = () => {
   });
 
   if (isLoading) {
-    displayLoadingPage();
+    return <LoadingPage />;
   }
 
   if (error) {
-    handleError(error);
+    handleUnAuthError(error);
   }
 
   return (
