@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 import LabelWrapper from "../../wrappers/LabelWrapper";
 
 const ControlledTextField = ({
-  label,
+  label = "",
   name,
   control,
   customDefaultValue,

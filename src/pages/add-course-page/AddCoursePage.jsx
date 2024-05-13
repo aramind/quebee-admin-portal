@@ -3,7 +3,7 @@ import useStyles from "../../hooks/useStyles";
 import { zodResolver } from "@hookform/resolvers/zod";
 import courseSchema from "../../schemas/course";
 import { useFieldArray, useForm } from "react-hook-form";
-import { Box, Button, Container, Stack } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import ControlledSimpleSelect from "../../components/form-controlled/ControlledSimpleSelect";
@@ -46,58 +46,22 @@ const AddCoursePage = () => {
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <MetaInfoSection control={control} />
         <br />
-        <SubjectSection control={control} />
-        {/* <ElevatedSectionWrapper>
-          {subjects.map((subject, subjectIndex) => (
-            <Fragment key={subject.id}>
-              <Stack direction="row">
-                <Box flex="1">
-                  <ControlledSimpleSelect
-                    label="Subject Code"
-                    name={`subjects[${subjectIndex}].code`}
-                    control={control}
-                    options={dummySubjects?.map((s) => s.code)}
-                  />
-                </Box>
-                <Box flex={4}>
-                  <ControlledSimpleSelect
-                    label="Subject title"
-                    name={`subjects[${subjectIndex}].title`}
-                    control={control}
-                    options={dummySubjects?.map((s) => s.name)}
-                  />
-                </Box>
-                <Button onClick={() => removeSubject(subjectIndex)}>
-                  Remove Subject
-                </Button>
-              </Stack>
+        <Stack flex={2} width="100%" direction="row" justifyContent="flex-end">
+          <Typography>Not on the list?</Typography>
+          <Stack width="150px">
+            <Button variant="outlined" size="small">
+              Add a subject
+            </Button>
+            <Button variant="outlined" size="small">
+              Add a topic
+            </Button>
+          </Stack>
+        </Stack>
 
-              <Box ml="4rem">
-                {topics.map((topic, topicIndex) => {
-                  if (topic.index === subjectIndex) {
-                    return (
-                      <Stack direction="row" key={topic.id}>
-                        <ControlledTextField
-                          control={control}
-                          name={`subjects[${subjectIndex}].topics[${topicIndex}].name`}
-                          label={`Topic ${topicIndex + 1}`}
-                        />
-                        <Button onClick={() => removeTopic(topicIndex)}>
-                          Remove Topic
-                        </Button>
-                      </Stack>
-                    );
-                  }
-                  return null;
-                })}
-                <Button onClick={() => appendTopic({ index: subjectIndex })}>
-                  Add Topic
-                </Button>
-              </Box>
-            </Fragment>
-          ))}
-          <Button onClick={() => appendSubject()}>Add Subject</Button>
-        </ElevatedSectionWrapper> */}
+        <br />
+
+        <SubjectSection control={control} />
+
         <br />
         <ElevatedSectionWrapper>
           <ControlledTextField

@@ -5,7 +5,7 @@ import ControlledChipMultiAutoComp from "../../components/form-controlled/Contro
 import constants from "../../components/configs/constants";
 
 const TagSection = ({ control, getValues }) => {
-  console.log(getValues("tags"));
+  // console.log(getValues("tags"));
   return (
     <Stack spacing={1.5} flex={1}>
       <ElevatedSectionWrapper fullH={true}>
@@ -16,7 +16,7 @@ const TagSection = ({ control, getValues }) => {
           label="select tag(s)"
           options={constants.TAGS}
           free
-          defaultValue={getValues("tags")}
+          // defaultValue={getValues("tags")}
         />
       </ElevatedSectionWrapper>
     </Stack>

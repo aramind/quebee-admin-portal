@@ -53,7 +53,7 @@ const CSTSection = ({
           // chipColor={teal["A100"]}
           textTransform="uppercase"
           // defaultValues={defaultValues?.courses}
-          defaultValue={getValues("courses")}
+          // defaultValue={getValues("courses")}
         />
 
         {/* <ControlledChipMultiSelect
@@ -72,7 +72,7 @@ const CSTSection = ({
           options={getSubjects(completeCoursesList) || []}
           // chipColor={amber["A100"]}
           textTransform="uppercase"
-          defaultValue={getValues("subjects")}
+          // defaultValue={getValues("subjects")}
         />
 
         {/* <ControlledChipMultiSelect
@@ -91,7 +91,7 @@ const CSTSection = ({
           options={getTopics(completeCoursesList) || []}
           // chipColor={cyan["A100"]}
           textTransform="capitalize"
-          defaultValue={getValues("topics")}
+          // defaultValue={getValues("topics")}
         />
       </Stack>
     </ElevatedSectionWrapper>

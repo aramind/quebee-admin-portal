@@ -6,7 +6,7 @@ const FormInputLabel = ({ label, styling }) => {
   const styles = useStyles();
   return (
     <InputLabel htmlFor={label} sx={{ ...styles.form.inputLabel, ...styling }}>
-      {label.toUpperCase()}
+      {label && label.toUpperCase()}
     </InputLabel>
   );
 };
