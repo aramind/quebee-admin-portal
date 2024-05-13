@@ -4,20 +4,51 @@ import React from "react";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import { useFieldArray } from "react-hook-form";
 import ControlledAutocomplete from "../../components/form-controlled/ControlledAutocomplete";
-
-const dummyTopics = [
-  { code: "A001", label: "Calculus" },
-  { code: "A002", label: "Science" },
-  { code: "A003", label: "Algebra" },
-];
+import useTopicReq from "../../hooks/api/useTopicReq";
+import useApiGet from "../../hooks/api/useApiGet";
+import LoadingPage from "../LoadingPage";
+import RequestErrorPage from "../RequestErrorPage";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SubjectInfoSection = ({ control, setOpenAddTopic }) => {
+  const { fetchTopics } = useTopicReq();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const {
+    data: fetchedTopics,
+    onLoading,
+    error,
+  } = useApiGet(
+    "topics",
+    () => fetchTopics({ params: "/trimmed?fields=code,title,acronym" }),
+    {
+      refetchOnWindowFocus: true,
+      retry: 3,
+    }
+  );
+
   const {
     fields: topics,
     append: appendTopic,
     remove: removeTopic,
   } = useFieldArray({ control, name: "topic" });
 
+  if (onLoading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    console.log(error?.response?.status);
+    const status = error?.response?.status;
+    if (status === 401 || status === 403) {
+      console.log("re logging in");
+      navigate("/login", { state: { from: location }, replace: true });
+    } else {
+      return <RequestErrorPage error={error} />;
+    }
+  }
   return (
     <Stack direction="row" spacing={4}>
       <Stack flex={2} spacing={1} justifyContent="flex-start">
@@ -55,7 +86,7 @@ const SubjectInfoSection = ({ control, setOpenAddTopic }) => {
               <ControlledAutocomplete
                 control={control}
                 name={`topics[${topicIndex}.title]`}
-                options={dummyTopics.map((t) => t.label)}
+                options={fetchedTopics.map((topic) => topic.title)}
               />
               <Button onClick={() => removeTopic(topicIndex)}>Remove</Button>
             </Stack>

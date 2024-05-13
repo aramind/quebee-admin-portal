@@ -5,7 +5,7 @@ const useRequest = () => {
 
   const request = async (options) => {
     const onSuccess = (res) => {
-      // console.log(res?.data?.data);
+      console.log(res?.data?.data);
       return res?.data?.data;
       // return res;
     };
@@ -13,7 +13,7 @@ const useRequest = () => {
     const onError = (err) => {
       // return Promise.reject(err.response?.data);
       // alert(err.response?.data?.message);
-      // console.log(err);
+      console.log(err);
     };
 
     return client(options).then(onSuccess).catch(onError);

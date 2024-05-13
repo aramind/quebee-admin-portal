@@ -7,7 +7,7 @@ const useTopicReq = () => {
   const request = useRequest();
 
   const topicReq = {
-    get: ({ params }) =>
+    fetchTopics: ({ params }) =>
       request({
         url: `${url}${params}`,
         method: "GET",
