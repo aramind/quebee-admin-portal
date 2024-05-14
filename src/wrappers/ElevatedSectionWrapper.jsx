@@ -11,11 +11,13 @@ const ElevatedSectionWrapper = ({
   bgcolor,
   px = "16px",
   py = "16px",
+  flex = "1",
 }) => {
   return (
     <Paper
       elevation={1}
       sx={{
+        flex: flex,
         px: px,
         py: py,
         width: fullW ? "100%" : width,

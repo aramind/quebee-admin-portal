@@ -1,4 +1,4 @@
-import { Autocomplete, Container, TextField } from "@mui/material";
+import { Autocomplete, Container, Stack, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
@@ -11,6 +11,7 @@ import SubjectInfoSection from "./SubjectInfoSection";
 import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
+import AvailabilityControlSection from "./AvailabilityControlSection";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -28,6 +29,7 @@ const ManageSubjectsTab = () => {
     retry: 3,
   });
 
+  console.log(subjectsList);
   const { handleSubmit, control, reset } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,
@@ -78,17 +80,20 @@ const ManageSubjectsTab = () => {
           />
         </ElevatedSectionWrapper>
         <br />
-        <ElevatedSectionWrapper
-          px={{ md: "20px", lg: "200px" }}
-          className="outlined"
-        >
-          <SubjectInfoSection
-            control={control}
-            topicsList={initialValues?.topics?.map((topic) => topic.title)}
-          />
-        </ElevatedSectionWrapper>
+        <Stack direction="row" spacing={1.5}>
+          <ElevatedSectionWrapper flex={6} px={{ xs: "20px", md: "50px" }}>
+            <SubjectInfoSection
+              control={control}
+              topicsList={initialValues?.topics?.map((topic) => topic.title)}
+            />
+          </ElevatedSectionWrapper>
+          <ElevatedSectionWrapper flex={1} px={{ xs: "10px", md: "20px" }}>
+            <AvailabilityControlSection control={control} />
+          </ElevatedSectionWrapper>
+        </Stack>
         <br />
         <DevTool control={control} />
+
         <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
           <FormActionButton
             label="undo changes"
