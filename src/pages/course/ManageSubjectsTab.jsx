@@ -1,5 +1,5 @@
 import { Autocomplete, Container, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
@@ -33,6 +33,21 @@ const ManageSubjectsTab = () => {
     mode: "onTouched",
     defaultValues: initialValues,
   });
+
+  useEffect(() => {
+    setInitialValues({
+      code: selectedSubject?.code,
+      acronym: selectedSubject?.acronym,
+      title: selectedSubject?.title,
+      description: selectedSubject?.description,
+      topics: selectedSubject?.subjects,
+    });
+  }, [selectedSubject]);
+
+  useEffect(() => {
+    // Update form values when initialValues change
+    reset(initialValues);
+  }, [initialValues, reset]);
 
   const onSubmit = (rawData) => {
     alert("CLICKED SUBMIT", rawData);
