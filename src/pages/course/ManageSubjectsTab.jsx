@@ -42,6 +42,8 @@ const ManageSubjectsTab = () => {
       title: selectedSubject?.title,
       description: selectedSubject?.description,
       topics: selectedSubject?.topics,
+      status: selectedSubject?.status,
+      isHidden: selectedSubject?.isHidden ? "yes" : "no",
     });
   }, [selectedSubject]);
 
