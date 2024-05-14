@@ -1,12 +1,15 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import { useFieldArray } from "react-hook-form";
 import ControlledAutocomplete from "../../components/form-controlled/ControlledAutocomplete";
 import { red } from "@mui/material/colors";
+import AddTopicDialog from "../add-course-page/AddTopicDialog";
 
-const SubjectInfoSection = ({ control, setOpenAddTopic, options }) => {
+const SubjectInfoSection = ({ control, options }) => {
+  const [openAddTopic, setOpenAddTopic] = useState(false);
+
   const {
     fields: topics,
     append: appendTopic,
@@ -68,6 +71,11 @@ const SubjectInfoSection = ({ control, setOpenAddTopic, options }) => {
           <Button onClick={() => appendTopic({ name: "" })}>Add Topic</Button>
         </Stack>
       </Stack>
+      <AddTopicDialog
+        open={openAddTopic}
+        setOpen={setOpenAddTopic}
+        title="Add New Topic"
+      />
     </Stack>
   );
 };

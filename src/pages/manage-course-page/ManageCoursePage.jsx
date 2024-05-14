@@ -83,20 +83,21 @@ const ManageCoursePage = () => {
         <br />
         <CourseDetailsSection control={control} />
         <br />
+
+        <DevTool control={control} />
+        <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+          <FormActionButton
+            label="undo changes"
+            onClickHandler={handleUndo}
+            variant="outlined"
+          />
+          <FormActionButton
+            type="submit"
+            label="save changes"
+            variant="contained"
+          />
+        </FormActionsContainer>
       </form>
-      <DevTool control={control} />
-      <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-        <FormActionButton
-          label="undo changes"
-          onClickHandler={handleUndo}
-          variant="outlined"
-        />
-        <FormActionButton
-          type="submit"
-          label="save changes"
-          variant="contained"
-        />
-      </FormActionsContainer>
     </Container>
   );
 };

@@ -38,7 +38,6 @@ function PaperComponent(props) {
 }
 
 const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
-  const [openAddTopic, setOpenAddTopic] = useState(false);
   const styles = useStyles();
   const { fetchTopics } = useTopicReq();
   const { addSubject } = useSubjReq();
@@ -112,7 +111,6 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
               <ElevatedSectionWrapper>
                 <SubjectInfoSection
                   control={control}
-                  setOpenAddTopic={setOpenAddTopic}
                   options={fetchedTopics?.map((topic) => topic.title)}
                 />
               </ElevatedSectionWrapper>
@@ -135,11 +133,6 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
           </DialogActionsContainer>
         </DialogActions>
       </Dialog>
-      <AddTopicDialog
-        open={openAddTopic}
-        setOpen={setOpenAddTopic}
-        title="Add New Topic"
-      />
     </>
   );
 };

@@ -7,6 +7,10 @@ import { grey } from "@mui/material/colors";
 import useSubjReq from "../../hooks/api/useSubReq";
 import useApiGet from "../../hooks/api/useApiGet";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
+import SubjectInfoSection from "./SubjectInfoSection";
+import { DevTool } from "@hookform/devtools";
+import FormActionsContainer from "../../containers/FormActionsContainer";
+import FormActionButton from "../../components/form/FormActionButton";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -50,7 +54,12 @@ const ManageSubjectsTab = () => {
       disableGutters
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
+        <ElevatedSectionWrapper
+          bgcolor={grey[200]}
+          px="30%"
+          py="8px"
+          className="outlined"
+        >
           <AutocompleteSelector
             value={selectedSubject}
             setValue={setSelectedSubject}
@@ -58,6 +67,24 @@ const ManageSubjectsTab = () => {
             label="subjects"
           />
         </ElevatedSectionWrapper>
+        <br />
+        <ElevatedSectionWrapper px={{ md: "20px", lg: "200px" }}>
+          <SubjectInfoSection control={control} />
+        </ElevatedSectionWrapper>
+        <br />
+        <DevTool control={control} />
+        <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+          <FormActionButton
+            label="undo changes"
+            onClickHandler={handleUndo}
+            variant="outlined"
+          />
+          <FormActionButton
+            type="submit"
+            label="save changes"
+            variant="contained"
+          />
+        </FormActionsContainer>
       </form>
     </Container>
   );
