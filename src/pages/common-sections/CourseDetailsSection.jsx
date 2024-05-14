@@ -24,6 +24,7 @@ const CourseDetailsSection = ({ control }) => {
     retry: 3,
   });
 
+  console.log(subjectsList);
   if (isLoading) {
     return <LoadingPage />;
   }

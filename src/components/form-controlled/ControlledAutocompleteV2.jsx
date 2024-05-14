@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller } from "react-hook-form";
 import AutoStoriesOutlinedIcon from "@mui/icons-material/AutoStoriesOutlined";
 const ControlledAutocompleteV2 = ({
@@ -16,12 +16,14 @@ const ControlledAutocompleteV2 = ({
   label = "",
   subjects,
 }) => {
+  const [selectedTitle, setSelectedTitle] = useState("  ");
   const [topics, setTopics] = useState([]);
-  //   const [selectedSubject, setSelectedSubject] = useState("");
-  console.log("SUBJECTS", subjects);
 
-  //   console.log(selectedSubject);
-  console.log("TOPICS", topics);
+  useEffect(() => {
+    const selectedSubject = subjects.find((s) => s.title === selectedTitle);
+    setTopics(selectedSubject?.topics || []);
+  }, [selectedTitle, subjects]);
+
   return (
     <>
       <Controller
@@ -31,23 +33,26 @@ const ControlledAutocompleteV2 = ({
           <Autocomplete
             fullWidth
             {...field}
-            value={field.value}
-            // onChange={(e, selected) => field.onChange(selected)}
-            onChange={(e, selected) => {
-              // Find the selected subject from the subjects array
-              const selectedSubject = subjects.find(
-                (s) => s.title === selected
-              );
-              if (selectedSubject) {
-                // Update topics state with the topics of the selected subject
-                setTopics(selectedSubject.topics || []);
-              } else {
-                setTopics([]);
-              }
-              field.onChange(selected); // Propagate selected value to the form
+            inputValue={selectedTitle}
+            onInputChange={(e, newTitle) => {
+              setSelectedTitle(newTitle);
             }}
-            options={subjects.map((s) => s.title)}
-            //   getOptionLabel={(option) => option.label}
+            value={
+              subjects.find((subject) => subject.title === field.value) || null
+            }
+            onChange={(e, selected) => {
+              // const selectedSubject = subjects.find(
+              //   (s) => s.title === selected?.title
+              // );
+              // if (selectedSubject) {
+              //   setTopics(selectedSubject.topics || []);
+              // } else {
+              //   setTopics([]);
+              // }
+              field.onChange(selected?.title || "");
+            }}
+            options={subjects}
+            getOptionLabel={(option) => option.title || ""}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -64,9 +69,9 @@ const ControlledAutocompleteV2 = ({
 
       <List sx={{ padding: 0 }}>
         {topics &&
-          topics.map((topic) => {
+          topics.map((topic, i) => {
             return (
-              <ListItem sx={{ padding: 0 }}>
+              <ListItem key={i} sx={{ padding: 0 }}>
                 <ListItemIcon>
                   <AutoStoriesOutlinedIcon />
                 </ListItemIcon>
