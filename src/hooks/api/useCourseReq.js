@@ -13,6 +13,12 @@ const useCourseReq = () => {
         method: "GET",
       }),
 
+    getById: ({ id, params }) =>
+      request({
+        url: `${url}/${id}${params}`,
+        method: "GET",
+      }),
+
     addCourse: ({ data }) =>
       request({
         url,
