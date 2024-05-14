@@ -28,7 +28,6 @@ const ManageCoursePage = () => {
     retry: 3,
   });
 
-  console.log(coursesList);
   const { control, handleSubmit, reset } = useForm({
     // resolver: zodResolver(courseSchema),
     mode: "onTouched",

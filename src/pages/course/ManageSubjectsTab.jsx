@@ -27,8 +27,6 @@ const ManageSubjectsTab = () => {
     refetchOnWindowFocus: true,
     retry: 3,
   });
-  console.log(selectedSubject);
-  console.log(subjectsList);
 
   const { handleSubmit, control, reset } = useForm({
     mode: "onTouched",
@@ -62,7 +60,6 @@ const ManageSubjectsTab = () => {
     console.log("CLICKED UNDO");
   };
 
-  console.log("IV", initialValues);
   return (
     <Container
       component="main"

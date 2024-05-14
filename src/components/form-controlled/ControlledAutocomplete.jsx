@@ -8,7 +8,6 @@ const ControlledAutocomplete = ({
   name = "",
   label = "",
 }) => {
-  console.log("CAOPTIONS", options);
   return (
     <Controller
       control={control}

@@ -16,7 +16,6 @@ const SubjectInfoSection = ({ control, topicsList }) => {
     remove: removeTopic,
   } = useFieldArray({ control, name: "topics" });
 
-  console.log(topicsList);
   return (
     <Stack direction="row" spacing={4}>
       <Stack flex={2} spacing={1} justifyContent="flex-start">
