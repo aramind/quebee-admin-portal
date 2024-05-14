@@ -80,44 +80,41 @@ const ManageCoursePage = () => {
       disableGutters
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <ElevatedSectionWrapper bgcolor={grey[200]}>
-          <Stack direction="row" spacing={1.5}>
-            <Autocomplete
-              fullWidth
-              value={value}
-              onChange={(e, newValue) => setValue(newValue)}
-              options={coursesList || []}
-              getOptionLabel={(option) => option.title}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  size="small"
-                  variant="outlined"
-                  placeholder="Type here to select course..."
-                  sx={{ bgcolor: grey[50] }}
-                />
-              )}
-            />
-
-            <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-              <FormActionButton
-                label="undo changes"
-                onClickHandler={handleUndo}
+        <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
+          <Autocomplete
+            // className="outlined"
+            value={value}
+            onChange={(e, newValue) => setValue(newValue)}
+            options={coursesList || []}
+            getOptionLabel={(option) => option.title}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                size="small"
                 variant="outlined"
+                placeholder="Type here to select course..."
+                sx={{ bgcolor: grey[50] }}
               />
-              <FormActionButton
-                type="submit"
-                label="save changes"
-                variant="contained"
-              />
-            </FormActionsContainer>
-          </Stack>
+            )}
+          />
         </ElevatedSectionWrapper>
         <br />
         <CourseDetailsSection control={control} />
         <br />
       </form>
       <DevTool control={control} />
+      <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+        <FormActionButton
+          label="undo changes"
+          onClickHandler={handleUndo}
+          variant="outlined"
+        />
+        <FormActionButton
+          type="submit"
+          label="save changes"
+          variant="contained"
+        />
+      </FormActionsContainer>
     </Container>
   );
 };
