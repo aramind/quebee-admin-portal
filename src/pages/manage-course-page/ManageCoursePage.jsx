@@ -76,7 +76,7 @@ const ManageCoursePage = () => {
     <Container
       component="main"
       maxWidth="xl"
-      sx={styles.mainContainer}
+      sx={styles.tabContainer}
       disableGutters
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>

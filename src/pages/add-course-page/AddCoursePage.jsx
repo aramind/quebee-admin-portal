@@ -2,7 +2,7 @@ import React from "react";
 import useStyles from "../../hooks/useStyles";
 
 import { useForm } from "react-hook-form";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
@@ -36,7 +36,7 @@ const AddCoursePage = () => {
     <Container
       component="main"
       maxWidth="xl"
-      sx={styles.mainContainer}
+      sx={styles.tabContainer}
       disableGutters
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>

@@ -48,6 +48,12 @@ const useStyles = () => {
       py: { xs: 2, md: 3 },
       px: { xs: 1, md: 6 },
     },
+    tabContainer: {
+      minHeight: "calc(100vh - 110px)",
+      backgroundColor: grey["100"],
+      py: { xs: 1, md: 2 },
+      px: { xs: 1, md: 3 },
+    },
   };
   return styles;
 };

@@ -72,6 +72,13 @@ const auroraTheme = createTheme({
     chip: "Inter",
   },
   components: {
+    MuiTabPanel: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+      },
+    },
     MuiIconButton: {
       styleOverrides: {
         root: {
