@@ -32,7 +32,7 @@ const AddQuestionPage = () => {
   const location = useLocation();
   const auth = useContext(AuthContext);
 
-  console.log(auth);
+  // console.log(auth);
 
   const { handleSubmit, control } = useForm({
     resolver: zodResolver(questionSchema),
