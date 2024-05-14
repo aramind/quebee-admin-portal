@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 
 import { useForm } from "react-hook-form";
@@ -13,25 +13,56 @@ import MetaInfoSection from "./MetaInfoSection";
 import SubjectSection from "./SubjectSection";
 import AddSubjectDialog from "./AddSubjectDialog";
 import { red } from "@mui/material/colors";
+import useSubjReq from "../../hooks/api/useSubReq";
+import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
+import useApiGet from "../../hooks/api/useApiGet";
+import LoadingPage from "../LoadingPage";
+import useCourseReq from "../../hooks/api/useCourseReq";
+import { AuthContext } from "../../context/AuthProvider";
 
 const AddCoursePage = () => {
+  const { auth } = useContext(AuthContext);
   const [openAddSubject, setOpenAddSubject] = useState(false);
 
   const styles = useStyles();
 
-  const { control, handleSubmit, getValues } = useForm({
+  const { fetchSubjects } = useSubjReq();
+  const { addCourse } = useCourseReq();
+  const handleUnAuthError = useErrorHandlerUnAuthReq();
+  const {
+    data: subjectsList,
+    isLoading,
+    error,
+  } = useApiGet("subjects", () => fetchSubjects({ params: "" }), {
+    refetchOnWindowFocus: true,
+    retry: 3,
+  });
+
+  console.log(auth);
+  const { control, handleSubmit } = useForm({
     // resolver: zodResolver(courseSchema),
     mode: "onTouched",
   });
 
   const onSubmit = (data) => {
-    alert("CLICKED");
-    console.log("COURSE", data);
+    const finalData = { ...data, subjects: data?.subjects.map((s) => s.title) };
+    // console.log("COURSE", finalData);
+    addCourse({ data: finalData });
+    alert("SUBMITTED");
   };
 
   const onError = (err) => {
     console.log("Error in form", err);
   };
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (error) {
+    handleUnAuthError(error);
+  }
+
   return (
     <Container
       component="main"
@@ -43,7 +74,7 @@ const AddCoursePage = () => {
         <MetaInfoSection control={control} />
         <br />
 
-        <SubjectSection control={control} getValues={getValues} />
+        <SubjectSection control={control} subjectsList={subjectsList} />
         <Stack
           // className="outlined"
           my={1}

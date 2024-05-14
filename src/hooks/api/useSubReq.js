@@ -12,7 +12,7 @@ const useSubjReq = () => {
         url: `${url}${params}`,
         method: "GET",
       }),
-    add: ({ data }) =>
+    addSubject: ({ data }) =>
       request({
         url,
         method: "POST",

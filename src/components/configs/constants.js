@@ -111,7 +111,7 @@ const constants = {
     TOPIC: `${process.env.REACT_APP_API_URL}/v1/courses/topics`,
     SUBJECT: `${process.env.REACT_APP_API_URL}/v1/courses/subjects`,
     EMPLOYEE: `${process.env.REACT_APP_API_URL}/v1/employees`,
-    COURSE: `${process.env.REACT_APP_API_URL}/courses`,
+    COURSE: `${process.env.REACT_APP_API_URL}/v1/courses`,
   },
 };
 export default constants;

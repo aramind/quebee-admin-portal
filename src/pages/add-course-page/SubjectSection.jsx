@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import React from "react";
 
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
@@ -6,26 +6,9 @@ import { useFieldArray } from "react-hook-form";
 
 import ControlledAutocompleteV2 from "../../components/form-controlled/ControlledAutocompleteV2";
 
-import useSubjReq from "../../hooks/api/useSubReq";
-import useApiGet from "../../hooks/api/useApiGet";
-import LoadingPage from "../LoadingPage";
-import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
-import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
-
 const MIN_HEIGHT = "170px";
 
-const SubjectSection = ({ control, getValues }) => {
-  const { fetchSubjects } = useSubjReq();
-  const handleUnAuthError = useErrorHandlerUnAuthReq();
-  const {
-    data: fetchedSubjects,
-    isLoading,
-    error,
-  } = useApiGet("subjects", () => fetchSubjects({ params: "" }), {
-    refetchOnWindowFocus: true,
-    retry: 3,
-  });
-
+const SubjectSection = ({ control, subjectsList }) => {
   const {
     fields: subjects,
     append: appendSubject,
@@ -34,14 +17,6 @@ const SubjectSection = ({ control, getValues }) => {
     control,
     name: "subjects",
   });
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (error) {
-    handleUnAuthError(error);
-  }
 
   return (
     <ElevatedSectionWrapper>
@@ -68,7 +43,7 @@ const SubjectSection = ({ control, getValues }) => {
             <ControlledAutocompleteV2
               control={control}
               name={`subjects[${subjectIndex}].title`}
-              subjects={fetchedSubjects}
+              subjects={subjectsList}
             />
           </Stack>
         ))}

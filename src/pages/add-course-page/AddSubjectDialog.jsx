@@ -41,11 +41,11 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   const [openAddTopic, setOpenAddTopic] = useState(false);
   const styles = useStyles();
   const { fetchTopics } = useTopicReq();
-  const { add } = useSubjReq();
+  const { addSubject } = useSubjReq();
   const handleUnAuthError = useErrorHandlerUnAuthReq();
 
-  const { mutate: addSubject } = useApiSend(
-    add,
+  const { mutate: handleAddSubject } = useApiSend(
+    addSubject,
     (data) => console.log("Success", data),
     (err) => console.log("Error", err),
     ["subjects"]
@@ -87,7 +87,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
     // console.log(selectedTopicIds);
     const finalData = { ...data, topics: selectedTopics };
     console.log(finalData);
-    addSubject({ data: finalData });
+    handleAddSubject({ data: finalData });
     alert("SUBMITTED");
   };
 
