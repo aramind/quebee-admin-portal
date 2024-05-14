@@ -1,14 +1,12 @@
-import { Box, Container, Tab, useTheme } from "@mui/material";
+import { Box, Container, Tab } from "@mui/material";
 import React, { useState } from "react";
 
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import AddCoursePage from "../add-course-page/AddCoursePage";
 import ManageCoursePage from "../manage-course-page/ManageCoursePage";
-import { red } from "@mui/material/colors";
 
 const CoursePage = () => {
   const [tabValue, setTabValue] = useState("1");
-  const theme = useTheme();
 
   const handleTabChange = (e, newTabValue) => {
     setTabValue((pv) => newTabValue);
@@ -16,29 +14,8 @@ const CoursePage = () => {
   return (
     <Container component="main" maxWidth="xl" disableGutters>
       <TabContext value={tabValue}>
-        <Box
-          //   sx={{ borderBottom: 1, borderColor: "divider", maxHeight: "48px" }}
-          sx={{
-            position: "sticky",
-            top: "60px",
-            zIndex: 999,
-            backgroundColor: theme.palette.bg.light.lightest,
-            borderBottom: 1,
-            borderColor: "divider",
-            maxHeight: "48px",
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100vw",
-          }}
-
-          //   backgroundColor={red[500]}
-        >
-          <TabList
-            onChange={handleTabChange}
-            // className="outlined"
-            sx={{ width: "100%" }}
-            centered
-          >
+        <Box sx={localStyle.tabListContainer}>
+          <TabList onChange={handleTabChange} centered sx={localStyle.tabList}>
             <Tab label="Add Course" value="1" />
             <Tab label="Manage Courses" value="2" />
             <Tab label="Manage Subjects" value="3" />
@@ -59,3 +36,28 @@ const CoursePage = () => {
 };
 
 export default CoursePage;
+
+const localStyle = {
+  tabList: {
+    width: "100%",
+    ".MuiTabs-indicator": {
+      height: "0px",
+    },
+    ".Mui-selected": {
+      fontWeight: "bold",
+    },
+  },
+  tabListContainer: {
+    position: "sticky",
+    top: "60px",
+    zIndex: 999,
+    backgroundColor: (theme) => theme.palette.bg.light.lighter,
+    borderBottom: 1,
+    borderColor: (theme) => theme.palette.bg.light.lighter,
+    // borderColor: "divider",
+    maxHeight: "48px",
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100vw",
+  },
+};

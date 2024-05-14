@@ -9,7 +9,6 @@ import PersistLoginComponent from "./components/PersistLoginComponent";
 import AddQuestionPage from "./pages/add-question-page/AddQuestionPage";
 import ManageQuestionPage from "./pages/manage-question-page/ManageQuestionPage";
 import ManageUserPage from "./pages/manage-user-page/ManageUserPage";
-import AddCoursePage from "./pages/add-course-page/AddCoursePage";
 import ManageCoursePage from "./pages/manage-course-page/ManageCoursePage";
 import CoursePage from "./pages/course/CoursePage";
 
@@ -51,8 +50,8 @@ const combinedRouter = createBrowserRouter([
                 element: <AddQuestionPage />,
               },
               {
-                path: "/add-course",
-                element: <AddCoursePage />,
+                path: "/course",
+                element: <CoursePage />,
               },
               {
                 path: "/manage-question",
@@ -76,8 +75,8 @@ const combinedRouter = createBrowserRouter([
                 element: <AddQuestionPage />,
               },
               {
-                path: "/add-course",
-                element: <AddCoursePage />,
+                path: "/course",
+                element: <CoursePage />,
               },
               {
                 path: "/manage-question",
@@ -97,8 +96,8 @@ const combinedRouter = createBrowserRouter([
       },
       {
         path: "",
-        // element: <LandingPage />,
-        element: <CoursePage />,
+        element: <LandingPage />,
+        // element: <CoursePage />,
       },
     ],
   },

@@ -79,6 +79,15 @@ const auroraTheme = createTheme({
         },
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            fontWeight: "bold",
+          },
+        },
+      },
+    },
     MuiIconButton: {
       styleOverrides: {
         root: {

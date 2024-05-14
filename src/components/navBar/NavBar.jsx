@@ -9,7 +9,7 @@ import useLogout from "../../hooks/useLogout";
 
 const pages = [
   { link: "/dashboard", navLabel: "Dashboard" },
-  { link: "/add-course", navLabel: "Add Course" },
+  { link: "/course", navLabel: "Courses" },
   { link: "/add-question", navLabel: "Add Question" },
   { link: "/manage-course", navLabel: "Manage Course" },
   { link: "/manage-question", navLabel: "Manage Question" },
