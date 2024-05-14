@@ -4,6 +4,7 @@ import {
   InputLabel,
   Stack,
   TextField,
+  ThemeProvider,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
@@ -15,9 +16,10 @@ import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import useCourseReq from "../../hooks/api/useCourseReq";
 import useApiGet from "../../hooks/api/useApiGet";
+import { grey } from "@mui/material/colors";
 
 const ManageCoursePage = () => {
-  const [value, setValue] = useState({});
+  const [value, setValue] = useState(null);
   const [initialValues, setInitialValues] = useState({});
 
   console.log(value);
@@ -78,13 +80,12 @@ const ManageCoursePage = () => {
       disableGutters
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <ElevatedSectionWrapper>
+        <ElevatedSectionWrapper bgcolor={grey[200]}>
           <Stack direction="row" spacing={1.5}>
             <Autocomplete
               fullWidth
               value={value}
               onChange={(e, newValue) => setValue(newValue)}
-              // options={["ECE", "ECT", "LET"]}
               options={coursesList || []}
               getOptionLabel={(option) => option.title}
               renderInput={(params) => (
@@ -92,7 +93,8 @@ const ManageCoursePage = () => {
                   {...params}
                   size="small"
                   variant="outlined"
-                  placeholder="Start typing here to select a course"
+                  placeholder="Type here to select course..."
+                  sx={{ bgcolor: grey[50] }}
                 />
               )}
             />

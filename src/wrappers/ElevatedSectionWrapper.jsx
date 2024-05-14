@@ -1,4 +1,5 @@
 import { Paper } from "@mui/material";
+import { yellow } from "@mui/material/colors";
 import React from "react";
 
 const ElevatedSectionWrapper = ({
@@ -8,6 +9,7 @@ const ElevatedSectionWrapper = ({
   centered,
   width,
   height,
+  bgcolor,
 }) => {
   return (
     <Paper
@@ -17,6 +19,7 @@ const ElevatedSectionWrapper = ({
         width: fullW ? "100%" : width,
         height: fullH ? "100%" : height,
         alignItems: centered ? "center" : "left",
+        backgroundColor: bgcolor,
       }}
     >
       {children}
