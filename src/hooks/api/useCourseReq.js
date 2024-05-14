@@ -25,6 +25,13 @@ const useCourseReq = () => {
         method: "POST",
         data,
       }),
+
+    patch: ({ id, data }) =>
+      request({
+        url: `${url}/${id}`,
+        method: "PATCH",
+        data,
+      }),
   };
 
   return courseReq;
