@@ -1,35 +1,31 @@
+import { Container } from "@mui/material";
 import React from "react";
 import useStyles from "../../hooks/useStyles";
-
+import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
+import CourseDetailsSection from "../common-sections/CourseDetailsSection";
 import { useForm } from "react-hook-form";
-import { Container } from "@mui/material";
-
 import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
-import useCourseReq from "../../hooks/api/useCourseReq";
 
-import CourseDetailsSection from "../common-sections/CourseDetailsSection";
-
-const AddCoursePage = () => {
+const ManageCoursePage = () => {
   const styles = useStyles();
-
-  const { addCourse } = useCourseReq();
 
   const { control, handleSubmit } = useForm({
     // resolver: zodResolver(courseSchema),
     mode: "onTouched",
   });
 
-  const onSubmit = (data) => {
-    const finalData = { ...data, subjects: data?.subjects.map((s) => s.title) };
-    // console.log("COURSE", finalData);
-    addCourse({ data: finalData });
-    alert("SUBMITTED");
+  const onSubmit = (rawData) => {
+    alert("CLICKED SUBMIT", rawData);
   };
 
   const onError = (err) => {
-    console.log("Error in form", err);
+    alert("Encountered an error updating user. Please try again later", err);
+  };
+
+  const handleUndo = () => {
+    console.log("CLICKED UNDO");
   };
 
   return (
@@ -40,25 +36,26 @@ const AddCoursePage = () => {
       disableGutters
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
+        <ElevatedSectionWrapper></ElevatedSectionWrapper>
+        <br />
         <CourseDetailsSection control={control} />
         <br />
         <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
           <FormActionButton
-            label="clear"
-            // onClickHandler={handleClear}
+            label="undo changes"
+            onClickHandler={handleUndo}
             variant="outlined"
           />
           <FormActionButton
-            label="upload"
-            // onClickHandler={handleUpload}
-            variant="outlined"
+            type="submit"
+            label="save changes"
+            variant="contained"
           />
-          <FormActionButton type="submit" label="save" variant="contained" />
         </FormActionsContainer>
-        <DevTool control={control} />
       </form>
+      <DevTool control={control} />
     </Container>
   );
 };
 
-export default AddCoursePage;
+export default ManageCoursePage;
