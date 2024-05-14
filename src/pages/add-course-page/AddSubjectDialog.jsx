@@ -15,7 +15,6 @@ import Draggable from "react-draggable";
 import { grey } from "@mui/material/colors";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
-import SubjectInfoSection from "./SubjectInfoSection";
 import AddTopicDialog from "./AddTopicDialog";
 import useTopicReq from "../../hooks/api/useTopicReq";
 
@@ -25,6 +24,7 @@ import LoadingPage from "../LoadingPage";
 import useApiSend from "../../hooks/api/useApiSend";
 import useSubjReq from "../../hooks/api/useSubReq";
 import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
+import SubjectInfoSection from "../course/SubjectInfoSection";
 
 function PaperComponent(props) {
   return (
@@ -73,18 +73,8 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   };
 
   const onSubmit = async (data) => {
-    // console.log(data);
-
     const selectedTopics = data?.topics?.map((topic) => topic?.title);
     console.log({ ...data, topics: selectedTopics });
-    // const selectedTopicIds = data?.topics
-    //   ?.filter((topic) => fetchedTopics.includes(topic))
-    //   .map((topic) => topic._id);
-
-    // const selectedTopicIds = fetchedTopics
-    //   ?.filter((topic) => selectedTopics.includes(topic.title))
-    //   .map((st) => st._id);
-    // console.log(selectedTopicIds);
     const finalData = { ...data, topics: selectedTopics };
     console.log(finalData);
     handleAddSubject({ data: finalData });

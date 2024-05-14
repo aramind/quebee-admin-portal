@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import AddCoursePage from "../add-course-page/AddCoursePage";
 import ManageCoursePage from "../manage-course-page/ManageCoursePage";
+import ManageSubjectsTab from "./ManageSubjectsTab";
 
 const CoursePage = () => {
   const [tabValue, setTabValue] = useState("1");
@@ -28,7 +29,9 @@ const CoursePage = () => {
         <TabPanel value="2">
           <ManageCoursePage />
         </TabPanel>
-        <TabPanel value="3">Manage Subjects</TabPanel>
+        <TabPanel value="3">
+          <ManageSubjectsTab />
+        </TabPanel>
         <TabPanel value="4">Manage Topics</TabPanel>
       </TabContext>
     </Container>

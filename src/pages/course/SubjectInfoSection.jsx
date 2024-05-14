@@ -52,8 +52,6 @@ const SubjectInfoSection = ({ control, setOpenAddTopic, options }) => {
             >
               Create Topic
             </Button>
-            {/* <Typography>Topic not in the list?</Typography>
-            <Button onClick={setOpenAddTopic}>Add</Button> */}
           </Stack>
         </Stack>
         <Stack spacing={1}>

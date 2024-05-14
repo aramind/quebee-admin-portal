@@ -1,11 +1,4 @@
-import {
-  Autocomplete,
-  Container,
-  InputLabel,
-  Stack,
-  TextField,
-  ThemeProvider,
-} from "@mui/material";
+import { Autocomplete, Container, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
@@ -17,13 +10,12 @@ import FormActionButton from "../../components/form/FormActionButton";
 import useCourseReq from "../../hooks/api/useCourseReq";
 import useApiGet from "../../hooks/api/useApiGet";
 import { grey } from "@mui/material/colors";
+import AutocompleteSelector from "../../components/AutocompleteSelector";
 
 const ManageCoursePage = () => {
   const [value, setValue] = useState(null);
   const [initialValues, setInitialValues] = useState({});
 
-  console.log(value);
-  console.log(initialValues);
   const styles = useStyles();
   const { get } = useCourseReq();
 
@@ -81,21 +73,11 @@ const ManageCoursePage = () => {
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
-          <Autocomplete
-            // className="outlined"
+          <AutocompleteSelector
             value={value}
-            onChange={(e, newValue) => setValue(newValue)}
-            options={coursesList || []}
-            getOptionLabel={(option) => option.title}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                size="small"
-                variant="outlined"
-                placeholder="Type here to select course..."
-                sx={{ bgcolor: grey[50] }}
-              />
-            )}
+            setValue={setValue}
+            options={coursesList}
+            label="courses"
           />
         </ElevatedSectionWrapper>
         <br />
