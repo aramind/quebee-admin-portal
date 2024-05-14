@@ -8,6 +8,7 @@ const ControlledAutocomplete = ({
   name = "",
   label = "",
 }) => {
+  console.log("CAOPTIONS", options);
   return (
     <Controller
       control={control}
@@ -16,7 +17,7 @@ const ControlledAutocomplete = ({
         <Autocomplete
           fullWidth
           {...field}
-          value={field.value}
+          value={options?.find((option) => option === field.value) || null}
           onChange={(e, selected) => field.onChange(selected)}
           options={options}
           //   getOptionLabel={(option) => option.label}

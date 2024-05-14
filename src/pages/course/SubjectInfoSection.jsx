@@ -7,15 +7,16 @@ import ControlledAutocomplete from "../../components/form-controlled/ControlledA
 import { red } from "@mui/material/colors";
 import AddTopicDialog from "../add-course-page/AddTopicDialog";
 
-const SubjectInfoSection = ({ control, options }) => {
+const SubjectInfoSection = ({ control, topicsList }) => {
   const [openAddTopic, setOpenAddTopic] = useState(false);
 
   const {
     fields: topics,
     append: appendTopic,
     remove: removeTopic,
-  } = useFieldArray({ control, name: "topic" });
+  } = useFieldArray({ control, name: "topics" });
 
+  console.log(topicsList);
   return (
     <Stack direction="row" spacing={4}>
       <Stack flex={2} spacing={1} justifyContent="flex-start">
@@ -62,8 +63,8 @@ const SubjectInfoSection = ({ control, options }) => {
             <Stack direction="row" key={topic.id} spacing={1}>
               <ControlledAutocomplete
                 control={control}
-                name={`topics[${topicIndex}.title]`}
-                options={options}
+                name={`topics[${topicIndex}].title`}
+                options={topicsList}
               />
               <Button onClick={() => removeTopic(topicIndex)}>Remove</Button>
             </Stack>

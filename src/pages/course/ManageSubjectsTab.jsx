@@ -27,8 +27,9 @@ const ManageSubjectsTab = () => {
     refetchOnWindowFocus: true,
     retry: 3,
   });
-
+  console.log(selectedSubject);
   console.log(subjectsList);
+
   const { handleSubmit, control, reset } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,
@@ -40,7 +41,7 @@ const ManageSubjectsTab = () => {
       acronym: selectedSubject?.acronym,
       title: selectedSubject?.title,
       description: selectedSubject?.description,
-      topics: selectedSubject?.subjects,
+      topics: selectedSubject?.topics,
     });
   }, [selectedSubject]);
 
@@ -61,6 +62,7 @@ const ManageSubjectsTab = () => {
     console.log("CLICKED UNDO");
   };
 
+  console.log("IV", initialValues);
   return (
     <Container
       component="main"
@@ -84,7 +86,10 @@ const ManageSubjectsTab = () => {
         </ElevatedSectionWrapper>
         <br />
         <ElevatedSectionWrapper px={{ md: "20px", lg: "200px" }}>
-          <SubjectInfoSection control={control} />
+          <SubjectInfoSection
+            control={control}
+            topicsList={initialValues?.topics?.map((topic) => topic.title)}
+          />
         </ElevatedSectionWrapper>
         <br />
         <DevTool control={control} />
