@@ -61,6 +61,6 @@ const localStyle = {
     maxHeight: "48px",
     display: "flex",
     justifyContent: "space-between",
-    width: "100vw",
+    width: "100%",
   },
 };

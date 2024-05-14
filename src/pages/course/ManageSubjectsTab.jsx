@@ -66,14 +66,10 @@ const ManageSubjectsTab = () => {
       maxWidth="xl"
       sx={styles.tabContainer}
       disableGutters
+      width="100vw"
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <ElevatedSectionWrapper
-          bgcolor={grey[200]}
-          px="30%"
-          py="8px"
-          className="outlined"
-        >
+        <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
           <AutocompleteSelector
             value={selectedSubject}
             setValue={setSelectedSubject}
@@ -82,7 +78,10 @@ const ManageSubjectsTab = () => {
           />
         </ElevatedSectionWrapper>
         <br />
-        <ElevatedSectionWrapper px={{ md: "20px", lg: "200px" }}>
+        <ElevatedSectionWrapper
+          px={{ md: "20px", lg: "200px" }}
+          className="outlined"
+        >
           <SubjectInfoSection
             control={control}
             topicsList={initialValues?.topics?.map((topic) => topic.title)}
