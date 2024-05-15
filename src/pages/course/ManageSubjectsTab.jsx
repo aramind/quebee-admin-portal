@@ -12,6 +12,7 @@ import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import AvailabilityControlSection from "./AvailabilityControlSection";
+import DisplayOnlySection from "./DisplayOnlySection";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -44,6 +45,9 @@ const ManageSubjectsTab = () => {
       topics: selectedSubject?.topics,
       status: selectedSubject?.status,
       isHidden: selectedSubject?.isHidden ? "yes" : "no",
+      creator: selectedSubject?.creator,
+      createdAt: selectedSubject?.createdAt,
+      version: selectedSubject?.version,
     });
   }, [selectedSubject]);
 
@@ -86,12 +90,13 @@ const ManageSubjectsTab = () => {
           <ElevatedSectionWrapper flex={6} px={{ xs: "20px", md: "50px" }}>
             <SubjectInfoSection
               control={control}
-              topicsList={initialValues?.topics?.map((topic) => topic.title)}
+              options={initialValues?.topics?.map((topic) => topic.title)}
             />
           </ElevatedSectionWrapper>
           <ElevatedSectionWrapper flex={1} px={{ xs: "10px", md: "20px" }}>
             <AvailabilityControlSection control={control} />
           </ElevatedSectionWrapper>
+          <DisplayOnlySection values={{ ...initialValues }} />
         </Stack>
         <br />
         <DevTool control={control} />

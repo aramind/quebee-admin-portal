@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 
 const ControlledAutocomplete = ({
   control,
-  options,
+  options = [],
   name = "",
   label = "",
 }) => {
@@ -16,7 +16,7 @@ const ControlledAutocomplete = ({
         <Autocomplete
           fullWidth
           {...field}
-          value={options?.find((option) => option === field.value) || null}
+          value={options?.find((option) => option === field.value) || ""}
           onChange={(e, selected) => field.onChange(selected)}
           options={options}
           //   getOptionLabel={(option) => option.label}

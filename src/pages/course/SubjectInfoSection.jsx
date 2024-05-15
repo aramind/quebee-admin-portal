@@ -7,7 +7,7 @@ import ControlledAutocomplete from "../../components/form-controlled/ControlledA
 import { red } from "@mui/material/colors";
 import AddTopicDialog from "../add-course-page/AddTopicDialog";
 
-const SubjectInfoSection = ({ control, topicsList }) => {
+const SubjectInfoSection = ({ control, options }) => {
   const [openAddTopic, setOpenAddTopic] = useState(false);
 
   const {
@@ -63,7 +63,7 @@ const SubjectInfoSection = ({ control, topicsList }) => {
               <ControlledAutocomplete
                 control={control}
                 name={`topics[${topicIndex}].title`}
-                options={topicsList}
+                options={options}
               />
               <Button onClick={() => removeTopic(topicIndex)}>Remove</Button>
             </Stack>

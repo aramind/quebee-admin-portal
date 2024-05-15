@@ -92,6 +92,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
     handleUnAuthError(error);
   }
 
+  console.log(fetchedTopics);
   return (
     <>
       <Dialog
