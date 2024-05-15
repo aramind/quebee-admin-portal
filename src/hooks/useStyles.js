@@ -21,7 +21,7 @@ const useStyles = () => {
     form: {
       inputLabel: {
         textAlign: "left",
-        fontSize: "0.8rem",
+        fontSize: { sx: "10px", md: "12px" },
         px: "5px",
         color: "font.gray",
         // fontWeight: "bold",

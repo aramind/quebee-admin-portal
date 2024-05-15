@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { grey, purple, red, teal } from "@mui/material/colors";
+import { green, grey, purple, red, teal } from "@mui/material/colors";
 
 // COLORS
 const COLORS = {
@@ -72,6 +72,36 @@ const auroraTheme = createTheme({
     chip: "Inter",
   },
   components: {
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          padding: "6px",
+        },
+        select: {
+          boxSizing: "border-box",
+
+          paddingTop: "0px",
+          paddingBottom: "0px",
+          paddingInline: "2px",
+        },
+        nativeInput: {
+          height: 0,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          padding: "6px",
+        },
+        input: {
+          boxSizing: "border-box",
+
+          padding: "2px",
+        },
+      },
+    },
+
     MuiTabPanel: {
       styleOverrides: {
         root: {
