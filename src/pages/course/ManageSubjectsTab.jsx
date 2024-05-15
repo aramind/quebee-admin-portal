@@ -13,6 +13,7 @@ import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import AvailabilityControlSection from "./AvailabilityControlSection";
 import DisplayOnlySection from "./DisplayOnlySection";
+import ACSandDOS from "./ACSandDOS";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -87,16 +88,15 @@ const ManageSubjectsTab = () => {
         </ElevatedSectionWrapper>
         <br />
         <Stack direction="row" spacing={1.5}>
-          <ElevatedSectionWrapper flex={6} px={{ xs: "20px", md: "50px" }}>
+          <ElevatedSectionWrapper flex={4} px={{ xs: "20px", md: "50px" }}>
             <SubjectInfoSection
               control={control}
               options={initialValues?.topics?.map((topic) => topic.title)}
             />
           </ElevatedSectionWrapper>
-          <ElevatedSectionWrapper flex={1} px={{ xs: "10px", md: "20px" }}>
-            <AvailabilityControlSection control={control} />
-          </ElevatedSectionWrapper>
-          <DisplayOnlySection values={{ ...initialValues }} />
+          <Stack spacing={1.5} flex={1}>
+            <ACSandDOS control={control} initialValues={initialValues} />
+          </Stack>
         </Stack>
         <br />
         <DevTool control={control} />

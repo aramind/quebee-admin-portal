@@ -1,7 +1,7 @@
 import { Chip, Stack, Typography } from "@mui/material";
 import React, { Fragment } from "react";
 
-const Value = ({ values, inChip }) => {
+const Value = ({ values, inChip, valueOptions }) => {
   return (
     <Stack direction="row" spacing={1}>
       {values && Array.isArray(values) ? (
@@ -28,7 +28,7 @@ const Value = ({ values, inChip }) => {
           </Fragment>
         ))
       ) : (
-        <Typography>{values}</Typography>
+        <Typography sx={{ ...valueOptions }}>{values}</Typography>
       )}
     </Stack>
   );
