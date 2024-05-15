@@ -12,6 +12,7 @@ import ACSandDOS from "./ACSandDOS";
 import TopicInfoSection from "./TopicInfoSection";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
+import useApiSend from "../../hooks/api/useApiSend";
 
 const ManageTopicsTab = () => {
   const [selected, setSelected] = useState(null);
@@ -19,7 +20,7 @@ const ManageTopicsTab = () => {
 
   const styles = useStyles();
 
-  const { fetchTopics } = useTopicReq();
+  const { fetchTopics, patchTopic } = useTopicReq();
 
   const {
     data: topicsList,
@@ -30,7 +31,11 @@ const ManageTopicsTab = () => {
     retry: 3,
   });
 
-  console.log("TOPICS", topicsList);
+  const { mutate: handleUpdate } = useApiSend(patchTopic, () =>
+    console.log("Topic updated successfully", (err) =>
+      console.log("Encountered an error updating.Try again.", err)
+    )
+  );
 
   const { handleSubmit, control, reset } = useForm({
     mode: "onTouched",
@@ -59,7 +64,20 @@ const ManageTopicsTab = () => {
   }, [initialValues, reset]);
 
   const onSubmit = (rawData) => {
-    alert("CLICKED SUBMIT", rawData);
+    const convertedIsHidden = rawData?.isHidden === "yes";
+    const updatedData = {
+      ...rawData,
+      isHidden: convertedIsHidden,
+      _id: selected?._id,
+    };
+
+    const _id = selected?._id;
+    if (!_id) {
+      alert("No topic selected");
+    } else {
+      handleUpdate({ data: updatedData, _id });
+      alert("Request sent.");
+    }
   };
 
   const onError = (err) => {
