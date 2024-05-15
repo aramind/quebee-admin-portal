@@ -18,6 +18,12 @@ const useTopicReq = () => {
         method: "POST",
         data,
       }),
+    patchTopic: ({ _id, data }) =>
+      request({
+        url: `${url}/${_id}`,
+        method: "PATCH",
+        data,
+      }),
   };
   return topicReq;
 };
