@@ -5,7 +5,7 @@ const RowWrapper = ({ children }) => {
   return (
     <Stack
       direction="row"
-      gap={2}
+      spacing={2}
       flexWrap="wrap"
       justifyContent="space-between"
     >

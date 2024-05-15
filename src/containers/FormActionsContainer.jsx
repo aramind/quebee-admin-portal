@@ -10,8 +10,9 @@ const FormActionsContainer = ({
 }) => {
   return (
     <Stack
+      // className="outlined"
       direction={{ xs: "column", sm: "row" }}
-      gap={2}
+      spacing={1.5}
       width={width ? width : "100%"}
       flex={flex}
       sx={{

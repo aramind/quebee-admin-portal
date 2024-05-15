@@ -65,7 +65,7 @@ const AddNewUserForm = ({ successFn }) => {
         <ElevatedSectionWrapper>
           <UserInfoSection control={control} title="Add New User" />
           <br />
-          <FormActionsContainer>
+          <FormActionsContainer justify="flex-end">
             <FormActionButton
               label="clear"
               onClickHandler={handleClear}

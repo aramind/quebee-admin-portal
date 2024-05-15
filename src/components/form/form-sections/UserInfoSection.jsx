@@ -7,16 +7,16 @@ import constants from "../../configs/constants";
 
 const UserInfoSection = ({ control, title }) => {
   return (
-    <Stack gap={1}>
+    <Stack spacing={2}>
       {title && <Typography variant="h6">{title}</Typography>}
+
       <RowWrapper>
         <ControlledTextField
           name="employeeId"
           control={control}
           label="Employee ID"
+          flex={0.5}
         />
-      </RowWrapper>
-      <RowWrapper>
         <ControlledTextField
           name="lastName"
           label="last name"
@@ -34,33 +34,40 @@ const UserInfoSection = ({ control, title }) => {
           name="middleName"
           control={control}
         />
-
-        <ControlledTextField label="email" name="email" control={control} />
       </RowWrapper>
 
       <RowWrapper>
-        <ControlledTextField
-          label="username"
-          name="username"
-          control={control}
-        />
         <ControlledSimpleSelect
           label="role"
           name="role"
           control={control}
           options={constants?.ROLES || []}
+          flex={0.5}
         />
         <ControlledSimpleSelect
           label="status"
           name="status"
           control={control}
           options={constants?.STATUS || []}
+          flex={0.5}
+        />
+        <ControlledTextField
+          label="email"
+          name="email"
+          control={control}
+          flex={1.2}
+        />
+        <ControlledTextField
+          label="username"
+          name="username"
+          control={control}
         />
 
         <ControlledTextField
           label="password"
           name="password"
           control={control}
+          flex={0.8}
         />
       </RowWrapper>
     </Stack>
