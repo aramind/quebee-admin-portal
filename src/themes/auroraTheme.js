@@ -99,6 +99,18 @@ const auroraTheme = createTheme({
 
           padding: "2px",
         },
+        multiline: {
+          // backgroundColor: red[500],
+          boxSizing: "border-box",
+          padding: "4px",
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+        },
       },
     },
 

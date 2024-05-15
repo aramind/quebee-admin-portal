@@ -4,13 +4,13 @@ import { Controller } from "react-hook-form";
 import LabelledSelect from "../form/LabelledSelect";
 import SimpleSelect from "../SimpleSelect";
 
-const ControlledSimpleSelect = ({ label, name, control, options }) => {
+const ControlledSimpleSelect = ({ label, name, control, options, flex }) => {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field }) => (
-        <Stack flex={1}>
+        <Stack flex={flex || 1}>
           <LabelledSelect
             label={label}
             select={

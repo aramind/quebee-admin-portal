@@ -9,13 +9,14 @@ const ControlledTextField = ({
   control,
   customDefaultValue,
   tfProps,
+  flex,
 }) => {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field }) => (
-        <Stack flex={1}>
+        <Stack flex={flex || 1}>
           <LabelWrapper id={name} label={label}>
             <TextField
               {...tfProps}

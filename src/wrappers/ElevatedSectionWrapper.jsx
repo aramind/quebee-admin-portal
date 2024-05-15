@@ -1,4 +1,4 @@
-import { Paper } from "@mui/material";
+import { Paper, Stack } from "@mui/material";
 import React from "react";
 
 const ElevatedSectionWrapper = ({
@@ -11,13 +11,13 @@ const ElevatedSectionWrapper = ({
   bgcolor,
   px = "16px",
   py = "16px",
-  flex = "1",
+  flex,
 }) => {
   return (
     <Paper
       elevation={1}
       sx={{
-        flex: flex,
+        flex: flex ? flex : 1,
         px: px,
         py: py,
         width: fullW ? "100%" : width,
