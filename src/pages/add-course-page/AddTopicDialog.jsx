@@ -14,7 +14,7 @@ import { grey } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
-import TopicInfoSection from "./TopicInfoSection";
+import TopicInfoSection from "../course/TopicInfoSection";
 import useTopicReq from "../../hooks/api/useTopicReq";
 import useApiSend from "../../hooks/api/useApiSend";
 

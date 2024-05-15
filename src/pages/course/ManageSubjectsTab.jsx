@@ -1,4 +1,4 @@
-import { Autocomplete, Container, Stack, TextField } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
@@ -11,8 +11,6 @@ import SubjectInfoSection from "./SubjectInfoSection";
 import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
-import AvailabilityControlSection from "./AvailabilityControlSection";
-import DisplayOnlySection from "./DisplayOnlySection";
 import ACSandDOS from "./ACSandDOS";
 
 const ManageSubjectsTab = () => {
@@ -95,7 +93,7 @@ const ManageSubjectsTab = () => {
             />
           </ElevatedSectionWrapper>
           <Stack spacing={1.5} flex={1}>
-            <ACSandDOS control={control} initialValues={initialValues} />
+            <ACSandDOS control={control} values={initialValues} />
           </Stack>
         </Stack>
         <br />

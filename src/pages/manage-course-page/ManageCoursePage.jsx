@@ -1,8 +1,7 @@
-import { Autocomplete, Container, TextField } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-import CourseDetailsSection from "../common-sections/CourseDetailsSection";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
@@ -11,6 +10,7 @@ import useCourseReq from "../../hooks/api/useCourseReq";
 import useApiGet from "../../hooks/api/useApiGet";
 import { grey } from "@mui/material/colors";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
+import ACSandDOS from "../course/ACSandDOS";
 
 const ManageCoursePage = () => {
   const [value, setValue] = useState(null);
@@ -34,6 +34,8 @@ const ManageCoursePage = () => {
     defaultValues: initialValues,
   });
 
+  // console.log("COURSES", coursesList);
+
   useEffect(() => {
     setInitialValues({
       code: value?.code,
@@ -43,11 +45,15 @@ const ManageCoursePage = () => {
       description: value?.description,
       remarks: value?.remarks,
       subjects: value?.subjects,
+      status: value?.status,
+      isHidden: value?.isHidden ? "yes" : "no",
+      creator: value?.creator,
+      createdAt: value?.createdAt,
+      version: value?.version,
     });
   }, [value]);
 
   useEffect(() => {
-    // Update form values when initialValues change
     reset(initialValues);
   }, [initialValues, reset]);
 
@@ -80,7 +86,15 @@ const ManageCoursePage = () => {
           />
         </ElevatedSectionWrapper>
         <br />
-        <CourseDetailsSection control={control} />
+        <Stack direction="row" spacing={1.5}>
+          <ElevatedSectionWrapper flex={4} px={{ xs: "20px", md: "50px" }}>
+            <CourseDetailsSection control={control} />
+          </ElevatedSectionWrapper>
+          <Stack spacing={1.5} flex={1} justifyContent="flex-start">
+            <ACSandDOS control={control} values={initialValues} />
+          </Stack>
+        </Stack>
+
         <br />
 
         <DevTool control={control} />

@@ -2,14 +2,14 @@ import React from "react";
 import useStyles from "../../hooks/useStyles";
 
 import { useForm } from "react-hook-form";
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 
 import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import useCourseReq from "../../hooks/api/useCourseReq";
 
-import CourseDetailsSection from "../common-sections/CourseDetailsSection";
+import CourseDetailsSection from "../course/CourseDetailsSection";
 
 const AddCoursePage = () => {
   const styles = useStyles();
