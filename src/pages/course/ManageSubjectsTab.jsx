@@ -86,13 +86,13 @@ const ManageSubjectsTab = () => {
         </ElevatedSectionWrapper>
         <br />
         <Stack direction="row" spacing={1.5}>
-          <ElevatedSectionWrapper flex={4} px={{ xs: "20px", md: "50px" }}>
+          <ElevatedSectionWrapper flex={1} px={{ xs: "20px", md: "50px" }}>
             <SubjectInfoSection
               control={control}
               options={initialValues?.topics?.map((topic) => topic.title)}
             />
           </ElevatedSectionWrapper>
-          <Stack spacing={1.5} flex={1}>
+          <Stack spacing={1.5} justifyContent="flex-start" width="180px">
             <ACSandDOS control={control} values={initialValues} />
           </Stack>
         </Stack>

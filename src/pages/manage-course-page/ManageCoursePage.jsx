@@ -88,10 +88,10 @@ const ManageCoursePage = () => {
         </ElevatedSectionWrapper>
         <br />
         <Stack direction="row" spacing={1.5}>
-          <Stack flex={4}>
+          <Stack flex={1}>
             <CourseDetailsSection control={control} />
           </Stack>
-          <Stack spacing={1.5} flex={1} justifyContent="flex-start">
+          <Stack spacing={1.5} justifyContent="flex-start" width="180px">
             <ACSandDOS control={control} values={initialValues} />
           </Stack>
         </Stack>
