@@ -5,6 +5,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import AddCoursePage from "../add-course-page/AddCoursePage";
 import ManageCoursePage from "../manage-course-page/ManageCoursePage";
 import ManageSubjectsTab from "./ManageSubjectsTab";
+import ManageTopicsTab from "./ManageTopicsTab";
 
 const CoursePage = () => {
   const [tabValue, setTabValue] = useState("1");
@@ -32,7 +33,9 @@ const CoursePage = () => {
         <TabPanel value="3">
           <ManageSubjectsTab />
         </TabPanel>
-        <TabPanel value="4">Manage Topics</TabPanel>
+        <TabPanel value="4">
+          <ManageTopicsTab />
+        </TabPanel>
       </TabContext>
     </Container>
   );

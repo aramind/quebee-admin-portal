@@ -32,6 +32,12 @@ const SubjectInfoSection = ({ control, options }) => {
           label="description"
           tfProps={{ multiline: true, minRows: 2 }}
         />
+        <ControlledTextField
+          control={control}
+          name="remarks"
+          label="remarks"
+          tfProps={{ multiline: true, minRows: 2 }}
+        />
         <Box height="100%" />
       </Stack>
 

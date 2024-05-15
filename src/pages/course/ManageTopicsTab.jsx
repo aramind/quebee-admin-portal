@@ -1,60 +1,60 @@
-import { Container, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
-import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
+import useTopicReq from "../../hooks/api/useTopicReq";
+import useApiGet from "../../hooks/api/useApiGet";
 import { useForm } from "react-hook-form";
+import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
+import AutocompleteSelector from "../../components/AutocompleteSelector";
+import { grey } from "@mui/material/colors";
+import { Container, Stack } from "@mui/material";
 import { DevTool } from "@hookform/devtools";
+import ACSandDOS from "./ACSandDOS";
+import TopicInfoSection from "./TopicInfoSection";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
-import useCourseReq from "../../hooks/api/useCourseReq";
-import useApiGet from "../../hooks/api/useApiGet";
-import { grey } from "@mui/material/colors";
-import AutocompleteSelector from "../../components/AutocompleteSelector";
-import ACSandDOS from "../course/ACSandDOS";
-import CourseDetailsSection from "../course/CourseDetailsSection";
 
-const ManageCoursePage = () => {
-  const [value, setValue] = useState(null);
+const ManageTopicsTab = () => {
+  const [selected, setSelected] = useState(null);
   const [initialValues, setInitialValues] = useState({});
 
   const styles = useStyles();
-  const { get } = useCourseReq();
+
+  const { fetchTopics } = useTopicReq();
 
   const {
-    data: coursesList,
+    data: topicsList,
     // isLoading,
     // error,
-  } = useApiGet("courses", () => get("/trimmed"), {
+  } = useApiGet("topics", () => fetchTopics({ params: "/trimmed" }), {
     refetchOnWindowFocus: true,
     retry: 3,
   });
 
-  const { control, handleSubmit, reset } = useForm({
-    // resolver: zodResolver(courseSchema),
+  console.log("TOPICS", topicsList);
+
+  const { handleSubmit, control, reset } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,
   });
 
-  // console.log("COURSES", coursesList);
-
   useEffect(() => {
     setInitialValues({
-      code: value?.code,
-      acronym: value?.acronym,
-      database: value?.database,
-      title: value?.title,
-      description: value?.description,
-      remarks: value?.remarks,
-      subjects: value?.subjects,
-      status: value?.status,
-      isHidden: value?.isHidden ? "yes" : "no",
-      creator: value?.creator,
-      createdAt: value?.createdAt,
-      version: value?.version,
+      code: selected?.code,
+      acronym: selected?.acronym,
+      title: selected?.title,
+      description: selected?.description,
+      status: selected?.status,
+      isHidden: selected?.isHidden ? "yes" : "no",
+      creator: selected?.creator,
+      createdAt: selected?.createdAt,
+      version: selected?.version,
+      remarks: selected?.remarks,
+      questions: selected?.questions,
     });
-  }, [value]);
+  }, [selected]);
 
   useEffect(() => {
+    // Update form values when initialValues change
     reset(initialValues);
   }, [initialValues, reset]);
 
@@ -76,28 +76,31 @@ const ManageCoursePage = () => {
       maxWidth="xl"
       sx={styles.tabContainer}
       disableGutters
+      width="100vw"
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
           <AutocompleteSelector
-            value={value}
-            setValue={setValue}
-            options={coursesList}
-            label="courses"
+            value={selected}
+            setValue={setSelected}
+            options={topicsList}
+            label="topics"
           />
         </ElevatedSectionWrapper>
         <br />
         <Stack direction="row" spacing={1.5}>
-          <Stack flex={4}>
-            <CourseDetailsSection control={control} />
-          </Stack>
-          <Stack spacing={1.5} flex={1} justifyContent="flex-start">
+          <ElevatedSectionWrapper flex={4} px={{ xs: "20px", md: "50px" }}>
+            {/* <SubjectInfoSection
+              control={control}
+              options={initialValues?.topics?.map((topic) => topic.title)}
+            /> */}
+            <TopicInfoSection control={control} />
+          </ElevatedSectionWrapper>
+          <Stack spacing={1.5} flex={1}>
             <ACSandDOS control={control} values={initialValues} />
           </Stack>
         </Stack>
-
         <br />
-
         <DevTool control={control} />
         <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
           <FormActionButton
@@ -116,4 +119,4 @@ const ManageCoursePage = () => {
   );
 };
 
-export default ManageCoursePage;
+export default ManageTopicsTab;
