@@ -3,6 +3,7 @@ import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import ControlledSimpleSelect from "../../components/form-controlled/ControlledSimpleSelect";
+import SelectDb from "../../components/form-finished/SelectDb";
 import constants from "../../configs/constants";
 
 const MetaInfoSection = ({ control }) => {
@@ -11,12 +12,13 @@ const MetaInfoSection = ({ control }) => {
       <Stack direction="row" spacing={1.5} alignItems="start">
         <ElevatedSectionWrapper>
           <Stack direction="row" spacing={1.5}>
-            <ControlledSimpleSelect
+            <SelectDb control={control} />
+            {/* <ControlledSimpleSelect
               label="database"
               name="database"
               control={control}
               options={constants?.DATABASES || []}
-            />
+            /> */}
             <ControlledTextField name="code" label="code" control={control} />
           </Stack>
         </ElevatedSectionWrapper>
