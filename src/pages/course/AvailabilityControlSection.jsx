@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import React from "react";
-import constants from "../../components/configs/constants";
+import constants from "../../configs/constants";
 import ControlledRadioGroup from "../../components/form-controlled/ControlledRadioGroup";
 
 const AvailabilityControlSection = ({ control }) => {

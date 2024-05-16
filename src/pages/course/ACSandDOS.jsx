@@ -5,7 +5,6 @@ import DisplayOnlySection from "./DisplayOnlySection";
 import { Stack } from "@mui/material";
 
 const ACSandDOS = ({ control, values }) => {
-  console.log(values);
   return (
     <Stack justifyContent="flex-start" spacing={1.5}>
       <ElevatedSectionWrapper>

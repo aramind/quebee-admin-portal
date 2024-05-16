@@ -3,7 +3,7 @@ import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import ControlledSimpleSelect from "../../components/form-controlled/ControlledSimpleSelect";
-import constants from "../../components/configs/constants";
+import constants from "../../configs/constants";
 
 const MetaInfoSection = ({ control }) => {
   return (
