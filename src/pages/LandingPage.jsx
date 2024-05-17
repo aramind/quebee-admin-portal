@@ -84,7 +84,7 @@ const LandingPage = () => {
                 display="inline"
                 fontStyle="italic"
               >
-                eTHERIA
+                queBEE
               </Typography>{" "}
               Admin Portal!
             </Typography>

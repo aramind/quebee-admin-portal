@@ -136,9 +136,9 @@ const LoginPage = () => {
               variant="h5"
               display="inline"
               color="primary"
-              sx={{ fontWeight: "bold", fontStyle: "italic" }}
+              sx={{ fontWeight: "bold" }}
             >
-              eTHERIA
+              QUEBEE
             </Typography>
             <Typography
               variant="h5"

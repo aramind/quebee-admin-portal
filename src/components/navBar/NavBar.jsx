@@ -36,7 +36,7 @@ const NavBar = () => {
         <nav>
           <div className="nav__logo">
             <NavLink to="/">
-              <h1>eTHERIA</h1>
+              <h1>queBEE</h1>
             </NavLink>
           </div>
           <div className="nav__nav-links">
@@ -68,7 +68,7 @@ const NavBar = () => {
         <nav>
           <div className="nav__logo">
             <NavLink to="/">
-              <h1>eTHERIA</h1>
+              <h1>queBEE</h1>
             </NavLink>
           </div>
           <NavMenu pages={pages} />
