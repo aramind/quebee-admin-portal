@@ -26,11 +26,11 @@ const LandingPage = () => {
   );
 
   // Redirect to login page if user is not authenticated
-  useEffect(() => {
-    if (!auth?.token) {
-      navigate("/login");
-    }
-  }, [auth, navigate]);
+  // useEffect(() => {
+  //   if (!auth?.token) {
+  //     navigate("/login");
+  //   }
+  // }, [auth, navigate]);
 
   if (isLoading) {
     return <LoadingPage />;

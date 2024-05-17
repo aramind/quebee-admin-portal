@@ -6,7 +6,6 @@ import LandingPage from "./pages/LandingPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import PersistLoginComponent from "./components/PersistLoginComponent";
-import AddQuestionPage from "./pages/add-question-page/AddQuestionPage";
 import ManageQuestionPage from "./pages/manage-question-page/ManageQuestionPage";
 import ManageUserPage from "./pages/manage-user-page/ManageUserPage";
 import ManageCoursePage from "./pages/manage-course-page/ManageCoursePage";
