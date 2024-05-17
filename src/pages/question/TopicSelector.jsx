@@ -40,7 +40,7 @@ const TopicSelector = ({ control }) => {
             }
             getOptionLabel={(topic) => topic?.title}
             filterSelectedOptions
-            value={field.value || []}
+            value={field.value}
             onChange={(e, newValue) => {
               field.onChange(newValue);
             }}

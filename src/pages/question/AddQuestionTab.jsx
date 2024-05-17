@@ -17,7 +17,7 @@ const AddQuestionTab = () => {
   const { control, handleSubmit } = useForm({
     mode: "onTouched",
     defaultValues: {
-      topics: [],
+      courses: [],
     },
   });
 
@@ -39,16 +39,14 @@ const AddQuestionTab = () => {
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <Stack direction={{ md: "row" }} spacing={1.5}>
-          <Stack
-            // className="outlined"
-            spacing={1.5}
-            flex={1}
-          >
+          <Stack spacing={1.5} flex={1}>
             <Stack direction="row" spacing={1}>
               <SelectDb control={control} />
               <ControlledTextField name="code" label="code" control={control} />
             </Stack>
-            <TopicSelector control={control} />
+            <>
+              <TopicSelector control={control} />
+            </>
             <br />
           </Stack>
           <br />
