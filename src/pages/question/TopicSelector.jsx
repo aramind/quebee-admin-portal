@@ -19,8 +19,9 @@ const TopicSelector = ({ control }) => {
     ["topics"],
     () => fetchTopics({ params: "/trimmed" }),
     {
-      refetchOnWindowFocus: true,
+      refetchOnWindowFocus: false,
       retry: 3,
+      staleTime: Infinity,
     }
   );
 
