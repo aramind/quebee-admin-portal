@@ -18,6 +18,7 @@ import zodLoginSchema from "../schemas/login";
 import { useGlobalState } from "../context/ContextProvider";
 import { AuthContext } from "../context/AuthProvider";
 import axios from "axios";
+import { red } from "@mui/material/colors";
 
 const currentYear = new Date().getFullYear();
 const LOGIN_URL = `${process.env.REACT_APP_API_URL}/v1/login`;
@@ -156,6 +157,7 @@ const LoginPage = () => {
                 variant="outlined"
                 error={!!errors.username}
                 {...register("username")}
+                sx={localStyle.textfield}
               />
               <Typography
                 variant="caption"
@@ -175,6 +177,7 @@ const LoginPage = () => {
                 variant="outlined"
                 type={showPassword ? "text" : "password"}
                 error={!!errors.password}
+                sx={localStyle.textfield}
                 {...register("password")}
                 InputProps={{
                   endAdornment: (
@@ -257,5 +260,18 @@ export default LoginPage;
 const localStyle = {
   checkbox: {
     "& .MuiButtonBase-root": { pr: "5px" },
+  },
+  textfield: {
+    "& .MuiOutlinedInput-root": {
+      padding: "8px", // Reset padding for the root element of MuiOutlinedInput
+    },
+    "& .MuiOutlinedInput-input": {
+      boxSizing: "content-box", // Reset box-sizing for the input element of MuiOutlinedInput
+      padding: "8px", // Reset padding for the input element of MuiOutlinedInput
+    },
+    "& .MuiOutlinedInput-multiline": {
+      boxSizing: "content-box", // Reset box-sizing for the multiline variant of MuiOutlinedInput
+      padding: "8px", // Reset padding for the multiline variant of MuiOutlinedInput
+    },
   },
 };
