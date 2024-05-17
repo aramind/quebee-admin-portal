@@ -97,8 +97,8 @@ const combinedRouter = createBrowserRouter([
       },
       {
         path: "",
-        // element: <LandingPage />,
-        element: <AddQuestionPage />,
+        element: <LandingPage />,
+        // element: <AddQuestionPage />,
       },
     ],
   },

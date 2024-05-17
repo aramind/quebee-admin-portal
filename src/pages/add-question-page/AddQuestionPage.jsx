@@ -13,7 +13,7 @@ import useQuestionReq from "../../hooks/api/useQuestionReq";
 import LoadingPage from "../LoadingPage";
 import { useLocation, useNavigate } from "react-router-dom";
 import RequestErrorPage from "../RequestErrorPage";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import constants from "../../configs/constants";
 import { red } from "@mui/material/colors";
@@ -46,7 +46,6 @@ const AddQuestionPage = () => {
     },
   });
 
-  //
   const { mutate: addQuestion } = useAddQuestion(
     onAddQuestionSuccess,
     onAddQuestionError
@@ -113,7 +112,14 @@ const AddQuestionPage = () => {
   const handleClear = () => {
     console.log("handling clear");
   };
+  // Redirect to login page if user is not authenticated
 
+  // if (!auth?.token) {
+  //   navigate("/login");
+  //   return null; // Redirect to login page// Return null to prevent further rendering
+  // }
+
+  //
   // console.log("COURSES LIST", coursesList);
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
