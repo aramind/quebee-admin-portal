@@ -14,7 +14,13 @@ const Question = ({ control }) => {
           control={control}
           name="question"
           render={({ field }) => (
-            <TextField fullWidth {...field} multiline onBlur={field.onBlur} />
+            <TextField
+              fullWidth
+              {...field}
+              multiline
+              onBlur={field.onBlur}
+              minRows={3}
+            />
           )}
         />
       </Stack>

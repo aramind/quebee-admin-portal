@@ -45,6 +45,7 @@ const Choices = ({ control, defaultValues }) => {
                       fullWidth
                       {...field}
                       multiline
+                      minRows={2}
                       // onBlur={field.onBlur}
                     />
                   )}

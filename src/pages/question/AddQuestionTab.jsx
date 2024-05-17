@@ -17,6 +17,7 @@ import useCourseReq from "../../hooks/api/useCourseReq";
 import useApiGet from "../../hooks/api/useApiGet";
 import { DevTool } from "@hookform/devtools";
 import { blue, grey, red } from "@mui/material/colors";
+import QuestionSection from "../add-question-page/QuestionSection";
 
 const AddQuestionTab = () => {
   const styles = useStyles();
@@ -71,7 +72,7 @@ const AddQuestionTab = () => {
             spacing={1.5}
             flex={1}
           >
-            <Stack direction="row" spacing={1.5}>
+            <Stack direction="row" spacing={1}>
               <SelectDb control={control} />
               <ControlledTextField name="code" label="code" control={control} />
             </Stack>
@@ -160,8 +161,9 @@ const AddQuestionTab = () => {
             />
           </Stack>
           <br />
-          <Stack className="outlined2" flex={1}>
-            <QSection control={control} />
+          <Stack className="outlined2" flex={2}>
+            {/* <QSection control={control} /> */}
+            <QuestionSection control={control} />
           </Stack>
         </Stack>
         <DevTool control={control} />
