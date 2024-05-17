@@ -11,6 +11,7 @@ import ManageUserPage from "./pages/manage-user-page/ManageUserPage";
 import ManageCoursePage from "./pages/manage-course-page/ManageCoursePage";
 import CoursePage from "./pages/course/CoursePage";
 import QuestionPage from "./pages/question/QuestionPage";
+import AddQuestionPage from "./pages/add-question-page/AddQuestionPage";
 
 const combinedRouter = createBrowserRouter([
   {
@@ -96,8 +97,8 @@ const combinedRouter = createBrowserRouter([
       },
       {
         path: "",
-        element: <LandingPage />,
-        // element: <AddQuestionPage />,
+        // element: <LandingPage />,
+        element: <AddQuestionPage />,
       },
     ],
   },
