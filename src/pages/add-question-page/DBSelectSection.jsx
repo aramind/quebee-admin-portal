@@ -1,8 +1,9 @@
 import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { Box } from "@mui/material";
-import constants from "../../components/configs/constants";
+
 import ControlledSimpleSelect from "../../components/form-controlled/ControlledSimpleSelect";
+import constants from "../../configs/constants";
 
 const DBSelectSection = ({ control }) => {
   return (

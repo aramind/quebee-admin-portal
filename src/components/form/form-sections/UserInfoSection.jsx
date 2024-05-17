@@ -3,7 +3,7 @@ import React from "react";
 import RowWrapper from "../../../wrappers/RowWrapper";
 import ControlledTextField from "../../form-controlled/ControlledTextField";
 import ControlledSimpleSelect from "../../form-controlled/ControlledSimpleSelect";
-import constants from "../../configs/constants";
+import constants from "../../../configs/constants";
 
 const UserInfoSection = ({ control, title }) => {
   return (

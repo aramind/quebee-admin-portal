@@ -1,4 +1,4 @@
-import constants from "../../components/configs/constants";
+import constants from "../../configs/constants";
 import useRequest from "./useRequest";
 
 const QUESTION_URL = constants?.API_URL?.QUESTION;

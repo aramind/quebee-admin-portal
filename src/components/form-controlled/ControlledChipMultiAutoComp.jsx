@@ -14,7 +14,7 @@ const ControlledChipMultiAutoComp = ({
   textTransform,
   defaultValue,
 }) => {
-  console.log(defaultValue);
+  // console.log(defaultValue);
   const [selectedOptions, setSelectedOptions] = useState(defaultValue || []);
 
   // useEffect(() => {

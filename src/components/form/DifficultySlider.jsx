@@ -1,6 +1,6 @@
 import { Slider, Typography } from "@mui/material";
 import React from "react";
-import constants from "../configs/constants";
+import constants from "../../configs/constants";
 
 const { STEP_DIFFICULTY, MIN_DIFFICULTY, MAX_DIFFICULTY, MARKS_DIFFICULTY } =
   constants.difficultySliderConstants;

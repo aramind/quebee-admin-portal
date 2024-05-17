@@ -1,5 +1,5 @@
 import { z } from "zod";
-import constants from "../components/configs/constants";
+import constants from "../configs/constants";
 
 const userSchema = z.object({
   // employeeId: z.string(),

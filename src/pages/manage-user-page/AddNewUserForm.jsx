@@ -6,12 +6,12 @@ import FormActionButton from "../../components/form/FormActionButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userSchema from "../../schemas/user";
-import constants from "../../components/configs/constants";
 
 import useApiSend from "../../hooks/api/useApiSend";
 import useUserReq from "../../hooks/api/useUserReq";
 import { DevTool } from "@hookform/devtools";
 import UserInfoSection from "../../components/form/form-sections/UserInfoSection";
+import constants from "../../configs/constants";
 
 const initialValues = {
   role: constants.ROLES?.[0], // Initial value for role select

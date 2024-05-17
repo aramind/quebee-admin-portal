@@ -26,35 +26,36 @@ const FormContentsSection = ({ control, getValues }) => {
   const location = useLocation();
   const { get } = useCourseReq();
 
-  const {
-    data: coursesList,
-    isLoading,
-    error,
-  } = useApiGet(
-    "courses",
-    () => get("/trimmed?fields=title,acronym,subjects"),
-    {
-      refetchOnWindowFocus: true,
-      retry: 3,
-      staleTime: Infinity,
-    }
-  );
+  const coursesList = [];
+  // const {
+  //   data: coursesList,
+  //   isLoading,
+  //   error,
+  // } = useApiGet(
+  //   "courses",
+  //   () => get("/trimmed?fields=title,acronym,subjects"),
+  //   {
+  //     refetchOnWindowFocus: true,
+  //     retry: 3,
+  //     staleTime: Infinity,
+  //   }
+  // );
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
+  // if (isLoading) {
+  //   return <LoadingPage />;
+  // }
 
-  if (error) {
-    console.log(error?.response?.status);
-    const status = error?.response?.status;
-    if (status === 401 || status === 403) {
-      console.log("re logging in");
-      navigate("/login", { state: { from: location }, replace: true });
-      return;
-    } else {
-      return <RequestErrorPage error={error} />;
-    }
-  }
+  // if (error) {
+  //   console.log(error?.response?.status);
+  //   const status = error?.response?.status;
+  //   if (status === 401 || status === 403) {
+  //     console.log("re logging in");
+  //     navigate("/login", { state: { from: location }, replace: true });
+  //     return;
+  //   } else {
+  //     return <RequestErrorPage error={error} />;
+  //   }
+  // }
 
   return (
     <>

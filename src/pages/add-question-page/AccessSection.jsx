@@ -1,8 +1,8 @@
 import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-import constants from "../../components/configs/constants";
 
 import ControlledRadioGroup from "../../components/form-controlled/ControlledRadioGroup";
+import constants from "../../configs/constants";
 
 const AccessSection = ({ control }) => {
   return (

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import constants from "../components/configs/constants";
+import constants from "../configs/constants";
 
 const questionSchema = z.object({
   code: z.string().min(1, "Required"),

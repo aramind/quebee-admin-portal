@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
-import constants from "../../components/configs/constants";
+import constants from "../../configs/constants";
 
 const TagSection = ({ control, getValues }) => {
   // console.log(getValues("tags"));

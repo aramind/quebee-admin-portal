@@ -8,7 +8,6 @@ import FormActionsSection from "./FormActionsSection";
 import { DevTool } from "@hookform/devtools";
 
 import { useAddQuestion } from "../../hooks/useAddQuestion";
-import constants from "../../components/configs/constants";
 import useApiGet from "../../hooks/api/useApiGet";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
 import LoadingPage from "../LoadingPage";
@@ -16,6 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import RequestErrorPage from "../RequestErrorPage";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
+import constants from "../../configs/constants";
 
 const onAddQuestionSuccess = () => {
   alert("Question added successfully");
