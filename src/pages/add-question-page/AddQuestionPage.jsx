@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import useStyles from "../../hooks/useStyles";
 import questionSchema from "../../schemas/question";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import FormContentsSection from "./FormContentsSection";
 import FormActionsSection from "./FormActionsSection";
 import { DevTool } from "@hookform/devtools";
@@ -16,6 +16,7 @@ import RequestErrorPage from "../RequestErrorPage";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import constants from "../../configs/constants";
+import { red } from "@mui/material/colors";
 
 const onAddQuestionSuccess = () => {
   alert("Question added successfully");
@@ -116,6 +117,8 @@ const AddQuestionPage = () => {
   // console.log("COURSES LIST", coursesList);
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
+      <Typography color={red[500]}>OLD ADD QUESTION PAGE</Typography>
+      <br />
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <FormContentsSection control={control} />
         <br />
