@@ -11,14 +11,15 @@ import {
 } from "@mui/material";
 import { grey, red, teal } from "@mui/material/colors";
 import React, { useState } from "react";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import useTopicReq from "../../hooks/api/useTopicReq";
 import useApiGet from "../../hooks/api/useApiGet";
 import FormInputLabel from "../../components/form/FormInputLabel";
 import AutoStoriesTwoToneIcon from "@mui/icons-material/AutoStoriesTwoTone";
 
-const TopicSelector = ({ control, setValue }) => {
+const TopicSelector = () => {
   const [selectedTopics, setSelectedTopics] = useState([]);
+  const { setValue } = useFormContext();
   const theme = useTheme();
   const { fetchTopics } = useTopicReq();
 
@@ -43,7 +44,6 @@ const TopicSelector = ({ control, setValue }) => {
   return (
     <Controller
       name="topics"
-      control={control}
       render={({ field }) => (
         <>
           {/* <Typography>Topic(s)</Typography> */}
