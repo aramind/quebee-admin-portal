@@ -6,7 +6,7 @@ import LabelWrapper from "../../wrappers/LabelWrapper";
 const ControlledTextField = ({
   label = "",
   name,
-  control,
+  // control,
   customDefaultValue,
   tfProps,
   flex,
@@ -14,7 +14,7 @@ const ControlledTextField = ({
   return (
     <Controller
       name={name}
-      control={control}
+      // control={control}
       render={({ field }) => (
         <Stack flex={flex || 1}>
           <LabelWrapper id={name} label={label}>
