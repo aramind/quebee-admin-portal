@@ -11,6 +11,7 @@ import QuestionSection from "../add-question-page/QuestionSection";
 import TopicSelector from "./TopicSelector";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import FormWrapper from "../../wrappers/FormWrapper";
+import useFormSubmit from "../../hooks/useFormSubmit";
 
 const AddQuestionTab = () => {
   const styles = useStyles();
@@ -24,14 +25,11 @@ const AddQuestionTab = () => {
 
   const formMethods = { control, handleSubmit, setValue };
 
-  const onSubmit = (rawData) => {
-    console.log(rawData);
-    alert("SUBMIT");
+  const handleFormDataSubmit = async (rawData) => {
+    console.log("Submitting...");
   };
 
-  const onError = (err) => {
-    console.log("error submitting form", err);
-  };
+  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
   return (
     <FormWrapper formMethods={formMethods}>
@@ -41,15 +39,14 @@ const AddQuestionTab = () => {
         sx={styles.tabContainer}
         disableGutters
       >
-        <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
+        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
           <Stack direction={{ md: "row" }} spacing={1.5}>
             <Stack spacing={1.5} flex={1}>
               <Stack direction="row" spacing={1}>
-                {/* <SelectDb control={control} /> */}
                 <ControlledTextField name="code" label="code" />
               </Stack>
               <ElevatedSectionWrapper>
-                <TopicSelector control={control} setValue={setValue} />
+                <TopicSelector />
               </ElevatedSectionWrapper>
               {/* <TopicSelectorV2 control={control} /> */}
 
