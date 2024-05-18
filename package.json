@@ -5,6 +5,8 @@
   "dependencies": {
     "@fontsource/roboto": "^5.0.8",
     "@hookform/resolvers": "^3.3.4",
+    "@mdi/js": "^7.4.47",
+    "@mdi/react": "^1.6.1",
     "@mui/icons-material": "^5.15.11",
     "@mui/lab": "^5.0.0-alpha.165",
     "@mui/material": "^5.15.11",

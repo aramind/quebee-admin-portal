@@ -72,6 +72,14 @@ const auroraTheme = createTheme({
     chip: "Inter",
   },
   components: {
+    MuiAutoComplete: {
+      styleOverrides: {
+        inputRoot: {
+          padding: "6px",
+          backgroundColor: red[100],
+        },
+      },
+    },
     MuiSelect: {
       styleOverrides: {
         root: {
@@ -110,6 +118,7 @@ const auroraTheme = createTheme({
       styleOverrides: {
         root: {
           fontSize: "1rem",
+          // backgroundColor: red[100],
         },
       },
     },

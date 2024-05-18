@@ -2,7 +2,6 @@ import { Container, Stack } from "@mui/material";
 import React from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
-import SelectDb from "../../components/form-finished/SelectDb";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 
 import { DevTool } from "@hookform/devtools";
@@ -10,16 +9,20 @@ import { DevTool } from "@hookform/devtools";
 import QuestionSection from "../add-question-page/QuestionSection";
 
 import TopicSelector from "./TopicSelector";
+import TopicSelectorV2 from "./TopicSelectorV2";
+import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 
 const AddQuestionTab = () => {
   const styles = useStyles();
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     mode: "onTouched",
     defaultValues: {
-      courses: [],
+      topics: [],
     },
   });
+
+  const formMethods = { control, handleSubmit, setValue };
 
   const onSubmit = (rawData) => {
     console.log(rawData);
@@ -41,12 +44,14 @@ const AddQuestionTab = () => {
         <Stack direction={{ md: "row" }} spacing={1.5}>
           <Stack spacing={1.5} flex={1}>
             <Stack direction="row" spacing={1}>
-              <SelectDb control={control} />
+              {/* <SelectDb control={control} /> */}
               <ControlledTextField name="code" label="code" control={control} />
             </Stack>
-            <>
-              <TopicSelector control={control} />
-            </>
+            <ElevatedSectionWrapper>
+              <TopicSelector control={control} setValue={setValue} />
+            </ElevatedSectionWrapper>
+            {/* <TopicSelectorV2 control={control} /> */}
+
             <br />
           </Stack>
           <br />

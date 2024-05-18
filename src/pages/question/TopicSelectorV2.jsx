@@ -1,24 +1,19 @@
 import {
   Autocomplete,
-  Box,
-  Button,
-  Chip,
   ListSubheader,
   Stack,
   TextField,
   Typography,
   useTheme,
 } from "@mui/material";
-import { grey, red, teal } from "@mui/material/colors";
-import React, { useState } from "react";
+import { grey, red } from "@mui/material/colors";
+import React from "react";
 import { Controller } from "react-hook-form";
 import useTopicReq from "../../hooks/api/useTopicReq";
 import useApiGet from "../../hooks/api/useApiGet";
 import FormInputLabel from "../../components/form/FormInputLabel";
-import AutoStoriesTwoToneIcon from "@mui/icons-material/AutoStoriesTwoTone";
 
-const TopicSelector = ({ control, setValue }) => {
-  const [selectedTopics, setSelectedTopics] = useState([]);
+const TopicSelectorV2 = ({ control }) => {
   const theme = useTheme();
   const { fetchTopics } = useTopicReq();
 
@@ -32,14 +27,6 @@ const TopicSelector = ({ control, setValue }) => {
     }
   );
 
-  const handleRemoveTopic = (topicToDelete) => {
-    const updatedTopics = selectedTopics.filter(
-      (topic) => topic?.title !== topicToDelete?.title
-    );
-
-    setSelectedTopics(updatedTopics);
-    setValue("topics", updatedTopics);
-  };
   return (
     <Controller
       name="topics"
@@ -59,15 +46,12 @@ const TopicSelector = ({ control, setValue }) => {
               }
               getOptionLabel={(topic) => topic?.title}
               filterSelectedOptions
-              value={selectedTopics || []}
-              onChange={(e, value) => {
-                setSelectedTopics(value);
-                setValue("topics", value);
+              value={field.value}
+              onChange={(e, newValue) => {
+                field.onChange(newValue);
               }}
               groupBy={(topic) => topic.title[0].toUpperCase()}
-              renderInput={(params) => (
-                <TextField {...params} placeholder="Select topic here..." />
-              )}
+              renderInput={(params) => <TextField {...params} />}
               renderGroup={(params) => (
                 <li key={params.key}>
                   <ListSubheader disableSticky>
@@ -94,55 +78,6 @@ const TopicSelector = ({ control, setValue }) => {
                 ...localStyle.chipOnBox,
               }}
             />
-            <Box height="8px" />
-            <Stack
-              // spacing={1}
-              sx={{
-                display: "flex",
-                alignItems: "flex-start",
-                overflowY: "auto",
-              }}
-              height="200px"
-            >
-              {selectedTopics.length > 0 &&
-                selectedTopics.map((topic, i) => (
-                  <Chip
-                    // size="small"
-                    key={i}
-                    onDelete={() => handleRemoveTopic(topic)}
-                    label={
-                      <Stack direction="row" spacing={1} alignItems="center">
-                        <AutoStoriesTwoToneIcon
-                          fontSize="small"
-                          color="primary"
-                        />
-                        <Typography>{topic.title}</Typography>
-                      </Stack>
-                    }
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      bgcolor: "transparent",
-                      fontSize: "1rem",
-                      borderRadius: "5px",
-                      "&:hover": {
-                        bgcolor: teal[50],
-                      },
-                      "& .MuiChip-label": {
-                        alignItems: "center",
-                        // outline: "1px solid red",
-                      },
-                    }}
-                  />
-                ))}
-            </Stack>
-            <Box height="8px" />
-            {selectedTopics.length > 0 && (
-              <Button variant="text" onClick={() => setSelectedTopics([])}>
-                Clear All
-              </Button>
-            )}
           </Stack>
         </>
       )}
@@ -150,7 +85,7 @@ const TopicSelector = ({ control, setValue }) => {
   );
 };
 
-export default TopicSelector;
+export default TopicSelectorV2;
 
 // localStyles
 const localStyle = {
@@ -176,9 +111,7 @@ const localStyle = {
     },
     "& .MuiChip-root": {
       // bgcolor: blue[200],
-
-      // bgcolor: (theme) => theme.palette.tertiary.lightest,
-      display: "none",
+      bgcolor: (theme) => theme.palette.tertiary.lightest,
     },
     "& .MuiInputBase": {
       height: "725px",
