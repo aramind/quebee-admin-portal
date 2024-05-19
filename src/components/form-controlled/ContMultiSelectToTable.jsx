@@ -45,8 +45,8 @@ const ContMultiSelectToTable = ({
     <Controller
       name={nameForController}
       render={({ field }) => (
-        <>
-          <Stack flex={1}>
+        <Stack height="360px">
+          <Stack spacing={0.3}>
             <FormInputLabel label={label} />
             <Autocomplete
               {...field}
@@ -89,7 +89,8 @@ const ContMultiSelectToTable = ({
           </Stack>
           <Stack
             sx={localStyles.tableContainer}
-            my={1.5}
+            mt={2}
+            flex={1}
             // className="outlined"
             boxSizing="border-box"
           >
@@ -111,13 +112,12 @@ const ContMultiSelectToTable = ({
                 />
               ))}
           </Stack>
-
-          {selected.length > 1 && (
-            <Stack direction="row" justifyContent="end" pr={1}>
+          <Stack direction="row" justifyContent="end">
+            {selected.length > 1 && (
               <DangerBtn label="Clear All" onClick={handleClear} />
-            </Stack>
-          )}
-        </>
+            )}
+          </Stack>
+        </Stack>
       )}
     />
   );
