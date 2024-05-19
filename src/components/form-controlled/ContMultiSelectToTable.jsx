@@ -45,7 +45,7 @@ const ContMultiSelectToTable = ({
     <Controller
       name={nameForController}
       render={({ field }) => (
-        <Stack height="360px">
+        <Stack height="280px">
           <Stack spacing={0.3}>
             <FormInputLabel label={label} />
             <Autocomplete
@@ -87,13 +87,7 @@ const ContMultiSelectToTable = ({
               }}
             />
           </Stack>
-          <Stack
-            sx={localStyles.tableContainer}
-            mt={2}
-            flex={1}
-            // className="outlined"
-            boxSizing="border-box"
-          >
+          <Stack sx={localStyles.tableContainer}>
             {selected?.length > 0 &&
               selected.map((item, i) => (
                 <Chip
@@ -144,8 +138,9 @@ const localStyles = {
   tableContainer: {
     display: "flex",
     alignItems: "flex-start",
-    overFlowY: "auto",
-    height: "240px",
+    overflowY: "auto",
+    height: "200px",
+    my: "1rem",
   },
   optionsGroupHead: {
     color: (theme) => theme.palette.primary.dark,

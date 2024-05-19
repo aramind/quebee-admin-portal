@@ -3,7 +3,6 @@ import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DBSelectSection from "./DBSelectSection";
 import AccessSection from "./AccessSection";
-import DifficultySection from "./DifficultySection";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import useApiGet from "../../hooks/api/useApiGet";
 import useCourseReq from "../../hooks/api/useCourseReq";
@@ -15,6 +14,7 @@ import TypeSection from "./TypeSection";
 import NatureSection from "./NatureSection";
 import QuestionSection from "./QuestionSection";
 import TagSection from "./TagSection";
+import DifficultySection from "../question/DifficultySection";
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 
 const prepCoursesList = (courses) => {
