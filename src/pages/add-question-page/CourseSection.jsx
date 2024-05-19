@@ -8,14 +8,14 @@ const CourseSection = ({ control }) => {
     <ElevatedSectionWrapper>
       {/* <ControlledChipMultiSelect
                     name="courses"
-                    control={control}
+                    // control={control}
                     id="controlled-multi-select"
                     label="course(s)"
                     options={constants.COURSES}
                   /> */}
       <ControlledChipMultiAutoComp
         name="courses"
-        control={control}
+        // control={control}
         id="controlled-multi-auto-comp"
         label="course(s)"
         options={constants.COURSES}

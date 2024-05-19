@@ -28,7 +28,7 @@ const ControlledLabelledTextField = ({
       </InputLabel>
       <Controller
         name={id}
-        control={control}
+        // control={control}
         defaultValue={defaultValue}
         render={({ field }) => (
           <TextField

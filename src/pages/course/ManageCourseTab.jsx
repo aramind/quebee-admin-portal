@@ -1,74 +1,72 @@
-import { Container, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
-import { useForm, useFormContext } from "react-hook-form";
-import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-import { grey } from "@mui/material/colors";
-import useSubjReq from "../../hooks/api/useSubReq";
 import useApiGet from "../../hooks/api/useApiGet";
+import useCourseReq from "../../hooks/api/useCourseReq";
+import { useForm } from "react-hook-form";
+import FormWrapper from "../../wrappers/FormWrapper";
+import { Container, Stack } from "@mui/material";
+import useFormSubmit from "../../hooks/useFormSubmit";
+import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
-import SubjectInfoSection from "./SubjectInfoSection";
+import { grey } from "@mui/material/colors";
+import CourseDetailsSection from "./CourseDetailsSection";
+import ACSandDOS from "./ACSandDOS";
 import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
-import ACSandDOS from "./ACSandDOS";
-import FormWrapper from "../../wrappers/FormWrapper";
-import useFormSubmit from "../../hooks/useFormSubmit";
 
-const ManageSubjectsTab = () => {
-  const [selectedSubject, setSelectedSubject] = useState(null);
+const ManageCourseTab = () => {
   const [initialValues, setInitialValues] = useState({});
-
+  const [value, setValue] = useState(null);
   const styles = useStyles();
-  const { fetchSubjects } = useSubjReq();
+  const { get } = useCourseReq();
 
   const {
-    data: subjectsList,
+    data: coursesList,
     // isLoading,
     // error,
-  } = useApiGet("subjects", () => fetchSubjects({ params: "/trimmed" }), {
+  } = useApiGet("courses", () => get("/trimmed"), {
     refetchOnWindowFocus: true,
     retry: 3,
   });
 
-  console.log(subjectsList);
-  const { handleSubmit, control, reset } = useForm({
+  const { control, handleSubmit, reset } = useForm({
+    // resolver: zodResolver(courseSchema),
     mode: "onTouched",
     defaultValues: initialValues,
   });
 
-  const formMethods = { handleSubmit, control, reset };
+  const formMethods = { control, handleSubmit };
 
   useEffect(() => {
     setInitialValues({
-      code: selectedSubject?.code,
-      acronym: selectedSubject?.acronym,
-      title: selectedSubject?.title,
-      description: selectedSubject?.description,
-      topics: selectedSubject?.topics,
-      status: selectedSubject?.status,
-      isHidden: selectedSubject?.isHidden ? "yes" : "no",
-      creator: selectedSubject?.creator,
-      createdAt: selectedSubject?.createdAt,
-      version: selectedSubject?.version,
+      code: value?.code,
+      acronym: value?.acronym,
+      database: value?.database,
+      title: value?.title,
+      description: value?.description,
+      remarks: value?.remarks,
+      subjects: value?.subjects,
+      status: value?.status,
+      isHidden: value?.isHidden ? "yes" : "no",
+      creator: value?.creator,
+      createdAt: value?.createdAt,
+      version: value?.version,
     });
-  }, [selectedSubject]);
+  }, [value]);
 
   useEffect(() => {
-    // Update form values when initialValues change
     reset(initialValues);
   }, [initialValues, reset]);
-
-  const handleFormDataSubmit = (rawData) => {
-    alert("CLICKED SUBMIT", rawData);
-  };
 
   const handleUndo = () => {
     console.log("CLICKED UNDO");
   };
 
+  const handleFormDataSubmit = async (rawData) => {
+    alert("CLICKED SUBMIT", rawData);
+  };
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
-
   return (
     <FormWrapper formMethods={formMethods}>
       <Container
@@ -76,25 +74,23 @@ const ManageSubjectsTab = () => {
         maxWidth="xl"
         sx={styles.tabContainer}
         disableGutters
-        width="100vw"
       >
         <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
           <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
             <AutocompleteSelector
-              value={selectedSubject}
-              setValue={setSelectedSubject}
-              options={subjectsList}
-              label="subjects"
+              value={value}
+              setValue={setValue}
+              options={coursesList}
+              label="courses"
             />
           </ElevatedSectionWrapper>
           <br />
           <Stack direction="row" spacing={1.5}>
-            <ElevatedSectionWrapper flex={1} px={{ xs: "20px", md: "50px" }}>
-              <SubjectInfoSection
-                // control={control}
-                options={initialValues?.topics?.map((topic) => topic.title)}
+            <Stack flex={1}>
+              <CourseDetailsSection
+              // control={control}
               />
-            </ElevatedSectionWrapper>
+            </Stack>
             <Stack spacing={1.5} justifyContent="flex-start" width="180px">
               <ACSandDOS
                 // control={control}
@@ -102,9 +98,10 @@ const ManageSubjectsTab = () => {
               />
             </Stack>
           </Stack>
-          <br />
-          {/* <DevTool control={control} /> */}
 
+          <br />
+
+          {/* <DevTool control={control} /> */}
           <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
             <FormActionButton
               label="undo changes"
@@ -123,4 +120,4 @@ const ManageSubjectsTab = () => {
   );
 };
 
-export default ManageSubjectsTab;
+export default ManageCourseTab;

@@ -8,7 +8,6 @@ const DynamicFields = ({ title }) => {
     mode: "onBlur",
   });
 
-  const { errors } = formState;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "contents",
@@ -19,39 +18,40 @@ const DynamicFields = ({ title }) => {
     console.log(contentsArray);
     return contentsArray;
   };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Stack spacing={1}>
-        <Typography variant="body" className="uppercase ">
-          {title}
-        </Typography>
-        {fields.map((field, index) => {
-          return (
-            <Stack spacing={1} key={field.id}>
-              <Stack spacing={1} direction="row">
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  {...register(`contents[${index}].content`)}
-                />
-                <Button
-                  sx={{ flex: "20%" }}
-                  variant="contained"
-                  onClick={() => remove(index)}
-                >
-                  Remove
-                </Button>
-              </Stack>
+    // <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <Stack spacing={1}>
+      <Typography variant="body" className="uppercase ">
+        {title}
+      </Typography>
+      {fields.map((field, index) => {
+        return (
+          <Stack spacing={1} key={field.id}>
+            <Stack spacing={1} direction="row">
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                {...register(`contents[${index}].content`)}
+              />
+              <Button
+                sx={{ flex: "20%" }}
+                variant="contained"
+                onClick={() => remove(index)}
+              >
+                Remove
+              </Button>
             </Stack>
-          );
-        })}
-        <Button variant="text" onClick={() => append()}>
-          Add
-        </Button>
-        <Button type="submit">SAVE</Button>
-      </Stack>
-    </form>
+          </Stack>
+        );
+      })}
+      <Button variant="text" onClick={() => append()}>
+        Add
+      </Button>
+      <Button type="submit">SAVE</Button>
+    </Stack>
+    // </form>
   );
 };
 

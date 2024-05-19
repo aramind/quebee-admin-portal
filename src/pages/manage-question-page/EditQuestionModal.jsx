@@ -206,7 +206,7 @@ const EditQuestionModal = ({
               >
                 <BoxWrapper>
                   <FormContentsSection
-                    control={control}
+                    // control={control}
                     // defaultValues={defaultValues}
                     // getValues={getValues}
                     getValues={getValues}
@@ -224,7 +224,7 @@ const EditQuestionModal = ({
           <DialogActionButton label="save" onClickHandler={handleSave} />
         </DialogActions>
       </Dialog>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </form>
   );
 };

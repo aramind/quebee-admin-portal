@@ -7,13 +7,13 @@ const AvailabilityControlSection = ({ control }) => {
   return (
     <Stack spacing={1.5}>
       <ControlledRadioGroup
-        control={control}
+        // control={control}
         name="status"
         label="status"
         options={constants?.AVAILABILITY_CONTROLS_STATUSES}
       />
       <ControlledRadioGroup
-        control={control}
+        // control={control}
         name="isHidden"
         label="hide"
         options={["yes", "no"]}

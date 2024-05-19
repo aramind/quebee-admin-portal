@@ -11,7 +11,7 @@ const Question = ({ control }) => {
       </Stack>
       <Stack flex={1}>
         <Controller
-          control={control}
+          // control={control}
           name="question"
           render={({ field }) => (
             <TextField

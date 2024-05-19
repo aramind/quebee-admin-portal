@@ -40,7 +40,7 @@ const AddCoursePage = () => {
       disableGutters
     >
       <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <CourseDetailsSection control={control} />
+        <CourseDetailsSection />
         <br />
         <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
           <FormActionButton
@@ -55,7 +55,7 @@ const AddCoursePage = () => {
           />
           <FormActionButton type="submit" label="save" variant="contained" />
         </FormActionsContainer>
-        <DevTool control={control} />
+        {/* <DevTool control={control} /> */}
       </form>
     </Container>
   );

@@ -8,13 +8,28 @@ import { DevTool } from "@hookform/devtools";
 
 import QuestionSection from "../add-question-page/QuestionSection";
 
-import TopicSelector from "./TopicSelector";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import FormWrapper from "../../wrappers/FormWrapper";
 import useFormSubmit from "../../hooks/useFormSubmit";
+import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSelectToTable";
+import useApiGet from "../../hooks/api/useApiGet";
+import useTopicReq from "../../hooks/api/useTopicReq";
 
 const AddQuestionTab = () => {
   const styles = useStyles();
+  const { fetchTopics } = useTopicReq();
+
+  const { data: topicsList } = useApiGet(
+    ["topics"],
+    () => fetchTopics({ params: "/trimmed" }),
+    {
+      refetchOnWindowFocus: false,
+      retry: 3,
+      staleTime: Infinity,
+    }
+  );
+
+  console.log(topicsList);
 
   const { control, handleSubmit, setValue } = useForm({
     mode: "onTouched",
@@ -46,7 +61,12 @@ const AddQuestionTab = () => {
                 <ControlledTextField name="code" label="code" />
               </Stack>
               <ElevatedSectionWrapper>
-                <TopicSelector />
+                {/* <TopicSelector /> */}
+                <ContMultiSelectToTable
+                  objOptionsWithTitles={topicsList || []}
+                  nameForController="topics"
+                  label="Topic(s)"
+                />
               </ElevatedSectionWrapper>
               {/* <TopicSelectorV2 control={control} /> */}
 
@@ -54,10 +74,10 @@ const AddQuestionTab = () => {
             </Stack>
             <br />
             <Stack className="outlined2" flex={2}>
-              <QuestionSection control={control} />
+              {/* <QuestionSection control={control} /> */}
             </Stack>
           </Stack>
-          <DevTool control={control} />
+          {/* <DevTool control={control} /> */}
         </form>
       </Container>
     </FormWrapper>

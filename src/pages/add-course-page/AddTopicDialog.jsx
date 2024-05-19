@@ -17,6 +17,8 @@ import DialogActionButton from "../../components/form/DialogActionButton";
 import TopicInfoSection from "../course/TopicInfoSection";
 import useTopicReq from "../../hooks/api/useTopicReq";
 import useApiSend from "../../hooks/api/useApiSend";
+import useFormSubmit from "../../hooks/useFormSubmit";
+import FormWrapper from "../../wrappers/FormWrapper";
 
 function PaperComponent(props) {
   return (
@@ -45,58 +47,60 @@ const AddTopicDialog = ({ open, setOpen, title = "", data }) => {
     mode: "onTouched",
   });
 
+  const formMethods = { control };
+
   const handleClose = (e) => {
     e.stopPropagation();
   };
 
-  const onSubmit = async (data) => {
+  const handleFormDataSubmit = async (data) => {
     console.log(data);
     alert("SUBMITTED");
     addTopic({ data: data });
   };
 
-  const onError = (err) => {
-    alert("Encountered an error. Try again.");
-  };
+  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
   return (
     <>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
-        maxWidth="lg"
-        fullWidth
-      >
-        <DialogTitle sx={styles.dialog.title} id="draggable-dialog-title">
-          {title}
-        </DialogTitle>
-        <DialogContent>
-          <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-            <Box>
-              <ElevatedSectionWrapper>
-                <TopicInfoSection control={control} />
-              </ElevatedSectionWrapper>
-            </Box>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <DialogActionsContainer>
-            <DialogActionButton
-              label="cancel"
-              onClickHandler={() => setOpen(false)}
-            />
-            <DialogActionButton
-              label="save"
-              onClickHandler={() => {
-                handleSubmit(onSubmit, onError)();
-                setOpen(false);
-              }}
-            />
-          </DialogActionsContainer>
-        </DialogActions>
-      </Dialog>
+      <FormWrapper formMethods={formMethods}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+          maxWidth="lg"
+          fullWidth
+        >
+          <DialogTitle sx={styles.dialog.title} id="draggable-dialog-title">
+            {title}
+          </DialogTitle>
+          <DialogContent>
+            <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+              <Box>
+                <ElevatedSectionWrapper>
+                  <TopicInfoSection />
+                </ElevatedSectionWrapper>
+              </Box>
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <DialogActionsContainer>
+              <DialogActionButton
+                label="cancel"
+                onClickHandler={() => setOpen(false)}
+              />
+              <DialogActionButton
+                label="save"
+                onClickHandler={() => {
+                  handleSubmit(handleFormSubmit)();
+                  setOpen(false);
+                }}
+              />
+            </DialogActionsContainer>
+          </DialogActions>
+        </Dialog>
+      </FormWrapper>
     </>
   );
 };

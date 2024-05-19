@@ -4,38 +4,27 @@ import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import SelectDb from "../../components/form-finished/SelectDb";
 
-const MetaInfoSection = ({ control }) => {
+const MetaInfoSection = () => {
   return (
     <>
       <Stack direction="row" spacing={1.5} alignItems="start">
         <ElevatedSectionWrapper>
           <Stack direction="row" spacing={1.5}>
-            <SelectDb control={control} />
-            <ControlledTextField name="code" label="code" control={control} />
+            <SelectDb />
+            <ControlledTextField name="code" label="code" c />
           </Stack>
         </ElevatedSectionWrapper>
 
         <ElevatedSectionWrapper flex={1.5}>
           <Stack direction="row" spacing={1.5}>
-            <ControlledTextField
-              name="acronym"
-              label="acronym"
-              control={control}
-            />
-
-            <ControlledTextField
-              name="title"
-              label="title"
-              control={control}
-              flex={2.5}
-            />
+            <ControlledTextField name="acronym" label="acronym" />
+            <ControlledTextField name="title" label="title" flex={2.5} />
           </Stack>
         </ElevatedSectionWrapper>
         <ElevatedSectionWrapper flex={1.5}>
           <ControlledTextField
             label="description"
             name="description"
-            control={control}
             tfProps={{ multiline: true, minRows: 1 }}
           />
         </ElevatedSectionWrapper>

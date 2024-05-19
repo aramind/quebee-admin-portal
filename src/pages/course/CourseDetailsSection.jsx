@@ -10,11 +10,11 @@ import useSubjReq from "../../hooks/api/useSubReq";
 import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
 import useApiGet from "../../hooks/api/useApiGet";
 import LoadingPage from "../LoadingPage";
-
-const CourseDetailsSection = ({ control }) => {
+const CourseDetailsSection = () => {
   const [openAddSubject, setOpenAddSubject] = useState(false);
   const { fetchSubjects } = useSubjReq();
   const handleUnAuthError = useErrorHandlerUnAuthReq();
+
   const {
     data: subjectsList,
     isLoading,
@@ -33,10 +33,9 @@ const CourseDetailsSection = ({ control }) => {
   }
   return (
     <>
-      <MetaInfoSection control={control} />
+      <MetaInfoSection />
       <br />
-
-      <SubjectSection control={control} subjectsList={subjectsList} />
+      <SubjectSection subjectsList={subjectsList} />
       <Stack
         // className="outlined"
         my={1}
@@ -61,7 +60,7 @@ const CourseDetailsSection = ({ control }) => {
       </Stack>
       <br />
       <ElevatedSectionWrapper>
-        <ControlledTextField name="remarks" label="remarks" control={control} />
+        <ControlledTextField name="remarks" label="remarks" />
       </ElevatedSectionWrapper>
       <AddSubjectDialog
         open={openAddSubject}

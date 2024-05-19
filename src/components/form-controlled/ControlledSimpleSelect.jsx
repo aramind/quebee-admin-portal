@@ -8,7 +8,7 @@ const ControlledSimpleSelect = ({ label, name, control, options, flex }) => {
   return (
     <Controller
       name={name}
-      control={control}
+      // control={control}
       render={({ field }) => (
         <Stack flex={flex || 1}>
           <LabelledSelect

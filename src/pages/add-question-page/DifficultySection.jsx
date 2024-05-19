@@ -12,7 +12,7 @@ const DifficultySection = ({ control }) => {
       <Controller
         id="difficulty-slider"
         name="difficulty"
-        control={control}
+        // control={control}
         defaultValue={3}
         render={({ field }) => (
           <Box

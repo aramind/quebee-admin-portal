@@ -7,7 +7,7 @@ const ControlledRadioGroup = ({ label, name, control, options, row }) => {
   return (
     <Controller
       name={name}
-      control={control}
+      // control={control}
       render={({ field }) => (
         <LabelWrapper id={label} label={label}>
           <RadGroup field={field} options={options} row={row} />

@@ -18,7 +18,7 @@ const Choices = ({ control, defaultValues }) => {
   return (
     <Controller
       name="correctAnswer"
-      control={control}
+      // control={control}
       render={({ field }) => (
         <Stack height="100%">
           <RadioGroup
@@ -37,7 +37,7 @@ const Choices = ({ control, defaultValues }) => {
                   label={<ChoicesLabel label={choice} fullH />}
                 />
                 <Controller
-                  control={control}
+                  // control={control}
                   // name={`choices[${choice}]`}
                   name={choice}
                   render={({ field }) => (

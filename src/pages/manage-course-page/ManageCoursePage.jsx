@@ -12,6 +12,8 @@ import { grey } from "@mui/material/colors";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
 import ACSandDOS from "../course/ACSandDOS";
 import CourseDetailsSection from "../course/CourseDetailsSection";
+import useFormSubmit from "../../hooks/useFormSubmit";
+import FormWrapper from "../../wrappers/FormWrapper";
 
 const ManageCoursePage = () => {
   const [value, setValue] = useState(null);
@@ -35,6 +37,7 @@ const ManageCoursePage = () => {
     defaultValues: initialValues,
   });
 
+  const formMethods = { control, reset };
   // console.log("COURSES", coursesList);
 
   useEffect(() => {
@@ -58,61 +61,66 @@ const ManageCoursePage = () => {
     reset(initialValues);
   }, [initialValues, reset]);
 
-  const onSubmit = (rawData) => {
+  const handleFormDataSubmit = (rawData) => {
     alert("CLICKED SUBMIT", rawData);
-  };
-
-  const onError = (err) => {
-    alert("Encountered an error updating user. Please try again later", err);
   };
 
   const handleUndo = () => {
     console.log("CLICKED UNDO");
   };
 
+  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
+
   return (
-    <Container
-      component="main"
-      maxWidth="xl"
-      sx={styles.tabContainer}
-      disableGutters
-    >
-      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
-          <AutocompleteSelector
-            value={value}
-            setValue={setValue}
-            options={coursesList}
-            label="courses"
-          />
-        </ElevatedSectionWrapper>
-        <br />
-        <Stack direction="row" spacing={1.5}>
-          <Stack flex={1}>
-            <CourseDetailsSection control={control} />
+    <FormWrapper formMethods={formMethods}>
+      <Container
+        component="main"
+        maxWidth="xl"
+        sx={styles.tabContainer}
+        disableGutters
+      >
+        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+          <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
+            <AutocompleteSelector
+              value={value}
+              setValue={setValue}
+              options={coursesList}
+              label="courses"
+            />
+          </ElevatedSectionWrapper>
+          <br />
+          <Stack direction="row" spacing={1.5}>
+            <Stack flex={1}>
+              <CourseDetailsSection
+              // control={control}
+              />
+            </Stack>
+            <Stack spacing={1.5} justifyContent="flex-start" width="180px">
+              <ACSandDOS
+                // control={control}
+                values={initialValues}
+              />
+            </Stack>
           </Stack>
-          <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-            <ACSandDOS control={control} values={initialValues} />
-          </Stack>
-        </Stack>
 
-        <br />
+          <br />
 
-        <DevTool control={control} />
-        <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-          <FormActionButton
-            label="undo changes"
-            onClickHandler={handleUndo}
-            variant="outlined"
-          />
-          <FormActionButton
-            type="submit"
-            label="save changes"
-            variant="contained"
-          />
-        </FormActionsContainer>
-      </form>
-    </Container>
+          {/* <DevTool control={control} /> */}
+          <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+            <FormActionButton
+              label="undo changes"
+              onClickHandler={handleUndo}
+              variant="outlined"
+            />
+            <FormActionButton
+              type="submit"
+              label="save changes"
+              variant="contained"
+            />
+          </FormActionsContainer>
+        </form>
+      </Container>
+    </FormWrapper>
   );
 };
 

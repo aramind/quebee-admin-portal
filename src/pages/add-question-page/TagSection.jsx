@@ -11,7 +11,7 @@ const TagSection = ({ control, getValues }) => {
       <ElevatedSectionWrapper fullH={true}>
         <ControlledChipMultiAutoComp
           name="tags"
-          control={control}
+          // control={control}
           id="controlled-multi-select"
           label="select tag(s)"
           options={constants.TAGS}

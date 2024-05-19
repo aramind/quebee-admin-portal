@@ -27,7 +27,7 @@ const ControlledAutocompleteV2 = ({
   return (
     <>
       <Controller
-        control={control}
+        // control={control}
         name={name}
         render={({ field }) => (
           <Autocomplete

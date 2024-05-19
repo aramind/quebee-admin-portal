@@ -13,6 +13,8 @@ import TopicInfoSection from "./TopicInfoSection";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import useApiSend from "../../hooks/api/useApiSend";
+import useFormSubmit from "../../hooks/useFormSubmit";
+import FormWrapper from "../../wrappers/FormWrapper";
 
 const ManageTopicsTab = () => {
   const [selected, setSelected] = useState(null);
@@ -42,6 +44,8 @@ const ManageTopicsTab = () => {
     defaultValues: initialValues,
   });
 
+  const formMethods = { handleSubmit, control, reset };
+
   useEffect(() => {
     setInitialValues({
       code: selected?.code,
@@ -63,7 +67,7 @@ const ManageTopicsTab = () => {
     reset(initialValues);
   }, [initialValues, reset]);
 
-  const onSubmit = (rawData) => {
+  const handleFormDataSubmit = (rawData) => {
     const convertedIsHidden = rawData?.isHidden === "yes";
     const updatedData = {
       ...rawData,
@@ -80,56 +84,62 @@ const ManageTopicsTab = () => {
     }
   };
 
-  const onError = (err) => {
-    alert("Encountered an error updating user. Please try again later", err);
-  };
-
   const handleUndo = () => {
     console.log("CLICKED UNDO");
   };
 
+  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
+
   return (
-    <Container
-      component="main"
-      maxWidth="xl"
-      sx={styles.tabContainer}
-      disableGutters
-      width="100vw"
-    >
-      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
-          <AutocompleteSelector
-            value={selected}
-            setValue={setSelected}
-            options={topicsList}
-            label="topics"
-          />
-        </ElevatedSectionWrapper>
-        <br />
-        <Stack direction="row" spacing={1.5}>
-          <ElevatedSectionWrapper flex={1} px={{ xs: "20px", md: "50px" }}>
-            <TopicInfoSection control={control} />
+    <FormWrapper formMethods={formMethods}>
+      <Container
+        component="main"
+        maxWidth="xl"
+        sx={styles.tabContainer}
+        disableGutters
+        width="100vw"
+      >
+        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+          <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
+            <AutocompleteSelector
+              value={selected}
+              setValue={setSelected}
+              options={topicsList}
+              label="topics"
+            />
           </ElevatedSectionWrapper>
-          <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-            <ACSandDOS control={control} values={initialValues} />
+          <br />
+          <Stack direction="row" spacing={1.5}>
+            <ElevatedSectionWrapper flex={1} px={{ xs: "20px", md: "50px" }}>
+              <TopicInfoSection
+
+              // control={control}
+              />
+            </ElevatedSectionWrapper>
+            <Stack spacing={1.5} justifyContent="flex-start" width="180px">
+              <ACSandDOS
+                // control={control}
+                values={initialValues}
+              />
+            </Stack>
           </Stack>
-        </Stack>
-        <br />
-        <DevTool control={control} />
-        <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-          <FormActionButton
-            label="undo changes"
-            onClickHandler={handleUndo}
-            variant="outlined"
-          />
-          <FormActionButton
-            type="submit"
-            label="save changes"
-            variant="contained"
-          />
-        </FormActionsContainer>
-      </form>
-    </Container>
+          <br />
+          {/* <DevTool control={control} /> */}
+          <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+            <FormActionButton
+              label="undo changes"
+              onClickHandler={handleUndo}
+              variant="outlined"
+            />
+            <FormActionButton
+              type="submit"
+              label="save changes"
+              variant="contained"
+            />
+          </FormActionsContainer>
+        </form>
+      </Container>
+    </FormWrapper>
   );
 };
 

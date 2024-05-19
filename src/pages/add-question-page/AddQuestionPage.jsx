@@ -17,6 +17,8 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import constants from "../../configs/constants";
 import { red } from "@mui/material/colors";
+import useFormSubmit from "../../hooks/useFormSubmit";
+import FormWrapper from "../../wrappers/FormWrapper";
 
 const onAddQuestionSuccess = () => {
   alert("Question added successfully");
@@ -46,6 +48,7 @@ const AddQuestionPage = () => {
     },
   });
 
+  const formMethods = { control };
   const { mutate: addQuestion } = useAddQuestion(
     onAddQuestionSuccess,
     onAddQuestionError
@@ -98,7 +101,7 @@ const AddQuestionPage = () => {
   };
   // form related
 
-  const onSubmit = (data) => {
+  const handleFormDataSubmit = (data) => {
     const formattedData = formatData(data);
 
     addQuestion(formattedData);
@@ -121,20 +124,27 @@ const AddQuestionPage = () => {
 
   //
   // console.log("COURSES LIST", coursesList);
+
+  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
+
   return (
-    <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
-      <Typography color={red[500]}>OLD ADD QUESTION PAGE</Typography>
-      <br />
-      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <FormContentsSection control={control} />
+    <FormWrapper formMethods={formMethods}>
+      <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
+        <Typography color={red[500]}>OLD ADD QUESTION PAGE</Typography>
         <br />
-        <FormActionsSection
-          handleClear={handleClear}
-          handleSubmit={handleSubmit}
-        />
-      </form>
-      <DevTool control={control} />
-    </Container>
+        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+          <FormContentsSection
+          // control={control}
+          />
+          <br />
+          <FormActionsSection
+            handleClear={handleClear}
+            handleSubmit={handleSubmit}
+          />
+        </form>
+        {/* <DevTool control={control} /> */}
+      </Container>
+    </FormWrapper>
   );
 };
 

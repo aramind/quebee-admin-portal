@@ -30,7 +30,7 @@ const TopicSelectorV2 = ({ control }) => {
   return (
     <Controller
       name="topics"
-      control={control}
+      // control={control}
       render={({ field }) => (
         <>
           {/* <Typography>Topic(s)</Typography> */}

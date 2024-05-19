@@ -16,7 +16,7 @@ const ControlledSimpleSelect = ({
     <Controller
       name={name}
       id={id}
-      control={control}
+      // control={control}
       render={({ field }) => (
         <LabelledSelect
           label={label}

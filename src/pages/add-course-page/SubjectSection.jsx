@@ -41,7 +41,7 @@ const SubjectSection = ({ control, subjectsList }) => {
             </Button>
 
             <ControlledAutocompleteV2
-              control={control}
+              // control={control}
               name={`subjects[${subjectIndex}].title`}
               subjects={subjectsList}
             />

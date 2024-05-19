@@ -67,14 +67,22 @@ const FormContentsSection = ({ control, getValues }) => {
         >
           <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[0]}>
             <ElevatedSectionWrapper fullW={true} fullH={true}>
-              <ControlledTextField label="code" name="code" control={control} />
+              <ControlledTextField
+                label="code"
+                name="code"
+                // control={control}
+              />
             </ElevatedSectionWrapper>
-            <DBSelectSection control={control} />
-            <AccessSection control={control} />
+            <DBSelectSection
+            // control={control}
+            />
+            <AccessSection
+            // control={control}
+            />
           </Stack>
           <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[1]}>
             <CSTSection
-              control={control}
+              // control={control}
               completeCoursesList={coursesList || []}
               coursesList={coursesList ? prepCoursesList(coursesList) : []}
               getValues={getValues}
@@ -82,30 +90,41 @@ const FormContentsSection = ({ control, getValues }) => {
           </Stack>
           <Stack spacing={1.5} flex={SCREEN_FLEX_PROPORTIONS[2]}>
             <Stack direction={{ xs: "column", md: "row" }} spacing={1.5}>
-              <TypeSection control={control} />
-              <NatureSection control={control} />
+              <TypeSection
+              // control={control}
+              />
+              <NatureSection
+              //  control={control}
+              />
             </Stack>
-            <DifficultySection control={control} />
+            <DifficultySection
+            //  control={control}
+            />
           </Stack>
         </Stack>
-        <QuestionSection control={control} />
+        <QuestionSection
+        // control={control}
+        />
 
         <ElevatedSectionWrapper fullW={true}>
           <ControlledTextField
             label="information"
             name="information"
-            control={control}
+            // control={control}
             tfProps={{ multiline: true, minRows: 2 }}
           />
         </ElevatedSectionWrapper>
 
-        <TagSection control={control} getValues={getValues} />
+        <TagSection
+          // control={control}
+          getValues={getValues}
+        />
 
         <ElevatedSectionWrapper fullW={true}>
           <ControlledTextField
             label="remarks"
             name="remarks"
-            control={control}
+            // control={control}
           />
         </ElevatedSectionWrapper>
       </Stack>

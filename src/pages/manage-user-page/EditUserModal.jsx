@@ -19,6 +19,8 @@ import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import UserInfoSection from "../../components/form/form-sections/UserInfoSection";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
+import useFormSubmit from "../../hooks/useFormSubmit";
+import FormWrapper from "../../wrappers/FormWrapper";
 
 function PaperComponent(props) {
   return (
@@ -56,56 +58,61 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
     defaultValues: { ...row },
   });
 
+  const formMethods = { handleSubmit, control };
+
   const handleClose = (e) => {
     e.stopPropagation();
   };
 
-  const onSubmit = async (data) => {
-    updateUser({ data: data, id: row?.id });
+  const handleFormDataSubmit = async (rawData) => {
+    updateUser({ data: rawData, id: row?.id });
   };
 
-  const onError = (err) => {
-    alert("Encountered an error updating user. Please try again later");
-  };
+  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
+
   return (
     <>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
-        maxWidth="lg"
-        fullWidth
-      >
-        <DialogTitle sx={styles.dialog.title} id="draggable-dialog-title">
-          {title}
-        </DialogTitle>
-        <DialogContent>
-          <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-            <Box>
-              <ElevatedSectionWrapper>
-                <UserInfoSection control={control} />
-              </ElevatedSectionWrapper>
-            </Box>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <DialogActionsContainer>
-            <DialogActionButton
-              label="cancel"
-              onClickHandler={() => setOpen(false)}
-            />
-            <DialogActionButton
-              label="save"
-              onClickHandler={() => {
-                handleSubmit(onSubmit, onError)();
-                setOpen(false);
-              }}
-            />
-          </DialogActionsContainer>
-        </DialogActions>
-      </Dialog>
-      {/* <DevTool control={control} /> */}
+      <FormWrapper formMethods={formMethods}>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+          maxWidth="lg"
+          fullWidth
+        >
+          <DialogTitle sx={styles.dialog.title} id="draggable-dialog-title">
+            {title}
+          </DialogTitle>
+          <DialogContent>
+            <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+              <Box>
+                <ElevatedSectionWrapper>
+                  <UserInfoSection
+                  // control={control}
+                  />
+                </ElevatedSectionWrapper>
+              </Box>
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <DialogActionsContainer>
+              <DialogActionButton
+                label="cancel"
+                onClickHandler={() => setOpen(false)}
+              />
+              <DialogActionButton
+                label="save"
+                onClickHandler={() => {
+                  handleSubmit(handleFormSubmit)();
+                  setOpen(false);
+                }}
+              />
+            </DialogActionsContainer>
+          </DialogActions>
+        </Dialog>
+        {/* <DevTool control={control} /> */}
+      </FormWrapper>
     </>
   );
 };

@@ -46,6 +46,7 @@ const AddCoursePage = () => {
     resolver: zodResolver(courseSchema),
     mode: "onTouched",
   });
+
   const { errors, dirtyFields } = formState;
   const {
     fields: fieldsForSubject,
@@ -120,7 +121,7 @@ const AddCoursePage = () => {
                       <Controller
                         name="database"
                         id="database"
-                        control={control}
+                        // control={control}
                         render={({ field }) => (
                           <LabelledSelect
                             label="database"
@@ -290,7 +291,7 @@ const AddCoursePage = () => {
         </Stack>
         <br />
       </form>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </Container>
   );
 };

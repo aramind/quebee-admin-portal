@@ -12,6 +12,8 @@ import useUserReq from "../../hooks/api/useUserReq";
 import { DevTool } from "@hookform/devtools";
 import UserInfoSection from "../../components/form/form-sections/UserInfoSection";
 import constants from "../../configs/constants";
+import useFormSubmit from "../../hooks/useFormSubmit";
+import FormWrapper from "../../wrappers/FormWrapper";
 
 const initialValues = {
   role: constants.ROLES?.[0], // Initial value for role select
@@ -43,10 +45,13 @@ const AddNewUserForm = ({ successFn }) => {
     defaultValues: initialValues,
   });
 
-  const onSubmit = async (data) => {
-    registerUser(data);
+  const formMethods = { handleSubmit, reset, control };
+
+  const handleFormDataSubmit = async (rawData) => {
+    registerUser(rawData);
   };
 
+  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
   // handlers
   // todo
   const handleClear = () => {
@@ -55,27 +60,33 @@ const AddNewUserForm = ({ successFn }) => {
     return forceRender;
   };
 
-  const onError = (error) => {
-    console.log("Error submitting form", error);
-  };
-
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
-        <ElevatedSectionWrapper>
-          <UserInfoSection control={control} title="Add New User" />
-          <br />
-          <FormActionsContainer justify="flex-end">
-            <FormActionButton
-              label="clear"
-              onClickHandler={handleClear}
-              variant="outlined"
+      <FormWrapper formMethods={formMethods}>
+        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+          <ElevatedSectionWrapper>
+            <UserInfoSection
+              // control={control}
+
+              title="Add New User"
             />
-            <FormActionButton label="save" variant="contained" type="submit" />
-          </FormActionsContainer>
-        </ElevatedSectionWrapper>
-      </form>
-      <DevTool control={control} />
+            <br />
+            <FormActionsContainer justify="flex-end">
+              <FormActionButton
+                label="clear"
+                onClickHandler={handleClear}
+                variant="outlined"
+              />
+              <FormActionButton
+                label="save"
+                variant="contained"
+                type="submit"
+              />
+            </FormActionsContainer>
+          </ElevatedSectionWrapper>
+        </form>
+        {/* <DevTool control={control} /> */}
+      </FormWrapper>
     </>
   );
 };

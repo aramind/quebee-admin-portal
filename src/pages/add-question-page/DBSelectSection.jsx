@@ -12,7 +12,7 @@ const DBSelectSection = ({ control }) => {
         {/* <ControlledSimpleSelect
           name="database"
           id="add-question-database"
-          control={control}
+          // control={control}
           label="database"
           defaultValue={constants.DATABASES[0]}
           options={constants.DATABASES}
@@ -21,7 +21,7 @@ const DBSelectSection = ({ control }) => {
         <ControlledSimpleSelect
           label="database"
           name="database"
-          control={control}
+          // control={control}
           options={constants?.DATABASES}
         />
       </Box>

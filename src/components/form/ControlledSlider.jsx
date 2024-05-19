@@ -13,7 +13,7 @@ const ControlledSliderXX = ({
   return (
     <Controller
       name={name}
-      control={control}
+      // control={control}
       defaultValue={defaultValue}
       render={({ field }) => <DifficultySlider field={field} />}
     />

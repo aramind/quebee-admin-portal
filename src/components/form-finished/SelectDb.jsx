@@ -7,7 +7,7 @@ const SelectDb = ({ control }) => {
     <ControlledSimpleSelect
       label="database"
       name="database"
-      control={control}
+      // control={control}
       options={constants?.DATABASES || []}
     />
   );

@@ -37,7 +37,7 @@ const CSTSection = ({
       <Stack spacing={1.5}>
         {/* <ControlledChipMultiSelect
                     name="courses" 
-                    control={control} 
+                    // control={control} 
                     id="controlled-multi-select"
                     label="course(s)"
                     options={constants.COURSES}
@@ -45,7 +45,7 @@ const CSTSection = ({
 
         <ControlledChipMultiAutoComp
           name="courses"
-          control={control}
+          // control={control}
           id="controlled-multi-auto-comp"
           label="course(s)"
           // options={constants.COURSES}
@@ -58,7 +58,7 @@ const CSTSection = ({
 
         {/* <ControlledChipMultiSelect
                     name="subjects"
-                    control={control}
+                    // control={control}
                     id="controlled-multi-select"
                     label="subject(s)"
                     options={constants.SUBJECTS}
@@ -66,7 +66,7 @@ const CSTSection = ({
 
         <ControlledChipMultiAutoComp
           name="subjects"
-          control={control}
+          // control={control}
           id="controlled-multi-auto-comp"
           label="subject(s)"
           options={getSubjects(completeCoursesList) || []}
@@ -77,7 +77,7 @@ const CSTSection = ({
 
         {/* <ControlledChipMultiSelect
                     name="topics"
-                    control={control}
+                    // control={control}
                     id="controlled-multi-select"
                     label="select topic(s)"
                     options={constants.TOPICS}
@@ -85,7 +85,7 @@ const CSTSection = ({
 
         <ControlledChipMultiAutoComp
           name="topics"
-          control={control}
+          // control={control}
           id="controlled-multi-auto-comp"
           label="topic(s)"
           options={getTopics(completeCoursesList) || []}

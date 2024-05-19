@@ -1,15 +1,15 @@
 import { Container } from "@mui/material";
 import React from "react";
 
-import AddCoursePage from "../add-course-page/AddCoursePage";
-import ManageCoursePage from "../manage-course-page/ManageCoursePage";
 import ManageSubjectsTab from "./ManageSubjectsTab";
 import ManageTopicsTab from "./ManageTopicsTab";
 import TabsContainer from "../../containers/TabsContainer";
+import AddCourseTab from "./AddCourseTab";
+import ManageCourseTab from "./ManageCourseTab";
 
 const coursesTabs = [
-  { label: "Add Course", component: <AddCoursePage /> },
-  { label: "Manage Courses", component: <ManageCoursePage /> },
+  { label: "Add Course", component: <AddCourseTab /> },
+  { label: "Manage Courses", component: <ManageCourseTab /> },
   { label: "Manage Subjects", component: <ManageSubjectsTab /> },
   { label: "Manage Topics", component: <ManageTopicsTab /> },
 ];

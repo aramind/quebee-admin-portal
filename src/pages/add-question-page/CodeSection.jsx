@@ -9,7 +9,7 @@ const CodeSection = ({ control }) => {
       {/* <FormInputLabel label="access" />
       <Controller
         name="access"
-        control={control}
+        // control={control}
         defaultValue={constants?.ACCESS[0] || ""}
         render={({ field }) => (
           <RadGroup field={field} options={constants?.ACCESS} row={false} />

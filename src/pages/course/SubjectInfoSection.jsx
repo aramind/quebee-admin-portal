@@ -19,21 +19,15 @@ const SubjectInfoSection = ({ control, options }) => {
   return (
     <Stack direction="row" spacing={4}>
       <Stack flex={2} spacing={1} justifyContent="flex-start">
+        <ControlledTextField name="code" label="subject code" />
+        <ControlledTextField name="acronym" label="acronym" />
+        <ControlledTextField name="title" label="title" />
         <ControlledTextField
-          control={control}
-          name="code"
-          label="subject code"
-        />
-        <ControlledTextField control={control} name="acronym" label="acronym" />
-        <ControlledTextField control={control} name="title" label="title" />
-        <ControlledTextField
-          control={control}
           name="description"
           label="description"
           tfProps={{ multiline: true, minRows: 2 }}
         />
         <ControlledTextField
-          control={control}
           name="remarks"
           label="remarks"
           tfProps={{ multiline: true, minRows: 2 }}
@@ -67,7 +61,7 @@ const SubjectInfoSection = ({ control, options }) => {
           {topics.map((topic, topicIndex) => (
             <Stack direction="row" key={topic.id} spacing={1}>
               <ControlledAutocomplete
-                control={control}
+                // control={control}
                 name={`topics[${topicIndex}].title`}
                 options={options}
               />

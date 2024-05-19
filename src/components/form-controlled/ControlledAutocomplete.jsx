@@ -2,15 +2,10 @@ import { Autocomplete, TextField } from "@mui/material";
 import React from "react";
 import { Controller } from "react-hook-form";
 
-const ControlledAutocomplete = ({
-  control,
-  options = [],
-  name = "",
-  label = "",
-}) => {
+const ControlledAutocomplete = ({ options = [], name = "", label = "" }) => {
   return (
     <Controller
-      control={control}
+      // control={control}
       name={name}
       render={({ field }) => (
         <Autocomplete

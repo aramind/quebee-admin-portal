@@ -9,7 +9,7 @@ const NatureSection = ({ control }) => {
       <ControlledRadioGroup
         label="nature"
         name="nature"
-        control={control}
+        // control={control}
         options={constants?.NATURE}
       />
     </ElevatedSectionWrapper>

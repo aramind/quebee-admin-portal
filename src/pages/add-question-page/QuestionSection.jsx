@@ -9,8 +9,13 @@ const QuestionSection = ({ control, defaultValues }) => {
   return (
     <ElevatedSectionWrapper fullW>
       <Stack>
-        <Question control={control} />
-        <Choices control={control} defaultValues={defaultValues} />
+        <Question
+        // control={control}
+        />
+        <Choices
+          // control={control}
+          defaultValues={defaultValues}
+        />
       </Stack>
     </ElevatedSectionWrapper>
   );
