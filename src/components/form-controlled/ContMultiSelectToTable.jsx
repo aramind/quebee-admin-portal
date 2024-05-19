@@ -112,7 +112,7 @@ const ContMultiSelectToTable = ({
               ))}
           </Stack>
 
-          {selected.length > 0 && (
+          {selected.length > 1 && (
             <Stack direction="row" justifyContent="end" pr={1}>
               <DangerBtn label="Clear All" onClick={handleClear} />
             </Stack>
