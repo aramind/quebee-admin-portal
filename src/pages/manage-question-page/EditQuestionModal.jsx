@@ -15,7 +15,6 @@ import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import questionSchema from "../../schemas/question";
 import { useForm } from "react-hook-form";
-import FormContentsSection from "../add-question-page/FormContentsSection";
 import DialogActionButton from "../../components/form/DialogActionButton";
 import { DevTool } from "@hookform/devtools";
 import { usePatchQuestion } from "../../hooks/usePatchQuestion";
@@ -205,12 +204,12 @@ const EditQuestionModal = ({
                 }}
               >
                 <BoxWrapper>
-                  <FormContentsSection
+                  {/* <FormContentsSection
                     // control={control}
                     // defaultValues={defaultValues}
                     // getValues={getValues}
                     getValues={getValues}
-                  />
+                  /> */}
                 </BoxWrapper>
               </Stack>
             </ElevatedSectionWrapper>

@@ -6,8 +6,6 @@ import ControlledTextField from "../../components/form-controlled/ControlledText
 
 import { DevTool } from "@hookform/devtools";
 
-import QuestionSection from "../add-question-page/QuestionSection";
-
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import FormWrapper from "../../wrappers/FormWrapper";
 import useFormSubmit from "../../hooks/useFormSubmit";
@@ -15,7 +13,6 @@ import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSe
 import useApiGet from "../../hooks/api/useApiGet";
 import useTopicReq from "../../hooks/api/useTopicReq";
 import DifficultySection from "./DifficultySection";
-import ControlledRadioGroup from "../../components/form-controlled/ControlledRadioGroup";
 import constants from "../../configs/constants";
 import ContRadGroup from "../../components/form-controlled/ContRadGroup";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";

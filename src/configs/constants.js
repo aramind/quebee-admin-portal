@@ -80,8 +80,6 @@ const constants = {
     { key: "others", value: "Others" },
   ],
 
-  ACCESS2: ["basic", "premium"],
-
   IS_HIDDEN: [
     { value: true, label: "yes" },
     { value: false, label: "no" },

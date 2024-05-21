@@ -1,6 +1,7 @@
 import {
   Button,
   FormControlLabel,
+  InputLabel,
   Radio,
   RadioGroup,
   Stack,
@@ -8,9 +9,24 @@ import {
 } from "@mui/material";
 
 import { Controller } from "react-hook-form";
-import ChoicesLabel from "../add-question-page/ChoicesLabel";
 
 const choices = ["A", "B", "C", "D"];
+
+const ChoiceLabel = ({ label, fullW, fullH }) => {
+  return (
+    <InputLabel
+      htmlFor="question-form-label"
+      className="centered-content"
+      sx={{
+        height: fullH && "100%",
+        width: fullW ? "100%" : "51px",
+        ...localStyles.choiceLabel,
+      }}
+    >
+      {label?.toUpperCase()}.
+    </InputLabel>
+  );
+};
 
 const ChoicesSection = () => {
   return (
@@ -29,7 +45,7 @@ const ChoicesSection = () => {
                   key={choice}
                   value={choice}
                   control={<Radio />}
-                  label={<ChoicesLabel label={choice} fullH />}
+                  label={<ChoiceLabel label={choice} fullH />}
                 />
                 <Controller
                   name={choice}
@@ -57,3 +73,13 @@ const ChoicesSection = () => {
 };
 
 export default ChoicesSection;
+
+const localStyles = {
+  choiceLabel: {
+    display: "flex",
+    justifyContent: { xs: "start", md: "center" },
+    alignItems: "center",
+    fontSize: "2rem",
+    color: "primary.main",
+  },
+};
