@@ -59,7 +59,7 @@ const ChoicesSection = () => {
                     justifyContent: "center",
                   }}
                 >
-                  <Button variant="outlined" sx={{ height: 1 }}>
+                  <Button variant="outlined" sx={{ height: 1 }} disabled>
                     Clear
                   </Button>
                 </Stack>

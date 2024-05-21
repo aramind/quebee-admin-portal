@@ -32,7 +32,7 @@ const QSection = () => {
         />
 
         <Stack width={{ xs: "100%", md: "120px" }} justifyContent="center">
-          <Button variant="outlined" sx={{ height: 1 }}>
+          <Button variant="outlined" sx={{ height: 1 }} disabled>
             Clear
           </Button>
         </Stack>

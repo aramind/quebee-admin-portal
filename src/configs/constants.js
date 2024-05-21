@@ -124,7 +124,7 @@ const constants = {
   AVAILABILITY_CONTROLS_STATUSES: ["pending", "live", "deleted"],
   API_URL: {
     ROOT: `${process.env.REACT_APP_API_URL}/v1`,
-    QUESTION: `${process.env.REACT_APP_API_URL}/questions`,
+    QUESTION: `${process.env.REACT_APP_API_URL}/v1/questions`,
     USER: `${process.env.REACT_APP_API_URL}/v1/employees`,
     TOPIC: `${process.env.REACT_APP_API_URL}/v1/courses/topics`,
     SUBJECT: `${process.env.REACT_APP_API_URL}/v1/courses/subjects`,

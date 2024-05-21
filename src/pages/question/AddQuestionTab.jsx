@@ -1,5 +1,5 @@
-import { Container, Stack } from "@mui/material";
-import React from "react";
+import { Button, Container, Stack, Typography } from "@mui/material";
+import React, { useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
@@ -19,10 +19,16 @@ import ControlledChipMultiAutoComp from "../../components/form-controlled/Contro
 import QSection from "./QSection";
 import ChoicesSection from "./ChoicesSection";
 import FormActionsSection from "../add-question-page/FormActionsSection";
+import useQuestionReq from "../../hooks/api/useQuestionReq";
+import useApiSend from "../../hooks/api/useApiSend";
+import { red, teal } from "@mui/material/colors";
+import AddTopicDialog from "../add-course-page/AddTopicDialog";
 
 const AddQuestionTab = () => {
+  const [openAddTopic, setOpenAddTopic] = useState(false);
   const styles = useStyles();
   const { fetchTopics } = useTopicReq();
+  const { add } = useQuestionReq();
 
   const { data: topicsList } = useApiGet(
     ["topics"],
@@ -32,6 +38,12 @@ const AddQuestionTab = () => {
       retry: 3,
       staleTime: Infinity,
     }
+  );
+
+  const { mutate: addQuestion } = useApiSend(
+    add,
+    () => console.log("Question submitted."),
+    (err) => console.error("Error submitting question. Try again.", err)
   );
 
   const { control, handleSubmit, setValue, reset } = useForm({
@@ -92,7 +104,9 @@ const AddQuestionTab = () => {
       status: "pending",
     };
 
-    // console.log("QD", questionData);
+    console.log("QD", questionData);
+    addQuestion(questionData);
+    alert("SUBMITTED");
   };
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
@@ -115,6 +129,37 @@ const AddQuestionTab = () => {
                 <ControlledTextField name="code" label="code" />
               </ElevatedSectionWrapper>
               <ElevatedSectionWrapper>
+                <Stack
+                  width="100%"
+                  alignItems="flex-end"
+                  sx={{ marginBottom: "-4px 0" }}
+                >
+                  <Typography
+                    variant="body"
+                    color={red["A100"]}
+                    fontSize="0.8rem"
+                    sx={{ margin: "-8px 0" }}
+                  >
+                    Topic not in the list?
+                  </Typography>
+
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={setOpenAddTopic}
+                    sx={{
+                      textDecoration: "underline",
+                      fontSize: "0.7rem",
+                      "&:hover": {
+                        backgroundColor: "transparent",
+                        color: teal[800],
+                        textDecoration: "underline",
+                      },
+                    }}
+                  >
+                    Create Topic
+                  </Button>
+                </Stack>
                 <ContMultiSelectToTable
                   objOptionsWithTitles={topicsList || []}
                   nameForController="topics"
@@ -162,8 +207,12 @@ const AddQuestionTab = () => {
                   free
                 />
               </ElevatedSectionWrapper>
+              <ElevatedSectionWrapper>
+                <ControlledTextField label="remarks" name="remarks" />
+              </ElevatedSectionWrapper>
             </Stack>
           </Stack>
+          <br />
           <FormActionsSection
             handleClear={handleClear}
             handleSubmit={handleSubmit}
@@ -171,6 +220,11 @@ const AddQuestionTab = () => {
           <DevTool control={control} />
         </form>
       </Container>
+      <AddTopicDialog
+        open={openAddTopic}
+        setOpen={setOpenAddTopic}
+        title="Add New Topic"
+      />
     </FormWrapper>
   );
 };
