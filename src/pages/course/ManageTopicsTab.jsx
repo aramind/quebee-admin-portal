@@ -33,10 +33,10 @@ const ManageTopicsTab = () => {
     retry: 3,
   });
 
-  const { mutate: handleUpdate } = useApiSend(patchTopic, () =>
-    console.log("Topic updated successfully", (err) =>
-      console.log("Encountered an error updating.Try again.", err)
-    )
+  const { mutate: handleUpdate } = useApiSend(
+    patchTopic,
+    () => console.log("Topic updated successfully"),
+    (err) => console.log("Encountered an error updating.Try again.", err)
   );
 
   const { handleSubmit, control, reset } = useForm({
