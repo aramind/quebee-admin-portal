@@ -12,7 +12,7 @@ import ChoicesLabel from "../add-question-page/ChoicesLabel";
 
 const choices = ["A", "B", "C", "D"];
 
-const ChoicesSection = ({ control, defaultValues }) => {
+const ChoicesSection = () => {
   return (
     <Controller
       name="correctAnswer"

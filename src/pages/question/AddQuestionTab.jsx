@@ -21,6 +21,7 @@ import ContRadGroup from "../../components/form-controlled/ContRadGroup";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
 import QSection from "./QSection";
 import ChoicesSection from "./ChoicesSection";
+import FormActionsSection from "../add-question-page/FormActionsSection";
 
 const AddQuestionTab = () => {
   const styles = useStyles();
@@ -38,9 +39,10 @@ const AddQuestionTab = () => {
 
   console.log(topicsList);
 
-  const { control, handleSubmit, setValue } = useForm({
+  const { control, handleSubmit, setValue, reset } = useForm({
     mode: "onTouched",
     defaultValues: {
+      code: "",
       topics: [],
       access: "2",
       type: "ob",
@@ -56,6 +58,9 @@ const AddQuestionTab = () => {
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
+  const handleClear = () => {
+    reset();
+  };
   return (
     <FormWrapper formMethods={formMethods}>
       <Container
@@ -107,7 +112,7 @@ const AddQuestionTab = () => {
                 <ControlledTextField
                   label="information"
                   name="information"
-                  tfProps={{ multiline: true, minRows: 2 }}
+                  tfProps={{ multiline: true, minRows: 4 }}
                 />
               </ElevatedSectionWrapper>
               <ElevatedSectionWrapper>
@@ -116,12 +121,14 @@ const AddQuestionTab = () => {
                   label="select tag(s)"
                   options={constants.TAGS}
                   free
-                  // defaultValue={getValues("tags")}
                 />
               </ElevatedSectionWrapper>
             </Stack>
           </Stack>
-
+          <FormActionsSection
+            handleClear={handleClear}
+            handleSubmit={handleSubmit}
+          />
           <DevTool control={control} />
         </form>
       </Container>

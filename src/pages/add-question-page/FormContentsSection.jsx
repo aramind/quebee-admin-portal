@@ -13,7 +13,6 @@ import CSTSection from "./CSTSection";
 import TypeSection from "./TypeSection";
 import NatureSection from "./NatureSection";
 import QuestionSection from "./QuestionSection";
-import TagSection from "./TagSection";
 import DifficultySection from "../question/DifficultySection";
 const SCREEN_FLEX_PROPORTIONS = ["20%", "45%", "35%"];
 
@@ -114,11 +113,11 @@ const FormContentsSection = ({ control, getValues }) => {
             tfProps={{ multiline: true, minRows: 2 }}
           />
         </ElevatedSectionWrapper>
-
+        {/* 
         <TagSection
           // control={control}
           getValues={getValues}
-        />
+        /> */}
 
         <ElevatedSectionWrapper fullW={true}>
           <ControlledTextField
