@@ -4,7 +4,6 @@ import React from "react";
 const RadGroup = ({ field, options, row }) => {
   return (
     <RadioGroup
-      aria-labelledby="radio-group"
       value={field.value}
       row={row}
       onChange={(e) => field.onChange(e.target.value)}
@@ -14,7 +13,7 @@ const RadGroup = ({ field, options, row }) => {
         <FormControlLabel
           key={typeof option === "object" ? option.key : option}
           value={typeof option === "object" ? option.key : option}
-          control={<Radio size="small" checked={field.value === option} />}
+          control={<Radio size="small" />}
           // label={typeof option === "object" ? option.value : option}
           label={
             <Typography

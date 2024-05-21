@@ -68,12 +68,31 @@ const constants = {
     { key: "tf", value: "T/F" },
     { key: "others", value: "Others" },
   ],
+
+  QUESTION_TYPE: [
+    { value: "ob", label: "Objective" },
+    { value: "ps", label: "Prob. Solving" },
+  ],
+
   NATURE: [
     { key: "obj", value: "Objective-type" },
     { key: "ps", value: "Problem-solving" },
     { key: "others", value: "Others" },
   ],
-  ACCESS: ["basic", "premium"],
+
+  ACCESS2: ["basic", "premium"],
+
+  IS_HIDDEN: [
+    { value: true, label: "yes" },
+    { value: false, label: "no" },
+  ],
+  ACCESS: [
+    { value: 1, label: "public" },
+    { value: 2, label: "basic" },
+    { value: 3, label: "premium" },
+    { value: 4, label: "special" },
+    { value: 5, label: "admin" },
+  ],
 
   //
   difficultySliderConstants: {

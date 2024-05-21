@@ -2,20 +2,14 @@ import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { Stack } from "@mui/material";
 
-import Question from "./Question";
-import Choices from "./Choices";
-
+import QSection from "../question/QSection";
+import ChoicesSection from "../question/ChoicesSection";
 const QuestionSection = ({ control, defaultValues }) => {
   return (
     <ElevatedSectionWrapper fullW>
       <Stack>
-        <Question
-        // control={control}
-        />
-        <Choices
-          // control={control}
-          defaultValues={defaultValues}
-        />
+        <QSection />
+        <ChoicesSection defaultValues={defaultValues} />
       </Stack>
     </ElevatedSectionWrapper>
   );

@@ -17,6 +17,10 @@ import useTopicReq from "../../hooks/api/useTopicReq";
 import DifficultySection from "./DifficultySection";
 import ControlledRadioGroup from "../../components/form-controlled/ControlledRadioGroup";
 import constants from "../../configs/constants";
+import ContRadGroup from "../../components/form-controlled/ContRadGroup";
+import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
+import QSection from "./QSection";
+import ChoicesSection from "./ChoicesSection";
 
 const AddQuestionTab = () => {
   const styles = useStyles();
@@ -38,6 +42,9 @@ const AddQuestionTab = () => {
     mode: "onTouched",
     defaultValues: {
       topics: [],
+      access: "2",
+      type: "ob",
+      isHidden: "false",
     },
   });
 
@@ -58,47 +65,63 @@ const AddQuestionTab = () => {
         disableGutters
       >
         <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
-          <Stack direction={{ md: "row" }} spacing={1.5}>
-            <Stack flex={2} spacing={1.5}>
-              <ElevatedSectionWrapper>
+          <Stack spacing={1.5} direction="row" alignItems="flex-start">
+            <Stack flex={1} spacing={1.5}>
+              <ElevatedSectionWrapper flex={1}>
                 <ControlledTextField name="code" label="code" />
               </ElevatedSectionWrapper>
-
-              <Stack direction="row" spacing={1.5}>
-                <Stack flex={3}>
-                  <DifficultySection />
-                </Stack>
-                <ElevatedSectionWrapper flex={1}>
-                  <ControlledRadioGroup
-                    label="access"
-                    name="access"
-                    options={constants?.ACCESS}
-                  />
-                </ElevatedSectionWrapper>
-                <ElevatedSectionWrapper flex={1}>
-                  <ControlledRadioGroup
-                    label="type"
-                    name="type"
-                    options={constants?.TYPE}
-                  />
-                </ElevatedSectionWrapper>
-              </Stack>
-              <QuestionSection control={control} />
-            </Stack>
-            <Stack spacing={1.5} flex={1}>
               <ElevatedSectionWrapper>
-                {/* <TopicSelector /> */}
                 <ContMultiSelectToTable
                   objOptionsWithTitles={topicsList || []}
                   nameForController="topics"
                   label="Topic(s)"
                 />
               </ElevatedSectionWrapper>
+              <Stack direction="row" spacing={1.5}>
+                <ElevatedSectionWrapper flex={1}>
+                  <ContRadGroup
+                    label="access"
+                    name="access"
+                    options={constants?.ACCESS}
+                  />
+                </ElevatedSectionWrapper>
+                <ElevatedSectionWrapper flex={1}>
+                  <ContRadGroup
+                    name="type"
+                    label="type"
+                    options={constants?.QUESTION_TYPE}
+                  />
+                </ElevatedSectionWrapper>
+              </Stack>
 
-              <br />
+              <Stack flex={2}>
+                <DifficultySection />
+              </Stack>
             </Stack>
-            <br />
+            <Stack flex={3} spacing={1.5}>
+              <ElevatedSectionWrapper>
+                <QSection />
+                <ChoicesSection />
+              </ElevatedSectionWrapper>
+              <ElevatedSectionWrapper>
+                <ControlledTextField
+                  label="information"
+                  name="information"
+                  tfProps={{ multiline: true, minRows: 2 }}
+                />
+              </ElevatedSectionWrapper>
+              <ElevatedSectionWrapper>
+                <ControlledChipMultiAutoComp
+                  name="tags"
+                  label="select tag(s)"
+                  options={constants.TAGS}
+                  free
+                  // defaultValue={getValues("tags")}
+                />
+              </ElevatedSectionWrapper>
+            </Stack>
           </Stack>
+
           <DevTool control={control} />
         </form>
       </Container>

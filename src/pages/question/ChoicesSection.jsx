@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   FormControlLabel,
   Radio,
@@ -9,27 +8,23 @@ import {
 } from "@mui/material";
 
 import { Controller } from "react-hook-form";
-import ChoicesLabel from "./ChoicesLabel";
+import ChoicesLabel from "../add-question-page/ChoicesLabel";
 
-// const choices = ["choice1", "choice2", "choice3", "choice4"];
 const choices = ["A", "B", "C", "D"];
 
-const Choices = ({ control, defaultValues }) => {
+const ChoicesSection = ({ control, defaultValues }) => {
   return (
     <Controller
       name="correctAnswer"
-      // control={control}
       render={({ field }) => (
         <Stack height="100%">
           <RadioGroup
-            aria-labelledby="radio-group"
             value={field.value}
-            // value={field.value}
             onChange={(e) => field.onChange(e.target.value)}
             sx={{ ml: 2 }}
           >
             {choices.map((choice, index) => (
-              <Stack direction="row" spacing={1.5} mt={1}>
+              <Stack direction="row" spacing={1.5} mt={1} key={index}>
                 <FormControlLabel
                   key={choice}
                   value={choice}
@@ -37,22 +32,14 @@ const Choices = ({ control, defaultValues }) => {
                   label={<ChoicesLabel label={choice} fullH />}
                 />
                 <Controller
-                  // control={control}
-                  // name={`choices[${choice}]`}
                   name={choice}
                   render={({ field }) => (
-                    <TextField
-                      fullWidth
-                      {...field}
-                      multiline
-                      minRows={2}
-                      // onBlur={field.onBlur}
-                    />
+                    <TextField fullWidth {...field} multiline minRows={2} />
                   )}
                 />
                 <Stack
                   sx={{
-                    width: "150px",
+                    width: "135px",
                     justifyContent: "center",
                   }}
                 >
@@ -69,4 +56,4 @@ const Choices = ({ control, defaultValues }) => {
   );
 };
 
-export default Choices;
+export default ChoicesSection;
