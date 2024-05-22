@@ -6,9 +6,9 @@ import LandingPage from "./pages/LandingPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import PersistLoginComponent from "./components/PersistLoginComponent";
-import ManageQuestionPage from "./pages/manage-question-page/ManageQuestionPage";
+
 import ManageUserPage from "./pages/manage-user-page/ManageUserPage";
-import ManageCoursePage from "./pages/manage-course-page/ManageCoursePage";
+
 import CoursePage from "./pages/course/CoursePage";
 import QuestionPage from "./pages/question/QuestionPage";
 
@@ -28,13 +28,8 @@ const combinedRouter = createBrowserRouter([
                 element: <DashBoardPage />,
               },
               {
-                path: "/add-question",
+                path: "/questions",
                 element: <QuestionPage />,
-              },
-
-              {
-                path: "/manage-question",
-                element: <ManageQuestionPage />,
               },
             ],
           },
@@ -46,20 +41,12 @@ const combinedRouter = createBrowserRouter([
                 element: <DashBoardPage />,
               },
               {
-                path: "/add-question",
+                path: "/questions",
                 element: <QuestionPage />,
               },
               {
-                path: "/course",
+                path: "/courses",
                 element: <CoursePage />,
-              },
-              {
-                path: "/manage-question",
-                element: <ManageQuestionPage />,
-              },
-              {
-                path: "/manage-course",
-                element: <ManageCoursePage />,
               },
             ],
           },
@@ -71,23 +58,15 @@ const combinedRouter = createBrowserRouter([
                 element: <DashBoardPage />,
               },
               {
-                path: "/add-question",
+                path: "/questions",
                 element: <QuestionPage />,
               },
               {
-                path: "/course",
+                path: "/courses",
                 element: <CoursePage />,
               },
               {
-                path: "/manage-question",
-                element: <ManageQuestionPage />,
-              },
-              {
-                path: "/manage-course",
-                element: <ManageCoursePage />,
-              },
-              {
-                path: "/manage-user",
+                path: "/users",
                 element: <ManageUserPage />,
               },
             ],
