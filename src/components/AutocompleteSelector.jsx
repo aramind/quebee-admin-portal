@@ -9,7 +9,7 @@ const AutocompleteSelector = ({ value, setValue, options, label = "" }) => {
       value={value}
       onChange={(e, newValue) => setValue(newValue)}
       options={options || []}
-      getOptionLabel={(option) => option.title}
+      getOptionLabel={(option) => option.title || option.question?.text}
       renderInput={(params) => (
         <TextField
           {...params}
