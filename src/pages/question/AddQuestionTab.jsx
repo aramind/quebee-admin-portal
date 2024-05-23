@@ -23,22 +23,12 @@ import useQuestionReq from "../../hooks/api/useQuestionReq";
 import useApiSend from "../../hooks/api/useApiSend";
 import { red, teal } from "@mui/material/colors";
 import AddTopicDialog from "../add-course-page/AddTopicDialog";
+import QuestionDetails from "./QuestionDetails";
 
 const AddQuestionTab = () => {
-  const [openAddTopic, setOpenAddTopic] = useState(false);
   const styles = useStyles();
-  const { fetchTopics } = useTopicReq();
-  const { add } = useQuestionReq();
 
-  const { data: topicsList } = useApiGet(
-    ["topics"],
-    () => fetchTopics({ params: "/trimmed" }),
-    {
-      refetchOnWindowFocus: false,
-      retry: 3,
-      staleTime: Infinity,
-    }
-  );
+  const { add } = useQuestionReq();
 
   const { mutate: addQuestion } = useApiSend(
     add,
@@ -114,6 +104,7 @@ const AddQuestionTab = () => {
   const handleClear = () => {
     reset();
   };
+
   return (
     <FormWrapper formMethods={formMethods}>
       <Container
@@ -123,95 +114,7 @@ const AddQuestionTab = () => {
         disableGutters
       >
         <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
-          <Stack spacing={1.5} direction="row" alignItems="flex-start">
-            <Stack flex={1} spacing={1.5}>
-              <ElevatedSectionWrapper flex={1}>
-                <ControlledTextField name="code" label="code" />
-              </ElevatedSectionWrapper>
-              <ElevatedSectionWrapper>
-                <Stack
-                  width="100%"
-                  alignItems="flex-end"
-                  sx={{ marginBottom: "-4px 0" }}
-                >
-                  <Typography
-                    variant="body"
-                    color={red["A100"]}
-                    fontSize="0.8rem"
-                    sx={{ margin: "-8px 0" }}
-                  >
-                    Topic not in the list?
-                  </Typography>
-
-                  <Button
-                    variant="text"
-                    size="small"
-                    onClick={setOpenAddTopic}
-                    sx={{
-                      textDecoration: "underline",
-                      fontSize: "0.7rem",
-                      "&:hover": {
-                        backgroundColor: "transparent",
-                        color: teal[800],
-                        textDecoration: "underline",
-                      },
-                    }}
-                  >
-                    Create Topic
-                  </Button>
-                </Stack>
-                <ContMultiSelectToTable
-                  objOptionsWithTitles={topicsList || []}
-                  nameForController="topics"
-                  label="Topic(s)"
-                />
-              </ElevatedSectionWrapper>
-              <Stack direction="row" spacing={1.5}>
-                <ElevatedSectionWrapper flex={1}>
-                  <ContRadGroup
-                    label="access"
-                    name="access"
-                    options={constants?.ACCESS}
-                  />
-                </ElevatedSectionWrapper>
-                <ElevatedSectionWrapper flex={1}>
-                  <ContRadGroup
-                    name="type"
-                    label="type"
-                    options={constants?.QUESTION_TYPE}
-                  />
-                </ElevatedSectionWrapper>
-              </Stack>
-
-              <Stack flex={2}>
-                <DifficultySection />
-              </Stack>
-            </Stack>
-            <Stack flex={3} spacing={1.5}>
-              <ElevatedSectionWrapper>
-                <QSection />
-                <ChoicesSection />
-              </ElevatedSectionWrapper>
-              <ElevatedSectionWrapper>
-                <ControlledTextField
-                  label="information"
-                  name="information"
-                  tfProps={{ multiline: true, minRows: 4 }}
-                />
-              </ElevatedSectionWrapper>
-              <ElevatedSectionWrapper>
-                <ControlledChipMultiAutoComp
-                  name="tags"
-                  label="select tag(s)"
-                  options={constants.TAGS}
-                  free
-                />
-              </ElevatedSectionWrapper>
-              <ElevatedSectionWrapper>
-                <ControlledTextField label="remarks" name="remarks" />
-              </ElevatedSectionWrapper>
-            </Stack>
-          </Stack>
+          <QuestionDetails />
           <br />
           <FormActionsSection
             handleClear={handleClear}
@@ -220,11 +123,6 @@ const AddQuestionTab = () => {
           <DevTool control={control} />
         </form>
       </Container>
-      <AddTopicDialog
-        open={openAddTopic}
-        setOpen={setOpenAddTopic}
-        title="Add New Topic"
-      />
     </FormWrapper>
   );
 };
