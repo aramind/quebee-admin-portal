@@ -31,7 +31,7 @@ function PaperComponent(props) {
   );
 }
 
-const AddTopicDialog = ({ open, setOpen, title = "", data }) => {
+const AddTopicDialog = ({ open, onClose, title = "", data }) => {
   const styles = useStyles();
 
   const { add } = useTopicReq();
@@ -86,15 +86,13 @@ const AddTopicDialog = ({ open, setOpen, title = "", data }) => {
           </DialogContent>
           <DialogActions>
             <DialogActionsContainer>
-              <DialogActionButton
-                label="cancel"
-                onClickHandler={() => setOpen(false)}
-              />
+              <DialogActionButton label="cancel" onClickHandler={onClose} />
               <DialogActionButton
                 label="save"
                 onClickHandler={() => {
                   handleSubmit(handleFormSubmit)();
-                  setOpen(false);
+                  // setOpen(false);
+                  onClose();
                 }}
               />
             </DialogActionsContainer>

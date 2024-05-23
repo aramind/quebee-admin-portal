@@ -13,9 +13,10 @@ import QSection from "./QSection";
 import ChoicesSection from "./ChoicesSection";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
 import AddTopicDialog from "../add-course-page/AddTopicDialog";
+import useDialog from "../../hooks/useDialog";
 
 const QuestionDetails = () => {
-  const [openAddTopic, setOpenAddTopic] = useState(false);
+  const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
   const { fetchTopics } = useTopicReq();
 
@@ -53,7 +54,7 @@ const QuestionDetails = () => {
             <Button
               variant="text"
               size="small"
-              onClick={setOpenAddTopic}
+              onClick={() => handleOpen({ title: "Add New Topic" })}
               sx={{
                 textDecoration: "underline",
                 fontSize: "0.7rem",
@@ -118,11 +119,12 @@ const QuestionDetails = () => {
           <ControlledTextField label="remarks" name="remarks" />
         </ElevatedSectionWrapper>
       </Stack>
-      <AddTopicDialog
+      {/* <AddTopicDialog
         open={openAddTopic}
         setOpen={setOpenAddTopic}
         title="Add New Topic"
-      />
+      /> */}
+      {renderDialog()}
     </Stack>
   );
 };
