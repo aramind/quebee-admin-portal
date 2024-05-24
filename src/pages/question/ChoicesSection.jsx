@@ -44,7 +44,7 @@ const ChoicesSection = () => {
                 <FormControlLabel
                   key={choice}
                   value={choice}
-                  control={<Radio />}
+                  control={<Radio checked={choice === field.value} />}
                   label={<ChoiceLabel label={choice} fullH />}
                 />
                 <Controller
