@@ -27,8 +27,13 @@ const ContMultiSelectToTable = ({
 
   useEffect(() => {
     // setSelected(initialValues?.topics);
-    setSelected(control?._options?.defaultValues?.topics || []);
-  }, [control?._options?.defaultValues?.topics, setValue]);
+    setSelected(control?._options?.defaultValues?.[nameForController] || []);
+  }, [
+    control?._options?.defaultValues,
+    control?._options?.defaultValues.nameForController,
+    nameForController,
+    setValue,
+  ]);
 
   const handleRemove = (itemToRemove) => {
     const updatedSelected = selected?.filter(
@@ -56,7 +61,7 @@ const ContMultiSelectToTable = ({
               fullWidth
               multiple
               options={sortObjectsByProp(objOptionsWithTitles, "title")}
-              getOptionLabel={(topic) => topic?.title}
+              getOptionLabel={(option) => option?.title}
               filterSelectedOptions
               value={selected || []}
               onChange={(e, value) => {
@@ -65,7 +70,7 @@ const ContMultiSelectToTable = ({
               }}
               groupBy={(option) => option?.title?.[0].toUpperCase()}
               renderInput={(params) => (
-                <TextField {...params} placeholder="Select topic here..." />
+                <TextField {...params} placeholder="Select here..." />
               )}
               renderGroup={(params) => (
                 <li key={params.key}>
