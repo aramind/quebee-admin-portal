@@ -14,7 +14,7 @@ import ControlledChipMultiAutoComp from "../../components/form-controlled/Contro
 import AddTopicDialog from "../add-course-page/AddTopicDialog";
 import useDialog from "../../hooks/useDialog";
 
-const QuestionDetails = () => {
+const QuestionDetails = ({ initialValues = {} }) => {
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
   const { fetchTopics } = useTopicReq();

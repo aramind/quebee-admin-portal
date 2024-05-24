@@ -36,7 +36,7 @@ const getLetterOfCorrectAnswer = (choices) => {
 const ManageQuestionTab = () => {
   const { get } = useQuestionReq();
   const [initialValues, setInitialValues] = useState({});
-  const [value, setValue] = useState(null);
+  const [fetchValues, setFetchValues] = useState(null);
   const styles = useStyles();
 
   const { data: questionsList } = useApiGet(
@@ -47,26 +47,26 @@ const ManageQuestionTab = () => {
     }
   );
 
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, setValue, getValues } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,
   });
 
-  const formMethods = { control, handleSubmit, reset };
+  const formMethods = { control, handleSubmit, reset, setValue, getValues };
 
   useEffect(() => {
     setInitialValues({
-      ...value,
-      question: value?.question?.text,
-      A: value?.choices?.[0].value?.text,
-      B: value?.choices?.[1].value?.text,
-      C: value?.choices?.[2].value?.text,
-      D: value?.choices?.[3].value?.text,
-      information: value?.information?.text,
-      correctAnswer: getLetterOfCorrectAnswer(value?.choices),
-      isHidden: value?.isHidden ? "yes" : "no",
+      ...fetchValues,
+      question: fetchValues?.question?.text,
+      A: fetchValues?.choices?.[0].value?.text,
+      B: fetchValues?.choices?.[1].value?.text,
+      C: fetchValues?.choices?.[2].value?.text,
+      D: fetchValues?.choices?.[3].value?.text,
+      information: fetchValues?.information?.text,
+      correctAnswer: getLetterOfCorrectAnswer(fetchValues?.choices),
+      isHidden: fetchValues?.isHidden ? "yes" : "no",
     });
-  }, [value]);
+  }, [fetchValues]);
 
   useEffect(() => {
     reset(initialValues);
@@ -80,7 +80,7 @@ const ManageQuestionTab = () => {
   const handleFormDataSubmit = async (rawData) => {
     alert("CLICKED SUBMIT with", rawData);
   };
-  console.log("RAW", value);
+  console.log("RAW", fetchValues);
   console.log("IV", initialValues);
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
@@ -95,10 +95,10 @@ const ManageQuestionTab = () => {
         <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
           <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
             <AutocompleteSelector
-              value={value}
-              setValue={setValue}
+              value={fetchValues}
+              setValue={setFetchValues}
               options={questionsList}
-              label="courses"
+              label="question"
             />
           </ElevatedSectionWrapper>
           <br />

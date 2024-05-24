@@ -1,21 +1,17 @@
 import {
   Autocomplete,
-  Box,
-  Button,
   Chip,
-  List,
-  ListItem,
   ListSubheader,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import FormInputLabel from "../form/FormInputLabel";
 import AutoStoriesTwoToneIcon from "@mui/icons-material/AutoStoriesTwoTone";
 import sortObjectsByProp from "../../utils/sortObjectsByProp";
-import { grey, red, teal } from "@mui/material/colors";
+import { red, teal } from "@mui/material/colors";
 import DangerBtn from "../buttons/DangerBtn";
 
 // NOTE: options should be an object with property named title
@@ -25,8 +21,14 @@ const ContMultiSelectToTable = ({
   nameForController,
   label,
 }) => {
+  const { setValue, control } = useFormContext();
+
   const [selected, setSelected] = useState([]);
-  const { setValue } = useFormContext();
+
+  useEffect(() => {
+    // setSelected(initialValues?.topics);
+    setSelected(control?._options?.defaultValues?.topics || []);
+  }, [control?._options?.defaultValues?.topics, setValue]);
 
   const handleRemove = (itemToRemove) => {
     const updatedSelected = selected?.filter(
