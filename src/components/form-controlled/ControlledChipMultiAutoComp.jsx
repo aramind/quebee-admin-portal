@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import LabelledSelect from "../form/LabelledSelect";
 import FormMultiAutoComp from "../form/FormMultiAutoComp";
 
 const ControlledChipMultiAutoComp = ({
-  // control,
   name,
   id,
   label,
@@ -14,28 +13,24 @@ const ControlledChipMultiAutoComp = ({
   textTransform,
   defaultValue,
 }) => {
-  // console.log(defaultValue);
-  const [selectedOptions, setSelectedOptions] = useState(defaultValue || []);
+  const { control } = useFormContext();
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
-  // useEffect(() => {
-  //   setSelectedOptions(defaultValues || []);
-  // }, [defaultValues]);
+  useEffect(() => {
+    setSelectedOptions(control?._options?.defaultValues?.[name] || []);
+  }, [control?._options?.defaultValues, name]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setSelectedOptions(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setSelectedOptions(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
     <Controller
       name={name}
       id={id}
-      // control={control}
       render={({ field }) => (
         <LabelledSelect
           label={label}
