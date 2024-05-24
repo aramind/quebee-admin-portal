@@ -1,5 +1,4 @@
 import { Button, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import { red, teal } from "@mui/material/colors";
@@ -119,11 +118,6 @@ const QuestionDetails = () => {
           <ControlledTextField label="remarks" name="remarks" />
         </ElevatedSectionWrapper>
       </Stack>
-      {/* <AddTopicDialog
-        open={openAddTopic}
-        setOpen={setOpenAddTopic}
-        title="Add New Topic"
-      /> */}
       {renderDialog()}
     </Stack>
   );

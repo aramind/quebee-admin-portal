@@ -1,28 +1,17 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { Container } from "@mui/material";
+import React from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
-import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 
 import { DevTool } from "@hookform/devtools";
 
-import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import FormWrapper from "../../wrappers/FormWrapper";
 import useFormSubmit from "../../hooks/useFormSubmit";
-import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSelectToTable";
-import useApiGet from "../../hooks/api/useApiGet";
-import useTopicReq from "../../hooks/api/useTopicReq";
-import DifficultySection from "./DifficultySection";
-import constants from "../../configs/constants";
-import ContRadGroup from "../../components/form-controlled/ContRadGroup";
-import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
-import QSection from "./QSection";
-import ChoicesSection from "./ChoicesSection";
+
 import FormActionsSection from "../add-question-page/FormActionsSection";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
 import useApiSend from "../../hooks/api/useApiSend";
-import { red, teal } from "@mui/material/colors";
-import AddTopicDialog from "../add-course-page/AddTopicDialog";
+
 import QuestionDetails from "./QuestionDetails";
 
 const AddQuestionTab = () => {

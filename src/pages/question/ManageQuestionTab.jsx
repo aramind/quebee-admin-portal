@@ -16,6 +16,23 @@ import FormActionButton from "../../components/form/FormActionButton";
 import { DevTool } from "@hookform/devtools";
 import QuestionDetails from "./QuestionDetails";
 
+const getLetterOfCorrectAnswer = (choices) => {
+  const correct = choices?.find((choice) => choice.isCorrect);
+  const indexOfCorrectAnswer = choices?.indexOf(correct);
+
+  switch (indexOfCorrectAnswer) {
+    case 0:
+      return "A";
+    case 1:
+      return "B";
+    case 2:
+      return "C";
+    case 3:
+      return "D";
+    default:
+      return undefined;
+  }
+};
 const ManageQuestionTab = () => {
   const { get } = useQuestionReq();
   const [initialValues, setInitialValues] = useState({});
@@ -40,6 +57,14 @@ const ManageQuestionTab = () => {
   useEffect(() => {
     setInitialValues({
       ...value,
+      question: value?.question?.text,
+      A: value?.choices?.[0].value?.text,
+      B: value?.choices?.[1].value?.text,
+      C: value?.choices?.[2].value?.text,
+      D: value?.choices?.[3].value?.text,
+      information: value?.information?.text,
+      correctAnswer: getLetterOfCorrectAnswer(value?.choices),
+      isHidden: value?.isHidden ? "yes" : "no",
     });
   }, [value]);
 
@@ -51,10 +76,12 @@ const ManageQuestionTab = () => {
     console.log("CLICKED UNDO");
   };
 
-  console.log(questionsList);
+  // console.log(questionsList);
   const handleFormDataSubmit = async (rawData) => {
     alert("CLICKED SUBMIT with", rawData);
   };
+  console.log("RAW", value);
+  console.log("IV", initialValues);
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
   return (
