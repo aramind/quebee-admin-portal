@@ -13,7 +13,15 @@ const RadGroup = ({ field, options, row }) => {
         <FormControlLabel
           key={typeof option === "object" ? option.key : option}
           value={typeof option === "object" ? option.key : option}
-          control={<Radio size="small" checked={field.value === option} />}
+          control={
+            <Radio
+              size="small"
+              checked={
+                field.value ===
+                (typeof option === "object" ? option.key : option)
+              }
+            />
+          }
           // label={typeof option === "object" ? option.value : option}
           label={
             <Typography
