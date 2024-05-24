@@ -80,8 +80,6 @@ const ManageQuestionTab = () => {
   const handleFormDataSubmit = async (rawData) => {
     alert("CLICKED SUBMIT with", rawData);
   };
-  console.log("RAW", fetchValues);
-  console.log("IV", initialValues);
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
   return (

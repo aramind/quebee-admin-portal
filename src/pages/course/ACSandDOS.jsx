@@ -4,7 +4,7 @@ import AvailabilityControlSection from "./AvailabilityControlSection";
 import DisplayOnlySection from "./DisplayOnlySection";
 import { Stack } from "@mui/material";
 
-const ACSandDOS = ({ control, values }) => {
+const ACSandDOS = ({ values }) => {
   return (
     <Stack justifyContent="flex-start" spacing={1.5}>
       <ElevatedSectionWrapper>
