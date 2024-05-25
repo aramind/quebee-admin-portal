@@ -14,7 +14,7 @@ import { grey } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
-import TopicInfoSection from "../course/TopicInfoSection";
+import TopicInfoSection from "./TopicInfoSection";
 import useTopicReq from "../../hooks/api/useTopicReq";
 import useApiSend from "../../hooks/api/useApiSend";
 import useFormSubmit from "../../hooks/useFormSubmit";
@@ -54,8 +54,6 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
   };
 
   const handleFormDataSubmit = async (data) => {
-    console.log(data);
-    alert("SUBMITTED");
     addTopic({ data: data });
   };
 

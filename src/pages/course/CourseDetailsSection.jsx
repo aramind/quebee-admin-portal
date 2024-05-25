@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MetaInfoSection from "../add-course-page/MetaInfoSection";
+import MetaInfoSection from "./MetaInfoSection";
 import SubjectSection from "../add-course-page/SubjectSection";
 import { Button, Stack, Typography } from "@mui/material";
 import { red } from "@mui/material/colors";

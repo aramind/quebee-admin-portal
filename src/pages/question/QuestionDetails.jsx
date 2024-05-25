@@ -9,7 +9,7 @@ import DifficultySection from "./DifficultySection";
 import QSection from "./QSection";
 import ChoicesSection from "./ChoicesSection";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
-import AddTopicDialog from "../add-course-page/AddTopicDialog";
+import AddTopicDialog from "../course/AddTopicDialog";
 import useDialog from "../../hooks/useDialog";
 import useFetchData from "../../hooks/api/useFetchData";
 

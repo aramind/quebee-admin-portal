@@ -3,7 +3,7 @@ import React from "react";
 
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import { red, teal } from "@mui/material/colors";
-import AddTopicDialog from "../add-course-page/AddTopicDialog";
+import AddTopicDialog from "./AddTopicDialog";
 import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSelectToTable";
 import useFetchData from "../../hooks/api/useFetchData";
 import useDialog from "../../hooks/useDialog";
