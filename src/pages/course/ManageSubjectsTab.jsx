@@ -14,24 +14,26 @@ import FormActionButton from "../../components/form/FormActionButton";
 import ACSandDOS from "./ACSandDOS";
 import FormWrapper from "../../wrappers/FormWrapper";
 import useFormSubmit from "../../hooks/useFormSubmit";
+import useFetchData from "../../hooks/api/useFetchData";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [initialValues, setInitialValues] = useState({});
 
   const styles = useStyles();
-  const { fetchSubjects } = useSubjReq();
+  // const { fetchSubjects } = useSubjReq();
+  const { subjectsList } = useFetchData();
 
-  const {
-    data: subjectsList,
-    // isLoading,
-    // error,
-  } = useApiGet("subjects", () => fetchSubjects({ params: "/trimmed" }), {
-    refetchOnWindowFocus: true,
-    retry: 3,
-  });
+  // const {
+  //   data: subjectsList,
+  //   // isLoading,
+  //   // error,
+  // } = useApiGet("subjects", () => fetchSubjects({ params: "/trimmed" }), {
+  //   refetchOnWindowFocus: true,
+  //   retry: 3,
+  // });
 
-  console.log(subjectsList);
+  // console.log(subjectsList);
   const { handleSubmit, control, reset, setValue } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,
@@ -60,7 +62,19 @@ const ManageSubjectsTab = () => {
   }, [initialValues, reset]);
 
   const handleFormDataSubmit = (rawData) => {
-    alert("CLICKED SUBMIT", rawData);
+    alert("CLICKED SUBMIT");
+    // console.log("RAWDATA", rawData);
+    const formattedData = {
+      code: rawData?.code,
+      acronym: rawData?.acronym,
+      title: rawData?.title,
+      description: rawData?.description,
+      topics: rawData?.topics?.map((topic) => topic._id),
+      status: rawData?.status,
+      isHidden: rawData?.isHidden === "yes",
+      remarks: rawData?.remarks,
+    };
+    console.log("FD", formattedData);
   };
 
   const handleUndo = () => {

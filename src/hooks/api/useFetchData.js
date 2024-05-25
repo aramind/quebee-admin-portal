@@ -1,11 +1,13 @@
 import LoadingPage from "../../pages/LoadingPage";
 import useApiGet from "./useApiGet";
 import useErrorHandlerUnAuthReq from "./useErrorHandlerUnAuthReq";
+import useSubjReq from "./useSubReq";
 import useTopicReq from "./useTopicReq";
 
 const useFetchData = () => {
   const handleUnAuthError = useErrorHandlerUnAuthReq();
   const { fetchTopics } = useTopicReq();
+  const { fetchSubjects } = useSubjReq();
 
   const {
     data: topicsList,
@@ -17,15 +19,24 @@ const useFetchData = () => {
     staleTime: Infinity,
   });
 
-  if (isLoading) {
+  const {
+    data: subjectsList,
+    isLoading: isLoadingInSubject,
+    error: isErrorInSubject,
+  } = useApiGet("subjects", () => fetchSubjects({ params: "/trimmed" }), {
+    refetchOnWindowFocus: true,
+    retry: 3,
+  });
+
+  if (isLoading || isLoadingInSubject) {
     return <LoadingPage />;
   }
 
-  if (error) {
+  if (error || isErrorInSubject) {
     handleUnAuthError(error);
   }
 
-  return { topicsList };
+  return { topicsList, subjectsList };
 };
 
 export default useFetchData;
