@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Value from "../manage-question-page/Value";
-import Label from "../manage-question-page/Label";
+import Value from "../../components/form/Value";
+import Label from "../../components/form/Label";
 import { formatCreatorName as getName } from "../../utils/formatCreatorName";
 import { formatDate } from "../../utils/formatDate";
 import { useFormContext } from "react-hook-form";
