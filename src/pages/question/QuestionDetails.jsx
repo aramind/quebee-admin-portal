@@ -3,8 +3,6 @@ import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import { red, teal } from "@mui/material/colors";
 import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSelectToTable";
-import useApiGet from "../../hooks/api/useApiGet";
-import useTopicReq from "../../hooks/api/useTopicReq";
 import ContRadGroup from "../../components/form-controlled/ContRadGroup";
 import constants from "../../configs/constants";
 import DifficultySection from "./DifficultySection";
@@ -13,21 +11,11 @@ import ChoicesSection from "./ChoicesSection";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
 import AddTopicDialog from "../add-course-page/AddTopicDialog";
 import useDialog from "../../hooks/useDialog";
+import useFetchData from "../../hooks/api/useFetchData";
 
 const QuestionDetails = ({ initialValues = {} }) => {
+  const { topicsList } = useFetchData();
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
-
-  const { fetchTopics } = useTopicReq();
-
-  const { data: topicsList } = useApiGet(
-    ["topics"],
-    () => fetchTopics({ params: "/trimmed" }),
-    {
-      refetchOnWindowFocus: false,
-      retry: 3,
-      staleTime: Infinity,
-    }
-  );
 
   return (
     <Stack spacing={1.5} direction="row" alignItems="flex-start">
@@ -110,7 +98,7 @@ const QuestionDetails = ({ initialValues = {} }) => {
           <ControlledChipMultiAutoComp
             name="tags"
             label="select tag(s)"
-            options={constants.TAGS}
+            options={["tag1"]}
             free
           />
         </ElevatedSectionWrapper>
