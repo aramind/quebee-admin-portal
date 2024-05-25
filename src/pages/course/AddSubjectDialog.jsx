@@ -15,19 +15,12 @@ import Draggable from "react-draggable";
 import { grey } from "@mui/material/colors";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
-import AddTopicDialog from "../add-course-page/AddTopicDialog";
-import useTopicReq from "../../hooks/api/useTopicReq";
-
-import useApiGet from "../../hooks/api/useApiGet";
-import LoadingPage from "../LoadingPage";
 
 import useApiSend from "../../hooks/api/useApiSend";
 import useSubjReq from "../../hooks/api/useSubReq";
-import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
 import SubjectInfoSection from "./SubjectInfoSection";
 import useFormSubmit from "../../hooks/useFormSubmit";
 import FormWrapper from "../../wrappers/FormWrapper";
-import useFetchData from "../../hooks/api/useFetchData";
 import { DevTool } from "@hookform/devtools";
 
 function PaperComponent(props) {

@@ -12,7 +12,6 @@ const SubjectInfoSection = () => {
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
   const { topicsList } = useFetchData();
-  console.log(topicsList);
 
   return (
     <Stack direction="row" spacing={4}>
