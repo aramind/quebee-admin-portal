@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MetaInfoSection from "./MetaInfoSection";
-import SubjectSection from "../add-course-page/SubjectSection";
+import SubjectSection from "./SubjectSection";
 import { Button, Stack, Typography } from "@mui/material";
 import { red } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
