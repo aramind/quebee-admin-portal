@@ -8,11 +8,12 @@ import { DevTool } from "@hookform/devtools";
 import FormWrapper from "../../wrappers/FormWrapper";
 import useFormSubmit from "../../hooks/useFormSubmit";
 
-import FormActionsSection from "../add-question-page/FormActionsSection";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
 import useApiSend from "../../hooks/api/useApiSend";
 
 import QuestionDetails from "./QuestionDetails";
+import FormActionsContainer from "../../containers/FormActionsContainer";
+import FormActionButton from "../../components/form/FormActionButton";
 
 const AddQuestionTab = () => {
   const styles = useStyles();
@@ -105,10 +106,15 @@ const AddQuestionTab = () => {
         <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
           <QuestionDetails />
           <br />
-          <FormActionsSection
-            handleClear={handleClear}
-            handleSubmit={handleSubmit}
-          />
+          <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+            <FormActionButton
+              label="clear"
+              onClickHandler={handleClear}
+              variant="outlined"
+            />
+            <FormActionButton type="submit" label="save" variant="contained" />
+          </FormActionsContainer>
+
           <DevTool control={control} />
         </form>
       </Container>
