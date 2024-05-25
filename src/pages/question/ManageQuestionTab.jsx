@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ManageQuestionPage from "../manage-question-page/ManageQuestionPage";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
 import useApiGet from "../../hooks/api/useApiGet";
 import { useForm } from "react-hook-form";
@@ -15,6 +14,7 @@ import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import { DevTool } from "@hookform/devtools";
 import QuestionDetails from "./QuestionDetails";
+import useApiSend from "../../hooks/api/useApiSend";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -38,6 +38,7 @@ const ManageQuestionTab = () => {
   const [initialValues, setInitialValues] = useState({});
   const [fetchValues, setFetchValues] = useState(null);
   const styles = useStyles();
+  const { edit } = useQuestionReq();
 
   const { data: questionsList } = useApiGet(
     "questions",
@@ -47,6 +48,11 @@ const ManageQuestionTab = () => {
     }
   );
 
+  const { mutate: sendUpdate } = useApiSend(
+    edit,
+    () => console.log("Question successfully updated"),
+    (err) => console.log("Error updating question", err)
+  );
   const { control, handleSubmit, reset, setValue, getValues } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,
@@ -78,7 +84,46 @@ const ManageQuestionTab = () => {
 
   // console.log(questionsList);
   const handleFormDataSubmit = async (rawData) => {
-    alert("CLICKED SUBMIT with", rawData);
+    // console.log(rawData);
+    alert("Submitting");
+    const formattedData = {
+      code: rawData?.code,
+      access: Number(rawData?.access),
+      difficulty: Number(rawData?.difficulty),
+      topics: rawData?.topics?.map((topic) => topic._id),
+      type: rawData?.type,
+      question: { text: rawData?.question },
+      choices: [
+        {
+          value: { text: rawData?.A, image: "" },
+          isCorrect: rawData?.correctAnswer === "A",
+        },
+        {
+          value: { text: rawData?.B, image: "" },
+          isCorrect: rawData?.correctAnswer === "B",
+        },
+        {
+          value: { text: rawData?.C, image: "" },
+          isCorrect: rawData?.correctAnswer === "C",
+        },
+        {
+          value: { text: rawData?.D, image: "" },
+          isCorrect: rawData?.correctAnswer === "D",
+        },
+      ],
+      information: { text: rawData?.information },
+      isHidden: rawData?.isHidden === "yes",
+      tags: rawData?.tags,
+      remarks: rawData?.remarks,
+      creator: rawData?.creator?._id,
+      status: rawData?.status,
+      // editors: rawData?.editors,
+    };
+    console.log("FD", formattedData);
+    sendUpdate({
+      id: rawData?._id,
+      data: formattedData,
+    });
   };
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
@@ -105,15 +150,10 @@ const ManageQuestionTab = () => {
               <QuestionDetails />
             </Stack>
             <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-              <ACSandDOS
-                // control={control}
-                values={initialValues}
-              />
+              <ACSandDOS values={initialValues} />
             </Stack>
           </Stack>
-
           <br />
-
           {/* <DevTool control={control} /> */}
           <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
             <FormActionButton
