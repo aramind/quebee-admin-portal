@@ -13,12 +13,24 @@ import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import useFetchData from "../../hooks/api/useFetchData";
+import useCourseReq from "../../hooks/api/useCourseReq";
+import useApiSend from "../../hooks/api/useApiSend";
 
 const ManageCourseTab = () => {
   const [initialValues, setInitialValues] = useState({});
   const [value, setValue] = useState(null);
   const styles = useStyles();
   const { coursesList } = useFetchData();
+  const { patch } = useCourseReq();
+
+  const { mutate: sendEditCourse } = useApiSend(
+    patch,
+    () =>
+      alert("Successful updating of course", (err) =>
+        alert("Error updating course. Try again.", err)
+      ),
+    ["courses"]
+  );
 
   const { control, handleSubmit, reset } = useForm({
     // resolver: zodResolver(courseSchema),
@@ -30,6 +42,7 @@ const ManageCourseTab = () => {
 
   useEffect(() => {
     setInitialValues({
+      _id: value?._id,
       code: value?.code,
       acronym: value?.acronym,
       database: value?.database,
@@ -55,6 +68,19 @@ const ManageCourseTab = () => {
 
   const handleFormDataSubmit = async (rawData) => {
     alert("CLICKED SUBMIT", rawData);
+    // console.log("RAW DATA", rawData);
+    const { _id, creator, createdAt, ...selectedData } = rawData;
+    const formattedData = {
+      ...selectedData,
+      subjects: [
+        ...new Set(
+          selectedData?.subjects?.map((s) => s.title).filter((title) => title)
+        ),
+      ],
+      isHidden: selectedData?.isHidden === "yes",
+    };
+    // console.log("FD", formattedData);
+    sendEditCourse({ id: _id, data: formattedData });
   };
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
   return (
