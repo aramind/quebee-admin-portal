@@ -9,11 +9,18 @@ import CourseDetailsSection from "./CourseDetailsSection";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import { DevTool } from "@hookform/devtools";
+import useApiSend from "../../hooks/api/useApiSend";
 
 const AddCourseTab = () => {
   const styles = useStyles();
   const { addCourse } = useCourseReq();
 
+  const { mutate: sendAddCourse } = useApiSend(
+    addCourse,
+    () => alert("Course added successfully"),
+    (err) => alert("Error adding course. Try again.", err),
+    ["courses", "topics", "subjects"]
+  );
   const { control, handleSubmit } = useForm({
     mode: "onTouched",
     defaultValues: {
@@ -37,7 +44,7 @@ const AddCourseTab = () => {
       ],
     };
     console.log(formattedData);
-    // addCourse({ data: formattedData });
+    sendAddCourse({ data: formattedData });
     alert("SUBMITTED");
   };
 
