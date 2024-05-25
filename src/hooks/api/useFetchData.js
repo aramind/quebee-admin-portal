@@ -13,7 +13,7 @@ const useFetchData = () => {
     data: topicsList,
     isLoading: isLoadingInTopic,
     error: isErrorInTopic,
-  } = useApiGet(["topics"], () => fetchTopics({ params: "/trimmed" }), {
+  } = useApiGet("topics", () => fetchTopics({ params: "/trimmed" }), {
     refetchOnWindowFocus: false,
     retry: 3,
     staleTime: Infinity,

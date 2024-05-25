@@ -6,31 +6,11 @@ import { red } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import AddSubjectDialog from "./AddSubjectDialog";
-import useSubjReq from "../../hooks/api/useSubReq";
-import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
-import useApiGet from "../../hooks/api/useApiGet";
-import LoadingPage from "../LoadingPage";
+import useFetchData from "../../hooks/api/useFetchData";
+
 const CourseDetailsSection = () => {
   const [openAddSubject, setOpenAddSubject] = useState(false);
-  const { fetchSubjects } = useSubjReq();
-  const handleUnAuthError = useErrorHandlerUnAuthReq();
-
-  const {
-    data: subjectsList,
-    isLoading,
-    error,
-  } = useApiGet("subjects", () => fetchSubjects({ params: "" }), {
-    refetchOnWindowFocus: true,
-    retry: 3,
-  });
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (error) {
-    handleUnAuthError(error);
-  }
+  const { subjectsList } = useFetchData();
   return (
     <>
       <MetaInfoSection />
