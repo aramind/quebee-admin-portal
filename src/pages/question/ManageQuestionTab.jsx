@@ -33,6 +33,7 @@ const getLetterOfCorrectAnswer = (choices) => {
       return undefined;
   }
 };
+
 const ManageQuestionTab = () => {
   const { get } = useQuestionReq();
   const [initialValues, setInitialValues] = useState({});
@@ -82,10 +83,7 @@ const ManageQuestionTab = () => {
     console.log("CLICKED UNDO");
   };
 
-  // console.log(questionsList);
   const handleFormDataSubmit = async (rawData) => {
-    // console.log(rawData);
-    alert("Submitting");
     const formattedData = {
       code: rawData?.code,
       access: Number(rawData?.access),
@@ -117,9 +115,7 @@ const ManageQuestionTab = () => {
       remarks: rawData?.remarks,
       creator: rawData?.creator?._id,
       status: rawData?.status,
-      // editors: rawData?.editors,
     };
-    console.log("FD", formattedData);
     sendUpdate({
       id: rawData?._id,
       data: formattedData,
