@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
-import useApiGet from "../../hooks/api/useApiGet";
-import useCourseReq from "../../hooks/api/useCourseReq";
 import { useForm } from "react-hook-form";
 import FormWrapper from "../../wrappers/FormWrapper";
 import { Container, Stack } from "@mui/material";
@@ -14,21 +12,13 @@ import ACSandDOS from "./ACSandDOS";
 import { DevTool } from "@hookform/devtools";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
+import useFetchData from "../../hooks/api/useFetchData";
 
 const ManageCourseTab = () => {
   const [initialValues, setInitialValues] = useState({});
   const [value, setValue] = useState(null);
   const styles = useStyles();
-  const { get } = useCourseReq();
-
-  const {
-    data: coursesList,
-    // isLoading,
-    // error,
-  } = useApiGet("courses", () => get("/trimmed"), {
-    refetchOnWindowFocus: true,
-    retry: 3,
-  });
+  const { coursesList } = useFetchData();
 
   const { control, handleSubmit, reset } = useForm({
     // resolver: zodResolver(courseSchema),

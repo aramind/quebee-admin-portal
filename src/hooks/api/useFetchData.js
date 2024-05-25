@@ -1,5 +1,6 @@
 import LoadingPage from "../../pages/LoadingPage";
 import useApiGet from "./useApiGet";
+import useCourseReq from "./useCourseReq";
 import useErrorHandlerUnAuthReq from "./useErrorHandlerUnAuthReq";
 import useQuestionReq from "./useQuestionReq";
 import useSubjReq from "./useSubReq";
@@ -10,6 +11,16 @@ const useFetchData = () => {
   const { fetchTopics } = useTopicReq();
   const { fetchSubjects } = useSubjReq();
   const { getTags } = useQuestionReq();
+  const { get } = useCourseReq();
+
+  const {
+    data: coursesList,
+    isLoading: isLoadingInCourse,
+    error: isErrorInCourse,
+  } = useApiGet("courses", () => get("/trimmed"), {
+    refetchOnWindowFocus: true,
+    retry: 3,
+  });
 
   const {
     data: topicsList,
@@ -40,16 +51,22 @@ const useFetchData = () => {
     staleTime: Infinity,
   });
 
-  if (isLoadingInTopic || isLoadingInSubject || isLoadingInTags) {
+  if (
+    isLoadingInCourse ||
+    isLoadingInTopic ||
+    isLoadingInSubject ||
+    isLoadingInTags
+  ) {
     return <LoadingPage />;
   }
 
   if (isErrorInTopic || isErrorInSubject) {
-    const error = isErrorInTopic || isErrorInSubject || isErrorInTags;
+    const error =
+      isErrorInCourse || isErrorInTopic || isErrorInSubject || isErrorInTags;
     handleUnAuthError(error);
   }
 
-  return { topicsList, subjectsList, tagsList };
+  return { coursesList, topicsList, subjectsList, tagsList };
 };
 
 export default useFetchData;
