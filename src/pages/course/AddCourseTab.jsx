@@ -25,11 +25,19 @@ const AddCourseTab = () => {
 
   const handleFormDataSubmit = async (rawData) => {
     console.log("Submitting...");
+    console.log(rawData);
+    const { topics, ...selectedData } = rawData;
     const formattedData = {
-      ...rawData,
-      subjects: rawData?.subjects.map((s) => s.title),
+      ...selectedData,
+      // subjects: selectedData?.subjects.map((s) => s.title),
+      subjects: [
+        ...new Set(
+          selectedData?.subjects?.map((s) => s.title).filter((title) => title)
+        ),
+      ],
     };
-    addCourse({ data: formattedData });
+    console.log(formattedData);
+    // addCourse({ data: formattedData });
     alert("SUBMITTED");
   };
 
@@ -59,7 +67,7 @@ const AddCourseTab = () => {
             />
             <FormActionButton type="submit" label="save" variant="contained" />
           </FormActionsContainer>
-          {/* <DevTool control={control} /> */}
+          <DevTool control={control} />
         </form>
       </Container>
     </FormWrapper>
