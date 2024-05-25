@@ -107,7 +107,7 @@ input:active {
 .MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label.css-18pnire-MuiTypography-root {
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 12px;
   padding-top: 8px;
 }
