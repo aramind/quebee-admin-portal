@@ -31,8 +31,8 @@ const AddCourseTab = () => {
   const formMethods = { control, handleSubmit };
 
   const handleFormDataSubmit = async (rawData) => {
-    console.log("Submitting...");
-    console.log(rawData);
+    // console.log("Submitting...");
+    // console.log(rawData);
     const { topics, ...selectedData } = rawData;
     const formattedData = {
       ...selectedData,
@@ -43,7 +43,7 @@ const AddCourseTab = () => {
         ),
       ],
     };
-    console.log(formattedData);
+
     sendAddCourse({ data: formattedData });
     alert("SUBMITTED");
   };
