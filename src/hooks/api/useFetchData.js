@@ -11,8 +11,8 @@ const useFetchData = () => {
 
   const {
     data: topicsList,
-    isLoading,
-    error,
+    isLoading: isLoadingInTopic,
+    error: isErrorInTopic,
   } = useApiGet(["topics"], () => fetchTopics({ params: "/trimmed" }), {
     refetchOnWindowFocus: false,
     retry: 3,
@@ -28,11 +28,12 @@ const useFetchData = () => {
     retry: 3,
   });
 
-  if (isLoading || isLoadingInSubject) {
+  if (isLoadingInTopic || isLoadingInSubject) {
     return <LoadingPage />;
   }
 
-  if (error || isErrorInSubject) {
+  if (isErrorInTopic || isErrorInSubject) {
+    const error = isErrorInTopic || isErrorInSubject;
     handleUnAuthError(error);
   }
 
