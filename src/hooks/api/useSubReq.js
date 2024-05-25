@@ -18,7 +18,7 @@ const useSubjReq = () => {
         method: "POST",
         data,
       }),
-    editSubject: ({ id, data }) => {
+    edit: ({ id, data }) => {
       request({
         url: `${url}/${id}`,
         method: "PATCH",

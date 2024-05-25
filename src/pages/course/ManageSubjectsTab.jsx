@@ -13,6 +13,8 @@ import ACSandDOS from "./ACSandDOS";
 import FormWrapper from "../../wrappers/FormWrapper";
 import useFormSubmit from "../../hooks/useFormSubmit";
 import useFetchData from "../../hooks/api/useFetchData";
+import useSubjReq from "../../hooks/api/useSubReq";
+import useApiSend from "../../hooks/api/useApiSend";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -20,6 +22,13 @@ const ManageSubjectsTab = () => {
 
   const styles = useStyles();
   const { subjectsList } = useFetchData();
+  const { edit } = useSubjReq();
+
+  const { mutate: handleEditSubject } = useApiSend(
+    edit,
+    () => alert("UPDATE SUCCESSFUL"),
+    (err) => console.error("Error updating subject", err)
+  );
 
   const { handleSubmit, control, reset, setValue } = useForm({
     mode: "onTouched",
@@ -30,6 +39,7 @@ const ManageSubjectsTab = () => {
 
   useEffect(() => {
     setInitialValues({
+      _id: selectedSubject?._id,
       code: selectedSubject?.code,
       acronym: selectedSubject?.acronym,
       title: selectedSubject?.title,
@@ -44,13 +54,10 @@ const ManageSubjectsTab = () => {
   }, [selectedSubject]);
 
   useEffect(() => {
-    // Update form values when initialValues change
     reset(initialValues);
   }, [initialValues, reset]);
 
   const handleFormDataSubmit = (rawData) => {
-    alert("CLICKED SUBMIT");
-    // console.log("RAWDATA", rawData);
     const formattedData = {
       code: rawData?.code,
       acronym: rawData?.acronym,
@@ -61,7 +68,7 @@ const ManageSubjectsTab = () => {
       isHidden: rawData?.isHidden === "yes",
       remarks: rawData?.remarks,
     };
-    console.log("FD", formattedData);
+    handleEditSubject({ id: rawData?._id, data: formattedData });
   };
 
   const handleUndo = () => {
