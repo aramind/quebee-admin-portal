@@ -15,7 +15,7 @@ import Draggable from "react-draggable";
 import { grey } from "@mui/material/colors";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
-import AddTopicDialog from "./AddTopicDialog";
+import AddTopicDialog from "../add-course-page/AddTopicDialog";
 import useTopicReq from "../../hooks/api/useTopicReq";
 
 import useApiGet from "../../hooks/api/useApiGet";
@@ -24,9 +24,11 @@ import LoadingPage from "../LoadingPage";
 import useApiSend from "../../hooks/api/useApiSend";
 import useSubjReq from "../../hooks/api/useSubReq";
 import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
-import SubjectInfoSection from "../course/SubjectInfoSection";
+import SubjectInfoSection from "./SubjectInfoSection";
 import useFormSubmit from "../../hooks/useFormSubmit";
 import FormWrapper from "../../wrappers/FormWrapper";
+import useFetchData from "../../hooks/api/useFetchData";
+import { DevTool } from "@hookform/devtools";
 
 function PaperComponent(props) {
   return (
@@ -41,9 +43,7 @@ function PaperComponent(props) {
 
 const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   const styles = useStyles();
-  const { fetchTopics } = useTopicReq();
   const { addSubject } = useSubjReq();
-  const handleUnAuthError = useErrorHandlerUnAuthReq();
 
   const { mutate: handleAddSubject } = useApiSend(
     addSubject,
@@ -52,24 +52,11 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
     ["subjects"]
   );
 
-  const {
-    data: fetchedTopics,
-    isLoading,
-    error,
-  } = useApiGet(
-    "topics",
-    () => fetchTopics({ params: "/trimmed?fields=code,title,acronym" }),
-    {
-      refetchOnWindowFocus: true,
-      retry: 3,
-    }
-  );
-
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, setValue } = useForm({
     mode: "onTouched",
   });
 
-  const formMethods = { handleSubmit, control };
+  const formMethods = { handleSubmit, control, setValue };
   const handleClose = (e) => {
     e.stopPropagation();
   };
@@ -84,14 +71,6 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   };
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (error) {
-    handleUnAuthError(error);
-  }
 
   return (
     <>
@@ -111,10 +90,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
             <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
               <Box>
                 <ElevatedSectionWrapper>
-                  <SubjectInfoSection
-                    // control={control}
-                    options={fetchedTopics?.map((topic) => topic.title)}
-                  />
+                  <SubjectInfoSection />
                 </ElevatedSectionWrapper>
               </Box>
             </form>

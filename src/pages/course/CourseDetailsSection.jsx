@@ -5,7 +5,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { red } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
-import AddSubjectDialog from "../add-course-page/AddSubjectDialog";
+import AddSubjectDialog from "./AddSubjectDialog";
 import useSubjReq from "../../hooks/api/useSubReq";
 import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
 import useApiGet from "../../hooks/api/useApiGet";

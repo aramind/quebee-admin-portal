@@ -1,20 +1,18 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
-import { useFieldArray } from "react-hook-form";
-import ControlledAutocomplete from "../../components/form-controlled/ControlledAutocomplete";
-import { red } from "@mui/material/colors";
+import { red, teal } from "@mui/material/colors";
 import AddTopicDialog from "../add-course-page/AddTopicDialog";
+import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSelectToTable";
+import useFetchData from "../../hooks/api/useFetchData";
+import useDialog from "../../hooks/useDialog";
 
-const SubjectInfoSection = ({ control, options }) => {
-  const [openAddTopic, setOpenAddTopic] = useState(false);
+const SubjectInfoSection = () => {
+  const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
-  const {
-    fields: topics,
-    append: appendTopic,
-    remove: removeTopic,
-  } = useFieldArray({ control, name: "topics" });
+  const { topicsList } = useFetchData();
+  console.log(topicsList);
 
   return (
     <Stack direction="row" spacing={4}>
@@ -34,48 +32,39 @@ const SubjectInfoSection = ({ control, options }) => {
         />
         <Box height="100%" />
       </Stack>
-
-      <Stack flex={3} spacing={1.5}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Typography>Topics</Typography>
-          <Stack direction="row" alignItems="center">
-            <Typography variant="body" color={red["A100"]} mx={1}>
-              Topic not in the list?
-            </Typography>
-
-            <Button
-              variant="text"
-              size="small"
-              onClick={setOpenAddTopic}
-              sx={{ textDecoration: "underline" }}
-            >
-              Create Topic
-            </Button>
-          </Stack>
+      <Stack flex={3} direction="row" spacing={1.5}>
+        <Stack flex={1} width="100%">
+          <ContMultiSelectToTable
+            objOptionsWithTitles={topicsList || []}
+            nameForController="topics"
+            label="Topic(s)"
+            height="100%"
+          />
         </Stack>
-        <Stack spacing={1}>
-          {topics.map((topic, topicIndex) => (
-            <Stack direction="row" key={topic.id} spacing={1}>
-              <ControlledAutocomplete
-                // control={control}
-                name={`topics[${topicIndex}].title`}
-                options={options}
-              />
-              <Button onClick={() => removeTopic(topicIndex)}>Remove</Button>
-            </Stack>
-          ))}
-          <Button onClick={() => appendTopic({ name: "" })}>Add Topic</Button>
+        <Stack alignItems="flex-end" sx={{ paddingTop: "16px" }}>
+          <Typography variant="body" color={red["A100"]} fontSize="0.8rem">
+            Topic not in the list?
+          </Typography>
+          <Button
+            variant="text"
+            size="small"
+            onClick={() => handleOpen({ title: "Add New Topic" })}
+            sx={{
+              marginTop: "-8px",
+              textDecoration: "underline",
+              fontSize: "0.7rem",
+              "&:hover": {
+                backgroundColor: "transparent",
+                color: teal[800],
+                textDecoration: "underline",
+              },
+            }}
+          >
+            Create Topic
+          </Button>
         </Stack>
       </Stack>
-      <AddTopicDialog
-        open={openAddTopic}
-        setOpen={setOpenAddTopic}
-        title="Add New Topic"
-      />
+      {renderDialog()}
     </Stack>
   );
 };

@@ -32,12 +32,12 @@ const ManageSubjectsTab = () => {
   });
 
   console.log(subjectsList);
-  const { handleSubmit, control, reset } = useForm({
+  const { handleSubmit, control, reset, setValue } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,
   });
 
-  const formMethods = { handleSubmit, control, reset };
+  const formMethods = { handleSubmit, control, reset, setValue };
 
   useEffect(() => {
     setInitialValues({
@@ -91,19 +91,15 @@ const ManageSubjectsTab = () => {
           <Stack direction="row" spacing={1.5}>
             <ElevatedSectionWrapper flex={1} px={{ xs: "20px", md: "50px" }}>
               <SubjectInfoSection
-                // control={control}
                 options={initialValues?.topics?.map((topic) => topic.title)}
               />
             </ElevatedSectionWrapper>
             <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-              <ACSandDOS
-                // control={control}
-                values={initialValues}
-              />
+              <ACSandDOS values={initialValues} />
             </Stack>
           </Stack>
           <br />
-          {/* <DevTool control={control} /> */}
+          <DevTool control={control} />
 
           <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
             <FormActionButton

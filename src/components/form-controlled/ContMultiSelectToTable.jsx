@@ -20,20 +20,17 @@ const ContMultiSelectToTable = ({
   objOptionsWithTitles,
   nameForController,
   label,
+  height = "280px",
 }) => {
   const { setValue, control } = useFormContext();
 
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
-    // setSelected(initialValues?.topics);
-    setSelected(control?._options?.defaultValues?.[nameForController] || []);
-  }, [
-    control?._options?.defaultValues,
-    control?._options?.defaultValues.nameForController,
-    nameForController,
-    setValue,
-  ]);
+    if (control?._options?.defaultValues) {
+      setSelected(control?._options?.defaultValues?.[nameForController] || []);
+    }
+  }, [control?._options?.defaultValues, nameForController, setValue]);
 
   const handleRemove = (itemToRemove) => {
     const updatedSelected = selected?.filter(
@@ -52,7 +49,7 @@ const ContMultiSelectToTable = ({
     <Controller
       name={nameForController}
       render={({ field }) => (
-        <Stack height="280px">
+        <Stack height={height} width="100%">
           <Stack spacing={0.3}>
             <FormInputLabel label={label} />
             <Autocomplete
