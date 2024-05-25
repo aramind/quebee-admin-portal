@@ -1,11 +1,9 @@
 import { Container, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
-import { useForm, useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import { grey } from "@mui/material/colors";
-import useSubjReq from "../../hooks/api/useSubReq";
-import useApiGet from "../../hooks/api/useApiGet";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
 import SubjectInfoSection from "./SubjectInfoSection";
 import { DevTool } from "@hookform/devtools";
@@ -21,19 +19,8 @@ const ManageSubjectsTab = () => {
   const [initialValues, setInitialValues] = useState({});
 
   const styles = useStyles();
-  // const { fetchSubjects } = useSubjReq();
   const { subjectsList } = useFetchData();
 
-  // const {
-  //   data: subjectsList,
-  //   // isLoading,
-  //   // error,
-  // } = useApiGet("subjects", () => fetchSubjects({ params: "/trimmed" }), {
-  //   refetchOnWindowFocus: true,
-  //   retry: 3,
-  // });
-
-  // console.log(subjectsList);
   const { handleSubmit, control, reset, setValue } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,
