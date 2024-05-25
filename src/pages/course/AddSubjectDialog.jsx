@@ -55,12 +55,12 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   };
 
   const handleFormDataSubmit = async (data) => {
-    const selectedTopics = data?.topics?.map((topic) => topic?.title);
-    console.log({ ...data, topics: selectedTopics });
-    const finalData = { ...data, topics: selectedTopics };
+    const finalData = {
+      ...data,
+      topics: data?.topics?.map((topic) => topic?._id),
+    };
     console.log(finalData);
     handleAddSubject({ data: finalData });
-    alert("SUBMITTED");
   };
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
