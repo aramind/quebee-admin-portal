@@ -32,6 +32,12 @@ const useQuestionReq = () => {
         url: `${QUESTION_URL}/${id}`,
         method: "GET",
       }),
+
+    getTags: () =>
+      request({
+        url: `${QUESTION_URL}/tags`,
+        method: "GET",
+      }),
   };
 
   return questionReq;

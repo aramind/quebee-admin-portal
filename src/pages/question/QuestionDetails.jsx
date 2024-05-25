@@ -13,10 +13,12 @@ import AddTopicDialog from "../add-course-page/AddTopicDialog";
 import useDialog from "../../hooks/useDialog";
 import useFetchData from "../../hooks/api/useFetchData";
 
-const QuestionDetails = ({ initialValues = {} }) => {
-  const { topicsList } = useFetchData();
+const QuestionDetails = () => {
+  const { topicsList, tagsList } = useFetchData();
+
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
+  console.log("TL", tagsList);
   return (
     <Stack spacing={1.5} direction="row" alignItems="flex-start">
       <Stack flex={1} spacing={1.5}>
@@ -98,7 +100,7 @@ const QuestionDetails = ({ initialValues = {} }) => {
           <ControlledChipMultiAutoComp
             name="tags"
             label="select tag(s)"
-            options={["tag1"]}
+            options={tagsList || []}
             free
           />
         </ElevatedSectionWrapper>
