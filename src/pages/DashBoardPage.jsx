@@ -1,5 +1,5 @@
 import React from "react";
-import { useGlobalState } from "../context/ContextProvider";
+import { useGlobalState } from "../context/GlobalStatesContextProvider";
 import { Stack, Typography } from "@mui/material";
 import mockDB from "../mockDB/mockDB";
 import DashBoardCard from "../components/dashBoardCard/dashBoardCard";

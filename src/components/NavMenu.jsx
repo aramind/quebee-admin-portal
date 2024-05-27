@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import { NavLink } from "react-router-dom";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
-import { useGlobalState } from "../context/ContextProvider";
+import { useGlobalState } from "../context/GlobalStatesContextProvider";
 
 const NavMenu = ({ pages }) => {
   const [anchorEl, setAnchorEl] = useState(null);

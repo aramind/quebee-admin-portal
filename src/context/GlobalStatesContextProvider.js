@@ -4,6 +4,7 @@ import globalReducer from "./globalReducer";
 const initialGlobalState = {
   currentUser: null,
   currentUserRole: 0,
+  alert: { open: false, severity: "info", message: "" },
 };
 
 const GlobalStateContext = createContext(initialGlobalState);
@@ -12,7 +13,7 @@ export const useGlobalState = () => {
   return useContext(GlobalStateContext);
 };
 
-const GlobalContextProvider = ({ children }) => {
+const GlobalStatesContextProvider = ({ children }) => {
   const [globalState, dispatch] = useReducer(globalReducer, initialGlobalState);
 
   return (
@@ -22,4 +23,4 @@ const GlobalContextProvider = ({ children }) => {
   );
 };
 
-export default GlobalContextProvider;
+export default GlobalStatesContextProvider;

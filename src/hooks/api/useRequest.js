@@ -1,11 +1,22 @@
+import { useGlobalState } from "../../context/GlobalStatesContextProvider";
 import useAxiosPrivate from "./useAxiosPrivate";
 
 const useRequest = () => {
+  const { dispatch } = useGlobalState();
+
   const client = useAxiosPrivate();
 
   const request = async (options) => {
     const onSuccess = (res) => {
-      // console.log(res?.data?.data);
+      console.log(res?.data?.message);
+      dispatch({
+        type: "SHOW_MINOR_ALERT",
+        payload: {
+          open: true,
+          severity: "success",
+          message: res?.data?.message,
+        },
+      });
       return res?.data?.data;
       // return res;
     };

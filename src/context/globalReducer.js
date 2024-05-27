@@ -5,10 +5,13 @@ const globalReducer = (state, action) => {
         ...state,
         currentUser: action.payload,
       };
-    // case "SET_ALLOWED":
-    //   return { ...state, allowed: action.payload };
-    // case "LOGOUT":
-    //   return { ...state, currentUser: null, currentUserRole: null };
+
+    case "SHOW_MINOR_ALERT":
+      return {
+        ...state,
+        alert: action.payload,
+      };
+
     default:
       throw new Error("No matched action");
   }

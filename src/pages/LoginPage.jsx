@@ -15,10 +15,9 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import zodLoginSchema from "../schemas/login";
 
-import { useGlobalState } from "../context/ContextProvider";
+import { useGlobalState } from "../context/GlobalStatesContextProvider";
 import { AuthContext } from "../context/AuthProvider";
 import axios from "axios";
-import { red } from "@mui/material/colors";
 import useFormSubmit from "../hooks/useFormSubmit";
 import FormWrapper from "../wrappers/FormWrapper";
 

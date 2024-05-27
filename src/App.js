@@ -3,9 +3,10 @@ import "./App.css";
 import router from "./routes";
 
 import { CssBaseline } from "@mui/material";
-import { useGlobalState } from "./context/ContextProvider";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthProvider";
+import { useGlobalState } from "./context/GlobalStatesContextProvider";
+import MinorNotification from "./components/notifications/MinorNotification";
 
 function App() {
   const { dispatch } = useGlobalState();
@@ -20,6 +21,7 @@ function App() {
     <div className="App">
       <CssBaseline />
       <RouterProvider router={router.combinedRouter} />
+      <MinorNotification />
     </div>
   );
 }
