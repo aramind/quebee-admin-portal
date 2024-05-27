@@ -2,21 +2,26 @@ import { Stack, TextField } from "@mui/material";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import LabelWrapper from "../../wrappers/LabelWrapper";
-
 const ControlledTextField = ({
   label = "",
   name,
-  // control,
+
   customDefaultValue,
   tfProps,
   flex,
-  hasValidation,
 }) => {
-  const { errors } = useFormContext();
+  const { errors, dirtyFields } = useFormContext();
+
+  const touchedStyles = {
+    "& fieldset": {
+      borderWidth: "1.5px",
+      borderColor: "primary.main",
+    },
+  };
+
   return (
     <Controller
       name={name}
-      // control={control}
       render={({ field }) => (
         <Stack flex={flex || 1}>
           <LabelWrapper
@@ -34,6 +39,7 @@ const ControlledTextField = ({
               variant={tfProps?.variant || "outlined"}
               fullWidth={tfProps?.fullWidth || true}
               error={!!errors?.[name]}
+              sx={dirtyFields?.[name] ? { ...touchedStyles } : {}}
             />
           </LabelWrapper>
         </Stack>

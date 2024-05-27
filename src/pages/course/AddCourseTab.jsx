@@ -28,7 +28,7 @@ const AddCourseTab = () => {
     handleSubmit,
     formState: { errors, touchedFields, dirtyFields, isDirty },
   } = useForm({
-    // mode: "onTouched",
+    mode: "onBlur",
     resolver: zodResolver(courseSchema),
     defaultValues: {
       topics: [],
