@@ -1,35 +1,26 @@
-import React from "react";
+import { useEffect } from "react";
 import { useGlobalState } from "../../context/GlobalStatesContextProvider";
-import { Alert, Snackbar } from "@mui/material";
+
+import { useSnackbar } from "notistack";
+import { Alert } from "@mui/material";
 
 const MinorNotification = () => {
   const {
     globalState: { alert },
-    dispatch,
   } = useGlobalState();
 
-  const handleClose = (e, reason) => {
-    if (reason === "clickaway") return;
-    dispatch({ type: "SHOW_MINOR_ALERT", payload: { ...alert, open: false } });
-  };
+  const { enqueueSnackbar } = useSnackbar();
 
-  return (
-    <Snackbar
-      open={alert.open}
-      autoHideDuration={3000}
-      onClose={handleClose}
-      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-      sx={{ zIndex: 1000 }}
-    >
-      <Alert
-        // onClose={handleClose}
-        severity={alert.severity}
-        elevation={6}
-      >
-        {alert.message}
-      </Alert>
-    </Snackbar>
-  );
+  useEffect(() => {
+    if (alert.open) {
+      enqueueSnackbar(alert.message, {
+        content: () => <Alert severity={alert.severity}>{alert.message}</Alert>,
+        autoHideDuration: 2000,
+      });
+    }
+  }, [alert.message, alert.open, alert.severity, enqueueSnackbar]);
+
+  return null;
 };
 
 export default MinorNotification;
