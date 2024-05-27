@@ -8,8 +8,10 @@ import useCourseReq from "../../hooks/api/useCourseReq";
 import CourseDetailsSection from "./CourseDetailsSection";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { DevTool } from "@hookform/devtools";
 import useApiSend from "../../hooks/api/useApiSend";
+import courseSchema from "../../schemas/course.js";
 
 const AddCourseTab = () => {
   const styles = useStyles();
@@ -17,22 +19,32 @@ const AddCourseTab = () => {
 
   const { mutate: sendAddCourse } = useApiSend(
     addCourse,
-    () => alert("Course added successfully"),
+    (data) => alert(data),
     (err) => alert("Error adding course. Try again.", err),
     ["courses", "topics", "subjects"]
   );
-  const { control, handleSubmit } = useForm({
-    mode: "onTouched",
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, touchedFields, dirtyFields, isDirty },
+  } = useForm({
+    // mode: "onTouched",
+    resolver: zodResolver(courseSchema),
     defaultValues: {
       topics: [],
     },
   });
 
-  const formMethods = { control, handleSubmit };
+  const formMethods = {
+    control,
+    handleSubmit,
+    errors,
+    touchedFields,
+    dirtyFields,
+    isDirty,
+  };
 
   const handleFormDataSubmit = async (rawData) => {
-    // console.log("Submitting...");
-    // console.log(rawData);
     const { topics, ...selectedData } = rawData;
     const formattedData = {
       ...selectedData,
@@ -45,7 +57,6 @@ const AddCourseTab = () => {
     };
 
     sendAddCourse({ data: formattedData });
-    alert("SUBMITTED");
   };
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);

@@ -8,8 +8,8 @@ const useRequest = () => {
 
   const request = async (options) => {
     const onSuccess = (res) => {
-      console.log(res?.data);
-      console.log(res?.data?.message);
+      // console.log(res?.data);
+      // console.log(res?.data?.message);
 
       dispatch({
         type: "SHOW_MINOR_ALERT",

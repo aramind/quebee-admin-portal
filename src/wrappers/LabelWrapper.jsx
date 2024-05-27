@@ -1,13 +1,24 @@
 import React from "react";
 import useStyles from "../hooks/useStyles";
 import { InputLabel, Stack } from "@mui/material";
+import { red } from "@mui/material/colors";
 
-const LabelWrapper = ({ children, id, label }) => {
+const getErrorLabel = (hasError, error) => {
+  if (!hasError) return "";
+  const formattedError = `>> ${error}`;
+  return formattedError.toUpperCase();
+};
+
+const LabelWrapper = ({ children, id, label, hasError, error }) => {
   const styles = useStyles();
+
   return (
     <Stack width={1} gap={0.25}>
-      <InputLabel htmlFor={id} sx={{ ...styles.form.inputLabel }}>
-        {label.toUpperCase()}
+      <InputLabel
+        htmlFor={id}
+        sx={{ ...styles.form.inputLabel, color: hasError && hasErrorStyles }}
+      >
+        {label.toUpperCase() + " " + getErrorLabel(hasError, error)}
         {/* {label.charAt(0).toUpperCase() + label.slice(1)} */}
       </InputLabel>
       {children}
@@ -16,3 +27,8 @@ const LabelWrapper = ({ children, id, label }) => {
 };
 
 export default LabelWrapper;
+
+const hasErrorStyles = {
+  color: red[500],
+  // fontWeight: "bold",
+};
