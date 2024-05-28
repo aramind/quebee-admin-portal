@@ -26,7 +26,7 @@ const AddCourseTab = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm({
     mode: "onBlur",
     resolver: zodResolver(courseSchema),
@@ -39,6 +39,7 @@ const AddCourseTab = () => {
     control,
     handleSubmit,
     errors,
+    dirtyFields,
   };
 
   const handleFormDataSubmit = async (rawData) => {
@@ -78,9 +79,19 @@ const AddCourseTab = () => {
             <FormActionButton
               label="upload"
               // onClickHandler={handleUpload}
+              disabled
               variant="outlined"
             />
-            <FormActionButton type="submit" label="save" variant="contained" />
+            <FormActionButton
+              type="submit"
+              label="save"
+              variant="contained"
+              disabled={
+                Object.keys(errors).length !== 0 ||
+                !dirtyFields?.code ||
+                !dirtyFields?.title
+              }
+            />
           </FormActionsContainer>
           <DevTool control={control} />
         </form>

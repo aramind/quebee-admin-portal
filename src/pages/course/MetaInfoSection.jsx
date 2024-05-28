@@ -11,14 +11,18 @@ const MetaInfoSection = () => {
         <ElevatedSectionWrapper>
           <Stack direction="row" spacing={1.5}>
             <SelectDb />
-            <ControlledTextField name="code" label="code" hasValidation />
+            <ControlledTextField name="code" label="code (required)" />
           </Stack>
         </ElevatedSectionWrapper>
 
         <ElevatedSectionWrapper flex={1.5}>
           <Stack direction="row" spacing={1.5}>
             <ControlledTextField name="acronym" label="acronym" />
-            <ControlledTextField name="title" label="title" flex={2.5} />
+            <ControlledTextField
+              name="title"
+              label="title (required)"
+              flex={2.5}
+            />
           </Stack>
         </ElevatedSectionWrapper>
         <ElevatedSectionWrapper flex={1.5}>
