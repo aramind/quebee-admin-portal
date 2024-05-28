@@ -5,8 +5,11 @@ import { red } from "@mui/material/colors";
 
 const getErrorLabel = (hasError, error) => {
   if (!hasError) return "";
-  const formattedError = `>> ${error}`;
-  return formattedError.toUpperCase();
+  if (error === "Required") return "";
+  else {
+    const formattedError = `>> ${error}`;
+    return formattedError.toUpperCase();
+  }
 };
 
 const LabelWrapper = ({ children, id, label, hasError, error }) => {
