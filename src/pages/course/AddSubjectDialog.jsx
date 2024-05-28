@@ -22,6 +22,8 @@ import SubjectInfoSection from "./SubjectInfoSection";
 import useFormSubmit from "../../hooks/useFormSubmit";
 import FormWrapper from "../../wrappers/FormWrapper";
 import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import subjectSchema from "../../schemas/subject";
 
 function PaperComponent(props) {
   return (
@@ -45,11 +47,17 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
     ["subjects"]
   );
 
-  const { handleSubmit, control, setValue } = useForm({
-    mode: "onTouched",
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors, dirtyFields },
+  } = useForm({
+    mode: "onBlur",
+    resolver: zodResolver(subjectSchema),
   });
 
-  const formMethods = { handleSubmit, control, setValue };
+  const formMethods = { handleSubmit, control, setValue, errors, dirtyFields };
   const handleClose = (e) => {
     e.stopPropagation();
   };
@@ -86,6 +94,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
                   <SubjectInfoSection />
                 </ElevatedSectionWrapper>
               </Box>
+              <DevTool control={control} />
             </form>
           </DialogContent>
           <DialogActions>
@@ -96,9 +105,16 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
               />
               <DialogActionButton
                 label="save"
+                disabled={
+                  Object.keys(errors).length !== 0 ||
+                  !dirtyFields?.code ||
+                  !dirtyFields?.title
+                }
                 onClickHandler={() => {
                   handleSubmit(handleFormSubmit)();
-                  setOpen(false);
+                  if (Object.keys(errors).length === 0) {
+                    setOpen(false);
+                  }
                 }}
               />
             </DialogActionsContainer>

@@ -16,9 +16,9 @@ const SubjectInfoSection = () => {
   return (
     <Stack direction="row" spacing={4}>
       <Stack flex={2} spacing={1} justifyContent="flex-start">
-        <ControlledTextField name="code" label="subject code" />
+        <ControlledTextField name="code" label="subject code (required)" />
         <ControlledTextField name="acronym" label="acronym" />
-        <ControlledTextField name="title" label="title" />
+        <ControlledTextField name="title" label="title (required)" />
         <ControlledTextField
           name="description"
           label="description"

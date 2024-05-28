@@ -23,11 +23,6 @@ import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import topicSchema from "../../schemas/topic";
 
-const setIsDisabled = (errors, dirtyFields) => {
-  if (!dirtyFields?.code || !dirtyFields?.title) return true;
-  if (Object.keys(errors).length !== 0) return true;
-  return false;
-};
 function PaperComponent(props) {
   return (
     <Draggable
@@ -72,7 +67,6 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
-  console.log(dirtyFields);
   return (
     <>
       <FormWrapper formMethods={formMethods}>
@@ -102,7 +96,11 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
               <DialogActionButton label="cancel" onClickHandler={onClose} />
               <DialogActionButton
                 label="save"
-                disabled={setIsDisabled(errors, dirtyFields)}
+                disabled={
+                  Object.keys(errors).length !== 0 ||
+                  !dirtyFields?.code ||
+                  !dirtyFields?.title
+                }
                 onClickHandler={() => {
                   handleSubmit(handleFormSubmit)();
                   // setOpen(false);
