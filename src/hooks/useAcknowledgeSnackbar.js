@@ -5,7 +5,7 @@ import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
 const useAcknowledgeSnackbar = () => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [severity, setSeverity] = useState("infor");
+  const [severity, setSeverity] = useState("info");
 
   const showSnackbar = useCallback((msg, sev) => {
     setMessage(msg);

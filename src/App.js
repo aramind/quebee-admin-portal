@@ -7,6 +7,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthProvider";
 import { useGlobalState } from "./context/GlobalStatesContextProvider";
 import MinorNotification from "./components/notifications/MinorNotification";
+import AcknowledgeNotification from "./components/notifications/AcknowledgeNotification";
 
 function App() {
   const { dispatch } = useGlobalState();
@@ -22,6 +23,7 @@ function App() {
       <CssBaseline />
       <RouterProvider router={router.combinedRouter} />
       <MinorNotification />
+      <AcknowledgeNotification />
     </div>
   );
 }

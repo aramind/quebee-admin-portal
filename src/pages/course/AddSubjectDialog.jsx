@@ -24,6 +24,7 @@ import FormWrapper from "../../wrappers/FormWrapper";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema from "../../schemas/subject";
+import useAcknowledgeSnackbar from "../../hooks/useAcknowledgeSnackbar";
 
 function PaperComponent(props) {
   return (
@@ -42,8 +43,12 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
 
   const { mutate: handleAddSubject } = useApiSend(
     addSubject,
-    (data) => console.log("Success", data),
-    (err) => console.log("Error", err),
+    (data) => {
+      console.log(data);
+    },
+    (err) => {
+      console.log(err);
+    },
     ["subjects"]
   );
 
@@ -58,6 +63,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   });
 
   const formMethods = { handleSubmit, control, setValue, errors, dirtyFields };
+
   const handleClose = (e) => {
     e.stopPropagation();
   };
@@ -70,8 +76,6 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
     console.log(finalData);
     handleAddSubject({ data: finalData });
   };
-
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
   return (
     <>
@@ -88,7 +92,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
             {title}
           </DialogTitle>
           <DialogContent>
-            <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+            <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
               <Box>
                 <ElevatedSectionWrapper>
                   <SubjectInfoSection />
@@ -111,7 +115,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
                   !dirtyFields?.title
                 }
                 onClickHandler={() => {
-                  handleSubmit(handleFormSubmit)();
+                  handleSubmit(handleFormDataSubmit)();
                   if (Object.keys(errors).length === 0) {
                     setOpen(false);
                   }

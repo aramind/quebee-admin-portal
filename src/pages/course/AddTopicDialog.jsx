@@ -3,7 +3,6 @@ import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import {
   Box,
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -26,7 +25,8 @@ import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import topicSchema from "../../schemas/topic";
 import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
-import useAcknowledgeSnackbar from "../../hooks/useAcknowledgeSnackbar";
+import { useGlobalState } from "../../context/GlobalStatesContextProvider";
+import { showAckNotification } from "../../utils/showAckNotification";
 
 function PaperComponent(props) {
   return (
@@ -41,20 +41,19 @@ function PaperComponent(props) {
 
 const AddTopicDialog = ({ open, onClose, title = "", data }) => {
   const styles = useStyles();
-  const { showSnackbar, SnackbarComponent } = useAcknowledgeSnackbar();
+
+  const {
+    globalState: { ackAlert },
+    dispatch,
+  } = useGlobalState();
 
   const { add } = useTopicReq();
 
   const { mutate: addTopic } = useApiSend(
     add,
-    (data) => {
-      console.log(data);
-      showSnackbar(data?.message, data?.success ? "success" : "error");
-    },
-    (err) => {
-      console.log(err);
-      showSnackbar(err?.message, "error");
-    },
+    (data) => showAckNotification({ dispatch, success: true, data, ackAlert }),
+    (err) =>
+      showAckNotification({ dispatch, success: false, data: err, ackAlert }),
     ["topics"]
   );
 
@@ -101,7 +100,7 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
             </Stack>
           </DialogTitle>
           <DialogContent>
-            <SnackbarComponent />
+            {/* <SnackbarComponent /> */}
             <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
               <Box>
                 <ElevatedSectionWrapper>

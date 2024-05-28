@@ -5,6 +5,7 @@ const initialGlobalState = {
   currentUser: null,
   currentUserRole: 0,
   alert: { open: false, severity: "info", message: "" },
+  ackAlert: { open: false, severity: "info", message: "" },
 };
 
 const GlobalStateContext = createContext(initialGlobalState);

@@ -12,6 +12,12 @@ const globalReducer = (state, action) => {
         alert: action.payload,
       };
 
+    case "SHOW_ACK_NOTIFICATION":
+      return {
+        ...state,
+        ackAlert: action.payload,
+      };
+
     default:
       throw new Error("No matched action");
   }
