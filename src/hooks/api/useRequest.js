@@ -8,9 +8,6 @@ const useRequest = () => {
 
   const request = async (options) => {
     const onSuccess = (res) => {
-      // console.log(res?.data);
-      // console.log(res?.data?.message);
-
       dispatch({
         type: "SHOW_MINOR_ALERT",
         payload: {
@@ -19,14 +16,11 @@ const useRequest = () => {
           message: res?.data?.message,
         },
       });
-      console.log(res?.data);
       return res?.data;
       // return res;
     };
 
     const onError = (err) => {
-      // return Promise.reject(err.response?.data);
-      // alert(err.response?.data?.message);
       dispatch({
         type: "SHOW_MINOR_ALERT",
         payload: {
@@ -35,6 +29,7 @@ const useRequest = () => {
           message: err?.message,
         },
       });
+      return Promise.reject(err.response?.data || err);
     };
 
     return client(options).then(onSuccess).catch(onError);

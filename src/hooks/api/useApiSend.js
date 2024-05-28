@@ -10,8 +10,8 @@ const useApiSend = (fn, successFn, errorFn, invalidateKey, options) => {
         invalidateKey.forEach((key) => queryClient.invalidateQueries(key));
       successFn && successFn(data);
     },
-    onError: errorFn,
-    retry: 2,
+    onError: (err) => errorFn(err),
+    retry: 0,
     ...options,
   });
 };

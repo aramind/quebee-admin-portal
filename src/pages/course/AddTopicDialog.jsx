@@ -3,25 +3,30 @@ import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import {
   Box,
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   Paper,
+  Stack,
 } from "@mui/material";
 import Draggable from "react-draggable";
-import { grey } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
 import TopicInfoSection from "./TopicInfoSection";
 import useTopicReq from "../../hooks/api/useTopicReq";
 import useApiSend from "../../hooks/api/useApiSend";
-import useFormSubmit from "../../hooks/useFormSubmit";
+// import useFormSubmit from "../../hooks/useFormSubmit";
 import FormWrapper from "../../wrappers/FormWrapper";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import topicSchema from "../../schemas/topic";
+import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
+import useAcknowledgeSnackbar from "../../hooks/useAcknowledgeSnackbar";
 
 function PaperComponent(props) {
   return (
@@ -36,13 +41,20 @@ function PaperComponent(props) {
 
 const AddTopicDialog = ({ open, onClose, title = "", data }) => {
   const styles = useStyles();
+  const { showSnackbar, SnackbarComponent } = useAcknowledgeSnackbar();
 
   const { add } = useTopicReq();
 
   const { mutate: addTopic } = useApiSend(
     add,
-    (data) => console.log(data?.message),
-    (err) => console.log(err),
+    (data) => {
+      console.log(data);
+      showSnackbar(data?.message, data?.success ? "success" : "error");
+    },
+    (err) => {
+      console.log(err);
+      showSnackbar(err?.message, "error");
+    },
     ["topics"]
   );
 
@@ -65,8 +77,6 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
     addTopic({ data: data });
   };
 
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
-
   return (
     <>
       <FormWrapper formMethods={formMethods}>
@@ -79,10 +89,20 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
           fullWidth
         >
           <DialogTitle sx={styles.dialog.title} id="draggable-dialog-title">
-            {title}
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              {title}
+              <IconButton onClick={() => onClose()}>
+                <CloseTwoToneIcon />
+              </IconButton>
+            </Stack>
           </DialogTitle>
           <DialogContent>
-            <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+            <SnackbarComponent />
+            <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
               <Box>
                 <ElevatedSectionWrapper>
                   <TopicInfoSection />
@@ -102,10 +122,9 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
                   !dirtyFields?.title
                 }
                 onClickHandler={() => {
-                  handleSubmit(handleFormSubmit)();
+                  handleSubmit(handleFormDataSubmit)();
                   // setOpen(false);
                   if (Object.keys(errors).length === 0) {
-                    onClose();
                   }
                 }}
               />

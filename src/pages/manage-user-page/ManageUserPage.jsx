@@ -64,7 +64,9 @@ const ManageUserPage = () => {
 
   useEffect(() => {
     if (fetchedUsers) {
-      const filtered = fetchedUsers.filter((user) => user.role !== "super");
+      const filtered = fetchedUsers?.data.filter(
+        (user) => user.role !== "super"
+      );
 
       setRows(
         filtered.map((user, index) => ({
