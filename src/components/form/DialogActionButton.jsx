@@ -5,6 +5,7 @@ import useStyles from "../../hooks/useStyles";
 const DialogActionButton = ({
   label,
   type,
+  disabled,
   onClickHandler,
   onSubmit,
   variant = "text",
@@ -14,6 +15,7 @@ const DialogActionButton = ({
 
   return (
     <Button
+      disabled={disabled}
       onClick={onClickHandler}
       variant={variant}
       sx={{ ...styles.dialog.actionButton, ...otherStyles }}

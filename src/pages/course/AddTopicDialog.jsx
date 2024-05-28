@@ -19,7 +19,15 @@ import useTopicReq from "../../hooks/api/useTopicReq";
 import useApiSend from "../../hooks/api/useApiSend";
 import useFormSubmit from "../../hooks/useFormSubmit";
 import FormWrapper from "../../wrappers/FormWrapper";
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import topicSchema from "../../schemas/topic";
 
+const setIsDisabled = (errors, dirtyFields) => {
+  if (!dirtyFields?.code || !dirtyFields?.title) return true;
+  if (Object.keys(errors).length !== 0) return true;
+  return false;
+};
 function PaperComponent(props) {
   return (
     <Draggable
@@ -43,11 +51,16 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
     ["topics"]
   );
 
-  const { handleSubmit, control } = useForm({
-    mode: "onTouched",
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, dirtyFields },
+  } = useForm({
+    mode: "onBlur",
+    resolver: zodResolver(topicSchema),
   });
 
-  const formMethods = { control };
+  const formMethods = { control, errors, dirtyFields };
 
   const handleClose = (e) => {
     e.stopPropagation();
@@ -59,6 +72,7 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
+  console.log(dirtyFields);
   return (
     <>
       <FormWrapper formMethods={formMethods}>
@@ -80,6 +94,7 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
                   <TopicInfoSection />
                 </ElevatedSectionWrapper>
               </Box>
+              <DevTool control={control} />
             </form>
           </DialogContent>
           <DialogActions>
@@ -87,10 +102,13 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
               <DialogActionButton label="cancel" onClickHandler={onClose} />
               <DialogActionButton
                 label="save"
+                disabled={setIsDisabled(errors, dirtyFields)}
                 onClickHandler={() => {
                   handleSubmit(handleFormSubmit)();
                   // setOpen(false);
-                  onClose();
+                  if (Object.keys(errors).length === 0) {
+                    onClose();
+                  }
                 }}
               />
             </DialogActionsContainer>

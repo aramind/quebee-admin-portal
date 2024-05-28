@@ -6,12 +6,12 @@ const TopicInfoSection = () => {
   return (
     <Stack direction="row" spacing={1.5}>
       <Stack flex={1} spacing={1.5}>
-        <ControlledTextField name="code" label="topic code" />
+        <ControlledTextField name="code" label="topic code (required)" />
         <ControlledTextField name="acronym" label="acronym" />
         <Box height="100%"></Box>
       </Stack>
       <Stack flex={2} spacing={1.5}>
-        <ControlledTextField name="title" label="topic title" />
+        <ControlledTextField name="title" label="topic title (required)" />
         <ControlledTextField
           name="description"
           label="description"
