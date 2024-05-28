@@ -10,14 +10,7 @@ const ControlledTextField = ({
   tfProps,
   flex,
 }) => {
-  const { errors, dirtyFields } = useFormContext();
-
-  const touchedStyles = {
-    "& fieldset": {
-      borderWidth: "1.5px",
-      borderColor: "primary.main",
-    },
-  };
+  const { errors } = useFormContext();
 
   return (
     <Controller
@@ -39,7 +32,6 @@ const ControlledTextField = ({
               variant={tfProps?.variant || "outlined"}
               fullWidth={tfProps?.fullWidth || true}
               error={!!errors?.[name]}
-              sx={dirtyFields?.[name] ? { ...touchedStyles } : {}}
             />
           </LabelWrapper>
         </Stack>

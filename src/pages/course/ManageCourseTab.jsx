@@ -32,13 +32,23 @@ const ManageCourseTab = () => {
     ["courses"]
   );
 
-  const { control, handleSubmit, reset } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+
+    formState: { errors },
+  } = useForm({
     // resolver: zodResolver(courseSchema),
     mode: "onTouched",
     defaultValues: initialValues,
   });
 
-  const formMethods = { control, handleSubmit };
+  const formMethods = {
+    control,
+    handleSubmit,
+    errors,
+  };
 
   useEffect(() => {
     setInitialValues({
@@ -130,6 +140,7 @@ const ManageCourseTab = () => {
               variant="contained"
             />
           </FormActionsContainer>
+          <DevTool control={control} />
         </form>
       </Container>
     </FormWrapper>

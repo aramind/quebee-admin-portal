@@ -26,7 +26,7 @@ const AddCourseTab = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, touchedFields, dirtyFields, isDirty },
+    formState: { errors },
   } = useForm({
     mode: "onBlur",
     resolver: zodResolver(courseSchema),
@@ -39,9 +39,6 @@ const AddCourseTab = () => {
     control,
     handleSubmit,
     errors,
-    touchedFields,
-    dirtyFields,
-    isDirty,
   };
 
   const handleFormDataSubmit = async (rawData) => {
