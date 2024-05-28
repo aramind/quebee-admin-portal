@@ -104,7 +104,7 @@ const ManageTopicsTab = () => {
             <AutocompleteSelector
               value={selected}
               setValue={setSelected}
-              options={topicsList}
+              options={topicsList?.data}
               label="topics"
             />
           </ElevatedSectionWrapper>

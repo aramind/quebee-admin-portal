@@ -15,7 +15,7 @@ const CourseDetailsSection = () => {
     <>
       <MetaInfoSection />
       <br />
-      <SubjectSection subjectsList={subjectsList} />
+      <SubjectSection subjectsList={subjectsList?.data} />
       <Stack
         // className="outlined"
         my={1}

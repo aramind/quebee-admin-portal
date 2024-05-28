@@ -106,7 +106,7 @@ const ManageCourseTab = () => {
             <AutocompleteSelector
               value={value}
               setValue={setValue}
-              options={coursesList}
+              options={coursesList?.data}
               label="courses"
             />
           </ElevatedSectionWrapper>

@@ -34,7 +34,7 @@ const SubjectInfoSection = () => {
       <Stack flex={3} direction="row" spacing={1.5}>
         <Stack flex={1} width="100%">
           <ContMultiSelectToTable
-            objOptionsWithTitles={topicsList || []}
+            objOptionsWithTitles={topicsList?.data || []}
             nameForController="topics"
             label="Topic(s)"
             height="100%"

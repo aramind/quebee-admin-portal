@@ -58,7 +58,7 @@ const QuestionDetails = () => {
             </Button>
           </Stack>
           <ContMultiSelectToTable
-            objOptionsWithTitles={topicsList || []}
+            objOptionsWithTitles={topicsList?.data || []}
             nameForController="topics"
             label="Topic(s)"
           />
@@ -100,7 +100,7 @@ const QuestionDetails = () => {
           <ControlledChipMultiAutoComp
             name="tags"
             label="select tag(s)"
-            options={tagsList || []}
+            options={tagsList?.data || []}
             free
           />
         </ElevatedSectionWrapper>

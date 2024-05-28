@@ -8,6 +8,7 @@ const useFormSubmit = (onSubmit) => {
         await onSubmit(formData);
       } catch (err) {
         console.error("Error submitting form:", err);
+        alert("ERROR", err);
       }
     },
     [onSubmit]

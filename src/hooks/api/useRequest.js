@@ -19,7 +19,8 @@ const useRequest = () => {
           message: res?.data?.message,
         },
       });
-      return res?.data?.data;
+      console.log(res?.data);
+      return res?.data;
       // return res;
     };
 
