@@ -25,6 +25,9 @@ import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema from "../../schemas/subject";
 import useAcknowledgeSnackbar from "../../hooks/useAcknowledgeSnackbar";
+import { useGlobalState } from "../../context/GlobalStatesContextProvider";
+import { showAckNotification } from "../../utils/showAckNotification";
+import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSelectToTable";
 
 function PaperComponent(props) {
   return (
@@ -40,15 +43,16 @@ function PaperComponent(props) {
 const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   const styles = useStyles();
   const { addSubject } = useSubjReq();
+  const {
+    globalState: { ackAlert },
+    dispatch,
+  } = useGlobalState();
 
   const { mutate: handleAddSubject } = useApiSend(
     addSubject,
-    (data) => {
-      console.log(data);
-    },
-    (err) => {
-      console.log(err);
-    },
+    (data) => showAckNotification({ dispatch, success: true, data, ackAlert }),
+    (err) =>
+      showAckNotification({ dispatch, success: false, data: err, ackAlert }),
     ["subjects"]
   );
 
@@ -58,7 +62,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
     setValue,
     formState: { errors, dirtyFields },
   } = useForm({
-    mode: "onBlur",
+    mode: "onTouched",
     resolver: zodResolver(subjectSchema),
   });
 
@@ -69,6 +73,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   };
 
   const handleFormDataSubmit = async (data) => {
+    console.log("DATA", data);
     const finalData = {
       ...data,
       topics: data?.topics?.map((topic) => topic?._id),

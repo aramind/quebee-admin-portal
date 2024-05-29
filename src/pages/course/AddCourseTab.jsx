@@ -93,7 +93,7 @@ const AddCourseTab = () => {
               }
             />
           </FormActionsContainer>
-          <DevTool control={control} />
+          {/* <DevTool control={control} /> */}
         </form>
       </Container>
     </FormWrapper>

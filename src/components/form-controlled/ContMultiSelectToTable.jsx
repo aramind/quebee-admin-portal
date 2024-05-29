@@ -47,6 +47,7 @@ const ContMultiSelectToTable = ({
   // console.log(objOptionsWithTitles);
   return (
     <Controller
+      control={control}
       name={nameForController}
       render={({ field }) => (
         <Stack height={height} width="100%">
