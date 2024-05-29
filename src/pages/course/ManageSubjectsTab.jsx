@@ -11,7 +11,6 @@ import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import ACSandDOS from "./ACSandDOS";
 import FormWrapper from "../../wrappers/FormWrapper";
-import useFormSubmit from "../../hooks/useFormSubmit";
 import useFetchData from "../../hooks/api/useFetchData";
 import useSubjReq from "../../hooks/api/useSubReq";
 import useApiSend from "../../hooks/api/useApiSend";
@@ -106,8 +105,6 @@ const ManageSubjectsTab = () => {
     setIV(selectedSubject);
   };
 
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
-
   return (
     <FormWrapper formMethods={formMethods}>
       <Container
@@ -117,7 +114,7 @@ const ManageSubjectsTab = () => {
         disableGutters
         width="100vw"
       >
-        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+        <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
           <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
             <AutocompleteSelector
               value={selectedSubject}
