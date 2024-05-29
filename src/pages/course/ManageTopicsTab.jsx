@@ -11,35 +11,41 @@ import TopicInfoSection from "./TopicInfoSection";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import useApiSend from "../../hooks/api/useApiSend";
-import useFormSubmit from "../../hooks/useFormSubmit";
 import FormWrapper from "../../wrappers/FormWrapper";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
 import ACSandDOS from "./ACSandDOS";
 import useFetchData from "../../hooks/api/useFetchData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import topicSchema from "../../schemas/topic";
-import { isSaveBtnDisabled } from "../../utils/form/isSaveBtnDisabled";
+import { showAckNotification } from "../../utils/showAckNotification";
+import { useGlobalState } from "../../context/GlobalStatesContextProvider";
 
 const ManageTopicsTab = () => {
   const [selected, setSelected] = useState(null);
   const [initialValues, setInitialValues] = useState({});
 
   const styles = useStyles();
+  const {
+    globalState: { ackAlert },
+    dispatch,
+  } = useGlobalState();
 
   const { patchTopic } = useTopicReq();
   const { topicsList } = useFetchData();
 
   const { mutate: handleUpdate } = useApiSend(
     patchTopic,
-    () => console.log("Topic updated successfully"),
-    (err) => console.log("Encountered an error updating.Try again.", err)
+    (data) => showAckNotification({ dispatch, success: true, data, ackAlert }),
+    (err) =>
+      showAckNotification({ dispatch, success: false, data: err, ackAlert }),
+    ["topics"]
   );
 
   const {
     handleSubmit,
     control,
     reset,
-    formState: { isDirty, errors, dirtyFields },
+    formState: { isDirty, errors },
   } = useForm({
     mode: "onTouched",
     resolver: zodResolver(topicSchema),
@@ -82,7 +88,6 @@ const ManageTopicsTab = () => {
       alert("No topic selected");
     } else {
       handleUpdate({ data: updatedData, _id });
-      alert("Request sent.");
     }
   };
 
@@ -91,9 +96,6 @@ const ManageTopicsTab = () => {
     reset(initialValues);
   };
 
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
-
-  console.log(isDirty);
   return (
     <FormWrapper formMethods={formMethods}>
       <Container
@@ -103,7 +105,7 @@ const ManageTopicsTab = () => {
         disableGutters
         width="100vw"
       >
-        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+        <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
           <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
             <AutocompleteSelector
               value={selected}
