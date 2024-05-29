@@ -15,19 +15,28 @@ import useFormSubmit from "../../hooks/useFormSubmit";
 import useFetchData from "../../hooks/api/useFetchData";
 import useSubjReq from "../../hooks/api/useSubReq";
 import useApiSend from "../../hooks/api/useApiSend";
+import { showAckNotification } from "../../utils/showAckNotification";
+import { useGlobalState } from "../../context/GlobalStatesContextProvider";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [initialValues, setInitialValues] = useState({});
 
   const styles = useStyles();
+  const {
+    globalState: { ackAlert },
+    dispatch,
+  } = useGlobalState();
+
   const { subjectsList } = useFetchData();
   const { edit } = useSubjReq();
 
   const { mutate: handleEditSubject } = useApiSend(
     edit,
-    () => alert("UPDATE SUCCESSFUL"),
-    (err) => console.error("Error updating subject", err)
+    (data) => showAckNotification({ dispatch, success: true, data, ackAlert }),
+    (err) =>
+      showAckNotification({ dispatch, success: false, data: err, ackAlert }),
+    ["subjects"]
   );
 
   const { handleSubmit, control, reset, setValue } = useForm({
