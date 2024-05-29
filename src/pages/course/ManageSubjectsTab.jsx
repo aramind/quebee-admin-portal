@@ -17,6 +17,8 @@ import useSubjReq from "../../hooks/api/useSubReq";
 import useApiSend from "../../hooks/api/useApiSend";
 import { showAckNotification } from "../../utils/showAckNotification";
 import { useGlobalState } from "../../context/GlobalStatesContextProvider";
+import { zodResolver } from "@hookform/resolvers/zod";
+import subjectSchema from "../../schemas/subject";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -39,12 +41,19 @@ const ManageSubjectsTab = () => {
     ["subjects"]
   );
 
-  const { handleSubmit, control, reset, setValue } = useForm({
+  const {
+    handleSubmit,
+    control,
+    reset,
+    setValue,
+    formState: { isDirty, errors },
+  } = useForm({
     mode: "onTouched",
+    resolver: zodResolver(subjectSchema),
     defaultValues: initialValues,
   });
 
-  const formMethods = { handleSubmit, control, reset, setValue };
+  const formMethods = { handleSubmit, control, reset, setValue, errors };
 
   useEffect(() => {
     setInitialValues({
@@ -107,9 +116,7 @@ const ManageSubjectsTab = () => {
           <br />
           <Stack direction="row" spacing={1.5}>
             <ElevatedSectionWrapper flex={1} px={{ xs: "20px", md: "50px" }}>
-              <SubjectInfoSection
-                options={initialValues?.topics?.map((topic) => topic.title)}
-              />
+              <SubjectInfoSection />
             </ElevatedSectionWrapper>
             <Stack spacing={1.5} justifyContent="flex-start" width="180px">
               <ACSandDOS values={initialValues} />
@@ -128,6 +135,11 @@ const ManageSubjectsTab = () => {
               type="submit"
               label="save changes"
               variant="contained"
+              disabled={
+                !selectedSubject?._id ||
+                !isDirty ||
+                Object.keys(errors).length !== 0
+              }
             />
           </FormActionsContainer>
         </form>

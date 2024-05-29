@@ -5,7 +5,6 @@ import LabelWrapper from "../../wrappers/LabelWrapper";
 const ControlledTextField = ({
   label = "",
   name,
-
   customDefaultValue,
   tfProps,
   flex,
