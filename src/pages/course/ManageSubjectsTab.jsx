@@ -46,6 +46,7 @@ const ManageSubjectsTab = () => {
     control,
     reset,
     setValue,
+    getValues,
     formState: { isDirty, errors },
   } = useForm({
     mode: "onTouched",
@@ -53,23 +54,34 @@ const ManageSubjectsTab = () => {
     defaultValues: initialValues,
   });
 
-  const formMethods = { handleSubmit, control, reset, setValue, errors };
+  const formMethods = {
+    handleSubmit,
+    control,
+    reset,
+    setValue,
+    errors,
+    getValues,
+  };
+
+  const setIV = (subject) => {
+    setInitialValues({
+      _id: subject?._id,
+      code: subject?.code,
+      acronym: subject?.acronym,
+      title: subject?.title,
+      description: subject?.description,
+      topics: subject?.topics,
+      status: subject?.status,
+      isHidden: subject?.isHidden ? "yes" : "no",
+      creator: subject?.creator,
+      createdAt: subject?.createdAt,
+      version: subject?.version,
+    });
+  };
 
   useEffect(() => {
-    setInitialValues({
-      _id: selectedSubject?._id,
-      code: selectedSubject?.code,
-      acronym: selectedSubject?.acronym,
-      title: selectedSubject?.title,
-      description: selectedSubject?.description,
-      topics: selectedSubject?.topics,
-      status: selectedSubject?.status,
-      isHidden: selectedSubject?.isHidden ? "yes" : "no",
-      creator: selectedSubject?.creator,
-      createdAt: selectedSubject?.createdAt,
-      version: selectedSubject?.version,
-    });
-  }, [selectedSubject]);
+    setIV(selectedSubject);
+  }, [selectedSubject, reset]);
 
   useEffect(() => {
     reset(initialValues);
@@ -90,7 +102,8 @@ const ManageSubjectsTab = () => {
   };
 
   const handleUndo = () => {
-    reset(initialValues);
+    reset();
+    setIV(selectedSubject);
   };
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
@@ -130,6 +143,7 @@ const ManageSubjectsTab = () => {
               label="undo changes"
               onClickHandler={handleUndo}
               variant="outlined"
+              disabled={!selectedSubject?._id || !isDirty}
             />
             <FormActionButton
               type="submit"

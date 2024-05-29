@@ -22,7 +22,7 @@ const ContMultiSelectToTable = ({
   label,
   height = "280px",
 }) => {
-  const { setValue, control } = useFormContext();
+  const { setValue, control, getValues } = useFormContext();
 
   const [selected, setSelected] = useState([]);
 
@@ -36,6 +36,13 @@ const ContMultiSelectToTable = ({
     setSelected,
     setValue,
   ]);
+
+  // useEffect(() => {
+  //   console.log(getValues(nameForController));
+  //   if (getValues(nameForController)) {
+  //     setSelected(getValues(nameForController) || []);
+  //   }
+  // }, [getValues, nameForController]);
 
   const handleRemove = (itemToRemove) => {
     const updatedSelected = selected?.filter(
