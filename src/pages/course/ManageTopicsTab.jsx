@@ -92,7 +92,6 @@ const ManageTopicsTab = () => {
   };
 
   const handleUndo = () => {
-    console.log("CLICKED UNDO");
     reset(initialValues);
   };
 

@@ -72,7 +72,7 @@ const ManageSubjectsTab = () => {
   };
 
   const handleUndo = () => {
-    console.log("CLICKED UNDO");
+    reset(initialValues);
   };
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
