@@ -13,6 +13,7 @@ const FormActionButton = ({
 
   return (
     <Button
+      variant={variant}
       type={type}
       disabled={disabled}
       onClick={onClickHandler}

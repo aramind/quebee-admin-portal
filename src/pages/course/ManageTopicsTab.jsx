@@ -15,6 +15,10 @@ import useFormSubmit from "../../hooks/useFormSubmit";
 import FormWrapper from "../../wrappers/FormWrapper";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
 import ACSandDOS from "./ACSandDOS";
+import useFetchData from "../../hooks/api/useFetchData";
+import { zodResolver } from "@hookform/resolvers/zod";
+import topicSchema from "../../schemas/topic";
+import { isSaveBtnDisabled } from "../../utils/form/isSaveBtnDisabled";
 
 const ManageTopicsTab = () => {
   const [selected, setSelected] = useState(null);
@@ -22,16 +26,8 @@ const ManageTopicsTab = () => {
 
   const styles = useStyles();
 
-  const { fetchTopics, patchTopic } = useTopicReq();
-
-  const {
-    data: topicsList,
-    // isLoading,
-    // error,
-  } = useApiGet("topics", () => fetchTopics({ params: "/trimmed" }), {
-    refetchOnWindowFocus: true,
-    retry: 3,
-  });
+  const { patchTopic } = useTopicReq();
+  const { topicsList } = useFetchData();
 
   const { mutate: handleUpdate } = useApiSend(
     patchTopic,
@@ -39,12 +35,18 @@ const ManageTopicsTab = () => {
     (err) => console.log("Encountered an error updating.Try again.", err)
   );
 
-  const { handleSubmit, control, reset } = useForm({
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { isDirty, errors, dirtyFields },
+  } = useForm({
     mode: "onTouched",
+    resolver: zodResolver(topicSchema),
     defaultValues: initialValues,
   });
 
-  const formMethods = { handleSubmit, control, reset };
+  const formMethods = { handleSubmit, control, reset, errors };
 
   useEffect(() => {
     setInitialValues({
@@ -86,10 +88,12 @@ const ManageTopicsTab = () => {
 
   const handleUndo = () => {
     console.log("CLICKED UNDO");
+    reset(initialValues);
   };
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
+  console.log(isDirty);
   return (
     <FormWrapper formMethods={formMethods}>
       <Container
@@ -124,7 +128,7 @@ const ManageTopicsTab = () => {
             </Stack>
           </Stack>
           <br />
-          {/* <DevTool control={control} /> */}
+          <DevTool control={control} />
           <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
             <FormActionButton
               label="undo changes"
@@ -135,6 +139,9 @@ const ManageTopicsTab = () => {
               type="submit"
               label="save changes"
               variant="contained"
+              disabled={
+                !selected?._id || !isDirty || Object.keys(errors).length !== 0
+              }
             />
           </FormActionsContainer>
         </form>
