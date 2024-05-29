@@ -62,7 +62,7 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
     control,
     formState: { errors, dirtyFields },
   } = useForm({
-    mode: "onBlur",
+    mode: "onTouched",
     resolver: zodResolver(topicSchema),
   });
 
@@ -122,9 +122,6 @@ const AddTopicDialog = ({ open, onClose, title = "", data }) => {
                 }
                 onClickHandler={() => {
                   handleSubmit(handleFormDataSubmit)();
-                  // setOpen(false);
-                  if (Object.keys(errors).length === 0) {
-                  }
                 }}
               />
             </DialogActionsContainer>

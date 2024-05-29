@@ -2,12 +2,14 @@ import React from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import {
+  Stack,
   Box,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Paper,
+  IconButton,
 } from "@mui/material";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 
@@ -19,15 +21,16 @@ import DialogActionButton from "../../components/form/DialogActionButton";
 import useApiSend from "../../hooks/api/useApiSend";
 import useSubjReq from "../../hooks/api/useSubReq";
 import SubjectInfoSection from "./SubjectInfoSection";
-import useFormSubmit from "../../hooks/useFormSubmit";
+
 import FormWrapper from "../../wrappers/FormWrapper";
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema from "../../schemas/subject";
-import useAcknowledgeSnackbar from "../../hooks/useAcknowledgeSnackbar";
+
 import { useGlobalState } from "../../context/GlobalStatesContextProvider";
 import { showAckNotification } from "../../utils/showAckNotification";
-import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSelectToTable";
+
+import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
 
 function PaperComponent(props) {
   return (
@@ -60,25 +63,38 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
     handleSubmit,
     control,
     setValue,
+    getValues,
+    reset,
     formState: { errors, dirtyFields },
+    trigger,
   } = useForm({
-    mode: "onTouched",
+    // mode: "onTouched",
     resolver: zodResolver(subjectSchema),
   });
 
-  const formMethods = { handleSubmit, control, setValue, errors, dirtyFields };
+  const formMethods = {
+    handleSubmit,
+    control,
+    setValue,
+    errors,
+    dirtyFields,
+    trigger,
+  };
 
   const handleClose = (e) => {
     e.stopPropagation();
+    reset();
+    setOpen(false);
   };
 
   const handleFormDataSubmit = async (data) => {
-    console.log("DATA", data);
+    // console.log("TOPICS", getValues()?.topics);
+    // console.log("DATA", data);
     const finalData = {
       ...data,
-      topics: data?.topics?.map((topic) => topic?._id),
+      topics: getValues()?.topics?.map((topic) => topic?._id),
     };
-    console.log(finalData);
+    // console.log(finalData);
     handleAddSubject({ data: finalData });
   };
 
@@ -94,7 +110,16 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
           fullWidth
         >
           <DialogTitle sx={styles.dialog.title} id="draggable-dialog-title">
-            {title}
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              {title}
+              <IconButton onClick={handleClose}>
+                <CloseTwoToneIcon />
+              </IconButton>
+            </Stack>
           </DialogTitle>
           <DialogContent>
             <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
@@ -119,12 +144,7 @@ const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
                   !dirtyFields?.code ||
                   !dirtyFields?.title
                 }
-                onClickHandler={() => {
-                  handleSubmit(handleFormDataSubmit)();
-                  if (Object.keys(errors).length === 0) {
-                    setOpen(false);
-                  }
-                }}
+                onClickHandler={handleSubmit(handleFormDataSubmit)}
               />
             </DialogActionsContainer>
           </DialogActions>

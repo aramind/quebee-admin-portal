@@ -30,14 +30,21 @@ const ContMultiSelectToTable = ({
     if (control?._options?.defaultValues) {
       setSelected(control?._options?.defaultValues?.[nameForController] || []);
     }
-  }, [control?._options?.defaultValues, nameForController, setValue]);
+  }, [
+    control?._options?.defaultValues,
+    nameForController,
+    setSelected,
+    setValue,
+  ]);
 
   const handleRemove = (itemToRemove) => {
     const updatedSelected = selected?.filter(
       (selected) => selected?.title !== itemToRemove?.title
     );
     setSelected(updatedSelected);
-    setValue(nameForController, updatedSelected);
+    setValue(nameForController, updatedSelected, {
+      shouldDirty: true,
+    });
   };
 
   const handleClear = () => {
@@ -64,7 +71,9 @@ const ContMultiSelectToTable = ({
               value={selected || []}
               onChange={(e, value) => {
                 setSelected(value);
-                setValue(nameForController, value);
+                setValue(nameForController, value, {
+                  shouldDirty: true,
+                });
               }}
               groupBy={(option) => option?.title?.[0].toUpperCase()}
               renderInput={(params) => (
