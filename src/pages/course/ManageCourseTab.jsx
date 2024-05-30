@@ -3,7 +3,6 @@ import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import FormWrapper from "../../wrappers/FormWrapper";
 import { Container, Stack } from "@mui/material";
-import useFormSubmit from "../../hooks/useFormSubmit";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
 import { grey } from "@mui/material/colors";
@@ -20,20 +19,19 @@ import courseSchema from "../../schemas/course.js";
 
 const ManageCourseTab = () => {
   const [initialValues, setInitialValues] = useState({});
-  const [value, setValue] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const styles = useStyles();
 
   const { coursesList } = useFetchData();
   const { patch } = useCourseReq();
-
   const { mutate: sendEditCourse } = useApiSend(patch, ["courses"]);
 
   const {
     control,
     handleSubmit,
     reset,
-
-    formState: { errors },
+    getValues,
+    formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(courseSchema),
     mode: "onTouched",
@@ -48,33 +46,32 @@ const ManageCourseTab = () => {
 
   useEffect(() => {
     setInitialValues({
-      _id: value?._id,
-      code: value?.code,
-      acronym: value?.acronym,
-      database: value?.database,
-      title: value?.title,
-      description: value?.description,
-      remarks: value?.remarks,
-      subjects: value?.subjects,
-      status: value?.status,
-      isHidden: value?.isHidden ? "yes" : "no",
-      creator: value?.creator,
-      createdAt: value?.createdAt,
-      version: value?.version,
+      _id: selectedCourse?._id,
+      code: selectedCourse?.code,
+      acronym: selectedCourse?.acronym,
+      database: selectedCourse?.database,
+      title: selectedCourse?.title,
+      description: selectedCourse?.description,
+      remarks: selectedCourse?.remarks,
+      subjects: selectedCourse?.subjects,
+      status: selectedCourse?.status,
+      isHidden: selectedCourse?.isHidden ? "yes" : "no",
+      creator: selectedCourse?.creator,
+      createdAt: selectedCourse?.createdAt,
+      version: selectedCourse?.version,
     });
-  }, [value]);
+  }, [selectedCourse]);
 
   useEffect(() => {
     reset(initialValues);
   }, [initialValues, reset]);
 
   const handleUndo = () => {
-    console.log("CLICKED UNDO");
+    reset(initialValues);
   };
 
-  const handleFormDataSubmit = async (rawData) => {
-    alert("CLICKED SUBMIT", rawData);
-    // console.log("RAW DATA", rawData);
+  const handleFormDataSubmit = async () => {
+    const rawData = getValues();
     const { _id, creator, createdAt, ...selectedData } = rawData;
     const formattedData = {
       ...selectedData,
@@ -85,10 +82,10 @@ const ManageCourseTab = () => {
       ],
       isHidden: selectedData?.isHidden === "yes",
     };
-    // console.log("FD", formattedData);
+    // console.log(formattedData);
     sendEditCourse({ id: _id, data: formattedData });
   };
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
+
   return (
     <FormWrapper formMethods={formMethods}>
       <Container
@@ -97,11 +94,11 @@ const ManageCourseTab = () => {
         sx={styles.tabContainer}
         disableGutters
       >
-        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+        <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
           <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
             <AutocompleteSelector
-              value={value}
-              setValue={setValue}
+              value={selectedCourse}
+              setValue={setSelectedCourse}
               options={coursesList?.data}
               label="courses"
             />
@@ -109,15 +106,10 @@ const ManageCourseTab = () => {
           <br />
           <Stack direction="row" spacing={1.5}>
             <Stack flex={1}>
-              <CourseDetailsSection
-              // control={control}
-              />
+              <CourseDetailsSection />
             </Stack>
             <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-              <ACSandDOS
-                // control={control}
-                values={initialValues}
-              />
+              <ACSandDOS values={initialValues} />
             </Stack>
           </Stack>
 
@@ -129,11 +121,17 @@ const ManageCourseTab = () => {
               label="undo changes"
               onClickHandler={handleUndo}
               variant="outlined"
+              disabled={!selectedCourse?._id || !isDirty}
             />
             <FormActionButton
               type="submit"
               label="save changes"
               variant="contained"
+              disabled={
+                !selectedCourse?._id ||
+                !isDirty ||
+                Object.keys(errors).length !== 0
+              }
             />
           </FormActionsContainer>
           <DevTool control={control} />
