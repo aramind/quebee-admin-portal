@@ -73,7 +73,7 @@ const ControlledAutocompleteV2 = ({
             return (
               <ListItem key={i} sx={{ padding: 0 }}>
                 <ListItemIcon>
-                  <AutoStoriesOutlinedIcon />
+                  <AutoStoriesOutlinedIcon color="primary" />
                 </ListItemIcon>
                 <ListItemText primary={topic.title} />
               </ListItem>
