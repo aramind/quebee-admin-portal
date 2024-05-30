@@ -25,7 +25,7 @@ const ControlledTextField = ({
             <TextField
               {...tfProps}
               {...field}
-              value={field.value || customDefaultValue}
+              value={field.value}
               id={name}
               size={tfProps?.size || "small"}
               variant={tfProps?.variant || "outlined"}

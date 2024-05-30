@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import FormWrapper from "../../wrappers/FormWrapper";
 import { Container } from "@mui/material";
 import useStyles from "../../hooks/useStyles";
-import useFormSubmit from "../../hooks/useFormSubmit";
 import useCourseReq from "../../hooks/api/useCourseReq";
 import CourseDetailsSection from "./CourseDetailsSection";
 import FormActionsContainer from "../../containers/FormActionsContainer";
@@ -12,7 +11,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DevTool } from "@hookform/devtools";
 import useApiSend from "../../hooks/api/useApiSend";
 import courseSchema from "../../schemas/course.js";
+import constants from "../../configs/constants.js";
 
+const initialValues = {
+  database: constants?.DATABASES?.[0],
+  code: "",
+  acronym: "",
+  title: "",
+  description: "",
+  subjects: null,
+  remarks: "",
+};
 const AddCourseTab = () => {
   const styles = useStyles();
   const { addCourse } = useCourseReq();
@@ -25,13 +34,12 @@ const AddCourseTab = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors, dirtyFields },
   } = useForm({
-    mode: "onBlur",
+    mode: "onTouched",
     resolver: zodResolver(courseSchema),
-    defaultValues: {
-      topics: [],
-    },
+    defaultValues: initialValues,
   });
 
   const formMethods = {
@@ -45,7 +53,6 @@ const AddCourseTab = () => {
     const { topics, ...selectedData } = rawData;
     const formattedData = {
       ...selectedData,
-      // subjects: selectedData?.subjects.map((s) => s.title),
       subjects: [
         ...new Set(
           selectedData?.subjects?.map((s) => s.title).filter((title) => title)
@@ -53,11 +60,18 @@ const AddCourseTab = () => {
       ],
     };
 
-    sendAddCourse({ data: formattedData });
+    const cleanedFormattedData = Object.fromEntries(
+      Object.entries(formattedData).filter(([key, value]) => {
+        return value !== undefined && value !== null && value !== "";
+      })
+    );
+
+    sendAddCourse({ data: cleanedFormattedData });
   };
 
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
-
+  const handleClear = () => {
+    reset(initialValues);
+  };
   return (
     <FormWrapper formMethods={formMethods}>
       <Container
@@ -66,21 +80,17 @@ const AddCourseTab = () => {
         sx={styles.tabContainer}
         disableGutters
       >
-        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+        <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
           <CourseDetailsSection />
           <br />
           <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
             <FormActionButton
               label="clear"
-              // onClickHandler={handleClear}
+              onClickHandler={handleClear}
               variant="outlined"
+              disabled={Object.keys(dirtyFields).length < 1}
             />
-            <FormActionButton
-              label="upload"
-              // onClickHandler={handleUpload}
-              disabled
-              variant="outlined"
-            />
+            <FormActionButton label="upload" disabled variant="outlined" />
             <FormActionButton
               type="submit"
               label="save"
@@ -92,7 +102,7 @@ const AddCourseTab = () => {
               }
             />
           </FormActionsContainer>
-          {/* <DevTool control={control} /> */}
+          <DevTool control={control} />
         </form>
       </Container>
     </FormWrapper>
