@@ -1,10 +1,9 @@
 import { z } from "zod";
 const questionSchema = z.object({
   code: z.string().min(1, "Required"),
-
   access: z.number().min(1, "Required"),
   difficulty: z.number().min(1, "Required"),
-  topics: z.array(z.object()).optional(),
+  topics: z.array().optional(),
   type: z.string().min(1, "Required"),
   question: z.string().min(1, "Required"),
   A: z.string().min(1, "Required"),

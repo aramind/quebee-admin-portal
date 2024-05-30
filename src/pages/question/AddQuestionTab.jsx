@@ -14,7 +14,26 @@ import useApiSend from "../../hooks/api/useApiSend";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import QuestionDetailsSection from "./QuestionDetailsSection";
+import { zodResolver } from "@hookform/resolvers/zod";
+import questionSchema from "../../schemas/question";
 
+const initialValues = {
+  code: "",
+  access: 2,
+  difficulty: 2,
+  topics: [],
+  type: "ob",
+  question: "",
+  A: "",
+  B: "",
+  C: "",
+  D: "",
+  correctAnswer: "",
+  information: "",
+  tags: [],
+  remarks: "",
+  isHidden: false,
+};
 const AddQuestionTab = () => {
   const styles = useStyles();
 
@@ -24,13 +43,8 @@ const AddQuestionTab = () => {
 
   const { control, handleSubmit, setValue, reset } = useForm({
     mode: "onTouched",
-    defaultValues: {
-      code: "",
-      topics: [],
-      access: 2,
-      type: "ob",
-      isHidden: false,
-    },
+    resolver: zodResolver(questionSchema),
+    defaultValues: initialValues,
   });
 
   const formMethods = { control, handleSubmit, setValue };
