@@ -16,6 +16,7 @@ import FormActionButton from "../../components/form/FormActionButton";
 import QuestionDetailsSection from "./QuestionDetailsSection";
 import questionSchema from "../../schemas/question";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { cleanData } from "../../utils/form/cleanData";
 
 const initialValues = {
   code: "",
@@ -47,7 +48,7 @@ const AddQuestionTab = () => {
     setValue,
     reset,
     getValues,
-    formState: { errors, isDirty, dirtyFields },
+    formState: { errors, isDirty },
   } = useForm({
     mode: "onTouched",
     resolver: yupResolver(questionSchema),
@@ -56,7 +57,6 @@ const AddQuestionTab = () => {
 
   const formMethods = { control, handleSubmit, setValue, errors, getValues };
 
-  console.log(errors);
   const handleFormDataSubmit = async (rawData) => {
     console.log("Submitting...");
     console.log(rawData);
@@ -102,18 +102,13 @@ const AddQuestionTab = () => {
       status: "pending",
     };
 
-    console.log("QD", questionData);
-    // addQuestion(questionData);
-    // alert("SUBMITTED");
+    addQuestion(cleanData(questionData));
   };
-
-  console.log(errors);
-  console.log(dirtyFields);
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
   const handleClear = () => {
-    reset();
+    reset(initialValues);
   };
 
   return (

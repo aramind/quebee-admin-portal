@@ -58,8 +58,6 @@ const ContMultiSelectToTable = ({
     setSelected([]);
   };
 
-  // console.log(objOptionsWithTitles);
-  console.log(errors?.[nameForController]);
   return (
     <Controller
       control={control}

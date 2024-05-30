@@ -16,7 +16,6 @@ const choices = ["A", "B", "C", "D"];
 const ChoiceLabel = ({ label, fullW, fullH }) => {
   const { errors } = useFormContext();
 
-  console.log(errors);
   return (
     <InputLabel
       htmlFor="question-form-label"
