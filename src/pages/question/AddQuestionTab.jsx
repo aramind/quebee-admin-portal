@@ -14,8 +14,8 @@ import useApiSend from "../../hooks/api/useApiSend";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import QuestionDetailsSection from "./QuestionDetailsSection";
-import { zodResolver } from "@hookform/resolvers/zod";
 import questionSchema from "../../schemas/question";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const initialValues = {
   code: "",
@@ -41,17 +41,25 @@ const AddQuestionTab = () => {
 
   const { mutate: addQuestion } = useApiSend(add, ["questions", "tags"]);
 
-  const { control, handleSubmit, setValue, reset } = useForm({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    reset,
+    getValues,
+    formState: { errors, isDirty, dirtyFields },
+  } = useForm({
     mode: "onTouched",
-    resolver: zodResolver(questionSchema),
+    resolver: yupResolver(questionSchema),
     defaultValues: initialValues,
   });
 
-  const formMethods = { control, handleSubmit, setValue };
+  const formMethods = { control, handleSubmit, setValue, errors, getValues };
 
+  console.log(errors);
   const handleFormDataSubmit = async (rawData) => {
     console.log("Submitting...");
-    // console.log(rawData);
+    console.log(rawData);
     const questionData = {
       code: rawData?.code,
       access: +rawData?.access,
@@ -95,9 +103,12 @@ const AddQuestionTab = () => {
     };
 
     console.log("QD", questionData);
-    addQuestion(questionData);
-    alert("SUBMITTED");
+    // addQuestion(questionData);
+    // alert("SUBMITTED");
   };
+
+  console.log(errors);
+  console.log(dirtyFields);
 
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
@@ -122,7 +133,12 @@ const AddQuestionTab = () => {
               onClickHandler={handleClear}
               variant="outlined"
             />
-            <FormActionButton type="submit" label="save" variant="contained" />
+            <FormActionButton
+              type="submit"
+              label="save"
+              variant="contained"
+              disabled={!isDirty}
+            />
           </FormActionsContainer>
 
           <DevTool control={control} />

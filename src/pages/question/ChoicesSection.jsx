@@ -7,12 +7,16 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { red } from "@mui/material/colors";
 
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 const choices = ["A", "B", "C", "D"];
 
 const ChoiceLabel = ({ label, fullW, fullH }) => {
+  const { errors } = useFormContext();
+
+  console.log(errors);
   return (
     <InputLabel
       htmlFor="question-form-label"
@@ -21,6 +25,7 @@ const ChoiceLabel = ({ label, fullW, fullH }) => {
         height: fullH && "100%",
         width: fullW ? "100%" : "51px",
         ...localStyles.choiceLabel,
+        color: errors?.[label] ? red[700] : "primary.main",
       }}
     >
       {label?.toUpperCase()}.
@@ -29,6 +34,8 @@ const ChoiceLabel = ({ label, fullW, fullH }) => {
 };
 
 const ChoicesSection = () => {
+  const { errors } = useFormContext();
+
   return (
     <Controller
       name="correctAnswer"
@@ -50,7 +57,13 @@ const ChoicesSection = () => {
                 <Controller
                   name={choice}
                   render={({ field }) => (
-                    <TextField fullWidth {...field} multiline minRows={2} />
+                    <TextField
+                      fullWidth
+                      {...field}
+                      multiline
+                      minRows={2}
+                      error={!!errors?.[choice]}
+                    />
                   )}
                 />
                 <Stack

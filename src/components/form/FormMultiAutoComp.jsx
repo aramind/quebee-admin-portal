@@ -2,6 +2,7 @@ import { Autocomplete, Box, MenuItem, TextField } from "@mui/material";
 import React from "react";
 
 import { grey, red } from "@mui/material/colors";
+import { useFormContext } from "react-hook-form";
 
 const FormMultiAutoComp = ({
   field,
@@ -11,7 +12,9 @@ const FormMultiAutoComp = ({
   handleChange,
   textTransform = "none",
   chipColor = "tertiary.lightest",
+  name,
 }) => {
+  const { errors } = useFormContext();
   return (
     <Autocomplete
       {...field}
@@ -27,7 +30,9 @@ const FormMultiAutoComp = ({
         handleChange({ target: { value: newValue } });
         field.onChange(newValue);
       }}
-      renderInput={(params) => <TextField {...params} />}
+      renderInput={(params) => (
+        <TextField error={!!errors?.[name]} {...params} />
+      )}
       renderValue={(selected) => (
         <Box sx={localStyle.box}>
           {selected.map((value) =>

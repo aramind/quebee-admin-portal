@@ -8,7 +8,7 @@ import DifficultySlider from "../../components/form/DifficultySlider";
 const DifficultySection = ({ control }) => {
   return (
     <ElevatedSectionWrapper>
-      <FormInputLabel label="difficulty" />
+      <FormInputLabel label="difficulty (required)" />
       <Controller
         id="difficulty-slider"
         name="difficulty"

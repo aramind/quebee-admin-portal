@@ -27,6 +27,7 @@ const ControlledChipMultiAutoComp = ({
     setSelectedOptions(typeof value === "string" ? value.split(",") : value);
   };
 
+  const { errors } = useFormContext();
   return (
     <Controller
       name={name}
@@ -34,6 +35,7 @@ const ControlledChipMultiAutoComp = ({
       render={({ field }) => (
         <LabelledSelect
           label={label}
+          hasError={!!errors?.[name]}
           select={
             <FormMultiAutoComp
               field={field}
@@ -43,6 +45,7 @@ const ControlledChipMultiAutoComp = ({
               free={free}
               chipColor={chipColor}
               textTransform={textTransform}
+              name={name}
             />
           }
         />

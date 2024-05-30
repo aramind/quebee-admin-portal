@@ -22,7 +22,7 @@ const ContMultiSelectToTable = ({
   label,
   height = "280px",
 }) => {
-  const { setValue, control, getValues } = useFormContext();
+  const { setValue, control, errors } = useFormContext();
 
   const [selected, setSelected] = useState([]);
 
@@ -59,6 +59,7 @@ const ContMultiSelectToTable = ({
   };
 
   // console.log(objOptionsWithTitles);
+  console.log(errors?.[nameForController]);
   return (
     <Controller
       control={control}
@@ -66,7 +67,10 @@ const ContMultiSelectToTable = ({
       render={({ field }) => (
         <Stack height={height} width="100%">
           <Stack spacing={0.3}>
-            <FormInputLabel label={label} />
+            <FormInputLabel
+              label={label}
+              hasError={!!errors?.[nameForController]}
+            />
             <Autocomplete
               {...field}
               size="small"

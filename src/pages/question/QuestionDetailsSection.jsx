@@ -2,7 +2,7 @@ import React from "react";
 import useFetchData from "../../hooks/api/useFetchData";
 import useDialog from "../../hooks/useDialog";
 import AddTopicDialog from "../course/AddTopicDialog";
-import { Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import { red, teal } from "@mui/material/colors";
@@ -13,18 +13,20 @@ import DifficultySection from "./DifficultySection";
 import QSection from "./QSection";
 import ChoicesSection from "./ChoicesSection";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
+import { useFormContext } from "react-hook-form";
 
 const QuestionDetailsSection = () => {
   const { topicsList, tagsList } = useFetchData();
+  const { errors } = useFormContext();
 
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
-  console.log("TL", tagsList);
+  //   console.log("TL", tagsList);
   return (
     <Stack spacing={1.5} direction="row" alignItems="flex-start">
       <Stack flex={1} spacing={1.5}>
         <ElevatedSectionWrapper flex={1}>
-          <ControlledTextField name="code" label="code" />
+          <ControlledTextField name="code" label="code (required)" />
         </ElevatedSectionWrapper>
         <ElevatedSectionWrapper>
           <Stack
@@ -61,13 +63,13 @@ const QuestionDetailsSection = () => {
           <ContMultiSelectToTable
             objOptionsWithTitles={topicsList?.data || []}
             nameForController="topics"
-            label="Topic(s)"
+            label="Topic(s) (At least one)"
           />
         </ElevatedSectionWrapper>
         <Stack direction="row" spacing={1.5}>
           <ElevatedSectionWrapper flex={1}>
             <ContRadGroup
-              label="access"
+              label="access (required)"
               name="access"
               options={constants?.ACCESS}
             />
@@ -75,7 +77,7 @@ const QuestionDetailsSection = () => {
           <ElevatedSectionWrapper flex={1}>
             <ContRadGroup
               name="type"
-              label="type"
+              label="type (required)"
               options={constants?.QUESTION_TYPE}
             />
           </ElevatedSectionWrapper>
@@ -89,6 +91,15 @@ const QuestionDetailsSection = () => {
         <ElevatedSectionWrapper>
           <QSection />
           <ChoicesSection />
+          <Box height="1.3rem" pl="1.5rem" mt={1}>
+            {errors?.correctAnswer ? (
+              <Typography color={red[700]} sx={{ fontWeight: "bold" }}>
+                Select one correct answer!
+              </Typography>
+            ) : (
+              ""
+            )}
+          </Box>
         </ElevatedSectionWrapper>
         <ElevatedSectionWrapper>
           <ControlledTextField
@@ -100,7 +111,7 @@ const QuestionDetailsSection = () => {
         <ElevatedSectionWrapper>
           <ControlledChipMultiAutoComp
             name="tags"
-            label="select tag(s)"
+            label="add tag(s) (required)"
             options={tagsList?.data || []}
             free
           />

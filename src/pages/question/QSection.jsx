@@ -1,8 +1,11 @@
 import { Button, InputLabel, Stack, TextField } from "@mui/material";
+import { red } from "@mui/material/colors";
 import React from "react";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 const QSection = () => {
+  const { errors } = useFormContext();
+
   return (
     <Stack
       direction={{ xs: "column", md: "column" }}
@@ -12,10 +15,10 @@ const QSection = () => {
       <InputLabel
         sx={{
           fontWeight: "bold",
-          color: "primary.main",
+          color: errors?.["question"] ? red[700] : "primary.main",
         }}
       >
-        QUESTION:
+        QUESTION (Required):
       </InputLabel>
       <Stack flex={1} direction="row" spacing={1.5}>
         <Controller
@@ -27,6 +30,7 @@ const QSection = () => {
               multiline
               onBlur={field.onBlur}
               minRows={3}
+              error={!!errors?.["question"]}
             />
           )}
         />
