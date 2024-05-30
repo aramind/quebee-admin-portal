@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
-import useApiGet from "../../hooks/api/useApiGet";
 import { useForm } from "react-hook-form";
 import FormWrapper from "../../wrappers/FormWrapper";
 import { Container, Stack } from "@mui/material";
@@ -15,6 +14,9 @@ import FormActionButton from "../../components/form/FormActionButton";
 import { DevTool } from "@hookform/devtools";
 import useApiSend from "../../hooks/api/useApiSend";
 import QuestionDetailsSection from "./QuestionDetailsSection";
+import useFetchData from "../../hooks/api/useFetchData";
+import { yupResolver } from "@hookform/resolvers/yup";
+import questionSchema from "../../schemas/question";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -35,27 +37,35 @@ const getLetterOfCorrectAnswer = (choices) => {
 };
 
 const ManageQuestionTab = () => {
-  const { get } = useQuestionReq();
   const [initialValues, setInitialValues] = useState({});
   const [fetchValues, setFetchValues] = useState(null);
   const styles = useStyles();
   const { edit } = useQuestionReq();
-
-  const { data: questionsList } = useApiGet(
-    "questions",
-    () => get("/trimmed"),
-    {
-      retry: 3,
-    }
-  );
-
+  const { questionsList } = useFetchData();
   const { mutate: sendUpdate } = useApiSend(edit, ["questions"]);
-  const { control, handleSubmit, reset, setValue, getValues } = useForm({
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+    getValues,
+    formState: { errors, isDirty },
+  } = useForm({
     mode: "onTouched",
+    resolver: yupResolver(questionSchema),
     defaultValues: initialValues,
   });
 
-  const formMethods = { control, handleSubmit, reset, setValue, getValues };
+  const formMethods = {
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+    getValues,
+    errors,
+    isDirty,
+  };
 
   useEffect(() => {
     setInitialValues({
@@ -76,7 +86,7 @@ const ManageQuestionTab = () => {
   }, [initialValues, reset]);
 
   const handleUndo = () => {
-    console.log("CLICKED UNDO");
+    reset(initialValues);
   };
 
   const handleFormDataSubmit = async (rawData) => {
@@ -132,7 +142,7 @@ const ManageQuestionTab = () => {
             <AutocompleteSelector
               value={fetchValues}
               setValue={setFetchValues}
-              options={questionsList}
+              options={questionsList?.data}
               label="question"
             />
           </ElevatedSectionWrapper>
@@ -152,11 +162,13 @@ const ManageQuestionTab = () => {
               label="undo changes"
               onClickHandler={handleUndo}
               variant="outlined"
+              disabled={!isDirty}
             />
             <FormActionButton
               type="submit"
               label="save changes"
               variant="contained"
+              disabled={!isDirty || Object.keys(errors).length !== 0}
             />
           </FormActionsContainer>
           <DevTool control={control} />

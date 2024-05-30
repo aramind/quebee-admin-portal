@@ -10,7 +10,7 @@ const useFetchData = () => {
   const handleUnAuthError = useErrorHandlerUnAuthReq();
   const { fetchTopics } = useTopicReq();
   const { fetchSubjects } = useSubjReq();
-  const { getTags } = useQuestionReq();
+  const { getTags, get: getQ } = useQuestionReq();
   const { get } = useCourseReq();
 
   const {
@@ -42,6 +42,14 @@ const useFetchData = () => {
   });
 
   const {
+    data: questionsList,
+    isLoading: isLoadingInQuestions,
+    error: isErrorInQuestions,
+  } = useApiGet("questions", () => getQ("/trimmed"), {
+    retry: 3,
+  });
+
+  const {
     data: tagsList,
     isLoading: isLoadingInTags,
     error: isErrorInTags,
@@ -55,6 +63,7 @@ const useFetchData = () => {
     isLoadingInCourse ||
     isLoadingInTopic ||
     isLoadingInSubject ||
+    isLoadingInQuestions ||
     isLoadingInTags
   ) {
     return <LoadingPage />;
@@ -62,11 +71,15 @@ const useFetchData = () => {
 
   if (isErrorInTopic || isErrorInSubject) {
     const error =
-      isErrorInCourse || isErrorInTopic || isErrorInSubject || isErrorInTags;
+      isErrorInCourse ||
+      isErrorInTopic ||
+      isErrorInSubject ||
+      isErrorInQuestions ||
+      isErrorInTags;
     handleUnAuthError(error);
   }
 
-  return { coursesList, topicsList, subjectsList, tagsList };
+  return { coursesList, topicsList, subjectsList, questionsList, tagsList };
 };
 
 export default useFetchData;
