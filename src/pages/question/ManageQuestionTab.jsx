@@ -89,6 +89,7 @@ const ManageQuestionTab = () => {
     reset(initialValues);
   };
 
+  console.log(fetchValues);
   const handleFormDataSubmit = async (rawData) => {
     const formattedData = {
       code: rawData?.code,
@@ -168,7 +169,11 @@ const ManageQuestionTab = () => {
               type="submit"
               label="save changes"
               variant="contained"
-              disabled={!isDirty || Object.keys(errors).length !== 0}
+              disabled={
+                !fetchValues?._id ||
+                !isDirty ||
+                Object.keys(errors).length !== 0
+              }
             />
           </FormActionsContainer>
           <DevTool control={control} />
