@@ -18,13 +18,12 @@ const useSubjReq = () => {
         method: "POST",
         data,
       }),
-    edit: ({ id, data }) => {
+    edit: ({ id, data }) =>
       request({
         url: `${url}/${id}`,
         method: "PATCH",
         data,
-      });
-    },
+      }),
   };
 
   return subjReq;

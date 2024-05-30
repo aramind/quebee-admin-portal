@@ -16,11 +16,13 @@ const useRequest = () => {
           message: res?.data?.message,
         },
       });
+      // console.log(res?.data);
       return res?.data;
       // return res;
     };
 
     const onError = (err) => {
+      // console.log(err.response?.data);
       dispatch({
         type: "SHOW_MINOR_ALERT",
         payload: {

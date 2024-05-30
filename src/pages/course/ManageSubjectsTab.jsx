@@ -34,7 +34,11 @@ const ManageSubjectsTab = () => {
 
   const { mutate: handleEditSubject } = useApiSend(
     edit,
-    (data) => showAckNotification({ dispatch, success: true, data, ackAlert }),
+    (data) => {
+      console.log("SUCCESS");
+      console.log(data);
+      showAckNotification({ dispatch, success: true, data, ackAlert });
+    },
     (err) =>
       showAckNotification({ dispatch, success: false, data: err, ackAlert }),
     ["subjects"]
@@ -86,7 +90,9 @@ const ManageSubjectsTab = () => {
     reset(initialValues);
   }, [initialValues, reset]);
 
-  const handleFormDataSubmit = (rawData) => {
+  const onSubmit = () => {
+    const rawData = getValues();
+
     const formattedData = {
       code: rawData?.code,
       acronym: rawData?.acronym,
@@ -97,7 +103,10 @@ const ManageSubjectsTab = () => {
       isHidden: rawData?.isHidden === "yes",
       remarks: rawData?.remarks,
     };
-    handleEditSubject({ id: rawData?._id, data: formattedData });
+    handleEditSubject({
+      id: rawData?._id,
+      data: formattedData,
+    });
   };
 
   const handleUndo = () => {
@@ -114,7 +123,7 @@ const ManageSubjectsTab = () => {
         disableGutters
         width="100vw"
       >
-        <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
             <AutocompleteSelector
               value={selectedSubject}
