@@ -49,8 +49,7 @@ const ManageQuestionTab = () => {
     }
   );
 
-  const { mutate: sendUpdate } = useApiSend();
-
+  const { mutate: sendUpdate } = useApiSend(edit, ["questions"]);
   const { control, handleSubmit, reset, setValue, getValues } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,
