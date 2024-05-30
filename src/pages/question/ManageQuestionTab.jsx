@@ -13,8 +13,8 @@ import ACSandDOS from "../course/ACSandDOS";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
 import { DevTool } from "@hookform/devtools";
-import QuestionDetails from "./QuestionDetails";
 import useApiSend from "../../hooks/api/useApiSend";
+import QuestionDetailsSection from "./QuestionDetailsSection";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -139,7 +139,7 @@ const ManageQuestionTab = () => {
           <br />
           <Stack direction="row" spacing={1.5}>
             <Stack flex={1}>
-              <QuestionDetails />
+              <QuestionDetailsSection />
             </Stack>
             <Stack spacing={1.5} justifyContent="flex-start" width="180px">
               <ACSandDOS values={initialValues} />

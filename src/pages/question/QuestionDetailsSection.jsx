@@ -1,19 +1,20 @@
+import React from "react";
+import useFetchData from "../../hooks/api/useFetchData";
+import useDialog from "../../hooks/useDialog";
+import AddTopicDialog from "../course/AddTopicDialog";
 import { Button, Stack, Typography } from "@mui/material";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import { red, teal } from "@mui/material/colors";
+import constants from "../../configs/constants";
 import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSelectToTable";
 import ContRadGroup from "../../components/form-controlled/ContRadGroup";
-import constants from "../../configs/constants";
 import DifficultySection from "./DifficultySection";
 import QSection from "./QSection";
 import ChoicesSection from "./ChoicesSection";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
-import AddTopicDialog from "../course/AddTopicDialog";
-import useDialog from "../../hooks/useDialog";
-import useFetchData from "../../hooks/api/useFetchData";
 
-const QuestionDetails = () => {
+const QuestionDetailsSection = () => {
   const { topicsList, tagsList } = useFetchData();
 
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
@@ -113,4 +114,4 @@ const QuestionDetails = () => {
   );
 };
 
-export default QuestionDetails;
+export default QuestionDetailsSection;

@@ -11,9 +11,9 @@ import useFormSubmit from "../../hooks/useFormSubmit";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
 import useApiSend from "../../hooks/api/useApiSend";
 
-import QuestionDetails from "./QuestionDetails";
 import FormActionsContainer from "../../containers/FormActionsContainer";
 import FormActionButton from "../../components/form/FormActionButton";
+import QuestionDetailsSection from "./QuestionDetailsSection";
 
 const AddQuestionTab = () => {
   const styles = useStyles();
@@ -100,7 +100,7 @@ const AddQuestionTab = () => {
         disableGutters
       >
         <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
-          <QuestionDetails />
+          <QuestionDetailsSection />
           <br />
           <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
             <FormActionButton
