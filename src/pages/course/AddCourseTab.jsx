@@ -12,6 +12,7 @@ import { DevTool } from "@hookform/devtools";
 import useApiSend from "../../hooks/api/useApiSend";
 import courseSchema from "../../schemas/course.js";
 import constants from "../../configs/constants.js";
+import { cleanData } from "../../utils/form/cleanData.js";
 
 const initialValues = {
   database: constants?.DATABASES?.[0],
@@ -60,13 +61,13 @@ const AddCourseTab = () => {
       ],
     };
 
-    const cleanedFormattedData = Object.fromEntries(
-      Object.entries(formattedData).filter(([key, value]) => {
-        return value !== undefined && value !== null && value !== "";
-      })
-    );
+    // const cleanedFormattedData = Object.fromEntries(
+    //   Object.entries(formattedData).filter(([key, value]) => {
+    //     return value !== undefined && value !== null && value !== "";
+    //   })
+    // );
 
-    sendAddCourse({ data: cleanedFormattedData });
+    sendAddCourse({ data: cleanData(formattedData) });
   };
 
   const handleClear = () => {
