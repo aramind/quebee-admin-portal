@@ -25,19 +25,7 @@ const AddNewUserForm = ({ successFn }) => {
   const { register } = useUserReq();
   const [forceRender, setForceRender] = useState(false);
 
-  const { mutate: registerUser } = useApiSend(
-    register,
-    () => {
-      successFn();
-      alert("New User added successfully");
-    },
-    (err) => {
-      console.log(err);
-      alert("Encountered an error adding the new user. Try again later", err);
-    },
-    ["users"],
-    {}
-  );
+  const { mutate: registerUser } = useApiSend(register, ["users"]);
   //   form
   const { handleSubmit, reset, control } = useForm({
     resolver: zodResolver(userSchema),

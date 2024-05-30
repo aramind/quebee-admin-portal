@@ -38,17 +38,7 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
   const { edit } = useUserReq();
   // hooks
   // console.log(row);
-  const { mutate: updateUser } = useApiSend(
-    edit,
-    () => {
-      alert("Update successful");
-    },
-    (err) => {
-      alert("Updating encountered a problem. Please Try again later.");
-    },
-    ["users"],
-    {}
-  );
+  const { mutate: updateUser } = useApiSend(edit, ["users"]);
 
   // form
 

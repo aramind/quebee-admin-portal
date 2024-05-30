@@ -14,8 +14,6 @@ import FormWrapper from "../../wrappers/FormWrapper";
 import useFetchData from "../../hooks/api/useFetchData";
 import useSubjReq from "../../hooks/api/useSubReq";
 import useApiSend from "../../hooks/api/useApiSend";
-import { showAckNotification } from "../../utils/showAckNotification";
-import { useGlobalState } from "../../context/GlobalStatesContextProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema from "../../schemas/subject";
 
@@ -24,25 +22,11 @@ const ManageSubjectsTab = () => {
   const [initialValues, setInitialValues] = useState({});
 
   const styles = useStyles();
-  const {
-    globalState: { ackAlert },
-    dispatch,
-  } = useGlobalState();
 
   const { subjectsList } = useFetchData();
   const { edit } = useSubjReq();
 
-  const { mutate: handleEditSubject } = useApiSend(
-    edit,
-    (data) => {
-      console.log("SUCCESS");
-      console.log(data);
-      showAckNotification({ dispatch, success: true, data, ackAlert });
-    },
-    (err) =>
-      showAckNotification({ dispatch, success: false, data: err, ackAlert }),
-    ["subjects"]
-  );
+  const { mutate: handleEditSubject } = useApiSend(edit, ["subjects"]);
 
   const {
     handleSubmit,

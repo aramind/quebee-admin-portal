@@ -15,22 +15,18 @@ import FormActionButton from "../../components/form/FormActionButton";
 import useFetchData from "../../hooks/api/useFetchData";
 import useCourseReq from "../../hooks/api/useCourseReq";
 import useApiSend from "../../hooks/api/useApiSend";
+import { zodResolver } from "@hookform/resolvers/zod";
+import courseSchema from "../../schemas/course.js";
 
 const ManageCourseTab = () => {
   const [initialValues, setInitialValues] = useState({});
   const [value, setValue] = useState(null);
   const styles = useStyles();
+
   const { coursesList } = useFetchData();
   const { patch } = useCourseReq();
 
-  const { mutate: sendEditCourse } = useApiSend(
-    patch,
-    () =>
-      alert("Successful updating of course", (err) =>
-        alert("Error updating course. Try again.", err)
-      ),
-    ["courses"]
-  );
+  const { mutate: sendEditCourse } = useApiSend(patch, ["courses"]);
 
   const {
     control,
@@ -39,7 +35,7 @@ const ManageCourseTab = () => {
 
     formState: { errors },
   } = useForm({
-    // resolver: zodResolver(courseSchema),
+    resolver: zodResolver(courseSchema),
     mode: "onTouched",
     defaultValues: initialValues,
   });

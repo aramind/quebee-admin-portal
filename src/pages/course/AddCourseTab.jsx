@@ -17,12 +17,11 @@ const AddCourseTab = () => {
   const styles = useStyles();
   const { addCourse } = useCourseReq();
 
-  const { mutate: sendAddCourse } = useApiSend(
-    addCourse,
-    (data) => alert(data),
-    (err) => alert("Error adding course. Try again.", err),
-    ["courses", "topics", "subjects"]
-  );
+  const { mutate: sendAddCourse } = useApiSend(addCourse, [
+    "courses",
+    "topics",
+    "subjects",
+  ]);
   const {
     control,
     handleSubmit,

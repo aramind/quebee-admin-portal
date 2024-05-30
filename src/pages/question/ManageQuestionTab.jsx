@@ -49,11 +49,8 @@ const ManageQuestionTab = () => {
     }
   );
 
-  const { mutate: sendUpdate } = useApiSend(
-    edit,
-    () => console.log("Question successfully updated"),
-    (err) => console.log("Error updating question", err)
-  );
+  const { mutate: sendUpdate } = useApiSend();
+
   const { control, handleSubmit, reset, setValue, getValues } = useForm({
     mode: "onTouched",
     defaultValues: initialValues,

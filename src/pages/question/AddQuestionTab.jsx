@@ -20,12 +20,7 @@ const AddQuestionTab = () => {
 
   const { add } = useQuestionReq();
 
-  const { mutate: addQuestion } = useApiSend(
-    add,
-    () => console.log("Question submitted."),
-    (err) => console.error("Error submitting question. Try again.", err),
-    ["questions", "tags"]
-  );
+  const { mutate: addQuestion } = useApiSend(add, ["questions", "tags"]);
 
   const { control, handleSubmit, setValue, reset } = useForm({
     mode: "onTouched",

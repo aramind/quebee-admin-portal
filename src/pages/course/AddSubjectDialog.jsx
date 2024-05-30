@@ -27,9 +27,6 @@ import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema from "../../schemas/subject";
 
-import { useGlobalState } from "../../context/GlobalStatesContextProvider";
-import { showAckNotification } from "../../utils/showAckNotification";
-
 import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
 
 function PaperComponent(props) {
@@ -46,18 +43,8 @@ function PaperComponent(props) {
 const AddSubjectDialog = ({ open, setOpen, title = "", data }) => {
   const styles = useStyles();
   const { addSubject } = useSubjReq();
-  const {
-    globalState: { ackAlert },
-    dispatch,
-  } = useGlobalState();
 
-  const { mutate: handleAddSubject } = useApiSend(
-    addSubject,
-    (data) => showAckNotification({ dispatch, success: true, data, ackAlert }),
-    (err) =>
-      showAckNotification({ dispatch, success: false, data: err, ackAlert }),
-    ["subjects"]
-  );
+  const { mutate: handleAddSubject } = useApiSend(addSubject, ["subjects"]);
 
   const {
     handleSubmit,

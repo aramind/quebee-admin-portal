@@ -17,29 +17,17 @@ import ACSandDOS from "./ACSandDOS";
 import useFetchData from "../../hooks/api/useFetchData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import topicSchema from "../../schemas/topic";
-import { showAckNotification } from "../../utils/showAckNotification";
-import { useGlobalState } from "../../context/GlobalStatesContextProvider";
 
 const ManageTopicsTab = () => {
   const [selected, setSelected] = useState(null);
   const [initialValues, setInitialValues] = useState({});
 
   const styles = useStyles();
-  const {
-    globalState: { ackAlert },
-    dispatch,
-  } = useGlobalState();
 
   const { patchTopic } = useTopicReq();
   const { topicsList } = useFetchData();
 
-  const { mutate: handleUpdate } = useApiSend(
-    patchTopic,
-    (data) => showAckNotification({ dispatch, success: true, data, ackAlert }),
-    (err) =>
-      showAckNotification({ dispatch, success: false, data: err, ackAlert }),
-    ["topics"]
-  );
+  const { mutate: handleUpdate } = useApiSend(patchTopic, ["topics"]);
 
   const {
     handleSubmit,

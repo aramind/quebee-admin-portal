@@ -15,17 +15,7 @@ const RenderAction = ({ row }) => {
   const styles = useStyles();
   const { deleteById } = useUserReq();
 
-  const { mutate: deleteUser, isLoading } = useApiSend(
-    deleteById,
-    () => {
-      alert("Successfully deleted user");
-    },
-    (err) => {
-      alert("Encountered an error deleting user. Please try again later.", err);
-    },
-    ["users"],
-    {}
-  );
+  const { mutate: deleteUser, isLoading } = useApiSend(deleteById, ["users"]);
 
   const handleDeleteUser = (id) => {
     deleteUser(id);
