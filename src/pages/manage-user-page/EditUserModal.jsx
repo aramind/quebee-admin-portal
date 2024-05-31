@@ -66,7 +66,7 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
   const handleReset = () => {
     reset({ ...row });
   };
-  const handleFormDataSubmit = async (rawData) => {
+  const handleFormDataSubmit = (rawData) => {
     updateUser({ data: rawData, id: row?.id });
   };
 
@@ -114,7 +114,7 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
               />
               <DialogActionButton
                 label="save"
-                onClickHandler={handleFormDataSubmit}
+                onClickHandler={() => handleSubmit(handleFormDataSubmit)()}
                 disabled={
                   !row?.id || !isDirty || Object.keys(errors).length !== 0
                 }

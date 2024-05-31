@@ -29,13 +29,12 @@ const useUserReq = () => {
       });
     },
 
-    edit: ({ data, id }) => {
+    edit: ({ data, id }) =>
       request({
         url: `${USER_URL}/${id}`,
         method: "PATCH",
         data,
-      });
-    },
+      }),
   };
 
   return userReq;

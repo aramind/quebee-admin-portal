@@ -12,7 +12,7 @@ import {
   Stack,
 } from "@mui/material";
 import Draggable from "react-draggable";
-import { grey, red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";

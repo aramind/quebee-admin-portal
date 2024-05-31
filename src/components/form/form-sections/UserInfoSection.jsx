@@ -36,10 +36,10 @@ const UserInfoSection = ({ title }) => {
           options={constants?.STATUS || []}
           flex={0.5}
         />
-        <ControlledTextField label="email**" name="email" flex={1.2} />
+        <ControlledTextField label="email**" name="email" flex={1} />
         <ControlledTextField label="username**" name="username" />
 
-        <ControlledTextField label="password**" name="password" flex={0.8} />
+        <ControlledTextField label="password**" name="password" flex={1} />
       </RowWrapper>
     </Stack>
   );
