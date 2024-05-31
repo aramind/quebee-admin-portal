@@ -89,7 +89,6 @@ const ManageQuestionTab = () => {
     reset(initialValues);
   };
 
-  console.log(fetchValues);
   const handleFormDataSubmit = async (rawData) => {
     const formattedData = {
       code: rawData?.code,

@@ -1,20 +1,14 @@
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import RenderAction from "../../components/renders/RenderAction";
 import RenderPassword from "../../components/renders/RenderPassword";
 import AddNewUserForm from "./AddNewUserForm";
-import useRefreshToken from "../../hooks/useRefreshToken";
-
-import useApiGet from "../../hooks/api/useApiGet";
-import useUserReq from "../../hooks/api/useUserReq";
-
 import useStyles from "../../hooks/useStyles";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import FormInputLabel from "../../components/form/FormInputLabel";
-import useErrorHandlerUnAuthReq from "../../hooks/api/useErrorHandlerUnAuthReq";
-import LoadingPage from "../LoadingPage";
+import useFetchData from "../../hooks/api/useFetchData";
 
 const setId = (user, index) => {
   return user?._id || index + 1;
@@ -48,25 +42,12 @@ const columns = [
 const ManageUserPage = () => {
   const [rows, setRows] = useState([]);
   const styles = useStyles();
-  const refresh = useRefreshToken();
-  const { get } = useUserReq();
-  const handleUnAuthError = useErrorHandlerUnAuthReq();
 
-  const {
-    data: fetchedUsers,
-    isLoading,
-    error,
-    refetch: refetchUsers,
-  } = useApiGet("users", get, {
-    refetchOnWindowFocus: true,
-    retry: 3,
-  });
+  const { usersList, refetchUsers } = useFetchData();
 
   useEffect(() => {
-    if (fetchedUsers) {
-      const filtered = fetchedUsers?.data.filter(
-        (user) => user.role !== "super"
-      );
+    if (usersList) {
+      const filtered = usersList?.data.filter((user) => user.role !== "super");
 
       setRows(
         filtered.map((user, index) => ({
@@ -83,7 +64,7 @@ const ManageUserPage = () => {
         }))
       );
     }
-  }, [fetchedUsers]);
+  }, [usersList]);
 
   const colsWithWidth = columns.map((col, index) => {
     return {
@@ -106,17 +87,8 @@ const ManageUserPage = () => {
     };
   });
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (error) {
-    handleUnAuthError(error);
-  }
-
   return (
     <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
-      <Button onClick={() => refresh()}>Refresh</Button>
       <ElevatedSectionWrapper>
         <Stack gap={1}>
           <FormInputLabel label="Current Users" />

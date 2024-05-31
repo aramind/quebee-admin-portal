@@ -5,6 +5,7 @@ import useErrorHandlerUnAuthReq from "./useErrorHandlerUnAuthReq";
 import useQuestionReq from "./useQuestionReq";
 import useSubjReq from "./useSubReq";
 import useTopicReq from "./useTopicReq";
+import useUserReq from "./useUserReq";
 
 const useFetchData = () => {
   const handleUnAuthError = useErrorHandlerUnAuthReq();
@@ -12,6 +13,7 @@ const useFetchData = () => {
   const { fetchSubjects } = useSubjReq();
   const { getTags, get: getQ } = useQuestionReq();
   const { get } = useCourseReq();
+  const { get: fetchUsers } = useUserReq();
 
   const {
     data: coursesList,
@@ -59,27 +61,54 @@ const useFetchData = () => {
     staleTime: Infinity,
   });
 
+  const {
+    data: usersList,
+    isLoading: isLoadingInUsers,
+    error: isErrorInUsers,
+    refetch: refetchUsers,
+  } = useApiGet("users", fetchUsers, {
+    refetchOnWindowFocus: true,
+    retry: 3,
+  });
+
   if (
     isLoadingInCourse ||
     isLoadingInTopic ||
     isLoadingInSubject ||
     isLoadingInQuestions ||
-    isLoadingInTags
+    isLoadingInTags ||
+    isLoadingInUsers
   ) {
     return <LoadingPage />;
   }
 
-  if (isErrorInTopic || isErrorInSubject) {
+  if (
+    isErrorInCourse ||
+    isErrorInTopic ||
+    isErrorInSubject ||
+    isErrorInQuestions ||
+    isErrorInTags ||
+    isErrorInUsers
+  ) {
     const error =
       isErrorInCourse ||
       isErrorInTopic ||
       isErrorInSubject ||
       isErrorInQuestions ||
-      isErrorInTags;
+      isErrorInTags ||
+      isErrorInUsers;
     handleUnAuthError(error);
   }
 
-  return { coursesList, topicsList, subjectsList, questionsList, tagsList };
+  return {
+    coursesList,
+    topicsList,
+    subjectsList,
+    questionsList,
+    tagsList,
+    usersList,
+    refetchUsers,
+  };
 };
 
 export default useFetchData;
