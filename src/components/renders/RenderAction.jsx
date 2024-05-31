@@ -15,7 +15,7 @@ const RenderAction = ({ row }) => {
   const styles = useStyles();
   const { deleteById } = useUserReq();
 
-  const { mutate: deleteUser, isLoading } = useApiSend(deleteById, ["users"]);
+  const { mutate: deleteUser } = useApiSend(deleteById, ["users"]);
 
   const handleDeleteUser = (id) => {
     deleteUser(id);
@@ -34,7 +34,6 @@ const RenderAction = ({ row }) => {
       <IconButton
         aria-label="delete"
         sx={styles.iconButton}
-        disabled={isLoading}
         onClick={() => setOpenConfirmDelete(true)}
       >
         <DeleteTwoToneIcon />

@@ -40,7 +40,6 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
   const styles = useStyles();
   const { edit } = useUserReq();
   // hooks
-  // console.log(row);
   const { mutate: updateUser } = useApiSend(edit, ["users"]);
 
   // form

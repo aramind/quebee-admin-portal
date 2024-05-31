@@ -1,7 +1,6 @@
 import { Stack } from "@mui/material";
 import React from "react";
 import SimpleLabelValue from "../../components/SimpleLabelValue";
-import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 
 const DeleteUserDialogContent = ({ userDetails }) => {
   const { employeeId, lastName, firstName, middleName, status, role } =
