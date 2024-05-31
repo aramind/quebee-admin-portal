@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   Paper,
   Stack,
   Typography,
@@ -21,8 +22,8 @@ import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import UserInfoSection from "../../components/form/form-sections/UserInfoSection";
 import DialogActionsContainer from "../../containers/DialogActionsContainer";
 import DialogActionButton from "../../components/form/DialogActionButton";
-import useFormSubmit from "../../hooks/useFormSubmit";
 import FormWrapper from "../../wrappers/FormWrapper";
+import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
 
 function PaperComponent(props) {
   return (
@@ -59,6 +60,7 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
 
   const handleClose = (e) => {
     e.stopPropagation();
+    setOpen(false);
   };
 
   const handleReset = () => {
@@ -80,7 +82,16 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
           fullWidth
         >
           <DialogTitle sx={styles.dialog.title} id="draggable-dialog-title">
-            {title}
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              {title}
+              <IconButton onClick={handleClose}>
+                <CloseTwoToneIcon />
+              </IconButton>
+            </Stack>
           </DialogTitle>
           <DialogContent>
             <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
