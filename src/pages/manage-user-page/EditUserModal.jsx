@@ -5,6 +5,8 @@ import {
   DialogContent,
   DialogTitle,
   Paper,
+  Stack,
+  Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React from "react";
@@ -42,13 +44,17 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
 
   // form
 
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(userSchema),
     mode: "onTouched",
     defaultValues: { ...row },
   });
 
-  const formMethods = { handleSubmit, control };
+  const formMethods = { handleSubmit, control, errors };
 
   const handleClose = (e) => {
     e.stopPropagation();
@@ -57,8 +63,6 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
   const handleFormDataSubmit = async (rawData) => {
     updateUser({ data: rawData, id: row?.id });
   };
-
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
   return (
     <>
@@ -75,14 +79,15 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
             {title}
           </DialogTitle>
           <DialogContent>
-            <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
-              <Box>
+            <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
+              <Stack spacing={1}>
                 <ElevatedSectionWrapper>
-                  <UserInfoSection
-                  // control={control}
-                  />
+                  <UserInfoSection />
                 </ElevatedSectionWrapper>
-              </Box>
+                <Typography pl={1} variant="caption" color={grey[700]}>
+                  All fields marked with are required.
+                </Typography>
+              </Stack>
             </form>
           </DialogContent>
           <DialogActions>
@@ -94,7 +99,7 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
               <DialogActionButton
                 label="save"
                 onClickHandler={() => {
-                  handleSubmit(handleFormSubmit)();
+                  handleSubmit(handleFormDataSubmit)();
                   setOpen(false);
                 }}
               />
