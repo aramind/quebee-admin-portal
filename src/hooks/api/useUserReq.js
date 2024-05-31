@@ -14,20 +14,18 @@ const useUserReq = () => {
         method: "GET",
       }),
 
-    register: (data) => {
+    register: (data) =>
       request({
         url: `${USER_URL}/register`,
         method: "POST",
         data: data,
-      });
-    },
+      }),
 
-    deleteById: (id) => {
+    deleteById: (id) =>
       request({
         url: `${USER_URL}/${id}`,
         method: "DELETE",
-      });
-    },
+      }),
 
     edit: ({ data, id }) =>
       request({
