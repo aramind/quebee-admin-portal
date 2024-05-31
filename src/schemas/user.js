@@ -8,7 +8,7 @@ const userSchema = z.object({
   firstName: z.string().min(1, "Required"),
   middleName: z.string(),
   username: z.string().min(1, "Required"),
-  password: z.string().min(1, "Required"),
+  password: z.string().min(4, "At least 4 characters."),
   email: z.string().email().min(1, "Required"),
   role: z.enum(constants.ROLES),
   status: z.enum(constants.STATUS),
