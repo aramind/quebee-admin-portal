@@ -47,7 +47,8 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    reset,
+    formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(userSchema),
     mode: "onTouched",
@@ -60,6 +61,9 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
     e.stopPropagation();
   };
 
+  const handleReset = () => {
+    reset({ ...row });
+  };
   const handleFormDataSubmit = async (rawData) => {
     updateUser({ data: rawData, id: row?.id });
   };
@@ -93,15 +97,16 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
           <DialogActions>
             <DialogActionsContainer>
               <DialogActionButton
-                label="cancel"
-                onClickHandler={() => setOpen(false)}
+                label="reset"
+                onClickHandler={handleReset}
+                disabled={!isDirty}
               />
               <DialogActionButton
                 label="save"
-                onClickHandler={() => {
-                  handleSubmit(handleFormDataSubmit)();
-                  setOpen(false);
-                }}
+                onClickHandler={handleFormDataSubmit}
+                disabled={
+                  !row?.id || !isDirty || Object.keys(errors).length !== 0
+                }
               />
             </DialogActionsContainer>
           </DialogActions>
