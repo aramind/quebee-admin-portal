@@ -99,7 +99,7 @@ const EditUserModal = ({ open, setOpen, title = "", row }) => {
                   <UserInfoSection />
                 </ElevatedSectionWrapper>
                 <Typography pl={1} variant="caption" color={grey[700]}>
-                  All fields marked with are required.
+                  All fields marked with ** are required.
                 </Typography>
               </Stack>
             </form>
