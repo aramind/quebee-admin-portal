@@ -28,6 +28,7 @@ const ConfirmActionDialog = ({
   title = "",
   content = "",
   handleConfirm,
+  row,
 }) => {
   const styles = useStyles();
 
@@ -53,7 +54,9 @@ const ConfirmActionDialog = ({
           <DialogActionButton
             label="confirm"
             onClickHandler={() => {
-              handleConfirm();
+              console.log("Confirm button clicked");
+              // handleConfirm();
+              console.log(row);
               setOpen(false);
             }}
           />

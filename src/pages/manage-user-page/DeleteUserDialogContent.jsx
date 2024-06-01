@@ -6,8 +6,8 @@ const DeleteUserDialogContent = ({ userDetails }) => {
   const { employeeId, lastName, firstName, middleName, status, role } =
     userDetails;
 
-  const user = { employeeId, lastName, firstName, middleName, status, role };
-  console.log(user);
+  // const user = { employeeId, lastName, firstName, middleName, status, role };
+  // console.log(user);
   return (
     // <Stack spacing={1.5} width="100%" direction="row" flexWrap="wrap">
     //   {user &&

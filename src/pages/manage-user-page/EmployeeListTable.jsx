@@ -1,15 +1,12 @@
-import { Container, Stack, Typography } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
-
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import RenderAction from "../../components/renders/RenderAction";
 import RenderPassword from "../../components/renders/RenderPassword";
-import AddNewUserForm from "./AddNewUserForm";
+import RenderAction from "../../components/renders/RenderAction";
 import useStyles from "../../hooks/useStyles";
+import useFetchData from "../../hooks/api/useFetchData";
+import { Stack, Typography } from "@mui/material";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import FormInputLabel from "../../components/form/FormInputLabel";
-import useFetchData from "../../hooks/api/useFetchData";
-import EmployeeListTable from "./EmployeeListTable";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 const setId = (user, index) => {
   return user?._id || index + 1;
@@ -22,7 +19,6 @@ const columns = [
   { field: "middleName", headerName: "middle name" },
   { field: "email", headerName: "email" },
   { field: "username", headerName: "username" },
-
   {
     field: "password",
     headerName: "password",
@@ -34,18 +30,16 @@ const columns = [
   {
     field: "actions",
     headerName: "Actions",
-
     renderCell: (params) => <RenderAction row={params.row} />,
     // renderCell: RenderAction,
   },
 ];
 
-console.log("RENDERS");
-const ManageUserPage = () => {
+console.log("RENDERS TABLE");
+const EmployeeListTable = () => {
   const [rows, setRows] = useState([]);
-  const styles = useStyles();
 
-  const { usersList, refetchUsers } = useFetchData();
+  const { usersList } = useFetchData();
 
   const processedRows = useMemo(() => {
     if (!usersList) return [];
@@ -70,56 +64,67 @@ const ManageUserPage = () => {
     setRows(processedRows);
   }, [processedRows]);
 
+  //   const colsWithWidth = columns.map((col, index) => {
+  //     return {
+  //       ...col,
+  //       align: "center",
+  //       headerAlign: "center",
+  //       editable: false,
+  //       flex: 1,
+  //       headerClassName: "users-table__header",
+  //       renderHeader: () => (
+  //         <Typography
+  //           sx={{
+  //             fontWeight: "bold",
+  //             width: "100%",
+  //           }}
+  //         >
+  //           {col.headerName.toUpperCase()}
+  //         </Typography>
+  //       ),
+  //     };
+  //   });
   // Memoizing columns to avoid unnecessary re-renders
-  // const colsWithWidth = useMemo(() => {
-  //   return columns.map((col) => ({
-  //     ...col,
-  //     align: "center",
-  //     headerAlign: "center",
-  //     editable: false,
-  //     flex: 1,
-  //     headerClassName: "users-table__header",
-  //     renderHeader: () => (
-  //       <Typography
-  //         sx={{
-  //           fontWeight: "bold",
-  //           width: "100%",
-  //         }}
-  //       >
-  //         {col.headerName.toUpperCase()}
-  //       </Typography>
-  //     ),
-  //   }));
-  // }, []);
-
-  console.log("RENDERS");
+  const colsWithWidth = useMemo(() => {
+    return columns.map((col) => ({
+      ...col,
+      align: "center",
+      headerAlign: "center",
+      editable: false,
+      flex: 1,
+      headerClassName: "users-table__header",
+      renderHeader: () => (
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            width: "100%",
+          }}
+        >
+          {col.headerName.toUpperCase()}
+        </Typography>
+      ),
+    }));
+  }, []);
   return (
-    <Container maxWidth="xl" sx={styles.mainContainer} disableGutters>
-      {/* <ElevatedSectionWrapper>
-        <Stack gap={1}>
-          <FormInputLabel label="Current Users" />
+    <ElevatedSectionWrapper>
+      <Stack gap={1}>
+        <FormInputLabel label="Current Users" />
 
-          <DataGrid
-            editMode="row"
-            rows={rows}
-            columns={colsWithWidth}
-            slots={{ toolbar: GridToolbar }}
-            sx={localStyle.datagrid}
-          />
-        </Stack>
-      </ElevatedSectionWrapper> */}
-      <EmployeeListTable />
-      <br />
-      <AddNewUserForm successFn={refetchUsers} />
-      <br />
-    </Container>
+        <DataGrid
+          editMode="row"
+          rows={rows}
+          columns={colsWithWidth}
+          slots={{ toolbar: GridToolbar }}
+          sx={localStyle.datagrid}
+        />
+      </Stack>
+    </ElevatedSectionWrapper>
   );
 };
 
-export default ManageUserPage;
+export default EmployeeListTable;
 
 //local sx styles
-// @type {import("@mui/material").SxProps}
 const localStyle = {
   datagrid: {
     "& .MuiDataGrid-columnHeader": {

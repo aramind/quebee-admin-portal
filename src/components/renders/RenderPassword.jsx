@@ -17,7 +17,7 @@ const genIcons = (n) => {
   return icons;
 };
 
-const RenderPassword = ({ row }) => {
+const RenderPassword = React.memo(({ row }) => {
   const [showPassword, setShowPassword] = useState(false);
   const styles = useStyles();
 
@@ -57,7 +57,7 @@ const RenderPassword = ({ row }) => {
       </Stack>
     </>
   );
-};
+});
 
 export default RenderPassword;
 

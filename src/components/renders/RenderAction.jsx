@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import { IconButton } from "@mui/material";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
@@ -9,24 +9,32 @@ import useUserReq from "../../hooks/api/useUserReq";
 import useApiSend from "../../hooks/api/useApiSend";
 import EditUserModal from "../../pages/manage-user-page/EditUserModal";
 
-const RenderAction = ({ row }) => {
+const RenderAction = React.memo(({ row }) => {
   const [openDialogEditUser, setOpenDialogEditUser] = useState(false);
   const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
   const styles = useStyles();
   const { deleteById } = useUserReq();
 
-  const { mutate: deleteUser } = useApiSend(deleteById, ["users"]);
+  // const { mutate: deleteUser } = useApiSend(deleteById, ["users"]);
 
-  const handleDeleteUser = (id) => {
-    deleteUser(id);
-  };
+  // const handleDeleteUser = () => console.log(row?.id);
+  // console.log("ID", id);
+  // deleteUser(id);
 
+  const handleEditUser = useCallback(() => {
+    setOpenDialogEditUser(true);
+  }, []);
+
+  const handleConfirmDelete = useCallback(() => {
+    setOpenConfirmDelete(true);
+  }, []);
+  console.log("RENDER ACTION");
   return (
     <>
       <IconButton
         aria-label="edit"
         sx={styles.iconButton}
-        onClick={() => setOpenDialogEditUser(true)}
+        onClick={handleEditUser}
       >
         <EditTwoToneIcon />
       </IconButton>
@@ -34,7 +42,7 @@ const RenderAction = ({ row }) => {
       <IconButton
         aria-label="delete"
         sx={styles.iconButton}
-        onClick={() => setOpenConfirmDelete(true)}
+        onClick={handleConfirmDelete}
       >
         <DeleteTwoToneIcon />
       </IconButton>
@@ -49,10 +57,11 @@ const RenderAction = ({ row }) => {
         setOpen={setOpenConfirmDelete}
         title="Delete this user?"
         content={<DeleteUserDialogContent userDetails={row} />}
-        handleConfirm={() => handleDeleteUser(row.employeeId)}
+        // handleConfirm={handleDeleteUser}
+        row={row}
       />
     </>
   );
-};
+}, []);
 
 export default RenderAction;
