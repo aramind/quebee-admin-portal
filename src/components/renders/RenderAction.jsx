@@ -15,11 +15,11 @@ const RenderAction = React.memo(({ row }) => {
   const styles = useStyles();
   const { deleteById } = useUserReq();
 
-  // const { mutate: deleteUser } = useApiSend(deleteById, ["users"]);
+  const { mutate: deleteUser } = useApiSend(deleteById, ["users"]);
 
-  // const handleDeleteUser = () => console.log(row?.id);
-  // console.log("ID", id);
-  // deleteUser(id);
+  const handleDeleteUser = useCallback(() => {
+    deleteUser(row?.id);
+  }, [deleteUser, row?.id]);
 
   const handleEditUser = useCallback(() => {
     setOpenDialogEditUser(true);
@@ -28,7 +28,7 @@ const RenderAction = React.memo(({ row }) => {
   const handleConfirmDelete = useCallback(() => {
     setOpenConfirmDelete(true);
   }, []);
-  console.log("RENDER ACTION");
+
   return (
     <>
       <IconButton
@@ -57,11 +57,11 @@ const RenderAction = React.memo(({ row }) => {
         setOpen={setOpenConfirmDelete}
         title="Delete this user?"
         content={<DeleteUserDialogContent userDetails={row} />}
-        // handleConfirm={handleDeleteUser}
+        handleConfirm={handleDeleteUser}
         row={row}
       />
     </>
   );
-}, []);
+});
 
 export default RenderAction;

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import RenderPassword from "../../components/renders/RenderPassword";
 import RenderAction from "../../components/renders/RenderAction";
-import useStyles from "../../hooks/useStyles";
 import useFetchData from "../../hooks/api/useFetchData";
 import { Stack, Typography } from "@mui/material";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
@@ -64,26 +63,6 @@ const EmployeeListTable = () => {
     setRows(processedRows);
   }, [processedRows]);
 
-  //   const colsWithWidth = columns.map((col, index) => {
-  //     return {
-  //       ...col,
-  //       align: "center",
-  //       headerAlign: "center",
-  //       editable: false,
-  //       flex: 1,
-  //       headerClassName: "users-table__header",
-  //       renderHeader: () => (
-  //         <Typography
-  //           sx={{
-  //             fontWeight: "bold",
-  //             width: "100%",
-  //           }}
-  //         >
-  //           {col.headerName.toUpperCase()}
-  //         </Typography>
-  //       ),
-  //     };
-  //   });
   // Memoizing columns to avoid unnecessary re-renders
   const colsWithWidth = useMemo(() => {
     return columns.map((col) => ({

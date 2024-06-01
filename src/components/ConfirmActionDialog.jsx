@@ -54,9 +54,7 @@ const ConfirmActionDialog = ({
           <DialogActionButton
             label="confirm"
             onClickHandler={() => {
-              console.log("Confirm button clicked");
-              // handleConfirm();
-              console.log(row);
+              handleConfirm();
               setOpen(false);
             }}
           />
