@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 
 import FormActionsContainer from "../../containers/FormActionsContainer";
@@ -12,68 +12,72 @@ import useUserReq from "../../hooks/api/useUserReq";
 import { DevTool } from "@hookform/devtools";
 import UserInfoSection from "../../components/form/form-sections/UserInfoSection";
 import constants from "../../configs/constants";
-import useFormSubmit from "../../hooks/useFormSubmit";
 import FormWrapper from "../../wrappers/FormWrapper";
 
 const initialValues = {
   role: constants.ROLES?.[0], // Initial value for role select
   status: constants.STATUS?.[0], // Initial value for status select
   password: constants.DEFAULT_PASSWORD,
+  employeeId: "",
+  lastName: "",
+  firstName: "",
+  middleName: "",
+  email: "",
+  username: "",
 };
 
-const AddNewUserForm = ({ successFn }) => {
+const AddNewUserForm = () => {
   const { register } = useUserReq();
-  const [forceRender, setForceRender] = useState(false);
 
-  const { mutate: registerUser } = useApiSend(register, ["users"]);
-  //   form
-  const { handleSubmit, reset, control } = useForm({
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors, isDirty },
+  } = useForm({
     resolver: zodResolver(userSchema),
     mode: "onTouched",
     defaultValues: initialValues,
   });
 
-  const formMethods = { handleSubmit, reset, control };
+  const handleClear = () => {
+    reset(initialValues);
+  };
+
+  const { mutate: registerUser } = useApiSend(register, ["users"], () =>
+    reset(initialValues)
+  );
+
+  const formMethods = { handleSubmit, reset, control, errors };
 
   const handleFormDataSubmit = async (rawData) => {
     registerUser(rawData);
   };
 
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
-  // handlers
-  // todo
-  const handleClear = () => {
-    reset();
-    setForceRender((prevState) => !prevState);
-    return forceRender;
-  };
-
   return (
     <>
       <FormWrapper formMethods={formMethods}>
-        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+        <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
           <ElevatedSectionWrapper>
-            <UserInfoSection
-              // control={control}
-
-              title="Add New User"
-            />
+            <UserInfoSection title="Add New User" />
             <br />
             <FormActionsContainer justify="flex-end">
               <FormActionButton
                 label="clear"
                 onClickHandler={handleClear}
                 variant="outlined"
+                disabled={!isDirty}
               />
               <FormActionButton
                 label="save"
                 variant="contained"
                 type="submit"
+                disabled={Object.keys(errors).length !== 0 || !isDirty}
               />
             </FormActionsContainer>
           </ElevatedSectionWrapper>
         </form>
-        {/* <DevTool control={control} /> */}
+        <DevTool control={control} />
       </FormWrapper>
     </>
   );
