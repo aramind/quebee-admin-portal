@@ -74,7 +74,7 @@ const LoginPage = () => {
         showAckNotification({
           dispatch,
           success: true,
-          data: { message: "You are logged in" },
+          data: { success: true, message: "You are logged in" },
           ackAlert,
         });
         navigate(from, { replace: true });
