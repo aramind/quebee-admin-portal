@@ -1,5 +1,5 @@
 import React from "react";
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Button, useMediaQuery, useTheme } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import "./navbar.css";
@@ -20,8 +20,8 @@ const NavBar = () => {
 
   const handleLogOut = async () => {
     console.log("CLICKED LOG OUT");
-    navigate("/login");
     logout();
+    navigate("/login");
   };
 
   const theme = useTheme();
@@ -56,9 +56,12 @@ const NavBar = () => {
                 );
               })}
             <TooltipWrapper title="Log out">
-              <NavLink className="nav__logout" to="/" onClick={handleLogOut}>
+              {/* <NavLink className="nav__logout" to="/" onClick={handleLogOut}>
                 <ExitToAppTwoToneIcon sx={{ fontSize: "2.5rem" }} />
-              </NavLink>
+              </NavLink>1 */}
+              <Button className="nav__logout" to="/" onClick={handleLogOut}>
+                <ExitToAppTwoToneIcon sx={{ fontSize: "2.5rem" }} />
+              </Button>
             </TooltipWrapper>
           </div>
         </nav>
