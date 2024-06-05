@@ -1,11 +1,12 @@
 import React from "react";
-import { Button, useMediaQuery, useTheme } from "@mui/material";
+import { Button, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import "./navbar.css";
 import TooltipWrapper from "../../wrappers/TooltipWrapper";
 import NavMenu from "../NavMenu";
 import useLogout from "../../hooks/useLogout";
+import { grey, red } from "@mui/material/colors";
 
 const pages = [
   { link: "/dashboard", navLabel: "Dashboard" },
@@ -59,9 +60,21 @@ const NavBar = () => {
               {/* <NavLink className="nav__logout" to="/" onClick={handleLogOut}>
                 <ExitToAppTwoToneIcon sx={{ fontSize: "2.5rem" }} />
               </NavLink>1 */}
-              <Button className="nav__logout" to="/" onClick={handleLogOut}>
-                <ExitToAppTwoToneIcon sx={{ fontSize: "2.5rem" }} />
-              </Button>
+              <IconButton
+                onClick={handleLogOut}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "tertiary.dark",
+                  },
+                }}
+              >
+                <ExitToAppTwoToneIcon
+                  sx={{
+                    fontSize: "2rem",
+                    color: grey[50],
+                  }}
+                />
+              </IconButton>
             </TooltipWrapper>
           </div>
         </nav>
