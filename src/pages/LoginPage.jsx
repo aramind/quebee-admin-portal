@@ -18,8 +18,8 @@ import zodLoginSchema from "../schemas/login";
 import { useGlobalState } from "../context/GlobalStatesContextProvider";
 import { AuthContext } from "../context/AuthProvider";
 import axios from "axios";
-import useFormSubmit from "../hooks/useFormSubmit";
 import FormWrapper from "../wrappers/FormWrapper";
+import { showAckNotification } from "../utils/showAckNotification";
 
 const currentYear = new Date().getFullYear();
 const LOGIN_URL = `${process.env.REACT_APP_API_URL}/v1/login`;
@@ -32,7 +32,10 @@ const LoginPage = () => {
   const from = location.state?.pathname || "/";
 
   // states
-  const { dispatch } = useGlobalState();
+  const {
+    globalState: { ackAlert },
+    dispatch,
+  } = useGlobalState();
   const [showPassword, setShowPassword] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
 
@@ -61,53 +64,30 @@ const LoginPage = () => {
       if (response.data.success) {
         const user = response.data.data;
         console.log(user);
-        if (user?.token) {
-          dispatch({
-            type: "SET_CURRENT_USER",
-            payload: user,
-          });
-        }
+        // if (user?.token) {
+        //   dispatch({
+        //     type: "SET_CURRENT_USER",
+        //     payload: user,
+        //   });
+        // }
         setAuth(user);
-
+        showAckNotification({
+          dispatch,
+          success: true,
+          data: { message: "You are logged in" },
+          ackAlert,
+        });
         navigate(from, { replace: true });
-        alert(response.data.message);
       }
     } catch (error) {
-      const errorMessage =
-        error?.response?.data?.message ||
-        "No server response. Please try again";
-      alert(errorMessage);
+      showAckNotification({
+        dispatch,
+        success: false,
+        data: { message: "Error logging in. " },
+        ackAlert,
+      });
     }
   };
-
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
-
-  // const onSubmit2 = (data) => {
-  //   const authenticatedUser = findUser(data);
-  //   console.log("USER", authenticatedUser);
-
-  //   if (authenticatedUser) {
-  //     setSubmitMessage((message) => "Login successful");
-  //     dispatch({
-  //       type: "SET_CURRENT_USER",
-  //       payload: {
-  //         username: authenticatedUser.username,
-  //         role: authenticatedUser.role,
-  //       },
-  //     });
-
-  //     localStorage.setItem(
-  //       "user",
-  //       JSON.stringify({
-  //         name: authenticatedUser.username,
-  //         role: authenticatedUser.role,
-  //       })
-  //     );
-  //     setAuthenticated((authenticated) => true);
-  //   } else {
-  //     setSubmitMessage((message) => "Invalid Credentials");
-  //   }
-  // };
 
   return (
     <FormWrapper formMethods={formMethods}>
@@ -118,7 +98,7 @@ const LoginPage = () => {
         direction="column"
         spacing="1rem"
       >
-        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+        <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
           <Stack
             height={{ xs: "100vw", md: "80vh" }}
             width={{ xs: "80vw", md: "80vh" }}
