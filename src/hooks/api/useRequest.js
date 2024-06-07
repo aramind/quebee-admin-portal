@@ -8,14 +8,17 @@ const useRequest = () => {
 
   const request = async (options) => {
     const onSuccess = (res) => {
-      dispatch({
-        type: "SHOW_MINOR_ALERT",
-        payload: {
-          open: true,
-          severity: res?.data?.success ? "success" : "error",
-          message: res?.data?.message,
-        },
-      });
+      if (res?.data?.message?.length > 1) {
+        dispatch({
+          type: "SHOW_MINOR_ALERT",
+          payload: {
+            open: true,
+            severity: res?.data?.success ? "success" : "error",
+            message: res?.data?.message,
+          },
+        });
+      }
+
       // console.log(res?.data);
       return res?.data;
       // return res;

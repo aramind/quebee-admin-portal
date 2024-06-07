@@ -38,6 +38,12 @@ const useQuestionReq = () => {
         url: `${QUESTION_URL}/tags`,
         method: "GET",
       }),
+
+    getQuestionsCount: ({ query }) =>
+      request({
+        url: `${QUESTION_URL}/count?${query}`,
+        method: "GET",
+      }),
   };
 
   return questionReq;

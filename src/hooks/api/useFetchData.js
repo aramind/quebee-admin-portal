@@ -71,6 +71,15 @@ const useFetchData = () => {
     retry: 3,
   });
 
+  // const {
+  //   data: questionsCount,
+  //   isLoading: isLoadingInCount,
+  //   error: isErrorInCount,
+  // } = useApiGet("questionsCount", (query) => getQuestionsCount({ query }), {
+  //   refetchOnWindowFocus: true,
+  //   retry: 3,
+  // });
+
   if (
     isLoadingInCourse ||
     isLoadingInTopic ||
