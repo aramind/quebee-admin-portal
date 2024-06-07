@@ -14,8 +14,8 @@ const DashBoardCard = ({ title, value }) => {
     <Card sx={{ width: 200, maxWidth: 300 }}>
       <CardActions style={{ justifyContent: "center" }}>{title}</CardActions>
       <Divider />
-      <CardContent>
-        <Typography variant="h1" color="#333" textAlign="center">
+      <CardContent sx={{ padding: 0 }}>
+        <Typography color="#333" textAlign="center" fontSize="4rem">
           {value}
         </Typography>
       </CardContent>

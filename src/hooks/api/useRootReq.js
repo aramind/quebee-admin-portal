@@ -12,6 +12,11 @@ const useRootReq = () => {
         url: `${ROOT_URL}/logout`,
         method: "DELETE",
       }),
+    getCounts: () =>
+      request({
+        url: `${ROOT_URL}/counts`,
+        method: "GET",
+      }),
   };
   return rootReq;
 };
