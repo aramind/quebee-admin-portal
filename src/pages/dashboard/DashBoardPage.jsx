@@ -28,10 +28,6 @@ const RowWrapper = ({ children }) => (
 );
 
 const DashBoardPage = () => {
-  const {
-    globalState: { currentUser },
-  } = useGlobalState();
-
   const { getCounts } = useRootReq();
 
   const { data: counts } = useApiGet("counts", getCounts);
@@ -39,10 +35,10 @@ const DashBoardPage = () => {
   console.log(counts);
   return (
     <>
-      <Typography variant="body1" color="initial" align="left" mx={5} my={2}>
+      {/* <Typography variant="body1" color="initial" align="left" mx={5} my={2}>
         Hello {currentUser?.name?.firstName}! Happy {currentDay} of{" "}
         {currentDate}
-      </Typography>
+      </Typography> */}
 
       {["questions", "courses", "subjects", "topics"].map((group, index) => (
         <>
@@ -57,12 +53,14 @@ const DashBoardPage = () => {
                 sx={{ display: "inline" }}
                 fontWeight="bold"
                 fontSize="inherit"
+                pl={2}
               >
                 (
-                {Object.values(counts?.data?.[group]).reduce(
-                  (total, count) => total + count,
-                  0
-                )}
+                {counts &&
+                  Object.values(counts?.data?.[group]).reduce(
+                    (total, count) => total + count,
+                    0
+                  )}
                 )
               </Typography>
             </Typography>
@@ -77,6 +75,7 @@ const DashBoardPage = () => {
           </RowWrapper>
         </>
       ))}
+      <br />
     </>
   );
 };
