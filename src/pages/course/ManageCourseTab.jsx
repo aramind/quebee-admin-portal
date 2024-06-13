@@ -114,6 +114,20 @@ const ManageCourseTab = () => {
       () => setDeleteDialogContent(selectedCourse),
       handleDelete
     );
+
+  const renderFormActions = () => (
+    <FormActions
+      selected={selectedCourse?._id}
+      status={selectedCourse?.status}
+      handleUpload={handleUpload}
+      handleConfirmDelete={handleConfirmDelete}
+      handleUndo={handleUndo}
+      handleFormDataSubmit={handleFormDataSubmit}
+      isDirty={isDirty}
+      errors={errors}
+    />
+  );
+
   return (
     <>
       <FormWrapper formMethods={formMethods}>
@@ -133,16 +147,7 @@ const ManageCourseTab = () => {
                   label="courses"
                 />
               </Box>
-              <FormActions
-                selected={selectedCourse?._id}
-                status={selectedCourse?.status}
-                handleUpload={handleUpload}
-                handleConfirmDelete={handleConfirmDelete}
-                handleUndo={handleUndo}
-                handleFormDataSubmit={handleFormDataSubmit}
-                isDirty={isDirty}
-                errors={errors}
-              />
+              {renderFormActions()}
             </Stack>
             <br />
             {selectedCourse && (
@@ -159,18 +164,7 @@ const ManageCourseTab = () => {
             <br />
 
             {/* <DevTool control={control} /> */}
-            {selectedCourse && (
-              <FormActions
-                selected={selectedCourse?._id}
-                status={selectedCourse?.status}
-                handleUpload={handleUpload}
-                handleConfirmDelete={handleConfirmDelete}
-                handleUndo={handleUndo}
-                handleFormDataSubmit={handleFormDataSubmit}
-                isDirty={isDirty}
-                errors={errors}
-              />
-            )}
+            {selectedCourse && renderFormActions()}
             <DevTool control={control} />
           </form>
         </Container>
