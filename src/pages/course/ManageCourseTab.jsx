@@ -8,15 +8,13 @@ import AutocompleteSelector from "../../components/AutocompleteSelector";
 import CourseDetailsSection from "./CourseDetailsSection";
 import ACSandDOS from "./ACSandDOS";
 import { DevTool } from "@hookform/devtools";
-import FormActionsContainer from "../../containers/FormActionsContainer";
-import FormActionButton from "../../components/form/FormActionButton";
 import useFetchData from "../../hooks/api/useFetchData";
 import useCourseReq from "../../hooks/api/useCourseReq";
 import useApiSend from "../../hooks/api/useApiSend";
 import { zodResolver } from "@hookform/resolvers/zod";
 import courseSchema from "../../schemas/course.js";
-import ConfirmActionDialog from "../../components/ConfirmActionDialog.jsx";
-import DeleteDialogContent from "../../components/dialog/DeleteDialogContent.jsx";
+import FormActions from "./FormActions.jsx";
+import useConfirmActionDialog from "../../hooks/useConfirmActionDialog.js";
 
 const setDeleteDialogContent = (selectedCourse) => {
   const obj = {
@@ -33,49 +31,9 @@ const setDeleteDialogContent = (selectedCourse) => {
   return obj;
 };
 
-const FormActions = ({
-  selectedCourse,
-  handleUpload,
-  handleConfirmDelete,
-  handleUndo,
-  isDirty,
-  errors,
-}) => {
-  return (
-    <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-      <FormActionButton
-        label="upload"
-        onClickHandler={handleUpload}
-        variant="outlined"
-        disabled={!selectedCourse?._id || selectedCourse?.status === "live"}
-      />
-      <FormActionButton
-        label="delete"
-        onClickHandler={handleConfirmDelete}
-        variant="outlined"
-        disabled={!selectedCourse?._id || selectedCourse?.status === "deleted"}
-      />
-      <FormActionButton
-        label="undo"
-        onClickHandler={handleUndo}
-        variant="outlined"
-        disabled={!selectedCourse?._id || !isDirty}
-      />
-      <FormActionButton
-        type="submit"
-        label="save"
-        variant="contained"
-        disabled={
-          !selectedCourse?._id || !isDirty || Object.keys(errors).length !== 0
-        }
-      />
-    </FormActionsContainer>
-  );
-};
 const ManageCourseTab = () => {
   const [initialValues, setInitialValues] = useState({});
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [openConfirmDelete, setOpenConfirmDelete] = useState(false);
   const styles = useStyles();
 
   const { coursesList } = useFetchData();
@@ -123,11 +81,11 @@ const ManageCourseTab = () => {
     reset(initialValues);
   }, [initialValues, reset]);
 
-  const handleUndo = () => {
+  const handleUndo = useCallback(() => {
     reset(initialValues);
-  };
+  }, [initialValues, reset]);
 
-  const handleFormDataSubmit = async () => {
+  const handleFormDataSubmit = useCallback(() => {
     const rawData = getValues();
     const { _id, creator, createdAt, ...selectedData } = rawData;
     const formattedData = {
@@ -139,22 +97,23 @@ const ManageCourseTab = () => {
       ],
       isHidden: selectedData?.isHidden === "yes",
     };
-    // console.log(formattedData);
     sendEditCourse({ id: _id, data: formattedData });
-  };
+  }, [getValues, sendEditCourse]);
 
-  const handleUpload = () => {
+  const handleUpload = useCallback(() => {
     sendSimpleUpdate({ id: selectedCourse?._id, data: { status: "live" } });
-  };
+  }, [selectedCourse?._id, sendSimpleUpdate]);
 
   const handleDelete = useCallback(() => {
     sendSimpleUpdate({ id: selectedCourse?._id, data: { status: "deleted" } });
   }, [selectedCourse?._id, sendSimpleUpdate]);
 
-  const handleConfirmDelete = useCallback(() => {
-    setOpenConfirmDelete(true);
-  }, []);
-
+  const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
+    useConfirmActionDialog(
+      "Delete this Course?",
+      () => setDeleteDialogContent(selectedCourse),
+      handleDelete
+    );
   return (
     <>
       <FormWrapper formMethods={formMethods}>
@@ -164,7 +123,7 @@ const ManageCourseTab = () => {
           sx={styles.tabContainer}
           disableGutters
         >
-          <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
+          <form noValidate>
             <Stack direction="row" spacing={1}>
               <Box width="100%" pt={0.4}>
                 <AutocompleteSelector
@@ -175,10 +134,12 @@ const ManageCourseTab = () => {
                 />
               </Box>
               <FormActions
-                selectedCourse={selectedCourse}
+                selected={selectedCourse?._id}
+                status={selectedCourse?.status}
                 handleUpload={handleUpload}
                 handleConfirmDelete={handleConfirmDelete}
                 handleUndo={handleUndo}
+                handleFormDataSubmit={handleFormDataSubmit}
                 isDirty={isDirty}
                 errors={errors}
               />
@@ -200,10 +161,12 @@ const ManageCourseTab = () => {
             {/* <DevTool control={control} /> */}
             {selectedCourse && (
               <FormActions
-                selectedCourse={selectedCourse}
+                selected={selectedCourse?._id}
+                status={selectedCourse?.status}
                 handleUpload={handleUpload}
                 handleConfirmDelete={handleConfirmDelete}
                 handleUndo={handleUndo}
+                handleFormDataSubmit={handleFormDataSubmit}
                 isDirty={isDirty}
                 errors={errors}
               />
@@ -212,15 +175,7 @@ const ManageCourseTab = () => {
           </form>
         </Container>
       </FormWrapper>
-      <ConfirmActionDialog
-        open={openConfirmDelete}
-        setOpen={setOpenConfirmDelete}
-        title="Delete this course?"
-        content={
-          <DeleteDialogContent data={setDeleteDialogContent(selectedCourse)} />
-        }
-        handleConfirm={handleDelete}
-      />
+      {renderConfirmActionDialog(selectedCourse || [])}
     </>
   );
 };

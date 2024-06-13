@@ -8,6 +8,7 @@ const FormActions = ({
   handleUpload,
   handleConfirmDelete,
   handleUndo,
+  handleFormDataSubmit,
   isDirty,
   errors,
 }) => {
@@ -32,8 +33,8 @@ const FormActions = ({
         disabled={!selected || !isDirty}
       />
       <FormActionButton
-        type="submit"
         label="save"
+        onClickHandler={handleFormDataSubmit}
         variant="contained"
         disabled={!selected || !isDirty || Object.keys(errors).length !== 0}
       />
