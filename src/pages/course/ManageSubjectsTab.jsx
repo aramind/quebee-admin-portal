@@ -6,8 +6,6 @@ import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
 import SubjectInfoSection from "./SubjectInfoSection";
 import { DevTool } from "@hookform/devtools";
-import FormActionsContainer from "../../containers/FormActionsContainer";
-import FormActionButton from "../../components/form/FormActionButton";
 import ACSandDOS from "./ACSandDOS";
 import FormWrapper from "../../wrappers/FormWrapper";
 import useFetchData from "../../hooks/api/useFetchData";
@@ -65,6 +63,7 @@ const ManageSubjectsTab = () => {
       creator: subject?.creator,
       createdAt: subject?.createdAt,
       version: subject?.version,
+      remarks: subject?.remarks,
     });
   }, []);
 
@@ -76,7 +75,7 @@ const ManageSubjectsTab = () => {
     reset(initialValues);
   }, [initialValues, reset]);
 
-  const onSubmit = () => {
+  const handleFormDataSubmit = () => {
     const rawData = getValues();
 
     const formattedData = {
@@ -132,6 +131,18 @@ const ManageSubjectsTab = () => {
       handleDelete
     );
 
+  const renderFormActions = () => (
+    <FormActions
+      selected={selectedSubject?._id}
+      status={selectedSubject?.status}
+      handleUpload={handleUpload}
+      handleConfirmDelete={handleConfirmDelete}
+      handleUndo={handleUndo}
+      handleFormDataSubmit={handleFormDataSubmit}
+      isDirty={isDirty}
+      errors={errors}
+    />
+  );
   return (
     <>
       <FormWrapper formMethods={formMethods}>
@@ -142,7 +153,7 @@ const ManageSubjectsTab = () => {
           disableGutters
           width="100vw"
         >
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <form noValidate>
             <Stack direction="row" spacing={1}>
               <Box width="100%" pt={0.4}>
                 <AutocompleteSelector
@@ -152,15 +163,7 @@ const ManageSubjectsTab = () => {
                   label="subjects"
                 />
               </Box>
-              <FormActions
-                selected={selectedSubject?._id}
-                status={selectedSubject?.status}
-                handleUpload={handleUpload}
-                handleConfirmDelete={handleConfirmDelete}
-                handleUndo={handleUndo}
-                isDirty={isDirty}
-                errors={errors}
-              />
+              {renderFormActions()}
             </Stack>
             <br />
             {selectedSubject?._id && (
@@ -179,17 +182,7 @@ const ManageSubjectsTab = () => {
             <br />
             <DevTool control={control} />
 
-            {selectedSubject?._id && (
-              <FormActions
-                selected={selectedSubject?._id}
-                status={selectedSubject?.status}
-                handleUpload={handleUpload}
-                handleConfirmDelete={handleConfirmDelete}
-                handleUndo={handleUndo}
-                isDirty={isDirty}
-                errors={errors}
-              />
-            )}
+            {selectedSubject?._id && renderFormActions()}
           </form>
         </Container>
       </FormWrapper>
