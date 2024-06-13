@@ -100,7 +100,12 @@ const ManageSubjectsTab = () => {
     setIV(selectedSubject);
   };
 
-  const handleUpload = () => {};
+  const handleUpload = useCallback(() => {
+    handleSimpleUpdate({
+      id: selectedSubject?._id,
+      data: { status: "live" },
+    });
+  }, [handleSimpleUpdate, selectedSubject?._id]);
 
   const handleDelete = useCallback(() => {
     handleSimpleUpdate({
