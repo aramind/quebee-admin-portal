@@ -52,7 +52,7 @@ const ManageSubjectsTab = () => {
     getValues,
   };
 
-  const setIV = (subject) => {
+  const setIV = useCallback((subject) => {
     setInitialValues({
       _id: subject?._id,
       code: subject?.code,
@@ -66,11 +66,11 @@ const ManageSubjectsTab = () => {
       createdAt: subject?.createdAt,
       version: subject?.version,
     });
-  };
+  }, []);
 
   useEffect(() => {
     setIV(selectedSubject);
-  }, [selectedSubject, reset]);
+  }, [selectedSubject, reset, setIV]);
 
   useEffect(() => {
     reset(initialValues);
@@ -95,10 +95,10 @@ const ManageSubjectsTab = () => {
     });
   };
 
-  const handleUndo = () => {
+  const handleUndo = useCallback(() => {
     reset();
     setIV(selectedSubject);
-  };
+  }, [reset, selectedSubject, setIV]);
 
   const handleUpload = useCallback(() => {
     handleSimpleUpdate({
@@ -163,7 +163,7 @@ const ManageSubjectsTab = () => {
               />
             </Stack>
             <br />
-            {selectedSubject && (
+            {selectedSubject?._id && (
               <Stack direction="row" spacing={1.5}>
                 <ElevatedSectionWrapper
                   flex={1}
@@ -179,24 +179,17 @@ const ManageSubjectsTab = () => {
             <br />
             <DevTool control={control} />
 
-            <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-              <FormActionButton
-                label="undo changes"
-                onClickHandler={handleUndo}
-                variant="outlined"
-                disabled={!selectedSubject?._id || !isDirty}
+            {selectedSubject?._id && (
+              <FormActions
+                selected={selectedSubject?._id}
+                status={selectedSubject?.status}
+                handleUpload={handleUpload}
+                handleConfirmDelete={handleConfirmDelete}
+                handleUndo={handleUndo}
+                isDirty={isDirty}
+                errors={errors}
               />
-              <FormActionButton
-                type="submit"
-                label="save changes"
-                variant="contained"
-                disabled={
-                  !selectedSubject?._id ||
-                  !isDirty ||
-                  Object.keys(errors).length !== 0
-                }
-              />
-            </FormActionsContainer>
+            )}
           </form>
         </Container>
       </FormWrapper>
