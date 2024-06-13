@@ -1,5 +1,5 @@
 import { Box, Container, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
@@ -25,9 +25,10 @@ const ManageSubjectsTab = () => {
   const styles = useStyles();
 
   const { subjectsList } = useFetchData();
-  const { edit } = useSubjReq();
+  const { edit, simpleUpdate } = useSubjReq();
 
   const { mutate: handleEditSubject } = useApiSend(edit, ["subjects"]);
+  const { mutate: handleSimpleUpdate } = useApiSend(simpleUpdate, ["subjects"]);
 
   const {
     handleSubmit,
@@ -101,9 +102,12 @@ const ManageSubjectsTab = () => {
 
   const handleUpload = () => {};
 
-  const handleDelete = () => {
-    alert("Deleting subject..");
-  };
+  const handleDelete = useCallback(() => {
+    handleSimpleUpdate({
+      id: selectedSubject?._id,
+      data: { status: "deleted" },
+    });
+  }, [selectedSubject?._id, handleSimpleUpdate]);
 
   const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
     useConfirmActionDialog(

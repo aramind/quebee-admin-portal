@@ -15,7 +15,7 @@ const MinorNotification = () => {
     if (alert.open) {
       enqueueSnackbar(alert.message, {
         content: () => <Alert severity={alert.severity}>{alert.message}</Alert>,
-        autoHideDuration: 2000,
+        autoHideDuration: 1500,
       });
     }
   }, [alert.message, alert.open, alert.severity, enqueueSnackbar]);
