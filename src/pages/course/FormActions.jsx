@@ -23,7 +23,7 @@ const FormActions = ({
         label="delete"
         onClickHandler={handleConfirmDelete}
         variant="outlined"
-        disabled={!selected}
+        disabled={!selected || status === "deleted"}
       />
       <FormActionButton
         label="undo"
