@@ -32,6 +32,46 @@ const setDeleteDialogContent = (selectedCourse) => {
   };
   return obj;
 };
+
+const FormActions = ({
+  selectedCourse,
+  handleUpload,
+  handleConfirmDelete,
+  handleUndo,
+  isDirty,
+  errors,
+}) => {
+  return (
+    <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+      <FormActionButton
+        label="upload"
+        onClickHandler={handleUpload}
+        variant="outlined"
+        disabled={!selectedCourse?._id || selectedCourse?.status === "live"}
+      />
+      <FormActionButton
+        label="delete"
+        onClickHandler={handleConfirmDelete}
+        variant="outlined"
+        disabled={!selectedCourse?._id}
+      />
+      <FormActionButton
+        label="undo"
+        onClickHandler={handleUndo}
+        variant="outlined"
+        disabled={!selectedCourse?._id || !isDirty}
+      />
+      <FormActionButton
+        type="submit"
+        label="save"
+        variant="contained"
+        disabled={
+          !selectedCourse?._id || !isDirty || Object.keys(errors).length !== 0
+        }
+      />
+    </FormActionsContainer>
+  );
+};
 const ManageCourseTab = () => {
   const [initialValues, setInitialValues] = useState({});
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -134,68 +174,40 @@ const ManageCourseTab = () => {
                   label="courses"
                 />
               </Box>
-              <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-                <FormActionButton
-                  label="upload"
-                  onClickHandler={handleUpload}
-                  variant="outlined"
-                  disabled={selectedCourse?.status === "live"}
-                />
-                <FormActionButton
-                  label="delete"
-                  onClickHandler={handleConfirmDelete}
-                  variant="outlined"
-                  // disabled={!selectedCourse?._id || !isDirty}
-                />
-                <FormActionButton
-                  label="undo"
-                  onClickHandler={handleUndo}
-                  variant="outlined"
-                  disabled={!selectedCourse?._id || !isDirty}
-                />
-                <FormActionButton
-                  type="submit"
-                  label="save"
-                  variant="contained"
-                  disabled={
-                    !selectedCourse?._id ||
-                    !isDirty ||
-                    Object.keys(errors).length !== 0
-                  }
-                />
-              </FormActionsContainer>
+              <FormActions
+                selectedCourse={selectedCourse}
+                handleUpload={handleUpload}
+                handleConfirmDelete={handleConfirmDelete}
+                handleUndo={handleUndo}
+                isDirty={isDirty}
+                errors={errors}
+              />
             </Stack>
             <br />
-            <Stack direction="row" spacing={1.5}>
-              <Stack flex={1}>
-                <CourseDetailsSection />
+            {selectedCourse && (
+              <Stack direction="row" spacing={1.5}>
+                <Stack flex={1}>
+                  <CourseDetailsSection />
+                </Stack>
+                <Stack spacing={1.5} justifyContent="flex-start" width="180px">
+                  <ACSandDOS values={initialValues} />
+                </Stack>
               </Stack>
-              <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-                <ACSandDOS values={initialValues} />
-              </Stack>
-            </Stack>
+            )}
 
             <br />
 
             {/* <DevTool control={control} /> */}
-            <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-              <FormActionButton
-                label="undo changes"
-                onClickHandler={handleUndo}
-                variant="outlined"
-                disabled={!selectedCourse?._id || !isDirty}
+            {selectedCourse && (
+              <FormActions
+                selectedCourse={selectedCourse}
+                handleUpload={handleUpload}
+                handleConfirmDelete={handleConfirmDelete}
+                handleUndo={handleUndo}
+                isDirty={isDirty}
+                errors={errors}
               />
-              <FormActionButton
-                type="submit"
-                label="save changes"
-                variant="contained"
-                disabled={
-                  !selectedCourse?._id ||
-                  !isDirty ||
-                  Object.keys(errors).length !== 0
-                }
-              />
-            </FormActionsContainer>
+            )}
             <DevTool control={control} />
           </form>
         </Container>
