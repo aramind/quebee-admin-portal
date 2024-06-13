@@ -7,6 +7,7 @@ const FormActionsContainer = ({
   sticky,
   width,
   flex = "100%",
+  sxOptions,
 }) => {
   return (
     <Stack
@@ -20,6 +21,7 @@ const FormActionsContainer = ({
         py: 0,
         position: sticky ? "sticky" : "static",
         bottom: "1rem",
+        ...sxOptions,
       }}
       // className="outlined"
     >

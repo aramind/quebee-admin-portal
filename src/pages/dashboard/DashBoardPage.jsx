@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useGlobalState } from "../../context/GlobalStatesContextProvider";
 import { Box, Stack, Typography } from "@mui/material";
 
@@ -8,6 +8,7 @@ import useApiGet from "../../hooks/api/useApiGet";
 
 import { teal } from "@mui/material/colors";
 import useRootReq from "../../hooks/api/useRootReq";
+import { AuthContext } from "../../context/AuthProvider";
 
 const currentDate = new Date().toLocaleDateString("en-PH", {
   timeZone: "Asia/Manila",
@@ -28,17 +29,18 @@ const RowWrapper = ({ children }) => (
 );
 
 const DashBoardPage = () => {
+  const { auth } = useContext(AuthContext);
   const { getCounts } = useRootReq();
 
   const { data: counts } = useApiGet("counts", getCounts);
 
-  console.log(counts);
   return (
     <>
-      {/* <Typography variant="body1" color="initial" align="left" mx={5} my={2}>
-        Hello {currentUser?.name?.firstName}! Happy {currentDay} of{" "}
-        {currentDate}
-      </Typography> */}
+      <Typography variant="body1" color="initial" align="left" mx={5} my={2}>
+        {/* Hello {currentUser?.name?.firstName}! Happy {currentDay} of{" "}
+        {currentDate} */}
+        {/* {auth} */}
+      </Typography>
 
       {["questions", "courses", "subjects", "topics"].map((group, index) => (
         <>

@@ -32,6 +32,13 @@ const useCourseReq = () => {
         method: "PATCH",
         data,
       }),
+
+    simpleUpdate: ({ id, data }) =>
+      request({
+        url: `${url}/simpleUpdate/${id}`,
+        method: "PATCH",
+        data,
+      }),
   };
 
   return courseReq;
