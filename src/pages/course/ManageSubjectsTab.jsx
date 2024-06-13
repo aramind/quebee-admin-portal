@@ -1,9 +1,8 @@
-import { Container, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import { useForm } from "react-hook-form";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-import { grey } from "@mui/material/colors";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
 import SubjectInfoSection from "./SubjectInfoSection";
 import { DevTool } from "@hookform/devtools";
@@ -16,6 +15,8 @@ import useSubjReq from "../../hooks/api/useSubReq";
 import useApiSend from "../../hooks/api/useApiSend";
 import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema from "../../schemas/subject";
+import FormActions from "./FormActions";
+import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -98,57 +99,100 @@ const ManageSubjectsTab = () => {
     setIV(selectedSubject);
   };
 
-  return (
-    <FormWrapper formMethods={formMethods}>
-      <Container
-        component="main"
-        maxWidth="xl"
-        sx={styles.tabContainer}
-        disableGutters
-        width="100vw"
-      >
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
-            <AutocompleteSelector
-              value={selectedSubject}
-              setValue={setSelectedSubject}
-              options={subjectsList?.data}
-              label="subjects"
-            />
-          </ElevatedSectionWrapper>
-          <br />
-          <Stack direction="row" spacing={1.5}>
-            <ElevatedSectionWrapper flex={1} px={{ xs: "20px", md: "50px" }}>
-              <SubjectInfoSection />
-            </ElevatedSectionWrapper>
-            <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-              <ACSandDOS values={initialValues} />
-            </Stack>
-          </Stack>
-          <br />
-          <DevTool control={control} />
+  const handleUpload = () => {};
 
-          <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-            <FormActionButton
-              label="undo changes"
-              onClickHandler={handleUndo}
-              variant="outlined"
-              disabled={!selectedSubject?._id || !isDirty}
-            />
-            <FormActionButton
-              type="submit"
-              label="save changes"
-              variant="contained"
-              disabled={
-                !selectedSubject?._id ||
-                !isDirty ||
-                Object.keys(errors).length !== 0
-              }
-            />
-          </FormActionsContainer>
-        </form>
-      </Container>
-    </FormWrapper>
+  const handleDelete = () => {
+    alert("Deleting subject..");
+  };
+
+  const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
+    useConfirmActionDialog(
+      "Delete this Subject?",
+      {
+        code: selectedSubject?.code,
+        acronym: selectedSubject?.acronym,
+        title: selectedSubject?.title,
+        description: selectedSubject?.description,
+        topics: selectedSubject?.topics.map((topic) => topic.title),
+        "  ": "",
+        status: selectedSubject?.status,
+        isHidden: selectedSubject?.isHidden ? "yes" : "no",
+        " ": "",
+        remarks: selectedSubject?.remarks,
+      },
+      handleDelete
+    );
+
+  return (
+    <>
+      <FormWrapper formMethods={formMethods}>
+        <Container
+          component="main"
+          maxWidth="xl"
+          sx={styles.tabContainer}
+          disableGutters
+          width="100vw"
+        >
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <Stack direction="row" spacing={1}>
+              <Box width="100%" pt={0.4}>
+                <AutocompleteSelector
+                  value={selectedSubject}
+                  setValue={setSelectedSubject}
+                  options={subjectsList?.data}
+                  label="subjects"
+                />
+              </Box>
+              <FormActions
+                selected={selectedSubject?._id}
+                status={selectedSubject?.status}
+                handleUpload={handleUpload}
+                handleConfirmDelete={handleConfirmDelete}
+                handleUndo={handleUndo}
+                isDirty={isDirty}
+                errors={errors}
+              />
+            </Stack>
+            <br />
+            {selectedSubject && (
+              <Stack direction="row" spacing={1.5}>
+                <ElevatedSectionWrapper
+                  flex={1}
+                  px={{ xs: "20px", md: "50px" }}
+                >
+                  <SubjectInfoSection />
+                </ElevatedSectionWrapper>
+                <Stack spacing={1.5} justifyContent="flex-start" width="180px">
+                  <ACSandDOS values={initialValues} />
+                </Stack>
+              </Stack>
+            )}
+            <br />
+            <DevTool control={control} />
+
+            <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+              <FormActionButton
+                label="undo changes"
+                onClickHandler={handleUndo}
+                variant="outlined"
+                disabled={!selectedSubject?._id || !isDirty}
+              />
+              <FormActionButton
+                type="submit"
+                label="save changes"
+                variant="contained"
+                disabled={
+                  !selectedSubject?._id ||
+                  !isDirty ||
+                  Object.keys(errors).length !== 0
+                }
+              />
+            </FormActionsContainer>
+          </form>
+        </Container>
+      </FormWrapper>
+      {renderConfirmActionDialog(selectedSubject || [])}
+    </>
   );
 };
 
