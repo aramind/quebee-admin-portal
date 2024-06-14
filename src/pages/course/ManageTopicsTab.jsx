@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useStyles from "../../hooks/useStyles";
 import useTopicReq from "../../hooks/api/useTopicReq";
-import useApiGet from "../../hooks/api/useApiGet";
 import { useForm } from "react-hook-form";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
-import { grey } from "@mui/material/colors";
-import { Container, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import { DevTool } from "@hookform/devtools";
 import TopicInfoSection from "./TopicInfoSection";
-import FormActionsContainer from "../../containers/FormActionsContainer";
-import FormActionButton from "../../components/form/FormActionButton";
 import useApiSend from "../../hooks/api/useApiSend";
 import FormWrapper from "../../wrappers/FormWrapper";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
@@ -17,6 +13,8 @@ import ACSandDOS from "./ACSandDOS";
 import useFetchData from "../../hooks/api/useFetchData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import topicSchema from "../../schemas/topic";
+import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
+import FormActions from "./FormActions";
 
 const ManageTopicsTab = () => {
   const [selected, setSelected] = useState(null);
@@ -24,15 +22,17 @@ const ManageTopicsTab = () => {
 
   const styles = useStyles();
 
-  const { patchTopic } = useTopicReq();
+  const { patchTopic, simpleUpdate } = useTopicReq();
   const { topicsList } = useFetchData();
 
   const { mutate: handleUpdate } = useApiSend(patchTopic, ["topics"]);
+  const { mutate: handleSimpleUpdate } = useApiSend(simpleUpdate, ["topics"]);
 
   const {
     handleSubmit,
     control,
     reset,
+    getValues,
     formState: { isDirty, errors },
   } = useForm({
     mode: "onTouched",
@@ -63,79 +63,118 @@ const ManageTopicsTab = () => {
     reset(initialValues);
   }, [initialValues, reset]);
 
-  const handleFormDataSubmit = (rawData) => {
-    const convertedIsHidden = rawData?.isHidden === "yes";
-    const updatedData = {
-      ...rawData,
-      isHidden: convertedIsHidden,
-      _id: selected?._id,
+  const handleFormDataSubmit = useCallback(() => {
+    const rawData = getValues();
+    const formattedData = {
+      code: rawData?.code,
+      acronym: rawData?.acronym,
+      title: rawData?.title,
+      description: rawData?.description,
+      status: rawData?.status,
+      remarks: rawData?.remarks,
+      isHidden: rawData?.isHidden === "yes",
     };
 
     const _id = selected?._id;
     if (!_id) {
       alert("No topic selected");
     } else {
-      handleUpdate({ data: updatedData, _id });
+      handleUpdate({ data: formattedData, _id });
     }
-  };
+  }, [getValues, handleUpdate, selected?._id]);
 
-  const handleUndo = () => {
+  const handleUndo = useCallback(() => {
     reset(initialValues);
-  };
+  }, [initialValues, reset]);
+
+  const handleUpload = useCallback(() => {
+    handleSimpleUpdate({
+      id: selected?._id,
+      data: { status: "live" },
+    });
+  }, [handleSimpleUpdate, selected?._id]);
+
+  const handleDelete = useCallback(() => {
+    handleSimpleUpdate({
+      id: selected?._id,
+      data: { status: "deleted" },
+    });
+  }, [handleSimpleUpdate, selected?._id]);
+
+  const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
+    useConfirmActionDialog(
+      "Delete this Topic?",
+      {
+        code: selected?.code,
+        acronym: selected?.acronym,
+        title: selected?.title,
+        description: selected?.description,
+        "  ": "",
+        status: selected?.status,
+        isHidden: selected?.isHidden ? "yes" : "no",
+        " ": "",
+        remarks: selected?.remarks,
+      },
+      handleDelete
+    );
+
+  const renderFormActions = () => (
+    <FormActions
+      selected={selected?._id}
+      status={selected?.status}
+      handleUpload={handleUpload}
+      handleConfirmDelete={handleConfirmDelete}
+      handleUndo={handleUndo}
+      handleFormDataSubmit={handleFormDataSubmit}
+      isDirty={isDirty}
+      errors={errors}
+    />
+  );
 
   return (
-    <FormWrapper formMethods={formMethods}>
-      <Container
-        component="main"
-        maxWidth="xl"
-        sx={styles.tabContainer}
-        disableGutters
-        width="100vw"
-      >
-        <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
-          <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
-            <AutocompleteSelector
-              value={selected}
-              setValue={setSelected}
-              options={topicsList?.data}
-              label="topics"
-            />
-          </ElevatedSectionWrapper>
-          <br />
-          <Stack direction="row" spacing={1.5}>
-            <ElevatedSectionWrapper flex={1} px={{ xs: "20px", md: "50px" }}>
-              <TopicInfoSection
-
-              // control={control}
-              />
-            </ElevatedSectionWrapper>
-            <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-              <ACSandDOS
-                // control={control}
-                values={initialValues}
-              />
+    <>
+      <FormWrapper formMethods={formMethods}>
+        <Container
+          component="main"
+          maxWidth="xl"
+          sx={styles.tabContainer}
+          disableGutters
+          width="100vw"
+        >
+          <form noValidate>
+            <Stack direction="row" spacing={1}>
+              <Box width="100%" pt={0.4}>
+                <AutocompleteSelector
+                  value={selected}
+                  setValue={setSelected}
+                  options={topicsList?.data}
+                  label="topics"
+                />
+              </Box>
+              {renderFormActions()}
             </Stack>
-          </Stack>
-          <br />
-          <DevTool control={control} />
-          <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-            <FormActionButton
-              label="undo changes"
-              onClickHandler={handleUndo}
-              variant="outlined"
-            />
-            <FormActionButton
-              type="submit"
-              label="save changes"
-              variant="contained"
-              disabled={
-                !selected?._id || !isDirty || Object.keys(errors).length !== 0
-              }
-            />
-          </FormActionsContainer>
-        </form>
-      </Container>
-    </FormWrapper>
+            <br />
+            {selected?._id && (
+              <Stack direction="row" spacing={1.5}>
+                <ElevatedSectionWrapper
+                  flex={1}
+                  px={{ xs: "20px", md: "50px" }}
+                >
+                  <TopicInfoSection />
+                </ElevatedSectionWrapper>
+                <Stack spacing={1.5} justifyContent="flex-start" width="180px">
+                  <ACSandDOS values={initialValues} />
+                </Stack>
+              </Stack>
+            )}
+            <br />
+            <DevTool control={control} />
+            {selected?._id && renderFormActions()}
+          </form>
+        </Container>
+      </FormWrapper>
+      {renderConfirmActionDialog(selected || [])}
+    </>
   );
 };
 
