@@ -1,28 +1,13 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import React, { useContext, useEffect } from "react";
-import useRefreshToken from "../hooks/useRefreshToken";
-import useApiGet from "../hooks/api/useApiGet";
 
-import LoadingPage from "./LoadingPage";
-import useUserReq from "../hooks/api/useUserReq";
 import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const { auth } = useContext(AuthContext);
-  const refresh = useRefreshToken();
-  const { get } = useUserReq();
-  const navigate = useNavigate();
 
-  const { data, isLoading, error, isError, isLoadingError } = useApiGet(
-    ["users"],
-    get,
-    {
-      enabled: true,
-      refetchOnWindowFocus: true,
-      retry: 2,
-    }
-  );
+  const navigate = useNavigate();
 
   // Redirect to login page if user is not authenticated
   useEffect(() => {
@@ -31,36 +16,33 @@ const LandingPage = () => {
     }
   }, [auth, navigate]);
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (isError || isLoadingError) {
-    return <div>Error: {error?.message}</div>;
-  }
-
   return (
-    <>
-      {data && (
-        <div>
-          <Button onClick={() => refresh()}>Refresh</Button>
-          <Box
-            display="flex"
-            alignItems="center"
-            height="80vh"
-            justifyContent="center"
-          >
-            <Typography variant="h3">
-              Welcome to{" "}
-              <Typography variant="inherit" color="primary" display="inline">
-                queBEE
-              </Typography>{" "}
-              Admin Portal!
-            </Typography>
-          </Box>
-        </div>
-      )}
-    </>
+    <Stack
+      height="90vh"
+      justifyContent="center"
+      alignItems="center"
+      px="10vw"
+      py="10vh"
+      spacing={2}
+    >
+      <Stack>
+        <Typography variant="h4">
+          {`Hello ${auth?.name?.firstName}! Welcome to `}
+          <Typography variant="inherit" color="primary" display="inline">
+            queBEE
+          </Typography>{" "}
+          Admin Portal!
+        </Typography>
+      </Stack>
+      <Box pt={4}>
+        <Box
+          component="img"
+          src="/assets/imgs/hello.svg"
+          alt="hello"
+          sx={{ maxWidth: "100%", height: "auto" }}
+        />
+      </Box>
+    </Stack>
   );
 };
 
