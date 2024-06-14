@@ -202,34 +202,19 @@ const ManageQuestionTab = () => {
             </Stack>
 
             <br />
-            <Stack direction="row" spacing={1.5}>
-              <Stack flex={1}>
-                <QuestionDetailsSection />
+            {initialValues?._id && (
+              <Stack direction="row" spacing={1.5}>
+                <Stack flex={1}>
+                  <QuestionDetailsSection />
+                </Stack>
+                <Stack spacing={1.5} justifyContent="flex-start" width="180px">
+                  <ACSandDOS values={initialValues} />
+                </Stack>
               </Stack>
-              <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-                <ACSandDOS values={initialValues} />
-              </Stack>
-            </Stack>
+            )}
             <br />
             {/* <DevTool control={control} /> */}
-            <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-              <FormActionButton
-                label="undo changes"
-                onClickHandler={handleUndo}
-                variant="outlined"
-                disabled={!isDirty}
-              />
-              <FormActionButton
-                type="submit"
-                label="save changes"
-                variant="contained"
-                disabled={
-                  !fetchValues?._id ||
-                  !isDirty ||
-                  Object.keys(errors).length !== 0
-                }
-              />
-            </FormActionsContainer>
+            {initialValues?._id && renderFormActions()}
             <DevTool control={control} />
           </form>
         </Container>
