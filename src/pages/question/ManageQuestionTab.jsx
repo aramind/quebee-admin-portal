@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
 import { useForm } from "react-hook-form";
 import FormWrapper from "../../wrappers/FormWrapper";
@@ -37,9 +37,10 @@ const ManageQuestionTab = () => {
   const [initialValues, setInitialValues] = useState({});
   const [fetchValues, setFetchValues] = useState(null);
   const styles = useStyles();
-  const { edit } = useQuestionReq();
+  const { edit, simpleUpdate } = useQuestionReq();
   const { questionsList } = useFetchData();
   const { mutate: sendUpdate } = useApiSend(edit, ["questions"]);
+  const { mutate: sendSimpleUpdate } = useApiSend(simpleUpdate, ["questions"]);
 
   const {
     control,
@@ -125,9 +126,19 @@ const ManageQuestionTab = () => {
     });
   };
 
-  const handleUpload = () => {};
+  const handleUpload = useCallback(() => {
+    sendSimpleUpdate({
+      id: initialValues?._id,
+      data: { status: "live" },
+    });
+  }, [initialValues?._id, sendSimpleUpdate]);
 
-  const handleDelete = () => {};
+  const handleDelete = useCallback(() => {
+    sendSimpleUpdate({
+      id: initialValues?._id,
+      data: { status: "deleted" },
+    });
+  }, [initialValues?._id, sendSimpleUpdate]);
 
   const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
     useConfirmActionDialog(

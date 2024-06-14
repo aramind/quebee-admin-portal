@@ -26,7 +26,12 @@ const useQuestionReq = () => {
         method: "PATCH",
         data,
       }),
-
+    simpleUpdate: ({ id, data }) =>
+      request({
+        url: `${QUESTION_URL}/simpleUpdate/${id}`,
+        method: "PATCH",
+        data,
+      }),
     getById: (id) =>
       request({
         url: `${QUESTION_URL}/${id}`,
