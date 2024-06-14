@@ -1,5 +1,5 @@
-import { Box, Button, Container, Typography } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import React, { useContext, useEffect } from "react";
 import useRefreshToken from "../hooks/useRefreshToken";
 import useApiGet from "../hooks/api/useApiGet";
 
@@ -7,7 +7,6 @@ import LoadingPage from "./LoadingPage";
 import useUserReq from "../hooks/api/useUserReq";
 import { AuthContext } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import useStyles from "../hooks/useStyles";
 
 const LandingPage = () => {
   const { auth } = useContext(AuthContext);
@@ -26,11 +25,11 @@ const LandingPage = () => {
   );
 
   // Redirect to login page if user is not authenticated
-  // useEffect(() => {
-  //   if (!auth?.token) {
-  //     navigate("/login");
-  //   }
-  // }, [auth, navigate]);
+  useEffect(() => {
+    if (!auth?.token) {
+      navigate("/login");
+    }
+  }, [auth, navigate]);
 
   if (isLoading) {
     return <LoadingPage />;

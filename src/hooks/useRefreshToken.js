@@ -9,6 +9,7 @@ const useRefreshToken = () => {
 
   const refresh = async () => {
     const response = await axios.get(REFRESH_URL, { withCredentials: true });
+    console.log(response?.data);
     const userInfo = response?.data?.data;
     const newAccessToken = response?.data?.data?.token;
     // console.log(newAccessToken);

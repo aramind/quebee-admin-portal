@@ -74,8 +74,8 @@ const combinedRouter = createBrowserRouter([
         ],
       },
       {
-        path: "/login",
-        element: <LoginPage />,
+        path: "",
+        element: <LandingPage />,
       },
     ],
   },
