@@ -4,13 +4,8 @@ import { useForm } from "react-hook-form";
 import FormWrapper from "../../wrappers/FormWrapper";
 import { Box, Container, Stack } from "@mui/material";
 import useStyles from "../../hooks/useStyles";
-import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
-import useFormSubmit from "../../hooks/useFormSubmit";
-import { grey } from "@mui/material/colors";
 import ACSandDOS from "../course/ACSandDOS";
-import FormActionsContainer from "../../containers/FormActionsContainer";
-import FormActionButton from "../../components/form/FormActionButton";
 import { DevTool } from "@hookform/devtools";
 import useApiSend from "../../hooks/api/useApiSend";
 import QuestionDetailsSection from "./QuestionDetailsSection";
@@ -19,7 +14,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import questionSchema from "../../schemas/question";
 import FormActions from "../course/FormActions";
 import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
-import TaskAltTwoToneIcon from "@mui/icons-material/TaskAltTwoTone";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -92,7 +86,8 @@ const ManageQuestionTab = () => {
     reset(initialValues);
   };
 
-  const handleFormDataSubmit = async (rawData) => {
+  const handleFormDataSubmit = async () => {
+    const rawData = getValues();
     const formattedData = {
       code: rawData?.code,
       access: Number(rawData?.access),
@@ -122,7 +117,6 @@ const ManageQuestionTab = () => {
       isHidden: rawData?.isHidden === "yes",
       tags: rawData?.tags,
       remarks: rawData?.remarks,
-      creator: rawData?.creator?._id,
       status: rawData?.status,
     };
     sendUpdate({
@@ -134,8 +128,6 @@ const ManageQuestionTab = () => {
   const handleUpload = () => {};
 
   const handleDelete = () => {};
-
-  const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
 
   const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
     useConfirmActionDialog(
@@ -188,7 +180,7 @@ const ManageQuestionTab = () => {
           sx={styles.tabContainer}
           disableGutters
         >
-          <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+          <form noValidate>
             <Stack direction="row" spacing={1}>
               <Box width="100%" pt={0.4}>
                 <AutocompleteSelector
