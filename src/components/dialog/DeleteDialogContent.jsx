@@ -8,7 +8,7 @@ const DeleteDialogContent = ({ data }) => {
       {data && (
         <Stack spacing={1}>
           {Object.entries(data).map(([key, value]) => {
-            if (key.trim().length > 1) {
+            if (key.trim().length > 0) {
               return (
                 <SimpleLabelValue label={key?.toUpperCase()} values={value} />
               );

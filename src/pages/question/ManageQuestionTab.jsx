@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
 import { useForm } from "react-hook-form";
 import FormWrapper from "../../wrappers/FormWrapper";
-import { Container, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import useStyles from "../../hooks/useStyles";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
@@ -17,6 +17,9 @@ import QuestionDetailsSection from "./QuestionDetailsSection";
 import useFetchData from "../../hooks/api/useFetchData";
 import { yupResolver } from "@hookform/resolvers/yup";
 import questionSchema from "../../schemas/question";
+import FormActions from "../course/FormActions";
+import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
+import TaskAltTwoToneIcon from "@mui/icons-material/TaskAltTwoTone";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -128,57 +131,111 @@ const ManageQuestionTab = () => {
     });
   };
 
+  const handleUpload = () => {};
+
+  const handleDelete = () => {};
+
   const handleFormSubmit = useFormSubmit(handleFormDataSubmit);
+
+  const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
+    useConfirmActionDialog(
+      "Delete this Question?",
+      {
+        code: initialValues?.code,
+        question: initialValues?.question,
+        A: `${initialValues?.choices?.[0]?.value?.text}${
+          initialValues?.choices?.[0]?.isCorrect ? " ✅" : ""
+        }`,
+        B: `${initialValues?.choices?.[1]?.value?.text}${
+          initialValues?.choices?.[1]?.isCorrect ? " ✅" : ""
+        }`,
+        C: `${initialValues?.choices?.[2]?.value?.text}${
+          initialValues?.choices?.[2]?.isCorrect ? " ✅" : ""
+        }`,
+        D: `${initialValues?.choices?.[3]?.value?.text}${
+          initialValues?.choices?.[3]?.isCorrect ? " ✅" : ""
+        }`,
+        information: initialValues?.information,
+
+        "  ": "",
+        status: initialValues?.status,
+        isHidden: initialValues?.isHidden ? "yes" : "no",
+        " ": "",
+        remarks: initialValues?.remarks,
+      },
+      handleDelete
+    );
+
+  const renderFormActions = () => (
+    <FormActions
+      selected={initialValues?._id}
+      status={initialValues?.status}
+      handleUpload={handleUpload}
+      handleConfirmDelete={handleConfirmDelete}
+      handleUndo={handleUndo}
+      handleFormDataSubmit={handleFormDataSubmit}
+      isDirty={isDirty}
+      errors={errors}
+    />
+  );
+
   return (
-    <FormWrapper formMethods={formMethods}>
-      <Container
-        component="main"
-        maxWidth="xl"
-        sx={styles.tabContainer}
-        disableGutters
-      >
-        <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
-          <ElevatedSectionWrapper bgcolor={grey[200]} px="30%" py="8px">
-            <AutocompleteSelector
-              value={fetchValues}
-              setValue={setFetchValues}
-              options={questionsList?.data}
-              label="question"
-            />
-          </ElevatedSectionWrapper>
-          <br />
-          <Stack direction="row" spacing={1.5}>
-            <Stack flex={1}>
-              <QuestionDetailsSection />
+    <>
+      <FormWrapper formMethods={formMethods}>
+        <Container
+          component="main"
+          maxWidth="xl"
+          sx={styles.tabContainer}
+          disableGutters
+        >
+          <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+            <Stack direction="row" spacing={1}>
+              <Box width="100%" pt={0.4}>
+                <AutocompleteSelector
+                  value={fetchValues}
+                  setValue={setFetchValues}
+                  options={questionsList?.data}
+                  label="question"
+                />
+              </Box>
+              {renderFormActions()}
             </Stack>
-            <Stack spacing={1.5} justifyContent="flex-start" width="180px">
-              <ACSandDOS values={initialValues} />
+
+            <br />
+            <Stack direction="row" spacing={1.5}>
+              <Stack flex={1}>
+                <QuestionDetailsSection />
+              </Stack>
+              <Stack spacing={1.5} justifyContent="flex-start" width="180px">
+                <ACSandDOS values={initialValues} />
+              </Stack>
             </Stack>
-          </Stack>
-          <br />
-          {/* <DevTool control={control} /> */}
-          <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
-            <FormActionButton
-              label="undo changes"
-              onClickHandler={handleUndo}
-              variant="outlined"
-              disabled={!isDirty}
-            />
-            <FormActionButton
-              type="submit"
-              label="save changes"
-              variant="contained"
-              disabled={
-                !fetchValues?._id ||
-                !isDirty ||
-                Object.keys(errors).length !== 0
-              }
-            />
-          </FormActionsContainer>
-          <DevTool control={control} />
-        </form>
-      </Container>
-    </FormWrapper>
+            <br />
+            {/* <DevTool control={control} /> */}
+            <FormActionsContainer justify={{ sm: "flex-end", xs: "center" }}>
+              <FormActionButton
+                label="undo changes"
+                onClickHandler={handleUndo}
+                variant="outlined"
+                disabled={!isDirty}
+              />
+              <FormActionButton
+                type="submit"
+                label="save changes"
+                variant="contained"
+                disabled={
+                  !fetchValues?._id ||
+                  !isDirty ||
+                  Object.keys(errors).length !== 0
+                }
+              />
+            </FormActionsContainer>
+            <DevTool control={control} />
+          </form>
+        </Container>
+      </FormWrapper>
+      {renderConfirmActionDialog(initialValues || [])}
+    </>
   );
 };
 
