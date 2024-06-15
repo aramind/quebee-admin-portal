@@ -23,25 +23,34 @@ const LandingPage = () => {
       alignItems="center"
       px="10vw"
       py="10vh"
-      spacing={2}
+      className="outlined"
     >
       <Stack>
+        <Typography variant="h6">Hello {auth?.name?.firstName}!</Typography>
         <Typography variant="h4">
-          {`Hello ${auth?.name?.firstName}! Welcome to `}
-          <Typography variant="inherit" color="primary" display="inline">
+          Welcome to
+          <Typography
+            fontWeight="bold"
+            variant="inherit"
+            color="primary"
+            display="inline"
+            pl={1}
+          >
             queBEE
           </Typography>{" "}
           Admin Portal!
         </Typography>
       </Stack>
-      <Box pt={4}>
+      <br />
+      <br />
+      <Stack justifyContent="center" alignItems="center">
         <Box
           component="img"
           src="/assets/imgs/hello.svg"
           alt="hello"
-          sx={{ maxWidth: "100%", height: "auto" }}
+          sx={{ maxWidth: "70%", height: "auto" }}
         />
-      </Box>
+      </Stack>
     </Stack>
   );
 };
