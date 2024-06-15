@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 import React from "react";
 
 const LoadingPage = () => {
@@ -10,9 +10,10 @@ const LoadingPage = () => {
       justifyContent="center"
       spacing={0.5}
     >
-      <Typography sx={{ fontWeight: "bold", fontSize: "3rem" }}>
+      <CircularProgress color="primary" />
+      {/* <Typography sx={{ fontWeight: "bold", fontSize: "3rem" }}>
         Loading...
-      </Typography>
+      </Typography> */}
     </Stack>
   );
 };

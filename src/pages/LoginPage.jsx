@@ -20,6 +20,7 @@ import { AuthContext } from "../context/AuthProvider";
 import axios from "axios";
 import FormWrapper from "../wrappers/FormWrapper";
 import { showAckNotification } from "../utils/showAckNotification";
+import LoadingPage from "./LoadingPage";
 
 const currentYear = new Date().getFullYear();
 const LOGIN_URL = `${process.env.REACT_APP_API_URL}/v1/login`;
@@ -38,6 +39,7 @@ const LoginPage = () => {
   } = useGlobalState();
   const [showPassword, setShowPassword] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("persist", persist);
@@ -57,6 +59,7 @@ const LoginPage = () => {
   };
 
   const handleFormDataSubmit = async (data) => {
+    setIsLoading(true);
     try {
       const response = await axios.post(LOGIN_URL, data, {
         withCredentials: true,
@@ -77,6 +80,7 @@ const LoginPage = () => {
           data: { success: true, message: "You are logged in" },
           ackAlert,
         });
+
         navigate(from, { replace: true });
       }
     } catch (error) {
@@ -86,154 +90,162 @@ const LoginPage = () => {
         data: { message: "Error logging in. " },
         ackAlert,
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
-    <FormWrapper formMethods={formMethods}>
-      <Stack
-        height={{ xs: "90vh", md: "100vh" }}
-        justifyContent="center"
-        alignItems="center"
-        direction="column"
-        spacing="1rem"
-      >
-        <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
-          <Stack
-            height={{ xs: "100vw", md: "80vh" }}
-            width={{ xs: "80vw", md: "80vh" }}
-            maxWidth="600px"
-            maxHeight="600px"
-            py={{ xs: 2, md: 4 }}
-            px={{ xs: 2, md: 8 }}
-            gap={{ xs: 2, md: 4 }}
-            borderRadius="10px"
-            direction="column"
-            justifyContent="center"
-            boxShadow="3"
-          >
-            <Stack direction="row" gap={2} justifyContent="center">
-              <Typography
-                variant="h5"
-                display="inline"
-                color="primary"
-                sx={{ fontWeight: "bold" }}
-              >
-                QUEBEE
-              </Typography>
-              <Typography
-                variant="h5"
-                display="inline"
-                color="tertiary.dark"
-                sx={{ fontWeight: "bold" }}
-              >
-                Admin Portal
-              </Typography>
-            </Stack>
-            <Stack gap={3}>
-              <Stack>
-                <TextField
-                  id="username"
-                  label="Username"
-                  variant="outlined"
-                  error={!!errors.username}
-                  {...register("username")}
-                  sx={localStyle.textfield}
-                />
-                <Typography
-                  variant="caption"
-                  display="block"
-                  textAlign="left"
-                  px={0.5}
-                  color="red"
-                  height="12px"
-                >
-                  {errors.username?.message}
-                </Typography>
-              </Stack>
-              <Stack>
-                <TextField
-                  id="password"
-                  label="Password"
-                  variant="outlined"
-                  type={showPassword ? "text" : "password"}
-                  error={!!errors.password}
-                  sx={localStyle.textfield}
-                  {...register("password")}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton onClick={handleClickShowPassword}>
-                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <Typography
-                  variant="caption"
-                  display="block"
-                  textAlign="left"
-                  px={0.5}
-                  color="red"
-                  height="12px"
-                >
-                  {errors.password?.message}
-                </Typography>
-              </Stack>
-            </Stack>
-            <Stack gap={1}>
-              <Typography
-                variant="body1"
-                // color={!!authenticated ? "green" : "error"}
-              >
-                {submitMessage}
-              </Typography>
-              <Button
-                variant="contained"
-                size="large"
-                sx={{ padding: "1rem" }}
-                type="submit"
-                disabled={isSubmitting}
-              >
-                Login
-              </Button>
-              <FormControlLabel
-                sx={localStyle.checkbox}
-                control={
-                  <Checkbox
-                    checked={persist}
-                    onChange={() => setPersist((pv) => !pv)}
-                  />
-                }
-                label={
-                  <Typography sx={{ fontSize: "0.9rem" }} disableGutter>
-                    {" "}
-                    Stay logged in in this device
-                  </Typography>
-                }
-              />
-            </Stack>
-          </Stack>
-        </form>
-        <Typography
-          variant="caption"
-          color="gray"
-          sx={{ fontStyle: "italic", letterSpacing: "1px" }}
+    <>
+      <FormWrapper formMethods={formMethods}>
+        <Stack
+          height={{ xs: "90vh", md: "100vh" }}
+          justifyContent="center"
+          alignItems="center"
+          direction="column"
+          spacing="1rem"
         >
-          Powered by{" "}
-          <a
-            href="https://www.linkedin.com/in/robin-mon-miranda/"
-            target="_blank"
-            rel="noreferrer"
-            className="company-link"
+          <form onSubmit={handleSubmit(handleFormDataSubmit)} noValidate>
+            <Stack
+              height={{ xs: "100vw", md: "80vh" }}
+              width={{ xs: "80vw", md: "80vh" }}
+              maxWidth="600px"
+              maxHeight="600px"
+              py={{ xs: 2, md: 4 }}
+              px={{ xs: 2, md: 8 }}
+              gap={{ xs: 2, md: 4 }}
+              borderRadius="10px"
+              direction="column"
+              justifyContent="center"
+              boxShadow="3"
+            >
+              <Stack direction="row" gap={2} justifyContent="center">
+                <Typography
+                  variant="h5"
+                  display="inline"
+                  color="primary"
+                  sx={{ fontWeight: "bold" }}
+                >
+                  QUEBEE
+                </Typography>
+                <Typography
+                  variant="h5"
+                  display="inline"
+                  color="tertiary.dark"
+                  sx={{ fontWeight: "bold" }}
+                >
+                  Admin Portal
+                </Typography>
+              </Stack>
+              <Stack gap={3}>
+                <Stack>
+                  <TextField
+                    id="username"
+                    label="Username"
+                    variant="outlined"
+                    error={!!errors.username}
+                    {...register("username")}
+                    sx={localStyle.textfield}
+                  />
+                  <Typography
+                    variant="caption"
+                    display="block"
+                    textAlign="left"
+                    px={0.5}
+                    color="red"
+                    height="12px"
+                  >
+                    {errors.username?.message}
+                  </Typography>
+                </Stack>
+                <Stack>
+                  <TextField
+                    id="password"
+                    label="Password"
+                    variant="outlined"
+                    type={showPassword ? "text" : "password"}
+                    error={!!errors.password}
+                    sx={localStyle.textfield}
+                    {...register("password")}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton onClick={handleClickShowPassword}>
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <Typography
+                    variant="caption"
+                    display="block"
+                    textAlign="left"
+                    px={0.5}
+                    color="red"
+                    height="12px"
+                  >
+                    {errors.password?.message}
+                  </Typography>
+                </Stack>
+              </Stack>
+              <Stack gap={1}>
+                <Typography
+                  variant="body1"
+                  // color={!!authenticated ? "green" : "error"}
+                >
+                  {submitMessage}
+                </Typography>
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{ padding: "1rem" }}
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Login
+                </Button>
+                <FormControlLabel
+                  sx={localStyle.checkbox}
+                  control={
+                    <Checkbox
+                      checked={persist}
+                      onChange={() => setPersist((pv) => !pv)}
+                    />
+                  }
+                  label={
+                    <Typography sx={{ fontSize: "0.9rem" }} disableGutter>
+                      {" "}
+                      Stay logged in in this device
+                    </Typography>
+                  }
+                />
+              </Stack>
+            </Stack>
+          </form>
+          <Typography
+            variant="caption"
+            color="gray"
+            sx={{ fontStyle: "italic", letterSpacing: "1px" }}
           >
-            RMSolutions&trade;
-          </a>
-          &nbsp;&copy;{currentYear}
-        </Typography>
-      </Stack>
-    </FormWrapper>
+            Powered by{" "}
+            <a
+              href="https://www.linkedin.com/in/robin-mon-miranda/"
+              target="_blank"
+              rel="noreferrer"
+              className="company-link"
+            >
+              RMSolutions&trade;
+            </a>
+            &nbsp;&copy;{currentYear}
+          </Typography>
+        </Stack>
+      </FormWrapper>
+    </>
   );
 };
 
