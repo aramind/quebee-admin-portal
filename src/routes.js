@@ -25,6 +25,10 @@ const combinedRouter = createBrowserRouter([
             element: <ProtectedRoute allowedRoles={["1991", "2013", "2025"]} />,
             children: [
               {
+                path: "",
+                element: <LandingPage />,
+              },
+              {
                 path: "/dashboard",
                 element: <DashBoardPage />,
               },
@@ -37,6 +41,10 @@ const combinedRouter = createBrowserRouter([
           {
             element: <ProtectedRoute allowedRoles={["1991", "2013"]} />,
             children: [
+              {
+                path: "",
+                element: <LandingPage />,
+              },
               {
                 path: "/dashboard",
                 element: <DashBoardPage />,
@@ -54,6 +62,10 @@ const combinedRouter = createBrowserRouter([
           {
             element: <ProtectedRoute allowedRoles={["1991"]} />,
             children: [
+              {
+                path: "",
+                element: <LandingPage />,
+              },
               {
                 path: "/dashboard",
                 element: <DashBoardPage />,
@@ -73,11 +85,6 @@ const combinedRouter = createBrowserRouter([
             ],
           },
         ],
-      },
-      {
-        path: "",
-        // element: <LandingPage />,
-        element: <LoadingPage />,
       },
     ],
   },
