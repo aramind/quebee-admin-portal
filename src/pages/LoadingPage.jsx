@@ -1,5 +1,7 @@
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import React from "react";
+import Lottie from "lottie-react";
+import loadingAnimation from "../components/animations/loading-animation.json";
 
 const LoadingPage = () => {
   return (
@@ -8,10 +10,23 @@ const LoadingPage = () => {
       alignItems="center"
       height="80vh"
       justifyContent="center"
-      spacing={0.5}
+      spacing={2}
     >
-      <CircularProgress color="primary" />
-      {/* <Typography sx={{ fontWeight: "bold", fontSize: "3rem" }}>
+      {/* <CircularProgress color="primary" size="5rem" /> */}
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+      >
+        <Lottie
+          animationData={loadingAnimation}
+          style={{
+            width: "30%",
+          }}
+        />
+      </Box>
+      {/* <Typography sx={{ fontSize: "2rem", color: "primary.main" }}>
         Loading...
       </Typography> */}
     </Stack>
