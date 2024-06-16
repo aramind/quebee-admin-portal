@@ -23,7 +23,7 @@ const LandingPage = () => {
       alignItems="center"
       px="10vw"
       py="10vh"
-      className="outlined"
+      // className="outlined"
     >
       <Stack>
         <Typography variant="h6">Hello {auth?.name?.firstName}!</Typography>

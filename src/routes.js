@@ -11,7 +11,6 @@ import ManageUserPage from "./pages/manage-user-page/ManageUserPage";
 import CoursePage from "./pages/course/CoursePage";
 import QuestionPage from "./pages/question/QuestionPage";
 import DashBoardPage from "./pages/dashboard/DashBoardPage";
-import LoadingPage from "./pages/LoadingPage";
 
 const combinedRouter = createBrowserRouter([
   {
