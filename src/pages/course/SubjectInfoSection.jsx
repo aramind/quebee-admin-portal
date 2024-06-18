@@ -5,13 +5,13 @@ import ControlledTextField from "../../components/form-controlled/ControlledText
 import { red, teal } from "@mui/material/colors";
 import AddTopicDialog from "./AddTopicDialog";
 import ContMultiSelectToTable from "../../components/form-controlled/ContMultiSelectToTable";
-import useFetchData from "../../hooks/api/useFetchData";
 import useDialog from "../../hooks/useDialog";
+import useFetchTopics from "../../hooks/api/useFetchTopics";
 
 const SubjectInfoSection = () => {
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
-  const { topicsList } = useFetchData();
+  const { topicsList } = useFetchTopics("live-topics", `/trimmed?status=live`);
 
   return (
     <Stack direction="row" spacing={4}>
