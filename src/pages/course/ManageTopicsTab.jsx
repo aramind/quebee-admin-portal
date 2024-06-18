@@ -23,11 +23,12 @@ const ManageTopicsTab = () => {
   const styles = useStyles();
 
   const { patchTopic, simpleUpdate } = useTopicReq();
-  const { topicsList } = useFetchData();
+  const { topicsList } = useFetchData("/trimmed", "topics");
 
   const { mutate: handleUpdate } = useApiSend(patchTopic, ["topics"]);
   const { mutate: handleSimpleUpdate } = useApiSend(simpleUpdate, ["topics"]);
 
+  console.log(topicsList);
   const {
     handleSubmit,
     control,

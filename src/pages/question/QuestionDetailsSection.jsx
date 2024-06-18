@@ -14,14 +14,15 @@ import QSection from "./QSection";
 import ChoicesSection from "./ChoicesSection";
 import ControlledChipMultiAutoComp from "../../components/form-controlled/ControlledChipMultiAutoComp";
 import { useFormContext } from "react-hook-form";
+import useFetchTopics from "../../hooks/api/useFetchTopics";
 
 const QuestionDetailsSection = () => {
-  const { topicsList, tagsList } = useFetchData();
+  const { topicsList } = useFetchTopics("live-topics", `/trimmed?status=live`);
+  const { tagsList } = useFetchData();
   const { errors } = useFormContext();
 
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
-  //   console.log("TL", tagsList);
   return (
     <Stack spacing={1.5} direction="row" alignItems="flex-start">
       <Stack flex={1} spacing={1.5}>
