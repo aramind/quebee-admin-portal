@@ -6,11 +6,14 @@ import { red } from "@mui/material/colors";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import ControlledTextField from "../../components/form-controlled/ControlledTextField";
 import AddSubjectDialog from "./AddSubjectDialog";
-import useFetchData from "../../hooks/api/useFetchData";
+import useFetchSubjects from "../../hooks/api/useFetchSubjects";
 
 const CourseDetailsSection = () => {
   const [openAddSubject, setOpenAddSubject] = useState(false);
-  const { subjectsList } = useFetchData();
+  const { subjectsList } = useFetchSubjects(
+    "liveSubjects",
+    `/trimmed?status=live`
+  );
   return (
     <>
       <MetaInfoSection />

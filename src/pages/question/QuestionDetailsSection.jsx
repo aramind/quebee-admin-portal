@@ -17,7 +17,7 @@ import { useFormContext } from "react-hook-form";
 import useFetchTopics from "../../hooks/api/useFetchTopics";
 
 const QuestionDetailsSection = () => {
-  const { topicsList } = useFetchTopics("live-topics", `/trimmed?status=live`);
+  const { topicsList } = useFetchTopics("liveTopics", `/trimmed?status=live`);
   const { tagsList } = useFetchData();
   const { errors } = useFormContext();
 

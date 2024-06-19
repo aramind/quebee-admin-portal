@@ -11,7 +11,7 @@ import useFetchTopics from "../../hooks/api/useFetchTopics";
 const SubjectInfoSection = () => {
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
-  const { topicsList } = useFetchTopics("live-topics", `/trimmed?status=live`);
+  const { topicsList } = useFetchTopics("liveTopics", `/trimmed?status=live`);
 
   return (
     <Stack direction="row" spacing={4}>
