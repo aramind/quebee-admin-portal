@@ -44,7 +44,6 @@ const ManageQuestionTab = () => {
   const { mutate: sendUpdate } = useApiSend(edit, ["questions"]);
   const { mutate: sendSimpleUpdate } = useApiSend(simpleUpdate, ["questions"]);
 
-  console.log("QLIST", questionsList);
   const {
     control,
     handleSubmit,
@@ -92,7 +91,6 @@ const ManageQuestionTab = () => {
 
   const handleFormDataSubmit = async () => {
     const rawData = getValues();
-    console.log(rawData);
     const formattedData = {
       code: rawData?.code,
       access: Number(rawData?.access),
