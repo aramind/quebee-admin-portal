@@ -9,7 +9,7 @@ const useQuestionReq = () => {
   const questionReq = {
     get: (params) =>
       request({
-        url: `${QUESTION_URL}/${params}`,
+        url: `${QUESTION_URL}${params}`,
         method: "GET",
       }),
 
@@ -41,6 +41,12 @@ const useQuestionReq = () => {
     getTags: () =>
       request({
         url: `${QUESTION_URL}/tags`,
+        method: "GET",
+      }),
+
+    getSources: () =>
+      request({
+        url: `${QUESTION_URL}/sources`,
         method: "GET",
       }),
 

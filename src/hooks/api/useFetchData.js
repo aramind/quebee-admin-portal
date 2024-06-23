@@ -11,7 +11,7 @@ const useFetchData = () => {
   const handleUnAuthError = useErrorHandlerUnAuthReq();
   const { fetchTopics } = useTopicReq();
   const { fetchSubjects } = useSubjReq();
-  const { getTags, get: getQ } = useQuestionReq();
+  const { getTags, getSources, get: getQ } = useQuestionReq();
   const { get } = useCourseReq();
   const { get: fetchUsers } = useUserReq();
 
@@ -52,11 +52,21 @@ const useFetchData = () => {
   });
 
   const {
+    data: sourcesList,
+    isLoading: isLoadingInSources,
+    error: isErrorInSources,
+  } = useApiGet("sources", getSources, {
+    refetchOnWindowFocus: true,
+    retry: 3,
+    staleTime: Infinity,
+  });
+
+  const {
     data: tagsList,
     isLoading: isLoadingInTags,
     error: isErrorInTags,
   } = useApiGet("tags", getTags, {
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
     retry: 3,
     staleTime: Infinity,
   });
@@ -86,6 +96,7 @@ const useFetchData = () => {
     isLoadingInSubject ||
     isLoadingInQuestions ||
     isLoadingInTags ||
+    isLoadingInSources ||
     isLoadingInUsers
   ) {
     return <LoadingPage />;
@@ -97,6 +108,7 @@ const useFetchData = () => {
     isErrorInSubject ||
     isErrorInQuestions ||
     isErrorInTags ||
+    isErrorInSources ||
     isErrorInUsers
   ) {
     const error =
@@ -105,6 +117,7 @@ const useFetchData = () => {
       isErrorInSubject ||
       isErrorInQuestions ||
       isErrorInTags ||
+      isErrorInSources ||
       isErrorInUsers;
     handleUnAuthError(error);
   }
@@ -114,6 +127,7 @@ const useFetchData = () => {
     topicsList,
     subjectsList,
     questionsList,
+    sourcesList,
     tagsList,
     usersList,
     refetchUsers,
