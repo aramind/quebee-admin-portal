@@ -92,6 +92,7 @@ const ManageQuestionTab = () => {
 
   const handleFormDataSubmit = async () => {
     const rawData = getValues();
+    console.log(rawData);
     const formattedData = {
       code: rawData?.code,
       access: Number(rawData?.access),
@@ -119,6 +120,7 @@ const ManageQuestionTab = () => {
       ],
       information: { text: rawData?.information },
       isHidden: rawData?.isHidden === "yes",
+      sources: rawData?.sources,
       tags: rawData?.tags,
       remarks: rawData?.remarks,
       status: rawData?.status,
