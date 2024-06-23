@@ -90,7 +90,7 @@ const AddQuestionTab = () => {
         text: rawData?.information,
         image: "",
       },
-
+      sources: rawData?.sources,
       isHidden:
         typeof rawData.isHidden !== "string"
           ? rawData.isHidden

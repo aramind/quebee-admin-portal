@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import questionSchema from "../../schemas/question";
 import FormActions from "../course/FormActions";
 import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
+import useFetchQuestions from "../../hooks/api/useFetchQuestions";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -38,10 +39,12 @@ const ManageQuestionTab = () => {
   const [fetchValues, setFetchValues] = useState(null);
   const styles = useStyles();
   const { edit, simpleUpdate } = useQuestionReq();
-  const { questionsList } = useFetchData();
+  // const { questionsList } = useFetchData();
+  const { questionsList } = useFetchQuestions("questions");
   const { mutate: sendUpdate } = useApiSend(edit, ["questions"]);
   const { mutate: sendSimpleUpdate } = useApiSend(simpleUpdate, ["questions"]);
 
+  console.log("QLIST", questionsList);
   const {
     control,
     handleSubmit,

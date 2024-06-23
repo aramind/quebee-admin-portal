@@ -23,6 +23,8 @@ const QuestionDetailsSection = () => {
 
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
 
+  console.log(tagsList);
+  console.log(sourcesList);
   return (
     <Stack spacing={1.5} direction="row" alignItems="flex-start">
       <Stack flex={1} spacing={1.5}>
