@@ -18,7 +18,7 @@ import useFetchTopics from "../../hooks/api/useFetchTopics";
 
 const QuestionDetailsSection = () => {
   const { topicsList } = useFetchTopics("liveTopics", `/trimmed?status=live`);
-  const { tagsList } = useFetchData();
+  const { tagsList, sourcesList } = useFetchData();
   const { errors } = useFormContext();
 
   const { handleOpen, renderDialog } = useDialog(AddTopicDialog);
@@ -107,6 +107,14 @@ const QuestionDetailsSection = () => {
             label="information"
             name="information"
             tfProps={{ multiline: true, minRows: 4 }}
+          />
+        </ElevatedSectionWrapper>
+        <ElevatedSectionWrapper>
+          <ControlledChipMultiAutoComp
+            name="sources"
+            label="sources"
+            options={sourcesList?.data || []}
+            free
           />
         </ElevatedSectionWrapper>
         <ElevatedSectionWrapper>
