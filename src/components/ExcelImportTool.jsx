@@ -80,54 +80,58 @@ const ExcelImportTool = () => {
   const handleRemove = () => {
     setFile(null);
     setFileName(null);
+    setTableData();
     fileRef.current.value = "";
   };
   return (
     <>
-      <Stack
-        direction="row"
-        spacing={2}
-        alignItems="center"
-        width="50%"
-        sx={{
-          outline: "2px solid",
-          outlineColor: (theme) => theme.palette.primary.main,
-        }}
-        pr="0.5rem"
-      >
-        <Button
-          component="label"
-          role={undefined}
-          variant="contained"
-          disableElevation
-          tabIndex={-1}
-          startIcon={<CloudUploadIcon />}
-          sx={{ borderRadius: 0 }}
+      <Stack direction="row" mb="1rem">
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          sx={{
+            outline: "2px solid",
+            outlineColor: (theme) => theme.palette.primary.main,
+          }}
+          pr="0.5rem"
+          minWidth="50%"
         >
-          Import excel file
-          <VisuallyHiddenInput
-            type="file"
-            accept="xlsx, xls"
-            multiple={false}
-            onChange={(e) => handleFile(e)}
-            ref={fileRef}
-          />
-        </Button>
-        <Typography>{fileName || "Please upload a file"}</Typography>
-        {/* 
+          <Button
+            component="label"
+            role={undefined}
+            variant="contained"
+            disableElevation
+            tabIndex={-1}
+            startIcon={<CloudUploadIcon />}
+            sx={{ borderRadius: 0 }}
+          >
+            Import file (.xlsx, .xls)
+            <VisuallyHiddenInput
+              type="file"
+              accept="xlsx, xls"
+              multiple={false}
+              onChange={(e) => handleFile(e)}
+              ref={fileRef}
+            />
+          </Button>
+          <Typography>{fileName || "No valid file imported..."}</Typography>
+          {/* 
       {fileName &&
         (fileTypeError ? <ErrorTwoToneIcon /> : <CheckCircleTwoToneIcon />)} */}
+          <Box flex={1} />
+          {fileName && (
+            <IconButton
+              color="primary"
+              aria-label="remove file"
+              onClick={handleRemove}
+              sx={{ p: 0 }}
+            >
+              <ClearTwoToneIcon />
+            </IconButton>
+          )}
+        </Stack>
         <Box flex={1} />
-        {fileName && (
-          <IconButton
-            color="primary"
-            aria-label="remove file"
-            onClick={handleRemove}
-            sx={{ p: 0 }}
-          >
-            <ClearTwoToneIcon />
-          </IconButton>
-        )}
       </Stack>
       {/* {table && (
         <Box
