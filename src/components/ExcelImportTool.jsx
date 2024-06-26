@@ -10,6 +10,8 @@ import XLSX from "xlsx";
 import GTable from "./grid-table/GTable";
 import { cleanData } from "../utils/form/cleanData";
 import useFetchTopics from "../hooks/api/useFetchTopics";
+import useApiSend from "../hooks/api/useApiSend";
+import useQuestionReq from "../hooks/api/useQuestionReq";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -35,7 +37,11 @@ const ExcelImportTool = () => {
   //   const [fileTypeError, setFileTypeError] = useState(false);
   const acceptableFileName = ["xlsx", "xls"];
   const { topicsList } = useFetchTopics("liveTopics", `/trimmed`);
-  console.log(topicsList?.data);
+  const { addBulk } = useQuestionReq();
+  const { mutate: addBulkQuestions } = useApiSend(addBulk, [
+    "questions",
+    "tags",
+  ]);
 
   const checkFileName = (name) => {
     return acceptableFileName.includes(name.split(".").pop().toLowerCase());
@@ -67,8 +73,6 @@ const ExcelImportTool = () => {
   };
 
   const getTopicsId = (arrayOfTopicIds) => {
-    console.log("TID", arrayOfTopicIds);
-    console.log("TL", topicsList?.data);
     const codesArray = arrayOfTopicIds;
     const objectsArray = topicsList?.data;
 
@@ -143,7 +147,8 @@ const ExcelImportTool = () => {
       tags: data?.TAGS?.split(","),
       remarks: data?.REMARKS,
     }));
-    console.log(cleanData(bulkFormattedData));
+    // console.log(cleanData(bulkFormattedData));
+    addBulkQuestions(bulkFormattedData);
   };
 
   return (

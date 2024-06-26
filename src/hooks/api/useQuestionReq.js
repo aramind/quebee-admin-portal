@@ -20,6 +20,13 @@ const useQuestionReq = () => {
         data,
       }),
 
+    addBulk: (data) =>
+      request({
+        url: `${QUESTION_URL}/bulk`,
+        method: "POST",
+        data,
+      }),
+
     edit: ({ id, data }) =>
       request({
         url: `${QUESTION_URL}/${id}`,
