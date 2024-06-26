@@ -7,6 +7,7 @@ import ErrorTwoToneIcon from "@mui/icons-material/ErrorTwoTone";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 import XLSX from "xlsx";
+import GTable from "./grid-table/GTable";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -23,7 +24,7 @@ const VisuallyHiddenInput = styled("input")({
 const ExcelImportTool = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState(null);
-
+  const [tableData, setTableData] = useState([]);
   const [table, setTable] = useState(null);
   const [sheetNames, setSheetNames] = useState([]);
   const [sheetData, setSheetData] = useState([]);
@@ -52,8 +53,9 @@ const ExcelImportTool = () => {
     const tbl = XLSX.utils.sheet_to_html(ws1);
     setTable(tbl);
     // assign data from sheet into objects
-    const sheetData = XLSX.utils.sheet_to_json(ws1);
-    console.log(sheetData);
+    const jsonData = XLSX.utils.sheet_to_json(ws1);
+    console.log(jsonData);
+    setTableData((pv) => jsonData);
   };
 
   const handleFile = async (e) => {
@@ -98,12 +100,11 @@ const ExcelImportTool = () => {
           role={undefined}
           variant="contained"
           disableElevation
-          borderRadius={0}
           tabIndex={-1}
           startIcon={<CloudUploadIcon />}
           sx={{ borderRadius: 0 }}
         >
-          Upload excel file
+          Import excel file
           <VisuallyHiddenInput
             type="file"
             accept="xlsx, xls"
@@ -139,6 +140,7 @@ const ExcelImportTool = () => {
           }}
         />
       )} */}
+      <GTable tableData={tableData} />
     </>
   );
 };
