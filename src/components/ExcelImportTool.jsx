@@ -8,6 +8,7 @@ import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 import XLSX from "xlsx";
 import GTable from "./grid-table/GTable";
+import { cleanData } from "../utils/form/cleanData";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -87,6 +88,49 @@ const ExcelImportTool = () => {
     setTableData();
     fileRef.current.value = "";
   };
+
+  console.log(tableData);
+
+  const handleBulkQuestionUpload = () => {
+    console.log(tableData);
+    const bulkFormattedData = tableData.map((data) => ({
+      code: data?.CODE,
+      access: +data?.ACCESS,
+      difficulty: +data?.DIFFICULTY,
+      type: data?.TYPE,
+      topics: data?.TOPICS?.split(","),
+      question: { text: data?.QUESTION_TEXT, image: data?.QUESTION_IMAGE },
+      choices: [
+        {
+          value: { text: data?.A_TEXT, image: data?.A_IMAGE },
+          isCorrect: data?.CORRECT_ANS === "A",
+        },
+        {
+          value: { text: data?.B_TEXT, image: data?.B_IMAGE },
+          isCorrect: data?.CORRECT_ANS === "B",
+        },
+        {
+          value: { text: data?.C_TEXT, image: data?.C_IMAGE },
+          isCorrect: data?.CORRECT_ANS === "C",
+        },
+        {
+          value: { text: data?.D_TEXT, image: data?.D_IMAGE },
+          isCorrect: data?.CORRECT_ANS === "D",
+        },
+      ],
+
+      information: {
+        text: data?.INFO_TEXT,
+        image: data?.INFO_IMAGE,
+      },
+      sources: data?.SOURCES?.split(","),
+
+      tags: data?.TAGS?.split(","),
+      remarks: data?.REMARKS,
+    }));
+    console.log(cleanData(bulkFormattedData));
+  };
+
   return (
     <>
       <Stack direction="row" mb="1rem">
@@ -149,6 +193,7 @@ const ExcelImportTool = () => {
         />
       )} */}
       <GTable tableData={tableData} headerData={headerData} />
+      <Button onClick={handleBulkQuestionUpload}>UPLOAD</Button>
     </>
   );
 };
