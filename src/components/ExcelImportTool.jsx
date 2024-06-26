@@ -25,6 +25,7 @@ const ExcelImportTool = () => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState(null);
   const [tableData, setTableData] = useState([]);
+  const [headerData, setHeaderData] = useState([]);
   const [table, setTable] = useState(null);
   const [sheetNames, setSheetNames] = useState([]);
   const [sheetData, setSheetData] = useState([]);
@@ -47,15 +48,18 @@ const ExcelImportTool = () => {
 
     // }
 
-    // console.log(wb.Sheets);
+    // console.log(Object.keys(wb.Sheets));
     const ws1 = wb.Sheets[wb.SheetNames[0]];
-    console.log(ws1);
-    const tbl = XLSX.utils.sheet_to_html(ws1);
-    setTable(tbl);
+    // console.log(ws1);
+    // const tbl = XLSX.utils.sheet_to_html(ws1);
+    // setTable(tbl);
     // assign data from sheet into objects
     const jsonData = XLSX.utils.sheet_to_json(ws1);
+    const headers = XLSX.utils.sheet_to_json(ws1, { header: 1 });
+    console.log("HEADERS", headers);
     console.log(jsonData);
     setTableData((pv) => jsonData);
+    setHeaderData((pv) => headers[0]);
   };
 
   const handleFile = async (e) => {
@@ -144,7 +148,7 @@ const ExcelImportTool = () => {
           }}
         />
       )} */}
-      <GTable tableData={tableData} />
+      <GTable tableData={tableData} headerData={headerData} />
     </>
   );
 };
