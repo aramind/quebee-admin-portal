@@ -9,6 +9,7 @@ import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 import XLSX from "xlsx";
 import GTable from "./grid-table/GTable";
 import { cleanData } from "../utils/form/cleanData";
+import useFetchTopics from "../hooks/api/useFetchTopics";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -33,6 +34,8 @@ const ExcelImportTool = () => {
   const fileRef = useRef();
   //   const [fileTypeError, setFileTypeError] = useState(false);
   const acceptableFileName = ["xlsx", "xls"];
+  const { topicsList } = useFetchTopics("liveTopics", `/trimmed`);
+  console.log(topicsList?.data);
 
   const checkFileName = (name) => {
     return acceptableFileName.includes(name.split(".").pop().toLowerCase());
@@ -63,6 +66,20 @@ const ExcelImportTool = () => {
     setHeaderData((pv) => headers[0]);
   };
 
+  const getTopicsId = (arrayOfTopicIds) => {
+    console.log("TID", arrayOfTopicIds);
+    console.log("TL", topicsList?.data);
+    const codesArray = arrayOfTopicIds;
+    const objectsArray = topicsList?.data;
+
+    const idsArray = codesArray.map((code) => {
+      const foundObject = objectsArray.find((obj) => obj.code === code);
+      return foundObject ? foundObject._id : null;
+    });
+
+    return idsArray;
+  };
+
   const handleFile = async (e) => {
     const myFile = e.target.files[0];
 
@@ -89,8 +106,6 @@ const ExcelImportTool = () => {
     fileRef.current.value = "";
   };
 
-  console.log(tableData);
-
   const handleBulkQuestionUpload = () => {
     console.log(tableData);
     const bulkFormattedData = tableData.map((data) => ({
@@ -98,7 +113,7 @@ const ExcelImportTool = () => {
       access: +data?.ACCESS,
       difficulty: +data?.DIFFICULTY,
       type: data?.TYPE,
-      topics: data?.TOPICS?.split(","),
+      topics: getTopicsId(data?.TOPICS?.split(",")),
       question: { text: data?.QUESTION_TEXT, image: data?.QUESTION_IMAGE },
       choices: [
         {
