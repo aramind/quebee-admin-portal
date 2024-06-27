@@ -3,8 +3,12 @@ import React, { useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
+import UploadFileSharpIcon from "@mui/icons-material/UploadFileSharp";
 import ErrorTwoToneIcon from "@mui/icons-material/ErrorTwoTone";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
+
 import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 import XLSX from "xlsx";
 import GTable from "./grid-table/GTable";
@@ -12,6 +16,7 @@ import { cleanData } from "../utils/form/cleanData";
 import useFetchTopics from "../hooks/api/useFetchTopics";
 import useApiSend from "../hooks/api/useApiSend";
 import useQuestionReq from "../hooks/api/useQuestionReq";
+import { grey, red } from "@mui/material/colors";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -110,6 +115,11 @@ const ExcelImportTool = () => {
     fileRef.current.value = "";
   };
 
+  const checkIfValid = () => {
+    const noAnswer = tableData.find((data) => data.CORRECT_ANS?.length < 1);
+    const valid = noAnswer ? false : true;
+    return valid;
+  };
   const handleBulkQuestionUpload = () => {
     console.log(tableData);
     const bulkFormattedData = tableData.map((data) => ({
@@ -147,8 +157,14 @@ const ExcelImportTool = () => {
       tags: data?.TAGS?.split(","),
       remarks: data?.REMARKS,
     }));
+
     // console.log(cleanData(bulkFormattedData));
-    addBulkQuestions(bulkFormattedData);
+    if (checkIfValid) {
+      addBulkQuestions(bulkFormattedData);
+    } else {
+      alert("Error in value(s)");
+      return;
+    }
   };
 
   return (
@@ -158,20 +174,20 @@ const ExcelImportTool = () => {
           direction="row"
           spacing={2}
           alignItems="center"
-          sx={{
-            outline: "2px solid",
-            outlineColor: (theme) => theme.palette.primary.main,
-          }}
+          // sx={{
+          //   outline: "2px solid",
+          //   outlineColor: (theme) => theme.palette.primary.main,
+          // }}
           pr="0.5rem"
           minWidth="50%"
         >
           <Button
             component="label"
             role={undefined}
-            variant="contained"
+            variant="outlined"
             disableElevation
             tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
+            startIcon={<UploadFileIcon />}
             sx={{ borderRadius: 0 }}
           >
             Import file (.xlsx, .xls)
@@ -183,11 +199,21 @@ const ExcelImportTool = () => {
               ref={fileRef}
             />
           </Button>
-          <Typography>{fileName || "No valid file imported..."}</Typography>
+
+          <Typography
+            sx={{
+              color: fileName
+                ? (theme) => theme.palette.primary.dark
+                : grey[400],
+            }}
+          >
+            {fileName}
+          </Typography>
+
           {/* 
       {fileName &&
         (fileTypeError ? <ErrorTwoToneIcon /> : <CheckCircleTwoToneIcon />)} */}
-          <Box flex={1} />
+
           {fileName && (
             <IconButton
               color="primary"
@@ -200,6 +226,14 @@ const ExcelImportTool = () => {
           )}
         </Stack>
         <Box flex={1} />
+        <Button
+          variant="contained"
+          onClick={handleBulkQuestionUpload}
+          disableElevation
+          endIcon={<CloudUploadOutlinedIcon />}
+        >
+          UPLOAD
+        </Button>
       </Stack>
       {/* {table && (
         <Box
@@ -213,7 +247,6 @@ const ExcelImportTool = () => {
         />
       )} */}
       <GTable tableData={tableData} headerData={headerData} />
-      <Button onClick={handleBulkQuestionUpload}>UPLOAD</Button>
     </>
   );
 };
