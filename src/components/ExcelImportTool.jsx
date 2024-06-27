@@ -226,11 +226,13 @@ const ExcelImportTool = () => {
           )}
         </Stack>
         <Box flex={1} />
+
         <Button
           variant="contained"
           onClick={handleBulkQuestionUpload}
           disableElevation
           endIcon={<CloudUploadOutlinedIcon />}
+          disabled={!tableData}
         >
           UPLOAD
         </Button>
