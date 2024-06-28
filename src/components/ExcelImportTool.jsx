@@ -17,6 +17,10 @@ import useFetchTopics from "../hooks/api/useFetchTopics";
 import useApiSend from "../hooks/api/useApiSend";
 import useQuestionReq from "../hooks/api/useQuestionReq";
 import { grey, red } from "@mui/material/colors";
+import questionSchemaForBulkQuestions from "../schemas/questionSchemaForBulkQuestions";
+import { isValid } from "zod";
+import { useGlobalState } from "../context/GlobalStatesContextProvider";
+import { showAckNotification } from "../utils/showAckNotification";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -30,7 +34,26 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
+const validateExcelData = async (data, code) => {
+  try {
+    await questionSchemaForBulkQuestions.validate(data, { abortEarly: false });
+    return { isValid: true, errors: [] };
+  } catch (error) {
+    return {
+      isValid: false,
+      field: error.inner?.[0]?.path,
+      error: error.inner?.[0]?.errors,
+      code,
+    };
+  }
+};
+
 const ExcelImportTool = () => {
+  const {
+    globalState: { ackAlert },
+    dispatch,
+  } = useGlobalState();
+  // const {}
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState(null);
   const [tableData, setTableData] = useState([]);
@@ -97,6 +120,13 @@ const ExcelImportTool = () => {
     if (!checkFileName(myFile.name)) {
       alert("Invalid File Type!");
       //   setFileTypeError((pv) => true);
+      showAckNotification({
+        dispatch,
+        success: false,
+        data: { message: "Invalid File type" },
+        ackAlert,
+        autoHideDuration: null,
+      });
       return;
     }
 
@@ -115,13 +145,33 @@ const ExcelImportTool = () => {
     fileRef.current.value = "";
   };
 
-  const checkIfValid = () => {
-    const noAnswer = tableData.find((data) => data.CORRECT_ANS?.length < 1);
-    const valid = noAnswer ? false : true;
-    return valid;
-  };
-  const handleBulkQuestionUpload = () => {
+  const handleBulkQuestionUpload = async () => {
     console.log(tableData);
+
+    const validationResults = await Promise.all(
+      tableData.map((data) => validateExcelData(data, data?.CODE))
+    );
+
+    const invalidData = validationResults.filter((result) => !result.isValid);
+
+    if (invalidData?.length > 0) {
+      // alert("Error in value(s: " + JSON.stringify(invalidData));
+      console.log(invalidData);
+      console.log(
+        "ERROR in " +
+          invalidData?.[0]?.code +
+          " " +
+          invalidData?.[0]?.field +
+          "field" +
+          " ->" +
+          invalidData?.[0]?.error?.[0]
+      );
+      alert(
+        `ERROR in ${invalidData?.[0]?.code} ${invalidData?.[0]?.field} field : ${invalidData?.[0]?.error?.[0]}`
+      );
+      return;
+    }
+
     const bulkFormattedData = tableData.map((data) => ({
       code: data?.CODE,
       access: +data?.ACCESS,
@@ -158,13 +208,7 @@ const ExcelImportTool = () => {
       remarks: data?.REMARKS,
     }));
 
-    // console.log(cleanData(bulkFormattedData));
-    if (checkIfValid) {
-      addBulkQuestions(bulkFormattedData);
-    } else {
-      alert("Error in value(s)");
-      return;
-    }
+    console.log(cleanData(bulkFormattedData));
   };
 
   return (
@@ -237,17 +281,6 @@ const ExcelImportTool = () => {
           UPLOAD
         </Button>
       </Stack>
-      {/* {table && (
-        <Box
-          dangerouslySetInnerHTML={{ __html: table }}
-          sx={{
-            mt: 2,
-            overflow: "auto",
-            maxHeight: "400px",
-            border: "1px solid #ccc",
-          }}
-        />
-      )} */}
       <GTable tableData={tableData} headerData={headerData} />
     </>
   );

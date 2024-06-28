@@ -5,7 +5,12 @@ const initialGlobalState = {
   currentUser: null,
   currentUserRole: 0,
   alert: { open: false, severity: "info", message: "" },
-  ackAlert: { open: false, severity: "info", message: "" },
+  ackAlert: {
+    open: false,
+    severity: "info",
+    message: "",
+    autoHideDuration: 3000,
+  },
 };
 
 const GlobalStateContext = createContext(initialGlobalState);

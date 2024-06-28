@@ -21,7 +21,7 @@ const AcknowledgeNotification = () => {
     <Snackbar
       open={ackAlert.open}
       onClose={handleClose}
-      autoHideDuration={3000}
+      autoHideDuration={ackAlert.autoHideDuration}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
       sx={{
         zIndex: "9999999",
