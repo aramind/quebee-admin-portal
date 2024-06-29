@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
 import { useForm } from "react-hook-form";
 import FormWrapper from "../../wrappers/FormWrapper";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, Divider, Stack, Typography } from "@mui/material";
 import useStyles from "../../hooks/useStyles";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
 import ACSandDOS from "../course/ACSandDOS";
@@ -15,6 +15,7 @@ import FormActions from "../course/FormActions";
 import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
 import useFetchQuestions from "../../hooks/api/useFetchQuestions";
 import GTable from "../../components/grid-table/GTable";
+import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -227,8 +228,7 @@ const ManageQuestionTab = () => {
               </Box>
               {renderFormActions()}
             </Stack>
-
-            <br />
+            {initialValues?._id && <br />}
             {initialValues?._id && (
               <Stack direction="row" spacing={1.5}>
                 <Stack flex={1}>
@@ -239,17 +239,32 @@ const ManageQuestionTab = () => {
                 </Stack>
               </Stack>
             )}
-            <br />
+            {initialValues?._id && <br />}
             {/* <DevTool control={control} /> */}
             {initialValues?._id && renderFormActions()}
+
             <DevTool control={control} />
           </form>
-          <GTable
-            tableData={getFormattedQData(questionsList?.data)}
-            headerData={Object.keys(
-              getFormattedQData(questionsList?.data)?.[0]
-            )}
-          />
+          {initialValues?._id && <br />}
+          {initialValues?._id && <Divider />}
+          <br />
+          <ElevatedSectionWrapper>
+            <Typography
+              mb={1}
+              textTransform={"uppercase"}
+              color="primary"
+              fontWeight="bold"
+            >
+              List of Questions
+            </Typography>
+
+            <GTable
+              tableData={getFormattedQData(questionsList?.data)}
+              headerData={Object.keys(
+                getFormattedQData(questionsList?.data)?.[0]
+              )}
+            />
+          </ElevatedSectionWrapper>
         </Container>
       </FormWrapper>
       {renderConfirmActionDialog(initialValues || [])}
