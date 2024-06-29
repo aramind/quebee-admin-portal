@@ -12,10 +12,9 @@ import useFetchTopics from "../hooks/api/useFetchTopics";
 import useApiSend from "../hooks/api/useApiSend";
 import useQuestionReq from "../hooks/api/useQuestionReq";
 import { grey } from "@mui/material/colors";
-import questionSchemaForBulkQuestions from "../schemas/questionSchemaForBulkQuestions";
-
 import { useGlobalState } from "../context/GlobalStatesContextProvider";
 import { showAckNotification } from "../utils/showAckNotification";
+import validateBulkQuestionsFromExcel from "../utils/validateBulkQuestionsFromExcel";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -28,20 +27,6 @@ const VisuallyHiddenInput = styled("input")({
   whiteSpace: "nowrap",
   width: 1,
 });
-
-const validateExcelData = async (data, code) => {
-  try {
-    await questionSchemaForBulkQuestions.validate(data, { abortEarly: false });
-    return { isValid: true, errors: [] };
-  } catch (error) {
-    return {
-      isValid: false,
-      field: error.inner?.[0]?.path,
-      error: error.inner?.[0]?.errors,
-      code,
-    };
-  }
-};
 
 const ExcelImportTool = () => {
   const {
@@ -138,7 +123,7 @@ const ExcelImportTool = () => {
 
   const handleBulkQuestionUpload = async () => {
     const validationResults = await Promise.all(
-      tableData.map((data) => validateExcelData(data, data?.CODE))
+      tableData.map((data) => validateBulkQuestionsFromExcel(data, data?.CODE))
     );
 
     const invalidData = validationResults.filter((result) => !result.isValid);
