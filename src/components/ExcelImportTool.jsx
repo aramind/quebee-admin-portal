@@ -157,11 +157,9 @@ const ExcelImportTool = () => {
         dispatch,
         success: false,
         data: {
-          message: `ERROR in ${(
-            <Typography fontWeight="bold">${invalidData?.[0]?.code}</Typography>
-          )} ${invalidData?.[0]?.field} field : ${
-            invalidData?.[0]?.error?.[0]
-          }`,
+          message: `ERROR in 
+            ${invalidData?.[0]?.code}
+         ${invalidData?.[0]?.field}\'s field : ${invalidData?.[0]?.error?.[0]}`,
         },
         ackAlert,
         autoHideDuration: null,
