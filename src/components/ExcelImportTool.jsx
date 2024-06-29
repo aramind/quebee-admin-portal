@@ -16,9 +16,9 @@ import { cleanData } from "../utils/form/cleanData";
 import useFetchTopics from "../hooks/api/useFetchTopics";
 import useApiSend from "../hooks/api/useApiSend";
 import useQuestionReq from "../hooks/api/useQuestionReq";
-import { grey, red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import questionSchemaForBulkQuestions from "../schemas/questionSchemaForBulkQuestions";
-import { isValid } from "zod";
+
 import { useGlobalState } from "../context/GlobalStatesContextProvider";
 import { showAckNotification } from "../utils/showAckNotification";
 
@@ -118,8 +118,6 @@ const ExcelImportTool = () => {
     if (!myFile) return;
 
     if (!checkFileName(myFile.name)) {
-      alert("Invalid File Type!");
-      //   setFileTypeError((pv) => true);
       showAckNotification({
         dispatch,
         success: false,
@@ -155,20 +153,19 @@ const ExcelImportTool = () => {
     const invalidData = validationResults.filter((result) => !result.isValid);
 
     if (invalidData?.length > 0) {
-      // alert("Error in value(s: " + JSON.stringify(invalidData));
-      console.log(invalidData);
-      console.log(
-        "ERROR in " +
-          invalidData?.[0]?.code +
-          " " +
-          invalidData?.[0]?.field +
-          "field" +
-          " ->" +
-          invalidData?.[0]?.error?.[0]
-      );
-      alert(
-        `ERROR in ${invalidData?.[0]?.code} ${invalidData?.[0]?.field} field : ${invalidData?.[0]?.error?.[0]}`
-      );
+      showAckNotification({
+        dispatch,
+        success: false,
+        data: {
+          message: `ERROR in ${(
+            <Typography fontWeight="bold">${invalidData?.[0]?.code}</Typography>
+          )} ${invalidData?.[0]?.field} field : ${
+            invalidData?.[0]?.error?.[0]
+          }`,
+        },
+        ackAlert,
+        autoHideDuration: null,
+      });
       return;
     }
 
