@@ -1,18 +1,13 @@
-import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
-import UploadFileSharpIcon from "@mui/icons-material/UploadFileSharp";
-import ErrorTwoToneIcon from "@mui/icons-material/ErrorTwoTone";
-import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 
 import ClearTwoToneIcon from "@mui/icons-material/ClearTwoTone";
 import XLSX from "xlsx";
 import GTable from "./grid-table/GTable";
-import { cleanData } from "../utils/form/cleanData";
 import useFetchTopics from "../hooks/api/useFetchTopics";
 import useApiSend from "../hooks/api/useApiSend";
 import useQuestionReq from "../hooks/api/useQuestionReq";
@@ -58,9 +53,9 @@ const ExcelImportTool = () => {
   const [fileName, setFileName] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [headerData, setHeaderData] = useState([]);
-  const [table, setTable] = useState(null);
+  // const [table, setTable] = useState(null);
   const [sheetNames, setSheetNames] = useState([]);
-  const [sheetData, setSheetData] = useState([]);
+  // const [sheetData, setSheetData] = useState([]);
   const fileRef = useRef();
   //   const [fileTypeError, setFileTypeError] = useState(false);
   const acceptableFileName = ["xlsx", "xls"];
@@ -94,8 +89,6 @@ const ExcelImportTool = () => {
     // assign data from sheet into objects
     const jsonData = XLSX.utils.sheet_to_json(ws1);
     const headers = XLSX.utils.sheet_to_json(ws1, { header: 1 });
-    console.log("HEADERS", headers);
-    console.log(jsonData);
     setTableData((pv) => jsonData);
     setHeaderData((pv) => headers[0]);
   };
@@ -144,8 +137,6 @@ const ExcelImportTool = () => {
   };
 
   const handleBulkQuestionUpload = async () => {
-    console.log(tableData);
-
     const validationResults = await Promise.all(
       tableData.map((data) => validateExcelData(data, data?.CODE))
     );
@@ -159,7 +150,7 @@ const ExcelImportTool = () => {
         data: {
           message: `ERROR in 
             ${invalidData?.[0]?.code}
-         ${invalidData?.[0]?.field}\'s field : ${invalidData?.[0]?.error?.[0]}`,
+         ${invalidData?.[0]?.field}'s field : ${invalidData?.[0]?.error?.[0]}`,
         },
         ackAlert,
         autoHideDuration: null,
@@ -203,7 +194,7 @@ const ExcelImportTool = () => {
       remarks: data?.REMARKS,
     }));
 
-    console.log(cleanData(bulkFormattedData));
+    addBulkQuestions(bulkFormattedData);
   };
 
   return (
