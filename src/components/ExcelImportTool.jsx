@@ -33,7 +33,7 @@ const ExcelImportTool = () => {
     globalState: { ackAlert },
     dispatch,
   } = useGlobalState();
-  // const {}
+
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState(null);
   const [tableData, setTableData] = useState([]);

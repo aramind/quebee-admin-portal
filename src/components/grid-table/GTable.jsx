@@ -15,6 +15,7 @@ const GTable = ({ tableData, headerData }) => {
     return formattedTableData;
   };
 
+  console.log(tableData);
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       {tableData?.length > 0 && (

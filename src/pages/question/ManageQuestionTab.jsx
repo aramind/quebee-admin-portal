@@ -9,12 +9,12 @@ import ACSandDOS from "../course/ACSandDOS";
 import { DevTool } from "@hookform/devtools";
 import useApiSend from "../../hooks/api/useApiSend";
 import QuestionDetailsSection from "./QuestionDetailsSection";
-import useFetchData from "../../hooks/api/useFetchData";
 import { yupResolver } from "@hookform/resolvers/yup";
 import questionSchema from "../../schemas/question";
 import FormActions from "../course/FormActions";
 import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
 import useFetchQuestions from "../../hooks/api/useFetchQuestions";
+import GTable from "../../components/grid-table/GTable";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -185,6 +185,27 @@ const ManageQuestionTab = () => {
     />
   );
 
+  const getFormattedQData = (data) => {
+    const formatted = data?.map((qd) => ({
+      QUESTION: qd.question?.text,
+      A: qd.choices?.[0]?.value?.text,
+      B: qd.choices?.[1]?.value?.text,
+      C: qd.choices?.[2]?.value?.text,
+      D: qd.choices?.[3]?.value?.text,
+      CORRECT_ANS: getLetterOfCorrectAnswer(qd.choices),
+      CODE: qd.code,
+      ACCESS: qd.access,
+      DIFFICULTY: qd.difficulty,
+      TOPICS: qd.topics?.map((t) => t.title),
+      INFORMATION: qd.information?.text,
+      SOURCES: qd.sources,
+      IS_HIDDEN: qd.isHidden,
+      TAGS: qd.tags,
+      REMARKS: qd.remarks,
+      STATUS: qd.status,
+    }));
+    return formatted;
+  };
   return (
     <>
       <FormWrapper formMethods={formMethods}>
@@ -223,6 +244,12 @@ const ManageQuestionTab = () => {
             {initialValues?._id && renderFormActions()}
             <DevTool control={control} />
           </form>
+          <GTable
+            tableData={getFormattedQData(questionsList?.data)}
+            headerData={Object.keys(
+              getFormattedQData(questionsList?.data)?.[0]
+            )}
+          />
         </Container>
       </FormWrapper>
       {renderConfirmActionDialog(initialValues || [])}
