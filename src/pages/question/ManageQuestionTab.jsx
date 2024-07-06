@@ -2,7 +2,17 @@ import React, { useCallback, useEffect, useState } from "react";
 import useQuestionReq from "../../hooks/api/useQuestionReq";
 import { useForm } from "react-hook-form";
 import FormWrapper from "../../wrappers/FormWrapper";
-import { Box, Container, Divider, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 import useStyles from "../../hooks/useStyles";
 import AutocompleteSelector from "../../components/AutocompleteSelector";
 import ACSandDOS from "../course/ACSandDOS";
@@ -17,6 +27,7 @@ import useFetchQuestions from "../../hooks/api/useFetchQuestions";
 import GTable from "../../components/grid-table/GTable";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DeleteDialogContent from "../../components/dialog/DeleteDialogContent";
+import { red, teal } from "@mui/material/colors";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -39,6 +50,7 @@ const getLetterOfCorrectAnswer = (choices) => {
 const ManageQuestionTab = () => {
   const [initialValues, setInitialValues] = useState({});
   const [fetchValues, setFetchValues] = useState(null);
+  const [status, setStatus] = useState("all");
   const styles = useStyles();
   const { edit, simpleUpdate } = useQuestionReq();
   // const { questionsList } = useFetchData();
@@ -212,6 +224,7 @@ const ManageQuestionTab = () => {
     return formatted;
   };
 
+  console.log(questionsList?.data);
   const getHeaderData = (data) => {
     const headers = Object.keys(data).filter((key) => key !== "_id");
     return headers;
@@ -259,17 +272,59 @@ const ManageQuestionTab = () => {
           <br />
           {questionsList?.data?.[0] && (
             <ElevatedSectionWrapper>
-              <Typography
-                mb={1}
-                textTransform={"uppercase"}
-                color="primary"
-                fontWeight="bold"
-              >
-                List of Questions
-              </Typography>
-
+              <Stack direction="row" alignItems="center">
+                <Typography
+                  textTransform={"uppercase"}
+                  color="primary"
+                  // fontWeight="bold"
+                >
+                  List of
+                </Typography>
+                <FormControl
+                  // variant="filled"
+                  sx={{ m: 1, minWidth: "100px" }}
+                  size="small"
+                >
+                  <Select
+                    labelId="status-selector"
+                    id="status-selector"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    sx={{
+                      color: teal[700],
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <MenuItem value="all">
+                      <em>ALL</em>
+                    </MenuItem>
+                    <MenuItem value="pending">
+                      <em>PENDING</em>
+                    </MenuItem>
+                    <MenuItem value="live">
+                      <em>LIVE</em>
+                    </MenuItem>
+                    <MenuItem value="deleted">
+                      <em>DELETED</em>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+                <Typography
+                  textTransform={"uppercase"}
+                  color="primary"
+                  // fontWeight="bold"
+                >
+                  Questions
+                </Typography>
+              </Stack>
               <GTable
-                tableData={getFormattedQData(questionsList?.data)}
+                tableData={
+                  status === "all"
+                    ? getFormattedQData(questionsList?.data)
+                    : getFormattedQData(
+                        questionsList?.data?.filter((q) => q.status === status)
+                      )
+                }
                 headerData={getHeaderData(
                   getFormattedQData(questionsList?.data)?.[0]
                 )}
