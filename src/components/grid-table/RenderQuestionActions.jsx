@@ -56,6 +56,7 @@ const RenderQuestionActions = ({ row, setFetchValues }) => {
         aria-label="delete"
         sx={styles.iconButton}
         onClick={handleConfirmDelete}
+        disabled={row?.STATUS === "deleted"}
       >
         <DeleteTwoToneIcon />
       </IconButton>

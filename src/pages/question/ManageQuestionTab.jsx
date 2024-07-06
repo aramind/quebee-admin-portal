@@ -224,7 +224,6 @@ const ManageQuestionTab = () => {
     return formatted;
   };
 
-  console.log(questionsList?.data);
   const getHeaderData = (data) => {
     const headers = Object.keys(data).filter((key) => key !== "_id");
     return headers;
