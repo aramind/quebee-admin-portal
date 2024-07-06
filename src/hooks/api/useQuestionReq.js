@@ -39,9 +39,9 @@ const useQuestionReq = () => {
         method: "PATCH",
         data,
       }),
-    getById: (id) =>
+    getById: ({ id }) =>
       request({
-        url: `${QUESTION_URL}/${id}`,
+        url: `${QUESTION_URL}/${id}?`,
         method: "GET",
       }),
 

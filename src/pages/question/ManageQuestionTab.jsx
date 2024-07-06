@@ -46,6 +46,8 @@ const ManageQuestionTab = () => {
   const { mutate: sendUpdate } = useApiSend(edit, ["questions"]);
   const { mutate: sendSimpleUpdate } = useApiSend(simpleUpdate, ["questions"]);
 
+  console.log("IV", initialValues);
+  console.log("FV", fetchValues);
   const {
     control,
     handleSubmit,
@@ -272,6 +274,7 @@ const ManageQuestionTab = () => {
               headerData={getHeaderData(
                 getFormattedQData(questionsList?.data)?.[0]
               )}
+              setFetchValues={setFetchValues}
             />
           </ElevatedSectionWrapper>
         </Container>

@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import RenderQuestionActions from "./RenderQuestionActions";
 
-const GTable = ({ tableData, headerData }) => {
+const GTable = ({ tableData, headerData, setFetchValues }) => {
   const getColumns = () => {
     const headers = headerData?.map((e) => ({
       field: e.toUpperCase(),
@@ -15,7 +15,12 @@ const GTable = ({ tableData, headerData }) => {
     headers.unshift({
       field: "ACTIONS",
       headerName: "ACTIONS",
-      renderCell: (params) => <RenderQuestionActions row={params.row} />,
+      renderCell: (params) => (
+        <RenderQuestionActions
+          row={params.row}
+          setFetchValues={setFetchValues}
+        />
+      ),
     });
 
     return headers;
@@ -26,7 +31,6 @@ const GTable = ({ tableData, headerData }) => {
     return formattedTableData;
   };
 
-  console.log(tableData);
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       {tableData?.length > 0 && (
