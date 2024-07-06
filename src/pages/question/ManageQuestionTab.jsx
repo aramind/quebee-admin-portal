@@ -46,8 +46,6 @@ const ManageQuestionTab = () => {
   const { mutate: sendUpdate } = useApiSend(edit, ["questions"]);
   const { mutate: sendSimpleUpdate } = useApiSend(simpleUpdate, ["questions"]);
 
-  console.log("IV", initialValues);
-  console.log("FV", fetchValues);
   const {
     control,
     handleSubmit,
@@ -259,24 +257,26 @@ const ManageQuestionTab = () => {
           {initialValues?._id && <br />}
           {initialValues?._id && <Divider />}
           <br />
-          <ElevatedSectionWrapper>
-            <Typography
-              mb={1}
-              textTransform={"uppercase"}
-              color="primary"
-              fontWeight="bold"
-            >
-              List of Questions
-            </Typography>
+          {questionsList?.data?.[0] && (
+            <ElevatedSectionWrapper>
+              <Typography
+                mb={1}
+                textTransform={"uppercase"}
+                color="primary"
+                fontWeight="bold"
+              >
+                List of Questions
+              </Typography>
 
-            <GTable
-              tableData={getFormattedQData(questionsList?.data)}
-              headerData={getHeaderData(
-                getFormattedQData(questionsList?.data)?.[0]
-              )}
-              setFetchValues={setFetchValues}
-            />
-          </ElevatedSectionWrapper>
+              <GTable
+                tableData={getFormattedQData(questionsList?.data)}
+                headerData={getHeaderData(
+                  getFormattedQData(questionsList?.data)?.[0]
+                )}
+                setFetchValues={setFetchValues}
+              />
+            </ElevatedSectionWrapper>
+          )}
         </Container>
       </FormWrapper>
       {renderConfirmActionDialog(initialValues || [])}
