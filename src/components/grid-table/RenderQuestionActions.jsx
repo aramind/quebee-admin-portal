@@ -50,7 +50,8 @@ const RenderQuestionActions = ({ row }) => {
   } = useConfirmActionDialog(
     "Editing Question Information",
     setEditContent(row?._id),
-    handleEdit
+    handleEdit,
+    "xl"
   );
   console.log(row);
   return (

@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import ConfirmActionDialog from "../components/ConfirmActionDialog";
 import DeleteDialogContent from "../components/dialog/DeleteDialogContent";
 
-const useConfirmActionDialog = (title, content, confirmCallback) => {
+const useConfirmActionDialog = (title, content, confirmCallback, maxWidth) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = useCallback(() => {
@@ -27,6 +27,7 @@ const useConfirmActionDialog = (title, content, confirmCallback) => {
         // content={<DeleteDialogContent data={content} />}
         content={content}
         handleConfirm={handleConfirm}
+        maxWidth={maxWidth}
       />
     ),
     [content, handleConfirm, open, title]

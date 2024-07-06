@@ -29,6 +29,7 @@ const ConfirmActionDialog = ({
   content = "",
   handleConfirm,
   row,
+  maxWidth = "md",
 }) => {
   const styles = useStyles();
 
@@ -43,7 +44,7 @@ const ConfirmActionDialog = ({
       PaperComponent={PaperComponent}
       aria-labelledby="draggable-dialog"
       fullWidth
-      maxWidth="xl"
+      maxWidth={maxWidth}
     >
       <DialogTitle sx={styles?.dialog?.title}>{title}</DialogTitle>
       <DialogContent>{content}</DialogContent>
