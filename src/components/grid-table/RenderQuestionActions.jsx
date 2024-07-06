@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import React from "react";
+import React, { useCallback } from "react";
 import useStyles from "../../hooks/useStyles";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
@@ -7,6 +7,7 @@ import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
 import DeleteDialogContent from "../dialog/DeleteDialogContent";
 
 import useQuestionReq from "../../hooks/api/useQuestionReq";
+import useApiSend from "../../hooks/api/useApiSend";
 
 const setDeleteContent = (row) => {
   const { _id, IS_HIDDEN, id, ...questionDetails } = row;
@@ -15,7 +16,9 @@ const setDeleteContent = (row) => {
 
 const RenderQuestionActions = ({ row, setFetchValues }) => {
   const styles = useStyles();
-  const { getById } = useQuestionReq();
+  const { getById, simpleUpdate } = useQuestionReq();
+
+  const { mutate: sendSimpleUpdate } = useApiSend(simpleUpdate, ["questions"]);
 
   const handleEdit = async () => {
     try {
@@ -28,9 +31,14 @@ const RenderQuestionActions = ({ row, setFetchValues }) => {
     }
   };
 
-  const handleDelete = () => {
-    alert(row?._id);
-  };
+  const handleDelete = useCallback(() => {
+    // alert(row?._id);
+    sendSimpleUpdate({
+      id: row?._id,
+      data: { status: "deleted" },
+    });
+  }, [row?._id, sendSimpleUpdate]);
+
   const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
     useConfirmActionDialog(
       "Delete this Question?",
