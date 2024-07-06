@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema from "../../schemas/subject";
 import FormActions from "./FormActions";
 import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
+import DeleteDialogContent from "../../components/dialog/DeleteDialogContent";
 
 const ManageSubjectsTab = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -116,18 +117,20 @@ const ManageSubjectsTab = () => {
   const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
     useConfirmActionDialog(
       "Delete this Subject?",
-      {
-        code: selectedSubject?.code,
-        acronym: selectedSubject?.acronym,
-        title: selectedSubject?.title,
-        description: selectedSubject?.description,
-        topics: selectedSubject?.topics.map((topic) => topic.title),
-        "  ": "",
-        status: selectedSubject?.status,
-        isHidden: selectedSubject?.isHidden ? "yes" : "no",
-        " ": "",
-        remarks: selectedSubject?.remarks,
-      },
+      <DeleteDialogContent
+        data={{
+          code: selectedSubject?.code,
+          acronym: selectedSubject?.acronym,
+          title: selectedSubject?.title,
+          description: selectedSubject?.description,
+          topics: selectedSubject?.topics.map((topic) => topic.title),
+          "  ": "",
+          status: selectedSubject?.status,
+          isHidden: selectedSubject?.isHidden ? "yes" : "no",
+          " ": "",
+          remarks: selectedSubject?.remarks,
+        }}
+      />,
       handleDelete
     );
 

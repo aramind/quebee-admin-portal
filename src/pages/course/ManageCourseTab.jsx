@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import courseSchema from "../../schemas/course.js";
 import FormActions from "./FormActions.jsx";
 import useConfirmActionDialog from "../../hooks/useConfirmActionDialog.js";
+import DeleteDialogContent from "../../components/dialog/DeleteDialogContent.jsx";
 
 const setDeleteDialogContent = (selectedCourse) => {
   const obj = {
@@ -28,7 +29,7 @@ const setDeleteDialogContent = (selectedCourse) => {
     "  ": "",
     remarks: selectedCourse?.remarks,
   };
-  return obj;
+  return <DeleteDialogContent data={obj} />;
 };
 
 const ManageCourseTab = () => {

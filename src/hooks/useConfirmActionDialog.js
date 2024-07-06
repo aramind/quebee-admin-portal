@@ -24,7 +24,8 @@ const useConfirmActionDialog = (title, content, confirmCallback) => {
         open={open}
         setOpen={setOpen}
         title={title}
-        content={<DeleteDialogContent data={content} />}
+        // content={<DeleteDialogContent data={content} />}
+        content={content}
         handleConfirm={handleConfirm}
       />
     ),

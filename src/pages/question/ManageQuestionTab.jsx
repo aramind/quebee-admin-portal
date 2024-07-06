@@ -16,6 +16,7 @@ import useConfirmActionDialog from "../../hooks/useConfirmActionDialog";
 import useFetchQuestions from "../../hooks/api/useFetchQuestions";
 import GTable from "../../components/grid-table/GTable";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
+import DeleteDialogContent from "../../components/dialog/DeleteDialogContent";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -147,29 +148,31 @@ const ManageQuestionTab = () => {
   const { handleOpen: handleConfirmDelete, renderConfirmActionDialog } =
     useConfirmActionDialog(
       "Delete this Question?",
-      {
-        code: initialValues?.code,
-        question: initialValues?.question,
-        A: `${initialValues?.choices?.[0]?.value?.text}${
-          initialValues?.choices?.[0]?.isCorrect ? " ✅" : ""
-        }`,
-        B: `${initialValues?.choices?.[1]?.value?.text}${
-          initialValues?.choices?.[1]?.isCorrect ? " ✅" : ""
-        }`,
-        C: `${initialValues?.choices?.[2]?.value?.text}${
-          initialValues?.choices?.[2]?.isCorrect ? " ✅" : ""
-        }`,
-        D: `${initialValues?.choices?.[3]?.value?.text}${
-          initialValues?.choices?.[3]?.isCorrect ? " ✅" : ""
-        }`,
-        information: initialValues?.information,
+      <DeleteDialogContent
+        data={{
+          code: initialValues?.code,
+          question: initialValues?.question,
+          A: `${initialValues?.choices?.[0]?.value?.text}${
+            initialValues?.choices?.[0]?.isCorrect ? " ✅" : ""
+          }`,
+          B: `${initialValues?.choices?.[1]?.value?.text}${
+            initialValues?.choices?.[1]?.isCorrect ? " ✅" : ""
+          }`,
+          C: `${initialValues?.choices?.[2]?.value?.text}${
+            initialValues?.choices?.[2]?.isCorrect ? " ✅" : ""
+          }`,
+          D: `${initialValues?.choices?.[3]?.value?.text}${
+            initialValues?.choices?.[3]?.isCorrect ? " ✅" : ""
+          }`,
+          information: initialValues?.information,
 
-        "  ": "",
-        status: initialValues?.status,
-        isHidden: initialValues?.isHidden ? "yes" : "no",
-        " ": "",
-        remarks: initialValues?.remarks,
-      },
+          "  ": "",
+          status: initialValues?.status,
+          isHidden: initialValues?.isHidden ? "yes" : "no",
+          " ": "",
+          remarks: initialValues?.remarks,
+        }}
+      />,
       handleDelete
     );
 
