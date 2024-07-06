@@ -32,7 +32,7 @@ const GTable = ({ tableData, headerData, setFetchValues }) => {
   };
 
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
+    <Box sx={{ width: "100%" }}>
       {tableData?.length > 0 && (
         <DataGrid
           rows={addIdToTableData(tableData)}
