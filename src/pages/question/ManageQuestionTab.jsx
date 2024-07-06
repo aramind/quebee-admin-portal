@@ -188,6 +188,7 @@ const ManageQuestionTab = () => {
 
   const getFormattedQData = (data) => {
     const formatted = data?.map((qd) => ({
+      _id: qd._id,
       QUESTION: qd.question?.text,
       A: qd.choices?.[0]?.value?.text,
       B: qd.choices?.[1]?.value?.text,
@@ -206,6 +207,11 @@ const ManageQuestionTab = () => {
       STATUS: qd.status,
     }));
     return formatted;
+  };
+
+  const getHeaderData = (data) => {
+    const headers = Object.keys(data).filter((key) => key !== "_id");
+    return headers;
   };
   return (
     <>
@@ -260,7 +266,7 @@ const ManageQuestionTab = () => {
 
             <GTable
               tableData={getFormattedQData(questionsList?.data)}
-              headerData={Object.keys(
+              headerData={getHeaderData(
                 getFormattedQData(questionsList?.data)?.[0]
               )}
             />
