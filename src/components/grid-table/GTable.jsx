@@ -1,3 +1,4 @@
+import "../../index.css";
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
@@ -8,6 +9,7 @@ import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import LiveHelpOutlinedIcon from "@mui/icons-material/LiveHelpOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
+import { red } from "@mui/material/colors";
 
 const GTable = ({ tableData, headerData, setFetchValues }) => {
   const getColumns = () => {
@@ -29,24 +31,37 @@ const GTable = ({ tableData, headerData, setFetchValues }) => {
       ),
     });
 
-    headers.unshift({
-      field: "STATUS_ICON",
-      headerName: "STATUS",
-      renderCell: (params) => {
-        if (params.row?.STATUS === "deleted") return <DeleteOutlinedIcon />;
-        else if (params.row?.STATUS === "pending")
-          return <RateReviewOutlinedIcon />;
-        else if (params.row?.STATUS === "live")
-          return <CloudDoneOutlinedIcon />;
-        else return <LiveHelpOutlinedIcon />;
-      },
-    });
+    // headers.unshift({
+    //   field: "STATUS_ICON",
+    //   headerName: "STATUS",
+    //   renderCell: (params) => {
+    //     if (params.row?.STATUS === "deleted") return <DeleteOutlinedIcon />;
+    //     else if (params.row?.STATUS === "pending")
+    //       return <RateReviewOutlinedIcon />;
+    //     else if (params.row?.STATUS === "live")
+    //       return <CloudDoneOutlinedIcon />;
+    //     else return <LiveHelpOutlinedIcon />;
+    //   },
+    // });
     return headers;
   };
 
   const addIdToTableData = (data) => {
     const formattedTableData = data?.map((e, index) => ({ ...e, id: index }));
     return formattedTableData;
+  };
+
+  const getRowClassName = (params) => {
+    switch (params.row?.STATUS) {
+      case "deleted":
+        return "gt-deleted-row row";
+      case "pending":
+        return "gt-pending-row row";
+      case "live":
+        return "gt-live-row row";
+      default:
+        return "";
+    }
   };
 
   return (
@@ -65,6 +80,8 @@ const GTable = ({ tableData, headerData, setFetchValues }) => {
           pageSizeOptions={[10, 20, 30, 40, 50]}
           // checkboxSelection
           disableRowSelectionOnClick
+          // sx={{ backgroundColor: red[500] }}
+          getRowClassName={(params) => getRowClassName(params)}
         />
       )}
     </Box>

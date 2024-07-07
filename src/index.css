@@ -124,3 +124,22 @@ input:active {
 input.PrivateSwitchBase-input {
   display: block;
 }
+
+/* GRID TABLE */
+.gt-deleted-row {
+  background-color: rgba(249, 174, 174, 0.3);
+}
+
+.gt-live-row {
+  background-color: rgba(151, 222, 97, 0.3);
+}
+
+.gt-pending-row {
+  background-color: rgba(242, 215, 125, 0.3);
+}
+
+.row:hover {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #277c7b;
+}
