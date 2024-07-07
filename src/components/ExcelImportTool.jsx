@@ -103,27 +103,32 @@ const ExcelImportTool = () => {
   };
 
   const handleFile = async (e) => {
-    const myFile = e.target.files[0];
+    try {
+      const myFile = e.target.files[0];
 
-    if (!myFile) return;
+      if (!myFile) return;
 
-    if (!checkFileName(myFile.name)) {
-      showAckNotification({
-        dispatch,
-        success: false,
-        data: { message: "Invalid File type" },
-        ackAlert,
-        autoHideDuration: null,
-      });
-      return;
+      if (!checkFileName(myFile.name)) {
+        showAckNotification({
+          dispatch,
+          success: false,
+          data: { message: "Invalid File type" },
+          ackAlert,
+          autoHideDuration: null,
+        });
+        return;
+      }
+
+      // Read the xlsx metadata
+      const data = await myFile.arrayBuffer();
+      readDataFromExcel(data);
+
+      setFile(myFile);
+      setFileName(myFile?.name);
+    } catch (error) {
+      console.error(error);
+      displayAlertMessage(error, false);
     }
-
-    // Read the xlsx metadata
-    const data = await myFile.arrayBuffer();
-    readDataFromExcel(data);
-
-    setFile(myFile);
-    setFileName(myFile?.name);
   };
 
   const handleRemove = () => {

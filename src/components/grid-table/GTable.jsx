@@ -13,37 +13,42 @@ import { red } from "@mui/material/colors";
 
 const GTable = ({ tableData, headerData, setFetchValues }) => {
   const getColumns = () => {
-    const headers = headerData?.map((e) => ({
-      field: e.toUpperCase(),
-      headerName: e.toUpperCase(),
-      width: 200,
-      editable: false,
-    }));
+    try {
+      const headers = headerData?.map((e) => ({
+        field: e.toUpperCase(),
+        headerName: e.toUpperCase(),
+        width: 200,
+        editable: false,
+      }));
 
-    headers.unshift({
-      field: "ACTIONS",
-      headerName: "ACTIONS",
-      renderCell: (params) => (
-        <RenderQuestionActions
-          row={params.row}
-          setFetchValues={setFetchValues}
-        />
-      ),
-    });
+      headers.unshift({
+        field: "ACTIONS",
+        headerName: "ACTIONS",
+        renderCell: (params) => (
+          <RenderQuestionActions
+            row={params.row}
+            setFetchValues={setFetchValues}
+          />
+        ),
+      });
 
-    // headers.unshift({
-    //   field: "STATUS_ICON",
-    //   headerName: "STATUS",
-    //   renderCell: (params) => {
-    //     if (params.row?.STATUS === "deleted") return <DeleteOutlinedIcon />;
-    //     else if (params.row?.STATUS === "pending")
-    //       return <RateReviewOutlinedIcon />;
-    //     else if (params.row?.STATUS === "live")
-    //       return <CloudDoneOutlinedIcon />;
-    //     else return <LiveHelpOutlinedIcon />;
-    //   },
-    // });
-    return headers;
+      // headers.unshift({
+      //   field: "STATUS_ICON",
+      //   headerName: "STATUS",
+      //   renderCell: (params) => {
+      //     if (params.row?.STATUS === "deleted") return <DeleteOutlinedIcon />;
+      //     else if (params.row?.STATUS === "pending")
+      //       return <RateReviewOutlinedIcon />;
+      //     else if (params.row?.STATUS === "live")
+      //       return <CloudDoneOutlinedIcon />;
+      //     else return <LiveHelpOutlinedIcon />;
+      //   },
+      // });
+      return headers;
+    } catch (error) {
+      alert(error);
+      return;
+    }
   };
 
   const addIdToTableData = (data) => {
