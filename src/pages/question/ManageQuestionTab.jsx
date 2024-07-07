@@ -7,7 +7,6 @@ import {
   Container,
   Divider,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   Stack,
@@ -27,7 +26,7 @@ import useFetchQuestions from "../../hooks/api/useFetchQuestions";
 import GTable from "../../components/grid-table/GTable";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DeleteDialogContent from "../../components/dialog/DeleteDialogContent";
-import { red, teal } from "@mui/material/colors";
+import { teal } from "@mui/material/colors";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);

@@ -51,6 +51,17 @@ const ExcelImportTool = () => {
     "tags",
   ]);
 
+  const displayAlertMessage = (message, success) => {
+    showAckNotification({
+      dispatch,
+      success,
+      data: {
+        message,
+      },
+      ackAlert,
+      autoHideDuration: null,
+    });
+  };
   const checkFileName = (name) => {
     return acceptableFileName.includes(name.split(".").pop().toLowerCase());
   };
@@ -74,6 +85,7 @@ const ExcelImportTool = () => {
     // assign data from sheet into objects
     const jsonData = XLSX.utils.sheet_to_json(ws1);
     const headers = XLSX.utils.sheet_to_json(ws1, { header: 1 });
+
     setTableData((pv) => jsonData);
     setHeaderData((pv) => headers[0]);
   };
@@ -122,6 +134,25 @@ const ExcelImportTool = () => {
   };
 
   const handleBulkQuestionUpload = async () => {
+    const validTopicCodes = topicsList?.data?.map((topic) => topic.code);
+    const allTopicCodesFromFile = [
+      ...new Set(tableData?.flatMap((data) => data.TOPICS?.split(","))),
+    ];
+    console.log(validTopicCodes);
+    console.log(allTopicCodesFromFile);
+
+    const invalidTopicsFromFile = allTopicCodesFromFile.filter(
+      (code) => !validTopicCodes.includes(code)
+    );
+
+    console.log(invalidTopicsFromFile);
+
+    if (invalidTopicsFromFile?.length > 0) {
+      let message = `${invalidTopicsFromFile} topics are not yet included in the DB (or have been removed). Either add them first to DB or remove them from this file before these set of questions can be uploaded.`;
+      displayAlertMessage(message, false);
+      return;
+    }
+
     const validationResults = await Promise.all(
       tableData.map((data) => validateBulkQuestionsFromExcel(data, data?.CODE))
     );
