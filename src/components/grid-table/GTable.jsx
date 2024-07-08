@@ -1,15 +1,8 @@
 import "../../index.css";
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import RenderQuestionActions from "./RenderQuestionActions";
-import ManageSearchRoundedIcon from "@mui/icons-material/ManageSearchRounded";
-import CloudDoneOutlinedIcon from "@mui/icons-material/CloudDoneOutlined";
-import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import LiveHelpOutlinedIcon from "@mui/icons-material/LiveHelpOutlined";
-import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
-import { red } from "@mui/material/colors";
 
 const GTable = ({ tableData, headerData, setFetchValues }) => {
   const getColumns = () => {
@@ -31,19 +24,6 @@ const GTable = ({ tableData, headerData, setFetchValues }) => {
           />
         ),
       });
-
-      // headers.unshift({
-      //   field: "STATUS_ICON",
-      //   headerName: "STATUS",
-      //   renderCell: (params) => {
-      //     if (params.row?.STATUS === "deleted") return <DeleteOutlinedIcon />;
-      //     else if (params.row?.STATUS === "pending")
-      //       return <RateReviewOutlinedIcon />;
-      //     else if (params.row?.STATUS === "live")
-      //       return <CloudDoneOutlinedIcon />;
-      //     else return <LiveHelpOutlinedIcon />;
-      //   },
-      // });
       return headers;
     } catch (error) {
       alert(error);
@@ -83,9 +63,7 @@ const GTable = ({ tableData, headerData, setFetchValues }) => {
             },
           }}
           pageSizeOptions={[10, 20, 30, 40, 50]}
-          // checkboxSelection
           disableRowSelectionOnClick
-          // sx={{ backgroundColor: red[500] }}
           getRowClassName={(params) => getRowClassName(params)}
         />
       )}
