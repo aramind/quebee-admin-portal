@@ -110,13 +110,8 @@ const ExcelImportTool = () => {
       if (!myFile) return;
 
       if (!checkFileName(myFile.name)) {
-        showAckNotification({
-          dispatch,
-          success: false,
-          data: { message: "Invalid File type" },
-          ackAlert,
-          autoHideDuration: null,
-        });
+        let message = "Invalid File type";
+        displayAlertMessage(message, false);
         return;
       }
 
