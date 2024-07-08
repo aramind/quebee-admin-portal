@@ -90,6 +90,7 @@ const ExcelImportTool = () => {
     setHeaderData((pv) => headers[0]);
   };
 
+  console.log(headerData);
   const getTopicsId = (arrayOfTopicIds) => {
     const codesArray = arrayOfTopicIds;
     const objectsArray = topicsList?.data;
@@ -139,6 +140,13 @@ const ExcelImportTool = () => {
   };
 
   const handleBulkQuestionUpload = async () => {
+    if (
+      !(headerData?.includes("CODE") && headerData?.includes("QUESTION_TEXT"))
+    ) {
+      let message = `Invalid File Content`;
+      displayAlertMessage(message, false);
+      return;
+    }
     const validationResults = await Promise.all(
       tableData.map((data) => validateBulkQuestionsFromExcel(data, data?.CODE))
     );
