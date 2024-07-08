@@ -217,10 +217,6 @@ const ExcelImportTool = () => {
           direction="row"
           spacing={2}
           alignItems="center"
-          // sx={{
-          //   outline: "2px solid",
-          //   outlineColor: (theme) => theme.palette.primary.main,
-          // }}
           pr="0.5rem"
           minWidth="50%"
         >

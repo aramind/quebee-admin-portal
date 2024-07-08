@@ -6,9 +6,9 @@ import TabsContainer from "../../containers/TabsContainer";
 import ImportQuestionTab from "./ImportQuestionTab";
 
 const questionTabs = [
-  { label: "add question", component: <AddQuestionTab /> },
-  { label: "import questions", component: <ImportQuestionTab /> },
   { label: "manage question", component: <ManageQuestionTab /> },
+  { label: "import questions", component: <ImportQuestionTab /> },
+  { label: "add question", component: <AddQuestionTab /> },
 ];
 const QuestionPage = () => {
   return (

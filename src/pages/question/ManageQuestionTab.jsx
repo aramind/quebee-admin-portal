@@ -27,6 +27,7 @@ import GTable from "../../components/grid-table/GTable";
 import ElevatedSectionWrapper from "../../wrappers/ElevatedSectionWrapper";
 import DeleteDialogContent from "../../components/dialog/DeleteDialogContent";
 import { teal } from "@mui/material/colors";
+import { useLocation } from "react-router-dom";
 
 const getLetterOfCorrectAnswer = (choices) => {
   const correct = choices?.find((choice) => choice.isCorrect);
@@ -50,6 +51,11 @@ const ManageQuestionTab = () => {
   const [initialValues, setInitialValues] = useState({});
   const [fetchValues, setFetchValues] = useState(null);
   const [status, setStatus] = useState("all");
+
+  // route
+  const location = useLocation();
+  const { selectedStatus } = location?.state || "all";
+
   const styles = useStyles();
   const { edit, simpleUpdate } = useQuestionReq();
   // const { questionsList } = useFetchData();
@@ -79,6 +85,10 @@ const ManageQuestionTab = () => {
     errors,
     isDirty,
   };
+
+  useEffect(() => {
+    if (selectedStatus) setStatus((pv) => selectedStatus);
+  }, [selectedStatus]);
 
   useEffect(() => {
     setInitialValues({
@@ -273,7 +283,6 @@ const ManageQuestionTab = () => {
               <Stack direction="row" alignItems="center">
                 <Typography
                   textTransform={"uppercase"}
-                  color="primary"
                   // fontWeight="bold"
                 >
                   List of
@@ -309,7 +318,6 @@ const ManageQuestionTab = () => {
                 </FormControl>
                 <Typography
                   textTransform={"uppercase"}
-                  color="primary"
                   // fontWeight="bold"
                 >
                   Questions

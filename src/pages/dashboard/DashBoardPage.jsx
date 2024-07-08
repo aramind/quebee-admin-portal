@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import { useGlobalState } from "../../context/GlobalStatesContextProvider";
 import { Box, Stack, Typography } from "@mui/material";
 
@@ -43,7 +43,7 @@ const DashBoardPage = () => {
       </Typography>
 
       {["questions", "courses", "subjects", "topics"].map((group, index) => (
-        <>
+        <Fragment key={index}>
           <Box my={2} py={1} sx={{ bgcolor: teal[50] }}>
             <Typography
               textAlign="center"
@@ -75,7 +75,7 @@ const DashBoardPage = () => {
               />
             ))}
           </RowWrapper>
-        </>
+        </Fragment>
       ))}
       <br />
     </>

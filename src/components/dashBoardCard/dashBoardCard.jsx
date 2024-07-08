@@ -4,10 +4,10 @@ import {
   CardActions,
   CardContent,
   Divider,
-  Stack,
   Typography,
 } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const DashBoardCard = ({ title, value }) => {
   return (
@@ -21,9 +21,11 @@ const DashBoardCard = ({ title, value }) => {
       </CardContent>
       <Divider />
       <CardActions style={{ justifyContent: "center" }}>
-        <Button variant="text" size="small">
-          View
-        </Button>
+        <Link to={"/questions"} state={{ selectedStatus: title.toLowerCase() }}>
+          <Button variant="text" size="small">
+            View
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
