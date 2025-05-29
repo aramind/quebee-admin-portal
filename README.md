@@ -25,7 +25,7 @@ A content management system for maintaining a reusable question pool designed to
 
 ---
 
-![Screenshot3](public/imgs/readme-screenshots/s1.png)
+![Screenshot3](public/assets/imgs/readme-screenshots/s1.png)
 
 ## 🌐 Live Demo
 
